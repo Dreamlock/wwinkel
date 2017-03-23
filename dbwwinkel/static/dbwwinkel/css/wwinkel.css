@@ -71,6 +71,7 @@ input[type= "number"],
 input[type = "email"],
 input[type = "tel"],
 input[type = "url"],
+input[type = "date"],
 textarea,select.form-control{
 	height: 50px;
     margin: 0;

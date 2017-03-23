@@ -1,0 +1,4 @@
+textarea,select.form-control{
+    height: 200px;
+    width: 100%;
+}
