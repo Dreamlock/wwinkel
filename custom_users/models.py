@@ -12,6 +12,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.email.strip()
 
-    object = BaseUserManager
+    objects = BaseUserManager()
 
 
