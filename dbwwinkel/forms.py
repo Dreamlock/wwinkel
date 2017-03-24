@@ -15,6 +15,7 @@ class NameForm(ModelForm):
             'question_text': ('*Stel hier uw vraag'),
             'reason': ('*Hoe is uw vraag ontstaan?'),
             'purpose': ('*Hoe wilt u de resultaten van uw vraag gebruiken?'),
+
             'deadline': ('Deadline(Laat open indien geen)'),
             'own_contribution': ('*Kan u een bijdrage leveren aan de kosten?'),
             'remarks': ('Opmerkingen'),
