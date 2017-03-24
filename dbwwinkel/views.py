@@ -23,4 +23,4 @@ def register_question(request):
     else:
         form = NameForm()
 
-    return render(request, 'dbwwinkel/name.html', {'form': form})
+    return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
