@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,16 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'custom_users.apps.CustomUsersConfig',
-    'dbwwinkel.apps.DbwwinkelConfig',
+    'custom_users',
+    'dbwwinkel',
     'cms',
     'menus',
     'treebeard',
-    'djangocms_admin_style'
-
+    'sekizai'
 ]
 
 MIDDLEWARE = [
+    'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,14 +56,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware'
 ]
 
 ROOT_URLCONF = 'wwinkel.urls'
 
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates', os.path.join(PROJECT_ROOT, '../templates').replace('\\', '/') ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,9 +77,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'sekizai.context_processors.sekizai',
+                'cms.context_processors.cms_settings'
             ],
+            #'loaders': ['django.template.loaders.filesystem.Loader','django.template.loaders.app_directories.Loader']
         },
+
+
     },
+]
+
+CMS_TEMPLATES = [
+    ('base/base.html','Base template' )
 ]
 
 WSGI_APPLICATION = 'wwinkel.wsgi.application'
@@ -118,6 +133,10 @@ SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
+
+LANGUAGES = [
+    ('nl', 'Dutch')
+]
 
 LANGUAGE_CODE = 'nl'
 

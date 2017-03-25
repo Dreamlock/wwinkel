@@ -1,4 +1,4 @@
-{% load cms_tags menu_tags  static %}
+{% load cms_tags sekizai_tags static menu_tags %}
 <!doctype html>
 <html>
     <head>
@@ -12,14 +12,15 @@
 
 
   {% block extra_head %}{% endblock %}
+    {% render_block "css" %}
     </head>
 
     <body>
-        {% cms_toolbar %}
 
+    {% cms_toolbar %}
         <nav class="navbar navbar-t navbar-inverse bg-inverse navbar-fixed-top">
             <ul class="nav navbar-nav">
-
+             {%  show_menu 0 100 100 100 "base/menu.html"%}
             </ul>
              <ul class = "nav navbar-nav navbar-center">
               <li class="nav-item">
@@ -57,13 +58,13 @@
 
 
     <script src="{% static 'dbwwinkel/js/jquery-3.2.0.min.js' %}"></script>
-    <script src="{% static "dbwwinkel/js/bootstrap.js "%}"></script>
+    <script src="{% static "dbwwinkel/js/bootstrap.js " %}"></script>
 
 
     {% block extra_scripts %}{% endblock %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-
+    {% render_block "js" %}
     </body>
 
 
