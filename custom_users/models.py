@@ -85,5 +85,23 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
+class Province(models.Model):
+    province = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.province
+
+
+class Address(models.Model):
+    province = models.ForeignKey(Province)
+    city = models.CharField(max_length=255, unique=True)
+    postal_code = models.PositiveIntegerField(unique=True)
+    street_name = models.CharField(max_length=40)
+    street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
+
+    def __str__(self):
+        return self.street_name + ' ' + str(self.street_number) + ' ' + self.city
+
+
 class User(AbstractUser):
     pass
