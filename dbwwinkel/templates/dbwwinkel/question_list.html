@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container">
   <table class="table">
@@ -20,5 +20,5 @@
 
 {% endblock %}
 {% block extra_scripts %}
-<script></script>
+ <script src="{% static 'dbwwinkel/js/myjs.js' %}"></script>
 {% endblock %}
