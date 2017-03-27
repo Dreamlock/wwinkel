@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from .forms import NameForm
+from .models import Question
 
 @login_required
 def register_question(request):
@@ -34,3 +35,13 @@ def register_question(request):
 
 def success(request):
     return HttpResponse("Vraag aanvaard")
+
+
+def list_questions(request):
+
+    all_questions = Question.objects.all()
+    output = ', '.join([q.question_text for q in all_questions])
+
+    context = {'questions': all_questions}
+    return render(request,'dbwwinkel/question_list.html', context)
+
