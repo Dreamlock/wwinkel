@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.conf import settings
 # Create your models here.
 
 
@@ -20,22 +21,14 @@ class Question(models.Model):
     remarks = models.TextField(blank = True)
     internal_remarks = models.TextField(blank = True)
     how_know_WW = models.TextField(blank = True)
-    deadline = models.DateField(blank = True)
+    deadline = models.DateField(blank = True, null = True)
 
     public = models.BooleanField()
 
     # metadata: invisible
-    # organisation = models.ForeignKey('Organisation')
     creation_date = models.DateTimeField(default = datetime.datetime.now())
     active = models.BooleanField(default=True)
-    status = models.CharField(max_length = 10, choices= QUESTION_STATUS)
-    log = models.ForeignKey('Log')
-    intake = models.ForeignKey('Intake')
+    status = models.CharField(max_length = 10, choices= QUESTION_STATUS, default= 'new')
 
+    organisation = models.ForeignKey(settings.AUTH_USER_MODEL)
 
-class Log(models.Model):
-    pass
-
-class Intake(models.Model):
-    date = models.DateTimeField(default = datetime.datetime.now())
-    remarks = models.TextField(blank = True)
