@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from .forms import NameForm
-from .models import Question
+from .models import Question,State
 
 @login_required
 def register_question(request):
@@ -21,6 +21,7 @@ def register_question(request):
 
             question = form.save(commit = False) # We still need to lay out the foreign keys
             question.organisation = request.user # Foreign key to the user (organisation in question...)
+            question.status = State.objects.get(id = 1)
             question.save()
 
             # redirect to a new URL:
