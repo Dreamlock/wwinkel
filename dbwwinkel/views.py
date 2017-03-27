@@ -6,7 +6,6 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import NameForm
-from .models import Intake
 
 def register_question(request):
     # if this is a POST request we need to process the form data

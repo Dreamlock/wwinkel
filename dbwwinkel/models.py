@@ -29,13 +29,8 @@ class Question(models.Model):
     creation_date = models.DateTimeField(default = datetime.datetime.now())
     active = models.BooleanField(default=True)
     status = models.CharField(max_length = 10, choices= QUESTION_STATUS)
-    log = models.ForeignKey('Log')
-    intake = models.ForeignKey('Intake')
+    # log = models.ForeignKey('Log')
 
 
 class Log(models.Model):
     pass
-
-class Intake(models.Model):
-    date = models.DateTimeField(default = datetime.datetime.now())
-    remarks = models.TextField(blank = True)
