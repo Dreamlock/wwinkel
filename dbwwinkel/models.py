@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.exceptions import ValidationError
+import datetime
+from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
 
@@ -30,4 +33,10 @@ class Question(models.Model):
     status = models.ForeignKey(State)
 
     organisation = models.ForeignKey(settings.AUTH_USER_MODEL)
+
+    def clean(self):
+        if self.deadline is not None and self.deadline < datetime.date.today():
+            raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
+
+
 

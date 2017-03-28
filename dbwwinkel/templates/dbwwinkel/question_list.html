@@ -1,8 +1,22 @@
 {% extends 'base/base.html' %}
 {% load static %}
+
+{% block extra_head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function($) {
+    $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
+</script>
+
+{% endblock %}
 {% block content %}
 <div class="container">
-  <table class="table">
+  <table class="table table-hover ">
     <thead>
       <tr>
         <th>Vraag</th>
@@ -10,7 +24,7 @@
     </thead>
       <tbody>
       {% for question in questions %}
-          <tr class ='clickable-row' data-href = "#">
+          <tr class ='table-row' data-href = "{% url 'detail' question.id %}" style="cursor: pointer;">
           <td>{{question.question_text  }}</td>
           </tr>
       {% endfor %}
@@ -20,5 +34,5 @@
 
 {% endblock %}
 {% block extra_scripts %}
- <script src="{% static 'dbwwinkel/js/myjs.js' %}"></script>
+
 {% endblock %}
