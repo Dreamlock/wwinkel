@@ -53,6 +53,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(
         _('is active'),
+        default=True,
         help_text=_('Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
     )
 
@@ -86,7 +87,12 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Province(models.Model):
-    province = models.CharField(max_length=50, unique=True)
+    PROVINCE_SELECT = (
+        ('ANT', _('Antwerp')),
+        ('OVL', _('East Flanders')),
+    )
+
+    province = models.CharField(max_length=50, unique=True, choices=PROVINCE_SELECT)
 
     def __str__(self):
         return self.province
@@ -100,8 +106,38 @@ class Address(models.Model):
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
 
     def __str__(self):
-        return self.street_name + ' ' + str(self.street_number) + ' ' + self.city
+        return self.street_name + ' ' + str(self.street_number) + ', ' + self.city
 
 
 class User(AbstractUser):
     pass
+
+
+class Organisation(models.Model):
+    name = models.CharField(_('name'), max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class OrganisationUser(User):
+    first_name = models.CharField(_('first name'), max_length=50)
+    last_name = models.CharField(_('last name'), max_length=50)
+    telephone = models.PositiveIntegerField(_('telephone number'))
+    gsm = models.PositiveIntegerField(_('gsm number'))
+    address = models.ForeignKey(Address)  # , related_name='user_address')
+    organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation')
+
+
+class Region(Province):
+    PROVINCE_SELECT = (
+        ('ANT', _('Antwerp')),
+        ('OVL', _('East Flanders')),
+        ('CEN', _('Central')),
+    )
+
+
+class ManagerUser(User):
+    region = models.ManyToManyField(Region)
+
+
