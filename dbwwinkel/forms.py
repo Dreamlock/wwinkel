@@ -1,28 +1,35 @@
 from django import forms
 from django.forms import ModelForm
 from dbwwinkel.models import Question
-
+from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
+import datetime
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
+
 class NameForm(ModelForm):
+
     class Meta:
         model = Question
         fields = ['question_text','reason', 'purpose','own_contribution','remarks', 'how_know_WW', 'deadline', 'public']
 
         labels = {
-            'question_text': ('*Stel hier uw vraag'),
-            'reason': ('*Hoe is uw vraag ontstaan?'),
-            'purpose': ('*Hoe wilt u de resultaten van uw vraag gebruiken?'),
+            'question_text': _('*Stel hier uw vraag'),
+            'reason': _('*Hoe is uw vraag ontstaan?'),
+            'purpose': _('*Hoe wilt u de resultaten van uw vraag gebruiken?'),
 
-            'deadline': ('Deadline(Laat open indien geen)'),
-            'own_contribution': ('*Kan u een bijdrage leveren aan de kosten?'),
-            'remarks': ('Opmerkingen'),
-            'how_know_WW': ('Hoe heeft u de wetenschapswinkel leren kennen?'),
-            'public': ('Gaat u er mee akkoord dat de resultaten openbaar zijn en gepubliceerd worden?')
+            'deadline': _('Deadline(Laat open indien geen)'),
+            'own_contribution': _('*Kan u een bijdrage leveren aan de kosten?'),
+            'remarks': _('Opmerkingen'),
+            'how_know_WW': _('Hoe heeft u de wetenschapswinkel leren kennen?'),
+            'public': _('Gaat u er mee akkoord dat de resultaten openbaar zijn en gepubliceerd worden?')
         }
 
         widgets = {
             'deadline': DateInput()
         }
+
+

@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 
 from .forms import NameForm
 from .models import Question,State
@@ -13,9 +14,11 @@ from .models import Question,State
 @login_required
 def register_question(request):
     # if this is a POST request we need to process the form data
+    form = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = NameForm(request.POST)
+
         # check whether it's valid:
         if form.is_valid():
 
@@ -27,9 +30,11 @@ def register_question(request):
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('success'))
 
-    # if a GET (or any other method) we'll create a blank form
+
     else:
         form = NameForm()
+
+        # if a GET (or any other method) we'll create a blank form
 
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
@@ -46,3 +51,9 @@ def list_questions(request):
     context = {'questions': all_questions}
     return render(request,'dbwwinkel/question_list.html', context)
 
+
+
+def detail(request, question_id):
+    question = Question.objects.get(id = question_id )
+    context = {'question': question}
+    return render(request,'dbwwinkel/detail_question.html', context)

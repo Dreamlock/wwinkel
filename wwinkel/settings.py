@@ -39,13 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    'haystack',
+    
     'custom_users',
     'dbwwinkel',
+
     'cms',
     'menus',
     'treebeard',
     'sekizai'
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+        # ...or for multicore...
+        # 'URL': 'http://127.0.0.1:8983/solr/mysite',
+    },
+}
 
 MIDDLEWARE = [
     'cms.middleware.utils.ApphookReloadMiddleware',
