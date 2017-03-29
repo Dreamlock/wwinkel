@@ -46,10 +46,7 @@ def success(request):
 def list_questions(request):
 
     all_questions = Question.objects.all()
-    status_lst = []
-    for question in all_questions:
-        status = question.status
-        status_lst.append(status.state)
+    status_lst = State.objects.all()
 
     context = {'questions': all_questions,
                'state_names': status_lst

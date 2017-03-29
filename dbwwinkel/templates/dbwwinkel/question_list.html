@@ -22,14 +22,16 @@ $(document).ready(function($) {
         <th>Publicatie datum</th>
         <th>Vraag</th>
         <th>Deadline</th>
+      <th>Status</th>
       </tr>
     </thead>
       <tbody>
       {% for question in questions %}
           <tr class ='table-row' data-href = "{% url 'detail' question.id %}" style="cursor: pointer;">
-              <td>{{ question.creation_date.date }}</td>
-              <td>{{question.question_text  }}</td>
-              <td>{{ question.deadline }}</td>
+            <td>{{ question.creation_date.date }}</td>
+            <td>{{question.question_text  }}</td>
+            <td>{{ question.deadline }}</td>
+            <td>{{ question.status_name}}</td>
           </tr>
       {% endfor %}
       </tbody>

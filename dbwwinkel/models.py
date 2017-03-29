@@ -38,5 +38,8 @@ class Question(models.Model):
         if self.deadline is not None and self.deadline < datetime.date.today():
             raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
 
+    def get_status_name(self):
+        return self.status.state
 
+    status_name = property(get_status_name)
 
