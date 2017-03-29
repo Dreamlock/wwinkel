@@ -4,24 +4,31 @@
 {% block content %}
     <div class = "container">
         <div class="row">
-            <div class = "col-md-11">
+            <div class = "col-md-10">
                 <h1>{{ question.question_text }}</h1>
                     <p></p>
                 </div>
-            <div class = "col-md-1">
+            <div class = "col-md-2">
+                <br>
                 <button type="submit" class="btn btn-default pull-down">Edit</button>
             </div>
         </div>
     </div>
     <hr />
+       <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Feedback van de wetenschapswinkel</h2>
+                <p>{{ question.internal_remarks }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
     <div class = "container">
         <div class="row">
             <div class = "col-md-11">
                 <h2>Hoe is uw vraag ontstaan?</h2>
                 <p>{{ question.reason }}</p>
-            </div>
-            <div class = "col-md-1">
-                <button type="submit" class="btn btn-default pull-down">Edit</button>
             </div>
         </div>
     </div>
@@ -32,9 +39,49 @@
                 <h2>Hoe wilt u de resultaten van de vraag gebruiken?</h2>
                 <p>{{ question.purpose }}</p>
             </div>
-            <div class = "col-md-1">
-                <button type="submit" class="btn btn-default pull-down">Edit</button>
+        </div>
+    </div>
+    <hr/>
+        <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Kunt u bijdragen tot de kosten?</h2>
+                <p>{{ question.own_contribution }}</p>
             </div>
         </div>
     </div>
+    <hr/>
+       <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Opmerking</h2>
+                <p>{{ question.remarks }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+       <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Gaat u ermee akkoort dat de resultaten openbaar zijn en gepubliceerd worden?</h2>
+                {% if question.public is True  %}
+                <p>Ja</p>
+                {% else %}
+                <p>Nee</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Deadline</h2>
+                <p>{{ question.deadline }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
 {% endblock %}
