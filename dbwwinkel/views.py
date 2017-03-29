@@ -5,8 +5,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from .forms import NameForm
+from django.contrib.auth.decorators import login_required
 
+from .forms import NameForm
+from .models import Question
+
+@login_required
 def register_question(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -14,13 +18,10 @@ def register_question(request):
         form = NameForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            form.save(commit = False) # We still need to lay out the foreign keys
-            # intake = Intake.objects.create()
 
-            # Adding extra metadata that comes with a question
-            # Starting with creating intake
-
-
+            question = form.save(commit = False) # We still need to lay out the foreign keys
+            question.organisation = request.user # Foreign key to the user (organisation in question...)
+            question.save()
 
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('success'))
@@ -34,3 +35,13 @@ def register_question(request):
 
 def success(request):
     return HttpResponse("Vraag aanvaard")
+
+
+def list_questions(request):
+
+    all_questions = Question.objects.all()
+    output = ', '.join([q.question_text for q in all_questions])
+
+    context = {'questions': all_questions}
+    return render(request,'dbwwinkel/question_list.html', context)
+
