@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User
-from .forms import UserChangeForm, UserCreationForm
+from .models import *
+from .forms import *
 
 
 class UserAdmin(BaseUserAdmin):
@@ -36,5 +36,62 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ('groups', 'user_permissions',)
 
 
+class OrganisationUserAdmin(UserAdmin):
+    form = OrganisationUserChangeForm
+    add_form = OrganisationUserCreationForm
+
+    list_display = ('email', 'first_name', 'last_name')
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Contact'), {'fields': ('telephone', 'gsm', 'address', 'organisation')}),
+        (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')}),
+    )
+    readonly_fields = ('date_joined', 'last_login')
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2')
+        }),
+        ('Extra', {
+            'fields': ('telephone', 'gsm', 'address', 'organisation')
+        })
+    )
+
+
+class ManagerUserAdmin(UserAdmin):
+    form = ManagerUserChangeForm
+    add_form = ManagerUserCreationForm
+
+    list_display = ('email',)
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('region'), {'fields': ('region',)}),
+        (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')}),
+    )
+    readonly_fields = ('date_joined', 'last_login')
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2')
+        }),
+        ('Extra', {
+            'fields': ('region',)
+        })
+    )
+    filter_horizontal = ('groups', 'user_permissions', 'region')
+
+
 # Register UserAdmin.
+admin.site.register(Address)
+admin.site.register(Organisation)
+admin.site.register(Province)
 admin.site.register(User, UserAdmin)
+admin.site.register(OrganisationUser, OrganisationUserAdmin)
+admin.site.register(Region)
+admin.site.register(ManagerUser, ManagerUserAdmin)

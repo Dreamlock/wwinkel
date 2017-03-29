@@ -1,15 +1,17 @@
 from django.db import models
-import datetime
+from django.utils import timezone
 from django.conf import settings
+from django.core.exceptions import ValidationError
+import datetime
+from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
 
-class Question(models.Model):
+class State(models.Model):
 
-    QUESTION_STATUS = (
-        ('new', 'nieuw'),
-        ('active', 'actief')
-    )
+  state = models.CharField(max_length = 10)
+
+class Question(models.Model):
 
     # Visible and editable: mandatory
     question_text = models.TextField()
@@ -26,9 +28,15 @@ class Question(models.Model):
     public = models.BooleanField()
 
     # metadata: invisible
-    creation_date = models.DateTimeField(default = datetime.datetime.now())
+    creation_date = models.DateTimeField(default = timezone.now)
     active = models.BooleanField(default=True)
-    status = models.CharField(max_length = 10, choices= QUESTION_STATUS, default= 'new')
+    status = models.ForeignKey(State)
 
     organisation = models.ForeignKey(settings.AUTH_USER_MODEL)
+
+    def clean(self):
+        if self.deadline is not None and self.deadline < datetime.date.today():
+            raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
+
+
 
