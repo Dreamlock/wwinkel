@@ -19,13 +19,17 @@ $(document).ready(function($) {
   <table class="table table-hover ">
     <thead>
       <tr>
+        <th>Publicatie datum</th>
         <th>Vraag</th>
+        <th>Deadline</th>
       </tr>
     </thead>
       <tbody>
       {% for question in questions %}
           <tr class ='table-row' data-href = "{% url 'detail' question.id %}" style="cursor: pointer;">
-          <td>{{question.question_text  }}</td>
+              <td>{{ question.creation_date.date }}</td>
+              <td>{{question.question_text  }}</td>
+              <td>{{ question.deadline }}</td>
           </tr>
       {% endfor %}
       </tbody>

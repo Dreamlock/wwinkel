@@ -46,9 +46,14 @@ def success(request):
 def list_questions(request):
 
     all_questions = Question.objects.all()
-    output = ', '.join([q.question_text for q in all_questions])
+    status_lst = []
+    for question in all_questions:
+        status = question.status
+        status_lst.append(status.state)
 
-    context = {'questions': all_questions}
+    context = {'questions': all_questions,
+               'state_names': status_lst
+               }
     return render(request,'dbwwinkel/question_list.html', context)
 
 
