@@ -10,7 +10,7 @@
         <div class = "row">
             <div class = col-xs-12>
 
-                <form action="{% url 'register_question' %}" method="post" class = "form-horizontal">
+                <form action="{{ request.get_full_path }} {% if from %}?next ={{ from }}{% endif %}" method="post" class = "form-horizontal">
                     {% csrf_token %}
                     <div class = "container">
                     <div class = "row">
