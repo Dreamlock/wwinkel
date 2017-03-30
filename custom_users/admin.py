@@ -6,8 +6,8 @@ from .models import *
 from .forms import *
 
 
-class AddressInline(admin.StackedInline):
-    model = Address
+# class AddressInline(admin.StackedInline):
+#     model = Address
 
 
 class UserAdmin(BaseUserAdmin):
@@ -21,9 +21,13 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'is_superuser', 'is_staff', 'date_joined')
     list_filters = ('is_admin',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', ('first_name', 'last_name'))}),
+        (_('Contact'), {'fields': ('telephone', 'gsm', 'address')}),
         (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')}),
+        (_('Permissions'), {
+            'classes': ('collapse',),
+            'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')
+        }),
     )
     readonly_fields = ('date_joined', 'last_login')
 
@@ -32,8 +36,11 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
-         ),
+            'fields': ('email', 'password1', 'password2')
+        }),
+        ('Extra', {
+            'fields': ('telephone', 'gsm', 'address')
+        })
     )
     search_fields = ('email',)
     ordering = ('email',)
@@ -47,6 +54,8 @@ class OrganisationUserAdmin(UserAdmin):
     add_form = OrganisationUserCreationForm
 
     list_display = ('email', 'first_name', 'last_name')
+    list_filter = ('organisation__name',)
+    search_fields = ['organisation__name', 'first_name', 'last_name']
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
@@ -72,6 +81,7 @@ class ManagerUserAdmin(UserAdmin):
     add_form = ManagerUserCreationForm
 
     list_display = ('email',)
+    list_filter = ('region',)
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

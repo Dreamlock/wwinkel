@@ -8,7 +8,7 @@ class UserCreationForm(BaseUserCreationForm):
 
     class Meta:
         model = User
-        fields = ("email",)
+        fields = ('email', 'telephone', 'gsm', 'address')
 
 
 class UserChangeForm(BaseUserChangeForm):

@@ -87,12 +87,17 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Province(models.Model):
+    class Meta:
+        verbose_name = _('province')
+        verbose_name_plural = _('provinces')
+
     PROVINCE_SELECT = (
         ('ANT', _('Antwerp')),
         ('OVL', _('East Flanders')),
+        ('WVL', _('West Flanders')),
     )
 
-    province = models.CharField(max_length=50, unique=True, choices=PROVINCE_SELECT)
+    province = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
 
     def __str__(self):
         return self.province
@@ -100,8 +105,8 @@ class Province(models.Model):
 
 class Address(models.Model):
     province = models.ForeignKey(Province)
-    city = models.CharField(max_length=255, unique=True)
-    postal_code = models.PositiveIntegerField(unique=True)
+    city = models.CharField(max_length=255)
+    postal_code = models.PositiveIntegerField()
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
 
@@ -110,7 +115,14 @@ class Address(models.Model):
 
 
 class User(AbstractUser):
-    pass
+    first_name = models.CharField(_('first name'), max_length=50, null=True)
+    last_name = models.CharField(_('last name'), max_length=50, null=True)
+    telephone = models.PositiveIntegerField(_('telephone number'), null=True)
+    gsm = models.PositiveIntegerField(_('gsm number'), null=True)
+    address = models.OneToOneField(Address, null=True)
+
+    def __str__(self):
+        return self.last_name + ', ' + self.first_name
 
 
 class Organisation(models.Model):
@@ -121,23 +133,35 @@ class Organisation(models.Model):
 
 
 class OrganisationUser(User):
-    first_name = models.CharField(_('first name'), max_length=50)
-    last_name = models.CharField(_('last name'), max_length=50)
-    telephone = models.PositiveIntegerField(_('telephone number'))
-    gsm = models.PositiveIntegerField(_('gsm number'))
-    address = models.ForeignKey(Address)  # , related_name='user_address')
+    class Meta:
+        verbose_name = _('organisation user')
+        verbose_name_plural = _('organisation users')
+
     organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation')
 
 
-class Region(Province):
+class Region(models.Model):
+    class Meta:
+        verbose_name = _('region')
+        verbose_name_plural = _('regions')
+
     PROVINCE_SELECT = (
         ('ANT', _('Antwerp')),
         ('OVL', _('East Flanders')),
+        ('WVL', _('West Flanders')),
         ('CEN', _('Central')),
     )
+    region = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
+
+    def __str__(self):
+        return self.region
 
 
 class ManagerUser(User):
+    class Meta:
+        verbose_name = _('management user')
+        verbose_name_plural = _('management users')
+
     region = models.ManyToManyField(Region)
 
 
