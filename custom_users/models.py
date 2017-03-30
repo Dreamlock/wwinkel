@@ -104,11 +104,16 @@ class Province(models.Model):
 
 
 class Address(models.Model):
+    class Meta:
+        verbose_name = _('address')
+        verbose_name_plural = _('addresses')
+
     province = models.ForeignKey(Province)
     city = models.CharField(max_length=255)
     postal_code = models.PositiveIntegerField()
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
+    user = models.OneToOneField('User', null=True)
 
     def __str__(self):
         return self.street_name + ' ' + str(self.street_number) + ', ' + self.city
@@ -119,9 +124,10 @@ class User(AbstractUser):
     last_name = models.CharField(_('last name'), max_length=50, null=True)
     telephone = models.PositiveIntegerField(_('telephone number'), null=True)
     gsm = models.PositiveIntegerField(_('gsm number'), null=True)
-    address = models.OneToOneField(Address, null=True)
 
     def __str__(self):
+        if self.first_name is None or self.last_name is None:
+            return super().__str__()
         return self.last_name + ', ' + self.first_name
 
 

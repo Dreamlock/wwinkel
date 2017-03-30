@@ -6,8 +6,8 @@ from .models import *
 from .forms import *
 
 
-# class AddressInline(admin.StackedInline):
-#     model = Address
+class AddressInline(admin.StackedInline):
+    model = Address
 
 
 class UserAdmin(BaseUserAdmin):
@@ -22,7 +22,7 @@ class UserAdmin(BaseUserAdmin):
     list_filters = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password', ('first_name', 'last_name'))}),
-        (_('Contact'), {'fields': ('telephone', 'gsm', 'address')}),
+        (_('Contact'), {'fields': ('telephone', 'gsm')}),
         (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
         (_('Permissions'), {
             'classes': ('collapse',),
@@ -39,14 +39,14 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2')
         }),
         ('Extra', {
-            'fields': ('telephone', 'gsm', 'address')
+            'fields': ('telephone', 'gsm')
         })
     )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
 
-
+    inlines = (AddressInline,)
 
 
 class OrganisationUserAdmin(UserAdmin):
@@ -59,7 +59,7 @@ class OrganisationUserAdmin(UserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Contact'), {'fields': ('telephone', 'gsm', 'address', 'organisation')}),
+        (_('Contact'), {'fields': ('telephone', 'gsm', 'organisation')}),
         (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
         (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')}),
     )
@@ -71,7 +71,7 @@ class OrganisationUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2')
         }),
         ('Extra', {
-            'fields': ('telephone', 'gsm', 'address', 'organisation')
+            'fields': ('telephone', 'gsm', 'organisation')
         })
     )
 
