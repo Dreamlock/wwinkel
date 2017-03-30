@@ -6,6 +6,10 @@ from .models import *
 from .forms import *
 
 
+class AddressInline(admin.StackedInline):
+    model = Address
+
+
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
@@ -34,6 +38,8 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
+
+
 
 
 class OrganisationUserAdmin(UserAdmin):
