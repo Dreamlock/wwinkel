@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
 from .models import User, OrganisationUser
+from django import forms
 
 
 class UserCreationForm(BaseUserCreationForm):
@@ -56,3 +57,8 @@ class ManagerUserChangeForm(BaseUserChangeForm):
     class Meta:
         model = OrganisationUser
         fields = '__all__'
+
+
+class LoginForm(forms.Form):
+    e_mail = forms.EmailInput()
+    password = forms.PasswordInput()
