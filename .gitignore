@@ -1,7 +1,6 @@
 **/*.pyc
 .idea/
 custom_users/__pycache__/
-custom_users/migrations/0003_auto_20170327_1034.py
 custom_users/migrations/__pycache__/
 dbwwinkel/__pycache__/
 dbwwinkel/migrations/__pycache__/
