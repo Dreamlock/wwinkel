@@ -3,6 +3,9 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.fields import EmailField, URLField, TextField
+from django.conf import settings
+from django.core.validators import RegexValidator
 
 
 class UserManager(BaseUserManager):
@@ -131,8 +134,36 @@ class User(AbstractUser):
         return self.last_name + ', ' + self.first_name
 
 
+class LegalEntity(models.Model):
+    entity = models.CharField(max_length=10, unique= True)
+
+    def __str__(self):
+        return '{0}'.format(self.entity)
+
+
+class OrganisationType(models.Model):
+    type = models.CharField(max_length=100)
+
+
 class Organisation(models.Model):
-    name = models.CharField(_('name'), max_length=200)
+
+    name = models.CharField(max_length=255, unique=True)
+    recognised_abbreviation = models.CharField(max_length=31, blank=True)
+
+    legal_entity = models.ForeignKey(LegalEntity)
+    address = models.ForeignKey(Address)
+
+    telephone = models.IntegerField()
+    fax = models.IntegerField(blank = True, null = True)
+    website = URLField(max_length=255, null = True )
+
+    goal = models.TextField()
+    remarks = models.TextField(blank = True, null = True)
+
+    creation_date = models.DateTimeField(default = timezone.now)
+    active = models.BooleanField(default = True)
+
+
 
     def __str__(self):
         return self.name

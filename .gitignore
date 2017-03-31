@@ -5,3 +5,6 @@ custom_users/migrations/__pycache__/
 dbwwinkel/__pycache__/
 dbwwinkel/migrations/__pycache__/
 wwinkel/__pycache__/
+db.sqlite3
+
+
