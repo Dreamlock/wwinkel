@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 
@@ -27,16 +27,16 @@ def register_question(request):
             question.status = State.objects.get(id = 1)
             question.save()
 
+
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('success'))
+            return redirect(detail, question_id = question.id)
 
 
     else:
         form = NameForm()
 
         # if a GET (or any other method) we'll create a blank form
-
-    return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
+    return render(request, 'dbwwinkel/vraagstelform.html', {'form':form})
 
 
 def success(request):
@@ -54,8 +54,19 @@ def list_questions(request):
     return render(request,'dbwwinkel/question_list.html', context)
 
 
-
 def detail(request, question_id):
     question = Question.objects.get(id = question_id )
     context = {'question': question}
     return render(request,'dbwwinkel/detail_question.html', context)
+
+
+@login_required
+def edit_question(request, question_id):
+
+    question = Question.objects.get(id = question_id)
+    form = NameForm(request.POST or None, instance = question)
+
+    if form.is_valid():
+        form.save()
+        return redirect(detail, question_id = '1')
+    return render(request, 'dbwwinkel/vraagstelform.html',{'form': form })

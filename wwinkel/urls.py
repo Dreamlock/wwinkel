@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^dbwwinkel/', include('dbwwinkel.urls')),
+    url(r'^custom_users/', include('custom_users.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('cms.urls'))
 ]

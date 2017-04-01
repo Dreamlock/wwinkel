@@ -1,4 +1,4 @@
-{% load cms_tags sekizai_tags static menu_tags %}
+{% load cms_tags sekizai_tags static menu_tags  %}
 <!doctype html>
 <html>
     <head>
@@ -24,7 +24,7 @@
             </ul>
              <ul class = "nav navbar-nav navbar-center">
               <li class="nav-item">
-                 <form action =  {% url 'list_questions' %} >
+                 <form action =  "{% url 'list_questions' %}" >
                     <div class ="form-inline">
                     <input type ="text" placeholder="zoek een vraag">
                     <button type="submit" class="btn btn-default">
@@ -43,14 +43,14 @@
                     </li>
 
                     <li class="nav-item">
-                    <a href=#>Afmelden</a>
+                    <a href="{% url 'logout' %}">Afmelden</a>
                     </li>
                 {% else %}
                 <li class="nav-item">
-                    <a href=#>Registreer</a>
+                    <a href= "{% url 'register_user' %}">Registreer</a>
                 </li>
                 <li class="nav-item">
-                    <a href=#>Aanmelden</a>
+                    <a href={% url 'login' %}>Aanmelden</a>
                 </li>
                 {% endif %}
             </ul>
