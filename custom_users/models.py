@@ -116,7 +116,6 @@ class Address(models.Model):
     postal_code = models.PositiveIntegerField()
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
-    user = models.OneToOneField('User', null=True)
 
     def __str__(self):
         return self.street_name + ' ' + str(self.street_number) + ', ' + self.city

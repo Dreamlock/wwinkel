@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 
-from .forms import LoginForm, OrganisationUserCreationForm, OrganisationForm
+from .forms import *
 from .models import OrganisationUser
 @login_required
 def logout_view(request):
@@ -51,34 +51,49 @@ def register_user_view(request):
 
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = OrganisationUserCreationForm(request.POST)
+        user_form = OrganisationUserCreationForm(request.POST)
         # check whether it's valid:
-        if form.is_valid():
-            form.save()
-            user = OrganisationUser.objects.get(email=form.cleaned_data['email'])
+        if user_form.is_valid():
+            user_form.save()
+            user = OrganisationUser.objects.get(email=user_form.cleaned_data['email'])
             if user is not None:
                 login(request, user)
-                return HttpResponse('succes') # TODO redirec to to a log in success page?"""
+                return HttpResponse('succes') # TODO redirect to to a log in success page?"""
 
     else:
-        user_form = OrganisationUserCreationForm()
+        organisation_form = OrganisationUserCreationForm()
 
             # redirect to a new URL:
-    return render(request, "custom_users/user_registration_form.html", {'form': user_form})
+    return render(request, "custom_users/user_registration_form.html", {'form': organisation_form})
 
 
 def register_organisation(request):
 
+    address_form = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = OrganisationForm(request.POST)
+        organisation_form = OrganisationForm(request.POST, prefix="organisation")
+        address_form = AdressForm(request.POST, prefix='address')
+        user_form = OrganisationUserCreationForm(request.POST, prefix='user')
+
         # check whether it's valid:
-        if form.is_valid():
-            form.save()
+        if organisation_form.is_valid() and address_form.is_valid() and user_form.is_valid():
+
+            organisation = organisation_form.save(commit = False)
+            address=address_form.save()
+            user = user_form.save(commit = False)
+
+            organisation.address= address
+            organisation.save()
+
+            user.organisation = organisation
+            user.save()
+
             return(HttpResponse("Organisatie bewaart"))
 
     else:
-        user_form = OrganisationForm()
-
-            # redirect to a new URL:
-    return render(request, "custom_users/organisation_registration_form.html", {'form': user_form})
+        organisation_form = OrganisationForm(prefix="organisation")
+        address_form = AdressForm( prefix='address')
+        user_form = OrganisationUserCreationForm(prefix='user')
+        # redirect to a new URL:
+    return render(request, "custom_users/organisation_registration_form.html", {'forms': [organisation_form, address_form, user_form]})

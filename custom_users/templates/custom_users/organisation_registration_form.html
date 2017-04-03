@@ -4,26 +4,35 @@
     <div class = "container">
     <form action = "{% url 'register_organisation' %}" method = "post">
         {% csrf_token %}
-        {% for field in form %}
-            <div class ="row">
-                     <div class="col-md-10">
-                        <div class="form-group">
-                            {{ field.label_tag }} <br>
-                             {% for error in field.errors %}
-                               <div class="alert alert-danger">
-                                    <strong>Error: </strong>{{ error }}
+
+        {% for form in forms %}
+             <div class = "row">
+            <div class = "col-md-4">
+                {% for field in form %}
+                    <div class ="row">
+                             <div class="col-md-10">
+                                <div class="form-group">
+                                    {{ field.label_tag }} <br>
+                                     {% for error in field.errors %}
+                                       <div class="alert alert-danger">
+                                            <strong>Error: </strong>{{ error }}
+                                        </div>
+                                    {% endfor %}
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                    {% endif %}
                                 </div>
-                            {% endfor %}
-                            {{ field }}
-                            {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                        </div>
+                            </div>
                     </div>
+                {% endfor %}
+            </div>
             </div>
         {% endfor %}
-        <input type="submit" value="Submit" />
+
+        <div class="row">
+            <input type="submit" value="Submit" />
+        </div>
     </form>
     </div>
-
 {% endblock %}
