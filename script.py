@@ -4,33 +4,34 @@ import csv, sys
         province
         legal entity
         organisation
+        organisation keywords
         
 """
 
 #path to province.csv
-with open(path) as f:
+with open(sys.argv[1]) as f:
     reader = csv.reader(f)
     for row in reader:
         obj, created = LegalEntity.objects.get_or_create(
             ID=row[0],
             name=row[1],
-            #active=row[2],
+            active=row[2],
             )
     f.close()
    
 #path to JuridicalEntity.csv
-with open(path) as f:
+with open(sys.argv[2]) as f:
     reader = csv.reader(f)
     for row in reader:
         obj, created = LegalEntity.objects.get_or_create(
             ID=row[0],
             entity=row[1],
-            #active=row[2],
+            active=row[2],
             )
     f.close()
     
 #path to organisation.csv
-with open(path) as f:
+with open(sys.argv[3]) as f:
     reader = csv.reader(f)
     for row in reader:
         obj, created = Address.objects.get_or_create(
@@ -62,12 +63,23 @@ with open(path) as f:
     f.close()
         
 #path to organisation_keywords.csv
-with open(path) as f:
+with open(sys.argv[4]) as f:
     reader = csv.reader(f)
     for row in reader:
         obj, created = LegalEntity.objects.get_or_create(
             ID=row[0],
             keyword=row[1],
-            #active=row[2],
+            active=row[2],
+            )
+    f.close()
+    
+#path to 
+with open(sys.argv[5]) as f:
+    reader = csv.reader(f)
+    for row in reader:
+        obj, created = LegalEntity.objects.get_or_create(
+            ID=row[0],
+            keyword=row[1],
+            active=row[2],
             )
     f.close()
