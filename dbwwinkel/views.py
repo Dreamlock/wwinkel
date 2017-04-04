@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
+from haystack.query import SearchQuerySet
 
 from .forms import NameForm
 from .models import Question,State
@@ -44,11 +44,17 @@ def success(request):
 
 
 def list_questions(request):
+    val=request.GET.get('search_text','')
+    if val == '':
+        val = '*'
 
-    all_questions = Question.objects.all()
+    print(val)
+    sqs = SearchQuerySet().autocomplete(content_auto='ba')
+
+    print(sqs)
     status_lst = State.objects.all()
 
-    context = {'questions': all_questions,
+    context = {'questions': sqs,
                'state_names': status_lst
                }
     return render(request,'dbwwinkel/question_list.html', context)

@@ -1,1 +1,1 @@
-{{ object.question}}
+{{ object.question_text}}
