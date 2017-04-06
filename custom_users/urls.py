@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^register_user', views.register_user_view, name='register_user'),
     url(r'^register_organisation', views.register_organisation, name = 'register_organisation'),
     url(r'^organisation_detail', views.organisation_detail, name='organisation_detail'),
-    url(r'^edit_organisation', views.edit_organisation, name='edit_organisation')
+    url(r'^edit_organisation/(?P<organisation_id>[0-9]+)', views.edit_organisation, name='edit_organisation')
 ]

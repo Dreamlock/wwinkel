@@ -106,5 +106,11 @@ def organisation_detail(request):
     return render(request, 'custom_users/organisation_detail.html', context)
 
 @login_required
-def edit_organisation(request):
-    pass
+def edit_organisation(request, organisation_id):
+    organisation = Organisation.objects.get(id=organisation_id)
+    form = OrganisationForm(request.POST or None, instance=organisation)
+
+    if form.is_valid():
+        form.save()
+        return redirect(organisation_detail)
+    return render(request, 'custom_users/organisation_registration_form.html', {'form': form})

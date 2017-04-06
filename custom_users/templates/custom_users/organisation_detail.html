@@ -7,8 +7,14 @@
             <div class = "col-md-10">
                 <h1>{{ organisation.name }}</h1>
                     <p></p>
-                </div>
-            
+            </div>
+            <div class = "col-md-2">
+                <br>
+                <a class="btn btn-success pull-down"
+                        href = "{% url 'edit_organisation' organisation.id %}">
+                    Organisatie Bewerken
+                </a>
+            </div>
         </div>
     </div>
     <hr />
@@ -48,11 +54,65 @@
         </div>
     </div>
     <hr/>
-       <div class = "container">
+    <div class = "container">
         <div class="row">
             <div class = "col-md-11">
                 <h2>Telefoon</h2>
                 <p>{{ organisation.telephone }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Fax</h2>
+                <p>{{ organisation.fax }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Site</h2>
+                <p>{{ organisation.website }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Doel</h2>
+                <p>{{ organisation.goal }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Opmerkingen</h2>
+                <p>{{ organisation.remarks }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Aangemeld op</h2>
+                <p>{{ organisation.creation_date }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Actief</h2>
+                <p>{{ organisation.active }}</p>
             </div>
         </div>
     </div>
