@@ -97,3 +97,14 @@ def register_organisation(request):
         user_form = OrganisationUserCreationForm(prefix='user')
         # redirect to a new URL:
     return render(request, "custom_users/organisation_registration_form.html", {'forms': [organisation_form, address_form, user_form]})
+
+@login_required
+def organisation_detail(request):
+    usr = OrganisationUser.objects.get(email=request.user.email)
+    organisation = usr.organisation
+    context = {'organisation': organisation}
+    return render(request, 'custom_users/organisation_detail.html', context)
+
+@login_required
+def edit_organisation(request):
+    pass

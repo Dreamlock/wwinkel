@@ -1,0 +1,62 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+{% block content %}
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-10">
+                <h1>{{ organisation.name }}</h1>
+                    <p></p>
+                </div>
+            
+        </div>
+    </div>
+    <hr />
+       <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Naam</h2>
+                <p>{{ organisation.name }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Afkorting</h2>
+                <p>{{ organisation.recognised_abbreviation }}</p>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Entiteit</h2>
+                <p>{{ organisation.legal_entity }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+        <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Adres</h2>
+                <p>{{ organisation.address }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+       <div class = "container">
+        <div class="row">
+            <div class = "col-md-11">
+                <h2>Telefoon</h2>
+                <p>{{ organisation.telephone }}</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+
+{% endblock %}
