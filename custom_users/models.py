@@ -34,6 +34,12 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, True, True, **extra_fields)
 
 
+class OrganisationManager(UserManager):
+
+    def is_organisation(self):
+        return True
+
+
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         _('email address'),
@@ -79,7 +85,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         """Returns the short name for the user."""
         return self.email.strip()
 
-    # def get_username(self):
+        # def get_username(self):
         # return getattr(self, self.USERNAME_FIELD)
 
     def email_user(self, subject, message, from_email=None, **kwargs):
@@ -134,7 +140,7 @@ class User(AbstractUser):
 
 
 class LegalEntity(models.Model):
-    entity = models.CharField(max_length=10, unique= True)
+    entity = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return '{0}'.format(self.entity)
@@ -145,7 +151,6 @@ class OrganisationType(models.Model):
 
 
 class Organisation(models.Model):
-
     name = models.CharField(max_length=255, unique=True)
     recognised_abbreviation = models.CharField(max_length=31, blank=True)
 
@@ -153,16 +158,14 @@ class Organisation(models.Model):
     address = models.ForeignKey(Address)
 
     telephone = models.IntegerField()
-    fax = models.IntegerField(blank = True, null = True)
-    website = URLField(max_length=255, null = True )
+    fax = models.IntegerField(blank=True, null=True)
+    website = URLField(max_length=255, null=True)
 
     goal = models.TextField()
-    remarks = models.TextField(blank = True, null = True)
+    remarks = models.TextField(blank=True, null=True)
 
-    creation_date = models.DateTimeField(default = timezone.now)
-    active = models.BooleanField(default = True)
-
-
+    creation_date = models.DateTimeField(default=timezone.now)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -199,5 +202,3 @@ class ManagerUser(User):
         verbose_name_plural = _('management users')
 
     region = models.ManyToManyField(Region)
-
-
