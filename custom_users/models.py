@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import EmailField, URLField, TextField
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.core.validators import RegexValidator
 
@@ -138,6 +139,22 @@ class User(AbstractUser):
             return super().__str__()
         return self.last_name + ', ' + self.first_name
 
+    '''
+    def is_organisation(self):
+        try:
+            OrganisationUser.objects.get(pk=self.id)
+        except ObjectDoesNotExist:
+            return False
+        return True
+
+    def is_manager(self):
+        try:
+            ManagerUser.objects.get(pk=self.id)
+        except ObjectDoesNotExist:
+            return False
+        return True
+    '''
+
 
 class LegalEntity(models.Model):
     entity = models.CharField(max_length=10, unique=True)
@@ -202,3 +219,5 @@ class ManagerUser(User):
         verbose_name_plural = _('management users')
 
     region = models.ManyToManyField(Region)
+
+

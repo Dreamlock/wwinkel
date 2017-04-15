@@ -89,7 +89,7 @@ def register_organisation(request):
             user.organisation = organisation
             user.save()
 
-            return(HttpResponse("Organisatie bewaart"))
+            return(HttpResponse("Organisatie bewaard"))
 
     else:
         organisation_form = OrganisationForm(prefix="organisation")
