@@ -4,9 +4,11 @@ from django.shortcuts import render
 
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
+
+from django.template import RequestContext
 
 from .forms import NameForm
 from .models import Question,State
@@ -76,3 +78,16 @@ def edit_question(request, question_id):
         form.save()
         return redirect(detail, question_id = '1')
     return render(request, 'dbwwinkel/vraagstelform.html',{'form': form })
+
+def handler404(request):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render_to_response('500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
