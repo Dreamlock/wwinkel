@@ -7,11 +7,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
-
+from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
 
 from .forms import NameForm
-from .models import Question,State
+from .models import Question, State
+
 
 @login_required
 def register_question(request):
@@ -23,22 +24,20 @@ def register_question(request):
 
         # check whether it's valid:
         if form.is_valid():
-
-            question = form.save(commit = False) # We still need to lay out the foreign keys
-            question.organisation = request.user # Foreign key to the user (organisation in question...)
-            question.status = State.objects.get(id = 1)
+            question = form.save(commit=False)  # We still need to lay out the foreign keys
+            question.organisation = request.user  # Foreign key to the user (organisation in question...)
+            question.status = State.objects.get(id=1)
             question.save()
 
-
             # redirect to a new URL:
-            return redirect(detail, question_id = question.id)
+            return redirect(detail, question_id=question.id)
 
 
     else:
         form = NameForm()
 
         # if a GET (or any other method) we'll create a blank form
-    return render(request, 'dbwwinkel/vraagstelform.html', {'form':form})
+    return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
 def success(request):
@@ -46,7 +45,7 @@ def success(request):
 
 
 def list_questions(request):
-    val=request.GET.get('search_text','')
+    val = request.GET.get('search_text', '')
     if val == '':
         val = '*'
 
@@ -59,22 +58,32 @@ def list_questions(request):
     context = {'questions': sqs,
                'state_names': status_lst
                }
-    return render(request,'dbwwinkel/question_list.html', context)
+    return render(request, 'dbwwinkel/question_list.html', context)
 
 
 def detail(request, question_id):
-    question = Question.objects.get(id = question_id )
+    question = Question.objects.get(id=question_id)
     context = {'question': question}
-    return render(request,'dbwwinkel/detail_question.html', context)
+    return render(request, 'dbwwinkel/detail_question.html', context)
 
 
 @login_required
 def edit_question(request, question_id):
+    question = Question.objects.get(id=question_id)
+    # todo: Check if the authentication works.
+    try:
+        if (request.user.organisation.id == question.organisation.id  # Check user same organisation as question.
+                and request.user.has_perm()):
+            pass
+        else:
+            raise PermissionDenied()
 
-    question = Question.objects.get(id = question_id)
-    form = NameForm(request.POST or None, instance = question)
+    except ValueError:
+        raise PermissionDenied()
+
+    form = NameForm(request.POST or None, instance=question)
 
     if form.is_valid():
         form.save()
-        return redirect(detail, question_id = '1')
-    return render(request, 'dbwwinkel/vraagstelform.html',{'form': form })
+        return redirect(detail, question_id='1')
+    return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
