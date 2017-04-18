@@ -34,7 +34,7 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                return HttpResponse('succes') # TODO redirec to to a log in success page?
+                return HttpResponse('succes') # TODO redirect to to a log in success page?
 
     else:
         form = LoginForm()

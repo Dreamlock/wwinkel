@@ -27,7 +27,7 @@ $(document).ready(function($) {
     </thead>
       <tbody>
       {% for question in questions %}
-          <tr {% if question.status.id  ==  1%} class = "table-row success"
+          <tr {% if question.object.status.id  ==  1%} class = "table-row success"
               {% else %}  class ="table-row"
               {% endif %}
               data-href = "{% url 'detail_organisation' question.object.id %}" style="cursor: pointer;">

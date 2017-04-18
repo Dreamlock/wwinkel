@@ -39,19 +39,13 @@ def register_question(request):
     return render(request, 'dbwwinkel/vraagstelform.html', {'form':form})
 
 
-def success(request):
-    return HttpResponse("Vraag aanvaard")
-
-
 def list_questions(request):
     val=request.GET.get('search_text','')
     if val == '':
-        val = '*'
+        val = 'e'
 
-    print(val)
-    sqs = SearchQuerySet().autocomplete(content_auto='ba')
 
-    print(sqs)
+    sqs = SearchQuerySet().autocomplete(content_auto=val)
     status_lst = State.objects.all()
 
     context = {'questions': sqs,
