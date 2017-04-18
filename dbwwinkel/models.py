@@ -33,6 +33,32 @@ def build_question_permissions():
     return result
 
 
+class Keyword(models.Model):
+    """
+    Representation of a keyword. Has a many to many relationship with Question (a question can have multiple keywords
+    and a keyword can belong to multiple questions)
+    """
+
+    key_word = models.CharField(max_length=33, unique=True)
+
+class QuestionSubject(models.Model):
+    """
+    Represents what subject(s) the question belongs to. This is primarly used to search for a specific question.
+    with facet search.
+    """
+
+    subject = models.CharField(max_length=33, unique=True)
+
+    def __str__(self):
+        return self.subject
+
+
+class StudyField(models.Model):
+    """Represents a field of study (like biology or computer science)"""
+
+    study_field = models.CharField(max_length=33, unique=True)
+
+
 class Question(models.Model):
     # Visible and editable: mandatory
     question_text = models.TextField()
@@ -54,6 +80,10 @@ class Question(models.Model):
     status = models.ForeignKey(State)
 
     organisation = models.ForeignKey(settings.AUTH_USER_MODEL)
+
+    keyword = models.ManyToManyField(Keyword)
+    question_subject = models.ManyToManyField(QuestionSubject)
+    study_field = models.ManyToManyField(StudyField)
 
     def clean(self):
         if self.deadline is not None and self.deadline < datetime.date.today():

@@ -32,10 +32,10 @@ $(document).ready(function($) {
               {% endif %}
               data-href = "{% url 'detail_organisation' question.object.id %}" style="cursor: pointer;">
 
-            <td>{{ question.creation_date.date }}</td>
+            <td>{{ question.object.creation_date.date }}</td>
             <td>{{question.object.question_text  }}</td>
-            <td>{{ question.deadline }}</td>
-            <td>{{ question.status_name}}</td>
+            <td>{{ question.object.deadline }}</td>
+            <td>{{ question.object.status_name}}</td>
           </tr>
       {% endfor %}
       </tbody>
