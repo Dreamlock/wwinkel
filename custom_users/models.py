@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import EmailField, URLField, TextField
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.core.validators import RegexValidator
 
@@ -32,6 +33,12 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password, **extra_fields):
         return self._create_user(email, password, True, True, **extra_fields)
+
+
+class OrganisationManager(UserManager):
+
+    def is_organisation(self):
+        return True
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
@@ -79,7 +86,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         """Returns the short name for the user."""
         return self.email.strip()
 
-    # def get_username(self):
+        # def get_username(self):
         # return getattr(self, self.USERNAME_FIELD)
 
     def email_user(self, subject, message, from_email=None, **kwargs):
@@ -132,9 +139,25 @@ class User(AbstractUser):
             return super().__str__()
         return self.last_name + ', ' + self.first_name
 
+    '''
+    def is_organisation(self):
+        try:
+            OrganisationUser.objects.get(pk=self.id)
+        except ObjectDoesNotExist:
+            return False
+        return True
+
+    def is_manager(self):
+        try:
+            ManagerUser.objects.get(pk=self.id)
+        except ObjectDoesNotExist:
+            return False
+        return True
+    '''
+
 
 class LegalEntity(models.Model):
-    entity = models.CharField(max_length=10, unique= True)
+    entity = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return '{0}'.format(self.entity)
@@ -145,7 +168,6 @@ class OrganisationType(models.Model):
 
 
 class Organisation(models.Model):
-
     name = models.CharField(max_length=255, unique=True)
     recognised_abbreviation = models.CharField(max_length=31, blank=True)
 
@@ -153,16 +175,14 @@ class Organisation(models.Model):
     address = models.ForeignKey(Address)
 
     telephone = models.IntegerField()
-    fax = models.IntegerField(blank = True, null = True)
-    website = URLField(max_length=255, null = True )
+    fax = models.IntegerField(blank=True, null=True)
+    website = URLField(max_length=255, null=True)
 
     goal = models.TextField()
-    remarks = models.TextField(blank = True, null = True)
+    remarks = models.TextField(blank=True, null=True)
 
-    creation_date = models.DateTimeField(default = timezone.now)
-    active = models.BooleanField(default = True)
-
-
+    creation_date = models.DateTimeField(default=timezone.now)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

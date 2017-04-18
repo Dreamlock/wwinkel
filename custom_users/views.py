@@ -18,7 +18,7 @@ def logout_view(request):
 def login_view(request):
     # if this is a POST request we need to process the form data
 
-    if request.user.is_authenticated(): # TODO this looks like a decorator?
+    if request.user.is_authenticated(): # TODO this looks like a decorator?   ## extra comment: If used as a decorator, denies permission to this view when not logged in.
         return HttpResponse("Already logged in") # TODO redirect to a 404?
 
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def register_organisation(request):
             user.organisation = organisation
             user.save()
 
-            return(HttpResponse("Organisatie bewaart"))
+            return(HttpResponse("Organisatie bewaard"))
 
     else:
         organisation_form = OrganisationForm(prefix="organisation")
