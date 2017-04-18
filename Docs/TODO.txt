@@ -1,0 +1,18 @@
+TO do list:
+
+-Functionaliteit medewerkers wwinkel(ongoing)
+
+-success log_in re direct naar een goeie pagina(afgerond?)
+
+-success register re direct naar correcte pagina(afgerond?)
+
+-Authenticatie organisatie met wetenschapswinkel
+
+-Authenticatie user met organisatie
+
+-Facet search (bezig)
+
+-plug ins(later)
+
+-change password Pagina
+-edit forms gebasseerd op permissies

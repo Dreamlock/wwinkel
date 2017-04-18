@@ -14,7 +14,7 @@ class NameForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['question_text','reason', 'purpose','own_contribution','remarks', 'how_know_WW', 'deadline', 'public']
+        fields = ['question_text','reason', 'purpose','own_contribution','remarks', 'how_know_WW', 'deadline', 'public', 'question_subject']
 
         labels = {
             'question_text': _('*Stel hier uw vraag'),

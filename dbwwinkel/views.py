@@ -28,6 +28,7 @@ def register_question(request):
             question.organisation = request.user  # Foreign key to the user (organisation in question...)
             question.status = State.objects.get(id=1)
             question.save()
+            form.save_m2m()
 
             # redirect to a new URL:
             return redirect(detail, question_id=question.id)
@@ -40,24 +41,22 @@ def register_question(request):
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
-def success(request):
-    return HttpResponse("Vraag aanvaard")
-
-
 def list_questions(request):
     val = request.GET.get('search_text', '')
+
     if val == '':
-        val = '*'
+        sqs = SearchQuerySet().filter(content = ' ').models(Question)
 
-    print(val)
-    sqs = SearchQuerySet().autocomplete(content_auto='ba')
+    else:
+        sqs = SearchQuerySet().autocomplete(content_auto=val)
 
-    print(sqs)
     status_lst = State.objects.all()
+
 
     context = {'questions': sqs,
                'state_names': status_lst
                }
+    #return HttpResponse("bla")
     return render(request, 'dbwwinkel/question_list.html', context)
 
 
