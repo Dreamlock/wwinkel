@@ -141,6 +141,11 @@ AUTH_PASSWORD_VALIDATORS = [] if DEBUG else stock_password_validators
 
 AUTH_USER_MODEL = "custom_users.User"
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    #'custom_users.permissions_backends.QuestionPermissionsBackend'
+)
+
 SITE_ID = 1
 
 

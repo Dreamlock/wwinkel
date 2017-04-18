@@ -87,6 +87,8 @@ def register_organisation(request):
             organisation.save()
 
             user.organisation = organisation
+
+            # todo: add permissions.
             user.save()
 
             return(HttpResponse("Organisatie bewaard"))

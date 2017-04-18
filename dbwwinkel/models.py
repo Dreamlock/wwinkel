@@ -5,16 +5,28 @@ from django.core.exceptions import ValidationError
 import datetime
 from django.utils.translation import ugettext_lazy as _
 
-
-# Create your models here.
+from custom_users.models import Region
 
 
 class State(models.Model):
     # TODO: possible states choice (bv. new, active, closed,...)
-    STATE_SELECT = (
+    '''STATE_SELECT = (
         ('new', 'new'),
         ('active', 'active'),
         ('closed', 'closed'),
+    )'''
+    STATE_SELECT = (
+        ('new', 'new'),
+        ('intake', 'intake'),
+        ('in_progress', 'in progress'),
+        ('draft', 'draft'),
+        ('free', 'free'),
+        ('verwerkt', 'verwerkt'),
+        ('denied', 'denied'),
+        ('ingetrokken', 'ingetrokken'),
+        ('in_option', 'in option'),
+        ('running', 'running'),
+        ('finished', 'finished'),
     )
 
     state = models.CharField(max_length=10)
@@ -52,6 +64,8 @@ class Question(models.Model):
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     status = models.ForeignKey(State)
+
+    region = models.ManyToManyField(Region)  # TODO: Check compatibility new field with forms (shouldn't be added by organisation)
 
     organisation = models.ForeignKey(settings.AUTH_USER_MODEL)
 
