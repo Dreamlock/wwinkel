@@ -4,9 +4,7 @@
     <div class = "container">
     <form action = "{% url 'register_organisation' %}" method = "post">
         {% csrf_token %}
-
         {% for form in forms %}
-             <div class = "row">
             <div class = "col-md-4">
                 {% for field in form %}
                     <div class ="row">
@@ -27,9 +25,7 @@
                     </div>
                 {% endfor %}
             </div>
-            </div>
         {% endfor %}
-
         <div class="row">
             <input type="submit" value="Submit" />
         </div>

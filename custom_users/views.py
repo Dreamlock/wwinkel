@@ -44,7 +44,6 @@ def login_view(request):
 
 
 def register_user_view(request):
-
     if request.user.is_authenticated(): # TODO this looks like a decorator?
         return HttpResponse("Already logged in") # TODO redirect to a 404?
 
@@ -74,7 +73,7 @@ def register_organisation(request):
         # create a form instance and populate it with data from the request:
         organisation_form = OrganisationForm(request.POST, prefix="organisation")
         address_form = AdressForm(request.POST, prefix='address')
-        user_form = OrganisationUserCreationForm(request.POST, prefix='user')
+        user_form = BaseOrganisationUserForm(request.POST, prefix='user')
 
         # check whether it's valid:
         if organisation_form.is_valid() and address_form.is_valid() and user_form.is_valid():
@@ -94,7 +93,7 @@ def register_organisation(request):
     else:
         organisation_form = OrganisationForm(prefix="organisation")
         address_form = AdressForm( prefix='address')
-        user_form = OrganisationUserCreationForm(prefix='user')
+        user_form = BaseOrganisationUserForm(prefix='user')
         # redirect to a new URL:
     return render(request, "custom_users/organisation_registration_form.html", {'forms': [organisation_form, address_form, user_form]})
 

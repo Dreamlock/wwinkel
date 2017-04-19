@@ -71,7 +71,8 @@ class OrganisationForm(forms.ModelForm):
     class Meta:
         model = Organisation
         fields = '__all__'
-        exclude = ['address']
+        exclude = ['address','active','creation_date']
+
 
 class AdressForm(forms.ModelForm):
 
@@ -79,7 +80,11 @@ class AdressForm(forms.ModelForm):
         model = Address
         fields = '__all__'
 
-class BaseOrganisationUser(UserCreationForm):
+class BaseOrganisationUserForm(OrganisationUserCreationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     class Meta:
-        exclude = ['organisation']
+        model = OrganisationUser
+        fields = ['email', 'first_name', 'last_name', 'telephone']
