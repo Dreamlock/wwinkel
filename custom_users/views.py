@@ -34,7 +34,7 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                return HttpResponse('succes') # TODO redirect to to a log in success page?
+                return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?
 
     else:
         form = LoginForm()
@@ -57,7 +57,7 @@ def register_user_view(request):
             user = OrganisationUser.objects.get(email=user_form.cleaned_data['email'])
             if user is not None:
                 login(request, user)
-                return HttpResponse('succes') # TODO redirect to to a log in success page?"""
+                return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?"""
 
     else:
         organisation_form = OrganisationUserCreationForm()
