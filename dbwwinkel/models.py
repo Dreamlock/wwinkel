@@ -16,20 +16,22 @@ class State(models.Model):
         ('closed', 'closed'),
     )'''
     STATE_SELECT = (
-        ('new', 'new'),
-        ('intake', 'intake'),
-        ('in_progress', 'in progress'),
-        ('draft', 'draft'),
-        ('free', 'free'),
-        ('verwerkt', 'verwerkt'),
-        ('denied', 'denied'),
-        ('ingetrokken', 'ingetrokken'),
-        ('in_option', 'in option'),
-        ('running', 'running'),
-        ('finished', 'finished'),
+        ('draft', _('draft')),
+        ('ipcnt', _('in progress central')),
+        ('procc', _('processed central')),
+        ('ipreg', _('in progress regional')),
+        ('free', _('free')),
+        ('inopt', _('in option')),
+        ('runng', _('running')),
+        ('done', _('done')),
+        ('denie', _('denied')),
+        ('revok', _('revoked')),
     )
 
     state = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.state
 
 
 def build_question_permissions():
@@ -40,8 +42,8 @@ def build_question_permissions():
     """
     result = set()
     for element in State.STATE_SELECT:
-        result.add(('view_'+element[0]+'_question', 'Can view '+element[1]+' question'))
-        result.add(('change_'+element[0]+'_question', 'Can change '+element[1]+' question'))
+        result.add(('view_'+element[0]+'_question', str(_('Can view '))+str(element[1])+str(_(' question'))))
+        result.add(('change_'+element[0]+'_question', str(_('Can change '))+str(element[1])+str(_(' question'))))
     return result
 
 
@@ -98,6 +100,9 @@ class Question(models.Model):
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject)
     study_field = models.ManyToManyField(StudyField)
+
+    def __str__(self):
+        return self.question_text
 
     def clean(self):
         if self.deadline is not None and self.deadline < datetime.date.today():
