@@ -15,33 +15,51 @@ $(document).ready(function($) {
 
 {% endblock %}
 {% block content %}
-<div class="container">
-  <table class="table table-hover ">
-    <thead>
-      <tr>
-        <th>Publicatie datum</th>
-        <th>Vraag</th>
-        <th>Deadline</th>
-      <th>Status</th>
-      </tr>
-    </thead>
-      <tbody>
-      {% for question in questions %}
-          <tr {% if question.object.status.id  ==  1%} class = "table-row success"
-              {% else %}  class ="table-row"
-              {% endif %}
-              data-href = "{% url 'detail_organisation' question.object.id %}" style="cursor: pointer;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidebar-nav-fixed affix">
+                    <div class="well">
+                        <ul class="nav ">
+                            <li class="nav-header">Status</li>
+                                {% include 'dbwwinkel/status_templates/student.html' %}
+                        </ul>
+                    </div>
+                    <!--/.well -->
+                </div>
+                <!--/sidebar-nav-fixed -->
+            </div>
+            <!--/span-->
+    <div class = "container">
+        <div class = "col-md-9">
+          <table class="table table-hover ">
+            <thead>
+              <tr>
+                <th>Publicatie datum</th>
+                <th>Vraag</th>
+                <th>Deadline</th>
+              <th>Status</th>
+              </tr>
+            </thead>
+              <tbody>
+              {% for question in questions %}
+                  <tr {% if question.object.status.id  ==  1%} class = "table-row success"
+                      {% else %}  class ="table-row"
+                      {% endif %}
+                      data-href = "{% url 'detail_organisation' question.object.id %}" style="cursor: pointer;">
 
-            <td>{{ question.object.creation_date.date }}</td>
-            <td>{{question.object.question_text  }}</td>
-            <td>{{ question.object.deadline }}</td>
-            <td>{{ question.object.status_name}}</td>
-          </tr>
-      {% endfor %}
-      </tbody>
-  </table>
-</div>
-
+                    <td>{{ question.object.creation_date.date }}</td>
+                    <td>{{question.object.question_text  }}</td>
+                    <td>{{ question.object.deadline }}</td>
+                    <td>{{ question.object.status_name}}</td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+    </div>
+    </div>
+    </div>
 {% endblock %}
 {% block extra_scripts %}
 

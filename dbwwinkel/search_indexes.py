@@ -5,9 +5,13 @@ from dbwwinkel.models import Question
 
 class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    # author = indexes.CharField(model_attr='user')
-    # pub_date = indexes.DateTimeField(model_attr='pub_date')
+
+    study_field = indexes.FacetMultiValueField()
     content_auto = indexes.EdgeNgramField(model_attr='question_text')
+
+
+    def prepare_study_field(self,obj):
+        return [l.study_field for l in obj.study_field.all()]
 
     def get_model(self):
         return Question

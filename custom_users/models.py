@@ -177,7 +177,7 @@ class Organisation(models.Model):
 
     telephone = models.IntegerField()
     fax = models.IntegerField(blank=True, null=True)
-    website = URLField(max_length=255, null=True)
+    website = URLField(max_length=255, null=True, blank=True)
 
     goal = models.TextField()
     remarks = models.TextField(blank=True, null=True)
