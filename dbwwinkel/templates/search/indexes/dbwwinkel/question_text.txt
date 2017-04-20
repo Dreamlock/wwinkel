@@ -1,1 +1,3 @@
 {{ object.question_text}}
+{{ object.status.id }}
+{{ object.organisation.id }}

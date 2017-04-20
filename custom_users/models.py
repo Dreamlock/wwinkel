@@ -110,10 +110,10 @@ class Province(models.Model):
     )
 
     province = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
-    """
+
     def __str__(self):
         return self.province
-    """
+
 
 
 class Address(models.Model):
