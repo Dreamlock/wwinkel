@@ -28,7 +28,7 @@ class State(models.Model):
         ('revok', _('revoked')),
     )
 
-    state = models.CharField(max_length=10)
+    state = models.CharField(max_length=5, choices=STATE_SELECT)
 
     def __str__(self):
         return self.state
@@ -114,6 +114,7 @@ class Question(models.Model):
     status_name = property(get_status_name)
 
     class Meta:
+        #default_permissions
         permissions = build_question_permissions()
 
 '''

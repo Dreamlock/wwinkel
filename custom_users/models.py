@@ -105,6 +105,8 @@ class Province(models.Model):
         ('ANT', _('Antwerp')),
         ('OVL', _('East Flanders')),
         ('WVL', _('West Flanders')),
+        ('OVL', _('East Flanders')),
+        ('VBR', _('Flemish Brabant'))
     )
 
     province = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)

@@ -11,6 +11,7 @@ class QuestionPermissionsBackend:
 
         permissions = user_obj.get_all_permissions(question)
         print(permissions)
+        return False
 
         """
         if perm in permissions and perm == 'view_new_question' and question.status == 'new':
@@ -18,6 +19,9 @@ class QuestionPermissionsBackend:
         if perm in permissions and perm == 'edit_new_question' and question.status == 'new':
             return True
         """
+
+
+
         result = False
         if perm in permissions:
             for state in State.STATE_SELECT:
@@ -31,3 +35,6 @@ class QuestionPermissionsBackend:
                         result = True
                     break
         return result
+
+if __name__ == '__main__':
+    print("")
