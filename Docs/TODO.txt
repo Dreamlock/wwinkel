@@ -2,10 +2,6 @@ TO do list:
 
 -Functionaliteit medewerkers wwinkel(ongoing)
 
--success log_in re direct naar een goeie pagina(afgerond?)
-
--success register re direct naar correcte pagina(afgerond?)
-
 -Authenticatie organisatie met wetenschapswinkel
 
 -Authenticatie user met organisatie
@@ -19,3 +15,8 @@ TO do list:
 -Database populatie statische elementen (state's, provincies, juridische entiteiten...., schrijf dit in een migration)
 -Database migratie (oude data in onze database)
 -Markup Forms (zie registreer form en wat er nog aangepast aann moet worden)
+
+DONE:
+
+-success log_in re direct naar een goeie pagina (momenteel search pagina)
+-success register re direct naar correcte pagina (momenteel search pagina)
