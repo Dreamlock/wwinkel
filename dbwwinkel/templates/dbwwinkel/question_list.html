@@ -5,14 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function($) {
-    $(".table-row").click(function() {
-        window.document.location = $(this).data("href");
-    });
-});
-</script>
-
+<script src="{% static "dbwwinkel/js/myjs.js" %}"></script>
 {% endblock %}
 {% block content %}
     <div class="container">
@@ -22,7 +15,13 @@ $(document).ready(function($) {
                     <div class="well">
                         <ul class="nav ">
                             <li class="nav-header">Status</li>
-                                {% include 'dbwwinkel/status_templates/student.html' %}
+                                <form name ="status" action = "{% url "list_questions" %}" method = 'post' accept-charset="utf-8">
+                                    {% csrf_token %}
+                                    {% include 'dbwwinkel/status_templates/student.html' %}
+                                    <div class = "row form-group">
+                                        <button type="submit" value = "select">Zoek! </button>
+                                    </div>
+                                </form>
                         </ul>
                     </div>
                     <!--/.well -->
