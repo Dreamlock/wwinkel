@@ -42,21 +42,27 @@ def register_question(request):
 
 
 def list_questions(request):
+
     val = request.GET.get('search_text', '')
 
     if val == '':
-        sqs = SearchQuerySet().filter(content = ' ').models(Question)
+        sqs = SearchQuerySet().all().models(Question)
+
 
     else:
         sqs = SearchQuerySet().autocomplete(content_auto=val)
 
     status_lst = State.objects.all()
 
+    if request.POST:
+        for item in sqs:
+            print(item.object.status)
+
 
     context = {'questions': sqs,
                'state_names': status_lst
                }
-    #return HttpResponse("bla")
+
     return render(request, 'dbwwinkel/question_list.html', context)
 
 
