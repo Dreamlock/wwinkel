@@ -17,9 +17,13 @@
                             <li class="nav-header">Status</li>
                                 <form name ="status" action = "{% url "list_questions" %}" method = 'post' accept-charset="utf-8">
                                     {% csrf_token %}
-                                    {% include 'dbwwinkel/status_templates/student.html' %}
+                                    {% for state in states %}
+                                        <input type ="checkbox" value = "{{ state.0 }}" name ="status"> {{ state.1 }}<br>
+                                    {% endfor %}
+
                                     <div class = "row form-group">
                                         <button type="submit" value = "select">Zoek! </button>
+
                                     </div>
                                 </form>
                         </ul>

@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 import datetime
 from django.utils.translation import ugettext_lazy as _
 
-from custom_users.models import Region
+from custom_users.models import Region, Organisation
 
 
 class State(models.Model):
@@ -95,7 +95,7 @@ class Question(models.Model):
 
     region = models.ManyToManyField(Region)  # TODO: Check compatibility new field with forms (shouldn't be added by organisation)
 
-    organisation = models.ForeignKey(settings.AUTH_USER_MODEL)
+    organisation = models.ForeignKey(Organisation)
 
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject)
@@ -109,9 +109,12 @@ class Question(models.Model):
             raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
 
     def get_status_name(self):
-        return self.status.state
+        state_names = [_("nieuw"), _("verwerking centraal"), _("verwerkt centraal"), _("verwerking_regionaal"),
+                       _("vrij"), _("gereserveerd"),_("lopend"), _("afgerond"), _("geweigerd"), _("ingetrokken")]
+        return state_names[self.status.id - 1]
 
     status_name = property(get_status_name)
+
 
     class Meta:
         permissions = build_question_permissions()

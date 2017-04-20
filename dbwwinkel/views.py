@@ -9,9 +9,11 @@ from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
+from django.utils.translation import ugettext_lazy as _
 
 from .forms import NameForm
 from .models import Question, State
+from custom_users.models import OrganisationUser
 
 
 @login_required
@@ -25,7 +27,8 @@ def register_question(request):
         # check whether it's valid:
         if form.is_valid():
             question = form.save(commit=False)  # We still need to lay out the foreign keys
-            question.organisation = request.user  # Foreign key to the user (organisation in question...)
+            org_user = OrganisationUser.objects.get(id = request.user.id)
+            question.organisation = org_user.organisation  # Foreign key to the user (organisation in question...)
             question.status = State.objects.get(id=1)
             question.save()
             form.save_m2m()
@@ -43,24 +46,40 @@ def register_question(request):
 
 def list_questions(request):
 
+    organisation_extra = None
     val = request.GET.get('search_text', '')
-
     if val == '':
         sqs = SearchQuerySet().all().models(Question)
-
 
     else:
         sqs = SearchQuerySet().autocomplete(content_auto=val)
 
-    status_lst = State.objects.all()
+    state_names = [_("nieuw"), _("verwerking_centraal"), _("verwerkt_centraal"),_("verwerking_regionaal"),_("vrij"),
+                   _("gereserveerd"),_("lopend"),
+                   _("afgerond"), _("geweigerd"), _("ingetrokken")]
+
+    using_states = []
+
+    if request.user.is_authenticated() == False: # Unlogged  options for a student
+                using_states =[(5,state_names[4]), (6,state_names[5]), (8,state_names[7])]
+                sqs = sqs.filter(status__in =[5, 6, 8])
+
+    else:
+        if OrganisationUser.objects.filter(id = request.user.id).exists():
+            using_states = [(5, state_names[4]), (6, state_names[5]), (8, state_names[7])]
+            user = OrganisationUser.objects.get(id = request.user.id)
+            organisation = user.organisation
+            sqs = sqs.filter(status__in =[5, 6, 8])
+            organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
 
     if request.POST:
-        for item in sqs:
-            print(item.object.status)
+        sqs = sqs.filter(status__in= request.POST.getlist("status"))
 
+        if OrganisationUser.objects.filter(id=request.user.id).exists():
+            sqs = sqs | organisation_extra
 
     context = {'questions': sqs,
-               'state_names': status_lst
+               'states': using_states
                }
 
     return render(request, 'dbwwinkel/question_list.html', context)
