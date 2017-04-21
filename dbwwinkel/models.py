@@ -103,8 +103,8 @@ class Question(models.Model):
     organisation = models.ForeignKey(Organisation)
 
     keyword = models.ManyToManyField(Keyword)
-    question_subject = models.ManyToManyField(QuestionSubject)
-    study_field = models.ManyToManyField(StudyField)
+    question_subject = models.ManyToManyField(QuestionSubject, blank=True)
+    study_field = models.ManyToManyField(StudyField, blank=True)
 
     def __str__(self):
         return self.question_text

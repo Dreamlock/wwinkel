@@ -12,6 +12,7 @@ class UserCreationForm(BaseUserCreationForm):
         fields = ('email', 'telephone', 'gsm')
 
 
+
 class UserChangeForm(BaseUserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,8 +71,18 @@ class OrganisationForm(forms.ModelForm):
 
     class Meta:
         model = Organisation
-        fields = '__all__'
-        exclude = ['address','active','creation_date']
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'telephone','website', 'goal', 'remarks']
+
+        labels = {
+            'name': '*Naam Organisatie',
+            'recognised_abbreviation': 'Afkorting Organisatie',
+            'legal_entity': '*Juridische entiteit',
+            'telephone': 'Telefoon',
+            'website': 'website',
+            'goal': '*Doel organisatie',
+            'remarks': 'Opmerkingen'
+
+        }
 
 
 class AdressForm(forms.ModelForm):
@@ -79,6 +90,14 @@ class AdressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = '__all__'
+
+        labels = {
+            'province': '*Provincie',
+            'city': '*Stad',
+            'postal_code': '*Postcode',
+            'street_name': '*Straat naam',
+            'street_number': '*PostNummer'
+        }
 
 class BaseOrganisationUserForm(OrganisationUserCreationForm):
 

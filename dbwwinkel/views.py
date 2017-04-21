@@ -72,9 +72,14 @@ def list_questions(request):
             sqs = sqs.filter(status__in =[5, 6, 8])
             organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
 
+
     if request.POST:
         sqs = sqs.filter(status__in= request.POST.getlist("status"))
 
+        if OrganisationUser.objects.filter(id=request.user.id).exists():
+            sqs = sqs | organisation_extra
+
+    else:
         if OrganisationUser.objects.filter(id=request.user.id).exists():
             sqs = sqs | organisation_extra
 
