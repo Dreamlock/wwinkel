@@ -146,7 +146,6 @@ class User(AbstractUser):
             return super().__str__()
         return self.last_name + ', ' + self.first_name
 
-    '''
     def is_organisation(self):
         try:
             OrganisationUser.objects.get(pk=self.id)
@@ -160,7 +159,6 @@ class User(AbstractUser):
         except ObjectDoesNotExist:
             return False
         return True
-    '''
 
 
 class LegalEntity(models.Model):
