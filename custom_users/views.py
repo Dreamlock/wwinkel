@@ -47,7 +47,6 @@ def register_user_view(request):
     if request.user.is_authenticated(): # TODO this looks like a decorator?
         return HttpResponse("Already logged in") # TODO redirect to a 404?
 
-
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         user_form = OrganisationUserCreationForm(request.POST)
@@ -90,14 +89,17 @@ def register_organisation(request):
             # todo: add permissions.
             user.save()
 
-            return(HttpResponse("Organisatie bewaard"))
+            return(HttpResponseRedirect('/dbwwinkel/list_questions?search_text='))
 
     else:
         organisation_form = OrganisationForm(prefix="organisation")
         address_form = AdressForm( prefix='address')
         user_form = BaseOrganisationUserForm(prefix='user')
         # redirect to a new URL:
-    return render(request, "custom_users/organisation_registration_form.html", {'forms': [organisation_form, address_form, user_form]})
+    return render(request, "custom_users/organisation_registration_form.html", {
+        'organisation_form': organisation_form,
+        'address_form': address_form,
+        'user_form': user_form})
 
 @login_required
 def organisation_detail(request):
