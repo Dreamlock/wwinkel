@@ -6,5 +6,9 @@ dbwwinkel/__pycache__/
 dbwwinkel/migrations/__pycache__/
 wwinkel/__pycache__/
 db.sqlite3
+**/migrations/*.py
+
+# Do not ignore this file.
+!custom_users/migrations/0001_initial.py
 
 
