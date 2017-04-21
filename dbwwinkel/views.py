@@ -92,7 +92,17 @@ def list_questions(request):
 
 def detail(request, question_id):
     question = Question.objects.get(id=question_id)
-    context = {'question': question}
+    button_template = "dbwwinkel/detail_question_buttons/default.html"
+
+    if request.user.is_authenticated == False: # Then the user is a student
+        button_template = "dbwwinkel/detail_question_buttons/student.html"
+
+    elif OrganisationUser.objects.filter(id = request.user.id).exists():
+        if request.user.has_perm('edit_question', question):
+            button_template = "dbwwinnkel/detail_question_buttons/organisations.html"
+    context = {'question': question,
+               'button_template': button_template}
+
     return render(request, 'dbwwinkel/detail_question.html', context)
 
 
@@ -116,3 +126,13 @@ def edit_question(request, question_id):
         form.save()
         return redirect(detail, question_id='1')
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
+
+
+def reserve_question(request, question_id):
+    return HttpResponse("Tijdelijke stub")
+    if request.user.is_authenticated == False:
+        question =  Question.objects.get(id = question_id )
+
+
+        if question.status.id == 5:
+            pass
