@@ -46,6 +46,8 @@
             </thead>
               <tbody>
               {% for question in questions %}
+                  {# if user.has_perm('view_question', question) Todo: let the permissions work#}
+                  {#forloop.counter0 #Todo: limit to first 30 questions (then question 31-60, 61-90,...) #}
                   <tr {% if question.object.status.id  ==  1%} class = "table-row success"
                       {% else %}  class ="table-row"
                       {% endif %}

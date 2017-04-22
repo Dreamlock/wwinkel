@@ -9,31 +9,36 @@ from custom_users.models import Region, Organisation
 
 
 class State(models.Model):
-    # TODO: possible states choice (bv. new, active, closed,...)
-    '''STATE_SELECT = (
-        ('new', 'new'),
-        ('active', 'active'),
-        ('closed', 'closed'),
-    )'''
+    DRAFT_QUESTION = 0
+    IN_PROGRESS_QUESTION_CENTRAL = 1
+    PROCESSED_QUESTION_CENTRAL = 2
+    IN_PROGRESS_QUESTION_REGIONAL = 3
+    PUBLIC_QUESTION = 4
+    RESERVED_QUESTION = 5
+    ONGOING_QUESTION = 6
+    FINISHED_QUESTION = 7
+    DENIED_QUESTION = 8
+    REVOKED_QUESTION = 9
+
     STATE_SELECT = (
-        ('draft', _('draft')),
-        ('ipcnt', _('in progress central')),
-        ('procc', _('processed central')),
-        ('ipreg', _('in progress regional')),
-        ('free', _('free')),
-        ('inopt', _('in option')),
-        ('runng', _('running')),
-        ('done', _('done')),
-        ('denie', _('denied')),
-        ('revok', _('revoked')),
+        (DRAFT_QUESTION, _('draft')),
+        (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
+        (PROCESSED_QUESTION_CENTRAL, _('processed central')),
+        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
+        (PUBLIC_QUESTION, _('public')),
+        (RESERVED_QUESTION, _('reserved')),
+        (ONGOING_QUESTION, _('ongoing')),
+        (FINISHED_QUESTION, _('finished')),
+        (DENIED_QUESTION, _('denied')),
+        (REVOKED_QUESTION, _('revoked')),
     )
 
-    state = models.CharField(max_length=10)
+    state = models.PositiveIntegerField(choices=STATE_SELECT, unique=True)
 
     def __str__(self):
-        return self.state
+        return str(self.STATE_SELECT[self.state][1])
 
-
+'''
 def build_question_permissions():
     """
     Generate a list of permissions given the different states that a Question can be in.
@@ -42,10 +47,10 @@ def build_question_permissions():
     """
     result = set()
     for element in State.STATE_SELECT:
-        result.add(('view_'+element[0]+'_question', str(_('Can view '))+str(element[1])+str(_(' question'))))
-        result.add(('change_'+element[0]+'_question', str(_('Can change '))+str(element[1])+str(_(' question'))))
+        result.add(('view_'+element[1].replace(' ', '_')+'_question', str(_('Can view '))+str(element[1])+str(_(' question'))))
+        result.add(('change_'+element[1].replace+'_question', str(_('Can change '))+str(element[1])+str(_(' question'))))
     return result
-
+'''
 
 class Keyword(models.Model):
     """
@@ -109,15 +114,39 @@ class Question(models.Model):
             raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
 
     def get_status_name(self):
+        # Todo: Clean states
         state_names = [_("nieuw"), _("verwerking centraal"), _("verwerkt centraal"), _("verwerking_regionaal"),
                        _("vrij"), _("gereserveerd"),_("lopend"), _("afgerond"), _("geweigerd"), _("ingetrokken")]
         return state_names[self.status.id - 1]
 
     status_name = property(get_status_name)
 
-
     class Meta:
-        permissions = build_question_permissions()
+        default_permissions = (
+            ('can_add_question', _('Can add question')),
+            ('can_view_draft_question', _('Can view draft question')),
+            ('can_edit_draft_question', _('Can edit draft question')),
+            ('can_view_in_progress_question_central', _('Can view in progress question central')),
+            ('can_edit_in_progress_question_central', _('Can edit in progress question central')),
+            ('can_view_processed_question_central', _('Can view processed question central')),
+            ('can_edit_processed_question_central', _('Can edit processed question central')),
+            ('can_view_in_progress_question_regional', _('Can view in progress question regional')),
+            ('can_edit_in_progress_question_regional', _('Can edit in progress question regional')),
+            ('can_view_public_question', _('Can view public question')),
+            ('can_edit_public_question', _('Can edit public question')),
+            ('can_view_reserved_question', _('Can view reserved question')),
+            ('can_edit_reserved_question', _('Can edit reserved question')),
+            ('can_view_ongoing_question', _('Can view ongoing question')),
+            ('can_edit_ongoing_question', _('Can edit ongoing question')),
+            ('can_view_finished_question', _('Can view finished question')),
+            ('can_edit_finished_question', _('Can edit finished question')),
+            ('can_view_denied_question', _('Can view denied question')),
+            ('can_edit_denied_question', _('Can edit denied question')),
+            ('can_view_revoked_question', _('Can view revoked question')),
+            ('can_edit_revoked_question', _('Can edit revoked question')),
+            ('can_delete_question', _('Can delete question')),
+        )
+        # permissions = build_question_permissions()
 
 '''
 class QuestionPermissionsBackend:

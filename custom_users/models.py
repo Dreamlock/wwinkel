@@ -101,17 +101,23 @@ class Province(models.Model):
         verbose_name = _('province')
         verbose_name_plural = _('provinces')
 
+    ANTWERP_REGION = 0
+    EAST_FLANDERS_REGION = 1
+    FLEMISH_BRABANT_REGION = 2
+    LIMBURG_REGION = 3
+    WEST_FLANDERS_REGION = 4
     PROVINCE_SELECT = (
-        ('ANT', _('Antwerp')),
-        ('OVL', _('East Flanders')),
-        ('WVL', _('West Flanders')),
+        (ANTWERP_REGION, _('Antwerp')),
+        (EAST_FLANDERS_REGION, _('East Flanders')),
+        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (LIMBURG_REGION, _('Limburg')),
+        (WEST_FLANDERS_REGION, _('West Flanders')),
     )
 
-    province = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
+    province = models.PositiveIntegerField(unique=True, choices=PROVINCE_SELECT)
 
     def __str__(self):
-        return self.province
-
+        return str(self.PROVINCE_SELECT[self.province][1])
 
 
 class Address(models.Model):
@@ -202,16 +208,24 @@ class Region(models.Model):
         verbose_name = _('region')
         verbose_name_plural = _('regions')
 
-    PROVINCE_SELECT = (
-        ('ANT', _('Antwerp')),
-        ('OVL', _('East Flanders')),
-        ('WVL', _('West Flanders')),
-        ('CEN', _('Central')),
+    ANTWERP_REGION = 0
+    EAST_FLANDERS_REGION = 1
+    FLEMISH_BRABANT_REGION = 2
+    LIMBURG_REGION = 3
+    WEST_FLANDERS_REGION = 4
+    CENTRAL_REGION = 5
+    REGION_SELECT = (
+        (ANTWERP_REGION, _('Antwerp')),
+        (EAST_FLANDERS_REGION, _('East Flanders')),
+        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (LIMBURG_REGION, _('Limburg')),
+        (WEST_FLANDERS_REGION, _('West Flanders')),
+        (CENTRAL_REGION, _('Central')),
     )
-    region = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
+    region = models.PositiveIntegerField(unique=True, choices=REGION_SELECT)
 
     def __str__(self):
-        return self.region
+        return str(self.REGION_SELECT[self.region][1])
 
 
 class ManagerUser(User):
