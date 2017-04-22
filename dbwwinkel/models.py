@@ -117,6 +117,7 @@ class Question(models.Model):
         # Todo: Clean states
         state_names = [_("nieuw"), _("verwerking centraal"), _("verwerkt centraal"), _("verwerking_regionaal"),
                        _("vrij"), _("gereserveerd"),_("lopend"), _("afgerond"), _("geweigerd"), _("ingetrokken")]
+
         return state_names[self.status.id - 1]
 
     status_name = property(get_status_name)
