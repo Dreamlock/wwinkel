@@ -10,10 +10,7 @@
                 </div>
             <div class = "col-md-2">
                 <br>
-                <a class="btn btn-success pull-down"
-                        href = "{% url 'edit_question' question.id %}">
-                    Vraag Bewerken
-                </a>
+                {% include button_template %}
             </div>
         </div>
     </div>
