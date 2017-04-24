@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'cms',
     'menus',
     'treebeard',
-    'sekizai'
+    'sekizai',
+    
+    'django_extensions'
 ]
 
 HAYSTACK_CONNECTIONS = {
