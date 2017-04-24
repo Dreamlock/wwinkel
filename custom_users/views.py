@@ -33,7 +33,7 @@ def login_view(request):
             user = authenticate(email = email, password = password)
 
             if user is not None:
-                login(request, user)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?
 
     else:
@@ -55,9 +55,10 @@ def register_user_view(request):
             user_form.save()
             user = OrganisationUser.objects.get(email=user_form.cleaned_data['email'])
             if user is not None:
-                login(request, user)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?"""
-
+        else:
+            return render(request, "custom_users/user_registration_form.html", {'form': user_form})
     else:
         organisation_form = OrganisationUserCreationForm()
 
@@ -90,7 +91,11 @@ def register_organisation(request):
             user.save()
 
             return(HttpResponseRedirect('/dbwwinkel/list_questions?search_text='))
-
+        else:
+            return render(request, "custom_users/organisation_registration_form.html", {
+                'organisation_form': organisation_form,
+                'address_form': address_form,
+                'user_form': user_form})
     else:
         organisation_form = OrganisationForm(prefix="organisation")
         address_form = AdressForm( prefix='address')

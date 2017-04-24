@@ -98,7 +98,7 @@ class Question(models.Model):
     active = models.BooleanField(default=True)
     status = models.ForeignKey(State)
 
-    region = models.ManyToManyField(Region)  # TODO: Check compatibility new field with forms (shouldn't be added by organisation)
+    region = models.ManyToManyField(Region)
 
     organisation = models.ForeignKey(Organisation)
 
@@ -131,12 +131,12 @@ class Question(models.Model):
             # ('edit_question', _('Can edit question (don\'t assign to user)')),
             ('view_draft_question', _('Can view draft question')),
             ('edit_draft_question', _('Can edit draft question')),
-            ('view_in_progress_question_central', _('Can view in progress question central')),
-            ('edit_in_progress_question_central', _('Can edit in progress question central')),
-            ('view_processed_question_central', _('Can view processed question central')),
-            ('edit_processed_question_central', _('Can edit processed question central')),
-            ('view_in_progress_question_regional', _('Can view in progress question regional')),
-            ('edit_in_progress_question_regional', _('Can edit in progress question regional')),
+            ('view_in_progress_central_question', _('Can view in progress question central')),
+            ('edit_in_progress_central_question', _('Can edit in progress question central')),
+            ('view_processed_central_question', _('Can view processed question central')),
+            ('edit_processed_central_question', _('Can edit processed question central')),
+            ('view_in_progress_regional_question', _('Can view in progress question regional')),
+            ('edit_in_progress_regional_question', _('Can edit in progress question regional')),
             # ('view_public_question', _('Can view public question')),
             ('edit_public_question', _('Can edit public question')),
             # ('view_reserved_question', _('Can view reserved question')),
