@@ -22,3 +22,5 @@ six
 
 pysolr
 django-haystack
+
+django-extensions
