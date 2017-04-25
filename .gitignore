@@ -12,3 +12,5 @@ db.sqlite3
 !custom_users/migrations/0001_initial.py
 
 
+schema.xml
+

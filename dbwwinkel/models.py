@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 import datetime
 from django.utils.translation import ugettext_lazy as _
 
-from custom_users.models import Region, Organisation
+from custom_users.models import Region, Organisation, Address
 
 
 class State(models.Model):
@@ -160,3 +160,24 @@ class QuestionPermissionsBackend:
             return False
         #if user_obj.id is
 '''
+
+class Institution(models.Model):
+
+    name = models.CharField(max_length=20)
+    address = models.ForeignKey(Address)
+
+
+class Student(models.Model):
+
+    first_name = models.CharField(max_length = 33)
+    last_name = models.CharField(max_length= 45)
+
+    mobile = models.CharField(max_length = 20)
+    email = models.EmailField()
+
+    status = models.BooleanField(default=True)
+
+    institution = models.ForeignKey(Institution)
+    study_field = models.ForeignKey(StudyField)
+    adres = models.ForeignKey(Address)
+    question = models.ForeignKey(Question)

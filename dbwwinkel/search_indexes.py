@@ -15,8 +15,8 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_study_field(self,obj):
         return [l.study_field for l in obj.study_field.all()]
 
-    """def prepare_state(self, obj):
-        return obj.status.pk"""
+    def prepare_study_field(self, obj):
+        return [l.study_field for l in obj.study_field.all()]
 
     def get_model(self):
         return Question
