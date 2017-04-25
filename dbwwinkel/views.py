@@ -58,7 +58,7 @@ def list_questions(request):
 
     if request.user.is_authenticated() == False: # Unlogged  options for a student
 
-        sqs = sqs.filter(status__in = visible_states)
+        sqs = sqs.filter(state__in = visible_states)
 
     else:
         if request.user.is_organisation():
@@ -66,7 +66,7 @@ def list_questions(request):
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation
             sqs = sqs.filter(status__in = visible_states)
-            organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
+            organisation_extra = SearchQuerySet().filter(organisation = organisation)
 
         elif request.user.is_manager():
 
@@ -76,8 +76,8 @@ def list_questions(request):
 
 
     if request.POST:
-
-        sqs = sqs.filter(status__in= request.POST.getlist("status"))
+        print(request.POST.getlist("status"))
+        sqs = sqs.filter(state__in= request.POST.getlist("status"))
 
         if OrganisationUser.objects.filter(id=request.user.id).exists():
             sqs = sqs | organisation_extra

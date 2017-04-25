@@ -96,7 +96,7 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    status = models.ForeignKey(State)
+    state = models.ForeignKey(State)
 
     region = models.ManyToManyField(Region)
 
@@ -113,14 +113,11 @@ class Question(models.Model):
         if self.deadline is not None and self.deadline < datetime.date.today():
             raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
 
-    def get_status_name(self):
-        # Todo: Clean states
-        state_names = [_("nieuw"), _("verwerking centraal"), _("verwerkt centraal"), _("verwerking_regionaal"),
-                       _("vrij"), _("gereserveerd"),_("lopend"), _("afgerond"), _("geweigerd"), _("ingetrokken")]
+    def get_state_name(self):
 
-        return state_names[self.status.id - 1]
+        return self.state
 
-    status_name = property(get_status_name)
+    state_name = property(get_state_name)
 
     class Meta:
         default_permissions = ('add', 'delete')
