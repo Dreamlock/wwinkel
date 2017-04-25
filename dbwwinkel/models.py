@@ -161,13 +161,13 @@ class QuestionPermissionsBackend:
         #if user_obj.id is
 '''
 
-class Institution:
+class Institution(models.Model):
 
     name = models.CharField(max_length=20)
     address = models.ForeignKey(Address)
 
 
-class Student:
+class Student(models.Model):
 
     first_name = models.CharField(max_length = 33)
     last_name = models.CharField(max_length= 45)
