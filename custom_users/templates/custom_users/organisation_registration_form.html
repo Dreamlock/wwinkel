@@ -6,6 +6,7 @@
 
 {% block content %}
     <form action = "{% url 'register_organisation' %}" method = "post">
+    {% csrf_token %}
     <div class ="container">
         <div class = "row">
             <h2> Informatie Organisatie</h2>
