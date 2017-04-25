@@ -180,3 +180,4 @@ class Student:
     institution = models.ForeignKey(Institution)
     study_field = models.ForeignKey(StudyField)
     adres = models.ForeignKey(Address)
+    question = models.ForeignKey(Question)
