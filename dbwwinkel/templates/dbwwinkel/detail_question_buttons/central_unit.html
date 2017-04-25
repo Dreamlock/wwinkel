@@ -1,0 +1,11 @@
+
+<form name ="region" action = "{% url "distribute_question" question_id %}" method = 'post' accept-charset="utf-8">
+{% csrf_token %}
+    {% for region in region_lst %}
+        <input type ="checkbox" value = "{{ region.1 }}" name ="region"> {{ region.0 }}<br>
+
+    {% endfor %}
+    <div class = "row form-group">
+        <button type="submit" value = "select">toewijzen </button>
+    </div>
+</form>

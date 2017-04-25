@@ -8,5 +8,7 @@ urlpatterns = [
     url(r'^list_questions', views.list_questions, name = 'list_questions'),
     url(r'^detail_organisation/(?P<question_id>[0-9]+)', views.detail, name='detail_organisation'),
     url(r'^edit_question/(?P<question_id>[0-9]+)',views.edit_question, name = 'edit_question'),
+    url(r'^distribute_question/(?P<question_id>[0-9]+)',views.distribute_question, name = 'distribute_question'),
     url(r'^search/', include('haystack.urls'))
+
     ]

@@ -38,6 +38,9 @@
 
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
+                    <li>
+                        <p class ="navbar-text">{{ user.email }}</p>
+                    </li>
                     <li class="nav-item">
                         <a href="{% url 'register_question' %}">Stel een vraag</a>
                     </li>

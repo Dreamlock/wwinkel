@@ -76,7 +76,6 @@ def list_questions(request):
 
 
     if request.POST:
-        print(request.POST.getlist("status"))
         sqs = sqs.filter(state__in= request.POST.getlist("status"))
 
         if OrganisationUser.objects.filter(id=request.user.id).exists():
@@ -96,6 +95,7 @@ def list_questions(request):
 def detail(request, question_id):
     question = Question.objects.get(id=question_id)
     button_template = "dbwwinkel/detail_question_buttons/default.html"
+    region_list = []
 
     if request.user.is_authenticated == False: # Then the user is a student
         button_template = "dbwwinkel/detail_question_buttons/student.html"
@@ -103,8 +103,19 @@ def detail(request, question_id):
     elif OrganisationUser.objects.filter(id = request.user.id).exists():
         if request.user.has_perm('edit_question', question):
             button_template = "dbwwinnkel/detail_question_buttons/organisations.html"
+
+    elif request.user.is_manager():
+        user = ManagerUser.objects.get(id=request.user.id)
+        if user.region.filter(region=Region.CENTRAL_REGION).exists():
+            for region in Region.objects.all():
+                if region.region != Region.CENTRAL_REGION:
+                    region_list.append((region,region.region))
+                button_template = "dbwwinkel/detail_question_buttons/central_unit.html"
+
     context = {'question': question,
-               'button_template': button_template}
+               'button_template': button_template,
+               'region_lst': region_list,
+               'question_id': question_id}
 
     return render(request, 'dbwwinkel/detail_question.html', context)
 
@@ -139,3 +150,12 @@ def reserve_question(request, question_id):
 
         if question.status.id == 5:
             pass
+
+def distribute_question(request, question_id):
+
+    question = Question.objects.get(id = question_id)
+
+    for region in request.POST.getlist('region'):
+        region_obj = Region.objects.get(region = region)
+        question.region.add(region_obj)
+    return HttpResponse("Toegewezen")
