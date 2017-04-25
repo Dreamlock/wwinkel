@@ -18,11 +18,20 @@ class QuestionPermissionsBackend:
         with translation.override('en'):
             question_state = str(question.status)
 
-        if ((user_obj.is_manager()
-                and (len(user_obj.region.filter(question__id=question.id)) > 0)
-                    or user_obj.region.filter(region=Region.CENTRAL_REGION))
-                or (user_obj.is_organisation()
-                    and user_obj.organisation.filter(question__id=question.id))):
+        checker = False
+
+        if user_obj.is_manager() and len(user_obj.region.filter(question__id=question.id)) > 0\
+                or user_obj.region.filter(region=Region.CENTRAL_REGION) :
+            checker = True
+
+        elif user_obj.is_organisation():
+                org_user = OrganisationUser.objects.get(id = user_obj.id)
+                user_of_question = question.organisation
+
+                if org_user.id == user_of_question.id:
+                    checker = True
+
+        if checker:
             if perm == 'view_question':
                 for permission in permissions:
                     # check of dat str(question.status) in permission zit (als ok: has_perm=true)

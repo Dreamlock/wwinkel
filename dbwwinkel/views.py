@@ -72,7 +72,7 @@ def list_questions(request):
         sqs = sqs.filter(status__in = visible_statuses)
 
     else:
-        if request.user.is_organisation()
+        if request.user.is_organisation():
             using_states = [(5, state_names[4]), (6, state_names[5]), (8, state_names[7])]
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation
