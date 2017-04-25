@@ -172,7 +172,7 @@ class Student:
     first_name = models.CharField(max_length = 33)
     last_name = models.CharField(max_length= 45)
 
-    mobile = models.charField(max_length = 20)
+    mobile = models.CharField(max_length = 20)
     email = models.EmailField()
 
     status = models.BooleanField(default=True)
