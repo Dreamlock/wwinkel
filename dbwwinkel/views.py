@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, render_to_response
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from haystack.query import SearchQuerySet
 from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
@@ -17,9 +17,10 @@ from custom_users.models import OrganisationUser
 
 
 @login_required
+@permission_required('dbwwinkel.add_question')
 def register_question(request):
     # if this is a POST request we need to process the form data
-    form = None
+    # form = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = NameForm(request.POST)
@@ -27,7 +28,7 @@ def register_question(request):
         # check whether it's valid:
         if form.is_valid():
             question = form.save(commit=False)  # We still need to lay out the foreign keys
-            org_user = OrganisationUser.objects.get(id = request.user.id)
+            org_user = OrganisationUser.objects.get(id = request.user.id)  # Error if creating a question with admin
             question.organisation = org_user.organisation  # Foreign key to the user (organisation in question...)
             question.status = State.objects.get(id=1)
             question.save()
@@ -61,11 +62,17 @@ def list_questions(request):
     using_states = []
 
     if request.user.is_authenticated() == False: # Unlogged  options for a student
-                using_states =[(5,state_names[4]), (6,state_names[5]), (8,state_names[7])]
-                sqs = sqs.filter(status__in =[5, 6, 8])
+        visible_statuses = [PUBLIC_QUESTION, PUBLIC_QUESTION, FINISHED_QUESTION]
+        '''using_states = [
+            State.STATE_SELECT[PUBLIC_QUESTION],
+            State.STATE_SELECT[PUBLIC_QUESTION],
+            State.STATE_SELECT[FINISHED_QUESTION],
+        ]'''
+        using_states = [State.STATE_SELECT[x] for x in visible_statuses]
+        sqs = sqs.filter(status__in = visible_statuses)
 
     else:
-        if OrganisationUser.objects.filter(id = request.user.id).exists():
+        if request.user.is_organisation()
             using_states = [(5, state_names[4]), (6, state_names[5]), (8, state_names[7])]
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation

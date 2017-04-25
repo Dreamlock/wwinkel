@@ -147,6 +147,7 @@ class User(AbstractUser):
         return self.last_name + ', ' + self.first_name
 
     def is_organisation(self):
+        return OrganisationUser.objects.filter(pk=self.id).exists()
         try:
             OrganisationUser.objects.get(pk=self.id)
         except ObjectDoesNotExist:
@@ -154,6 +155,7 @@ class User(AbstractUser):
         return True
 
     def is_manager(self):
+        return ManagerUser.objects.filter(pk=self.id).exists()
         try:
             ManagerUser.objects.get(pk=self.id)
         except ObjectDoesNotExist:
