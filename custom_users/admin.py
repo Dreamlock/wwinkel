@@ -104,6 +104,7 @@ class ManagerUserAdmin(UserAdmin):
 
 
 # Register UserAdmin.
+admin.site.register(LegalEntity)
 admin.site.register(Address)
 admin.site.register(Organisation)
 admin.site.register(Province)
