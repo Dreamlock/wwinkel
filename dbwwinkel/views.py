@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .forms import NameForm
 from .models import Question, State
-from custom_users.models import OrganisationUser
+from custom_users.models import OrganisationUser, ManagerUser, Region
 
 
 @login_required
@@ -46,7 +46,8 @@ def register_question(request):
 
 
 def list_questions(request):
-
+    visible_states = [State.STATE_SELECT[State.PUBLIC_QUESTION], State.STATE_SELECT[State.RESERVED_QUESTION]
+        , State.STATE_SELECT[State.FINISHED_QUESTION]]
     organisation_extra = None
     val = request.GET.get('search_text', '')
     if val == '':
@@ -55,32 +56,27 @@ def list_questions(request):
     else:
         sqs = SearchQuerySet().autocomplete(content_auto=val)
 
-    state_names = [_("nieuw"), _("verwerking_centraal"), _("verwerkt_centraal"),_("verwerking_regionaal"),_("vrij"),
-                   _("gereserveerd"),_("lopend"),
-                   _("afgerond"), _("geweigerd"), _("ingetrokken")]
-
-    using_states = []
-
     if request.user.is_authenticated() == False: # Unlogged  options for a student
-        visible_statuses = [PUBLIC_QUESTION, PUBLIC_QUESTION, FINISHED_QUESTION]
-        '''using_states = [
-            State.STATE_SELECT[PUBLIC_QUESTION],
-            State.STATE_SELECT[PUBLIC_QUESTION],
-            State.STATE_SELECT[FINISHED_QUESTION],
-        ]'''
-        using_states = [State.STATE_SELECT[x] for x in visible_statuses]
-        sqs = sqs.filter(status__in = visible_statuses)
+
+        sqs = sqs.filter(status__in = visible_states)
 
     else:
         if request.user.is_organisation():
-            using_states = [(5, state_names[4]), (6, state_names[5]), (8, state_names[7])]
+            print(visible_states)
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation
-            sqs = sqs.filter(status__in =[5, 6, 8])
+            sqs = sqs.filter(status__in = visible_states)
             organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
+
+        elif request.user.is_manager():
+
+            user = ManagerUser.objects.get(id = request.user.id)
+            if user.region.filter(region = Region.CENTRAL_REGION).exists():
+                visible_states = State.STATE_SELECT
 
 
     if request.POST:
+
         sqs = sqs.filter(status__in= request.POST.getlist("status"))
 
         if OrganisationUser.objects.filter(id=request.user.id).exists():
@@ -91,7 +87,7 @@ def list_questions(request):
             sqs = sqs | organisation_extra
 
     context = {'questions': sqs,
-               'states': using_states
+               'states': visible_states
                }
 
     return render(request, 'dbwwinkel/question_list.html', context)
