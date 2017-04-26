@@ -16,7 +16,7 @@ class QuestionPermissionsBackend:
 
         question_state = ''
         with translation.override('en'):
-            question_state = str(question.status)
+            question_state = str(question.state)
 
         checker = False
 
