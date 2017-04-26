@@ -140,7 +140,7 @@ class Question(models.Model):
             ('edit_reserved_question', _('Can edit reserved question')),
             ('view_ongoing_question', _('Can view ongoing question')),
             ('edit_ongoing_question', _('Can edit ongoing question')),
-            ('view_finished_question', _('Can view finished question')),
+            # ('view_finished_question', _('Can view finished question')),
             ('edit_finished_question', _('Can edit finished question')),
             ('view_denied_question', _('Can view denied question')),
             ('edit_denied_question', _('Can edit denied question')),
