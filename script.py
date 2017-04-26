@@ -74,32 +74,35 @@ with open(sys.argv[3]) as f:
         if (row[0] == "idorganization"):
             pass
         else:
-            prov = cmmodels.Province.objects.get(id=row[9])
-            adr,created = cmmodels.Address.objects.update_or_create(
-                province=prov,
-                city=row[8],
-                postal_code=row[7],
-                street_name=row[5],
-                street_number=row[6],
-            )
-            adr.save()
-            cdate = row[18]
-            refactored_date=refactorDate(cdate)
-            le = cmmodels.LegalEntity.objects.get(id=row[4])
-            obj,created = cmmodels.Organisation.objects.update_or_create(id=row[0],
-            address=adr,
-            legal_entity=le,
-            active=row[17],
-            creation_date=refactored_date,
-            #fax=row[11],
-            goal=row[14],
-            name=row[2],
-            recognised_abbreviation=row[3],
-            remarks=row[16],
-            telephone=498119433,
-            #website=row[12],
-            )
-            obj.save()
+            try:
+                prov = cmmodels.Province.objects.get(id=row[9])
+                adr,created = cmmodels.Address.objects.update_or_create(
+                    province=prov,
+                    city=row[8],
+                    postal_code=row[7],
+                    street_name=row[5],
+                    street_number=row[6],
+                )
+                adr.save()
+                cdate = row[18]
+                refactored_date=refactorDate(cdate)
+                le = cmmodels.LegalEntity.objects.get(id=row[4])
+                obj,created = cmmodels.Organisation.objects.update_or_create(id=row[0],
+                address=adr,
+                legal_entity=le,
+                active=row[17],
+                creation_date=refactored_date,
+                #fax=row[11],
+                goal=row[14],
+                name=row[2],
+                recognised_abbreviation=row[3],
+                remarks=row[16],
+                telephone=498119433,
+                #website=row[12],
+                )
+                obj.save()
+            except:
+                pass
     f.close()
 
 #import question
