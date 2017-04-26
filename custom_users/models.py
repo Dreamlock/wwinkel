@@ -1,10 +1,12 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import EmailField, URLField, TextField
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.validators import RegexValidator
 
@@ -201,6 +203,14 @@ class OrganisationUser(User):
         verbose_name_plural = _('organisation users')
 
     organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation')
+
+
+def organisation_user_created(sender, **kwargs):
+    user = kwargs['instance']
+    if kwargs['created']:
+        user.groups.set([Group.objects.get(name='Organisations')])
+
+post_save.connect(organisation_user_created, sender=OrganisationUser)
 
 
 class Region(models.Model):

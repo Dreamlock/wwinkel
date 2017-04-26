@@ -45,4 +45,3 @@ with open(sys.argv[2]) as f:
             obj.entity=row[1]
             obj.save()
     f.close()
-
