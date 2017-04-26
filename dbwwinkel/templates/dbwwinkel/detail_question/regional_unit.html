@@ -1,6 +1,6 @@
 {% extends 'dbwwinkel/detail_question/detail_question_base.html' %}
 {% block options %}
-    {% if question.state.state == 3 %}
+    {% if question.state.state == 3  or question.state.state == 2 %}
         <a class="btn btn-success pull-down" href = "{% url 'open_question' question.id %}">Vraag vrijgeven </a>
     {% endif %}
 
