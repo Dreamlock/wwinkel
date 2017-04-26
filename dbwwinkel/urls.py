@@ -12,6 +12,8 @@ urlpatterns = [
     url(r'^reserve_question/(?P<question_id>[0-9]+)',views.reserve_question, name = 'reserve_question'),
     url(r'^assign_question/(?P<question_id>[0-9]+)',views.assign_question, name = 'assign_question'),
     url(r'round_up_question/(?P<question_id>[0-9]+)',views.round_up_question, name = 'round_up_question'),
+    url(r'deny_question/(?P<question_id>[0-9]+)',views.deny_question, name = 'deny_question'),
+    url(r'revoke_question/(?P<question_id>[0-9]+)',views.revoke_question, name = 'revoke_question'),
     url(r'^search/', include('haystack.urls'))
 
     ]

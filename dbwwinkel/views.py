@@ -81,7 +81,7 @@ def list_questions(request):
                 sqs = sqs | SearchQuerySet().filter(region__in = [region.region for region in user.region.all()])
                 visible_states.extend([State.STATE_SELECT[State.PROCESSED_QUESTION_CENTRAL],
                                        State.STATE_SELECT[State.IN_PROGRESS_QUESTION_REGIONAL]])
-                
+
     else:
         sqs = sqs2
 
@@ -101,16 +101,15 @@ def list_questions(request):
 
 
 def detail(request, question_id):
-    question = Question.objects.get(id=question_id)
-    button_template = "dbwwinkel/detail_question/default.html"
-    region_list = []
 
+    question = Question.objects.get(id=question_id)
     if request.user.is_authenticated == False: # Then the user is a student
         return student_detail(request, question)
 
     elif OrganisationUser.objects.filter(id = request.user.id).exists():
-        if request.user.has_perm('edit_question', question):
-            button_template = "dbwwinnkel/detail_question/organisations.html"
+        organisation = (OrganisationUser.objects.get(id = request.user.id)).organisation
+        if organisation == question.organisation:
+            return organisation_detail(request, question)
 
     elif request.user.is_manager():
         user = ManagerUser.objects.get(id=request.user.id)
@@ -122,8 +121,6 @@ def detail(request, question_id):
 
 
     context = {'question': question,
-               'button_template': button_template,
-               'region_lst': region_list,
                'question_id': question_id}
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
@@ -147,6 +144,10 @@ def central_detail(request, question):
     context = {'question': question,
                'region_lst': region_list}
     return render(request, 'dbwwinkel/detail_question/central_unit.html',context)
+
+def organisation_detail(request, question):
+    context = {'question': question}
+    return render(request, 'dbwwinkel/detail_question/organisations.html', context)
 
 
 @login_required
@@ -216,3 +217,21 @@ def round_up_question(request, question_id):
     question.state = State.objects.get(state= State.FINISHED_QUESTION)
     question.save()
     return HttpResponse("Vraag is afgerond")
+
+def deny_question(request, question_id):
+    """FAKE NEWS"""
+
+    question = Question.objects.get(id = question_id)
+    question.state = State.objects.get(state= State.DENIED_QUESTION)
+    question.save()
+    return HttpResponse("Vraag is geweigerd")
+
+
+def revoke_question(request, question_id):
+
+    question = Question.objects.get(id = question_id)
+    question.state = State.objects.get(state= State.REVOKED_QUESTION)
+    question.save()
+    return HttpResponse("Vraag is terug getrokken")
+
+
