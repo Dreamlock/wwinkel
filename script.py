@@ -28,7 +28,7 @@ def province_map(old_province_id):
 
 def refactorDate(cdate):
     if len(cdate) < 14 or len(cdate) > 16:
-        return "0000-00-00 00:00"
+        return "0001-01-01 01:01"
     fields=cdate.split('/')
     month=fields[0]
     day=fields[1]
@@ -96,7 +96,7 @@ with open(sys.argv[3]) as f:
             name=row[2],
             recognised_abbreviation=row[3],
             remarks=row[16],
-            #telephone=12345+int(row[0]),
+            telephone=498119433,
             #website=row[12],
             )
             obj.save()
