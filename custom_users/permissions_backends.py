@@ -20,9 +20,11 @@ class QuestionPermissionsBackend:
 
         checker = False
 
-        if user_obj.is_manager() and len(user_obj.region.filter(question__id=question.id)) > 0\
-                or user_obj.region.filter(region=Region.CENTRAL_REGION) :
-            checker = True
+        if user_obj.is_manager():
+            user_obj = ManagerUser.objects.get(id=user_obj.id)
+            if (len(user_obj.region.filter(question__id=question.id)) > 0
+                    or user_obj.region.filter(region=Region.CENTRAL_REGION)):
+                checker = True
 
         elif user_obj.is_organisation():
                 org_user = OrganisationUser.objects.get(id = user_obj.id)
