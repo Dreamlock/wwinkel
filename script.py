@@ -22,6 +22,12 @@ def province_map(old_province_id):
     }
     return idmap[old_province_id]
 
+for i in range(0, 6):
+    obj, created = cmmodels.Province.objects.get_or_create(id=(i + 1))
+    obj.province = i
+    obj.save()
+
+raise 1
 #path to province.csv
 with open(sys.argv[1]) as f:
     reader = csv.reader(f)
@@ -45,3 +51,5 @@ with open(sys.argv[2]) as f:
             obj.entity=row[1]
             obj.save()
     f.close()
+
+

@@ -88,7 +88,7 @@ class Question(models.Model):
     # Visible and editable: optional
     remarks = models.TextField(blank=True)
     internal_remarks = models.TextField(blank=True)
-    how_know_WW = models.TextField(blank=True)
+    how_know_WW = models.TextField(blank=True)  # TODO: Add model with values like question_anonymized.xlsx.questionknowfrom
     deadline = models.DateField(blank=True, null=True)
 
     public = models.BooleanField()
