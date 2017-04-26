@@ -77,6 +77,9 @@ class StudyField(models.Model):
 
     study_field = models.CharField(max_length=33, unique=True)
 
+    def __str__(self):
+        return self.study_field
+
 
 class Question(models.Model):
     # Visible and editable: mandatory

@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 from .forms import *
+from dbwwinkel.models import *
 
 
 class AddressInline(admin.StackedInline):
@@ -122,3 +123,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(OrganisationUser, OrganisationUserAdmin)
 admin.site.register(Region)
 admin.site.register(ManagerUser, ManagerUserAdmin)
+admin.site.register(StudyField)
