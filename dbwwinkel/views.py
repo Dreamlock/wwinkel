@@ -59,7 +59,7 @@ def list_questions(request):
     else:
         sqs = SearchQuerySet().autocomplete(content_auto=val)
 
-    sqs = sqs.filter(state__in=[l[0] for l in visible_states])
+    sqs2 = sqs.filter(state__in=[l[0] for l in visible_states])
 
 
     if request.user.is_authenticated():
@@ -67,10 +67,8 @@ def list_questions(request):
         if request.user.is_organisation():
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation
-
-            sqs = sqs.filter(status__in = visible_states)
-            organisation_extra = SearchQuerySet().filter(organisation = organisation)
-            sqs = sqs | organisation_extra
+            organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
+            sqs = sqs2 | organisation_extra
 
         elif request.user.is_manager():
 
@@ -83,6 +81,9 @@ def list_questions(request):
                 sqs = sqs | SearchQuerySet().filter(region__in = [region.region for region in user.region.all()])
                 visible_states.extend([State.STATE_SELECT[State.PROCESSED_QUESTION_CENTRAL],
                                        State.STATE_SELECT[State.IN_PROGRESS_QUESTION_REGIONAL]])
+                
+    else:
+        sqs = sqs2
 
     if request.POST:
         sqs = sqs.filter(state__in= request.POST.getlist("status"))
@@ -114,14 +115,11 @@ def detail(request, question_id):
     elif request.user.is_manager():
         user = ManagerUser.objects.get(id=request.user.id)
         if user.region.filter(region=Region.CENTRAL_REGION).exists():
-            for region in Region.objects.all():
-                if region.region != Region.CENTRAL_REGION:
-                    region_list.append((region,region.region))
-                button_template = "dbwwinkel/detail_question/central_unit.html"
+            return central_detail(request, question)
 
         elif not set(user.region.all()).isdisjoint(question.region.all()):
             return regional_detail(request, question)
-            button_template = "dbwwinkel/detail_question/regional_unit.html"
+
 
     context = {'question': question,
                'button_template': button_template,
@@ -130,15 +128,25 @@ def detail(request, question_id):
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
 
-def student_detail(request, question):
 
+def student_detail(request, question):
     context = {'question': question}
     return render(request, 'dbwwinkel/detail_question/student.html', context)
 
+
 def regional_detail(request, question):
-    question_id = question.id
     context = {'question': question}
     return render(request, 'dbwwinkel/detail_question/regional_unit.html',context)
+
+
+def central_detail(request, question):
+    region_list = []
+    for region in Region.objects.all():
+        if region.region != Region.CENTRAL_REGION:
+            region_list.append((region, region.region))
+    context = {'question': question,
+               'region_lst': region_list}
+    return render(request, 'dbwwinkel/detail_question/central_unit.html',context)
 
 
 @login_required
