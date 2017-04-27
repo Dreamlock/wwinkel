@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from dbwwinkel.models import Question
+from dbwwinkel.models import Question, Student
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
@@ -14,7 +14,7 @@ class NameForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['question_text','reason', 'purpose','own_contribution','remarks', 'how_know_WW', 'deadline', 'public']
+        fields = ['question_text','reason', 'purpose','own_contribution','remarks', 'how_know_WW', 'deadline', 'public', 'study_field']
 
         labels = {
             'question_text': _('*Stel hier uw vraag'),
@@ -32,4 +32,9 @@ class NameForm(ModelForm):
             'deadline': DateInput()
         }
 
+class StudentForm(ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ['first_name']
 

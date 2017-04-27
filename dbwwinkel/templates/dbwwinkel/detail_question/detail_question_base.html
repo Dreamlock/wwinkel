@@ -4,16 +4,14 @@
 {% block content %}
     <div class = "container">
         <div class="row">
-            <div class = "col-md-10">
+            <div class = "col-md-9">
                 <h1>{{ question.question_text }}</h1>
                     <p></p>
                 </div>
-            <div class = "col-md-2">
+            <div class = "col-md-3">
                 <br>
-                <a class="btn btn-success pull-down"
-                        href = "{% url 'edit_question' question.id %}">
-                    Vraag Bewerken
-                </a>
+                {% block options %}
+                {% endblock %}
             </div>
         </div>
     </div>

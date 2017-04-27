@@ -1,9 +1,12 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import EmailField, URLField, TextField
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.validators import RegexValidator
 
@@ -32,6 +35,12 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password, **extra_fields):
         return self._create_user(email, password, True, True, **extra_fields)
+
+
+class OrganisationManager(UserManager):
+
+    def is_organisation(self):
+        return True
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
@@ -79,7 +88,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         """Returns the short name for the user."""
         return self.email.strip()
 
-    # def get_username(self):
+        # def get_username(self):
         # return getattr(self, self.USERNAME_FIELD)
 
     def email_user(self, subject, message, from_email=None, **kwargs):
@@ -94,16 +103,23 @@ class Province(models.Model):
         verbose_name = _('province')
         verbose_name_plural = _('provinces')
 
+    ANTWERP_REGION = 0
+    EAST_FLANDERS_REGION = 1
+    FLEMISH_BRABANT_REGION = 2
+    LIMBURG_REGION = 3
+    WEST_FLANDERS_REGION = 4
     PROVINCE_SELECT = (
-        ('ANT', _('Antwerp')),
-        ('OVL', _('East Flanders')),
-        ('WVL', _('West Flanders')),
+        (ANTWERP_REGION, _('Antwerp')),
+        (EAST_FLANDERS_REGION, _('East Flanders')),
+        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (LIMBURG_REGION, _('Limburg')),
+        (WEST_FLANDERS_REGION, _('West Flanders')),
     )
 
-    province = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
+    province = models.PositiveIntegerField(unique=True, choices=PROVINCE_SELECT)
 
     def __str__(self):
-        return self.province
+        return str(self.PROVINCE_SELECT[self.province][1])
 
 
 class Address(models.Model):
@@ -116,7 +132,6 @@ class Address(models.Model):
     postal_code = models.PositiveIntegerField()
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
-    user = models.OneToOneField('User', null=True)
 
     def __str__(self):
         return self.street_name + ' ' + str(self.street_number) + ', ' + self.city
@@ -133,9 +148,25 @@ class User(AbstractUser):
             return super().__str__()
         return self.last_name + ', ' + self.first_name
 
+    def is_organisation(self):
+        return OrganisationUser.objects.filter(pk=self.id).exists()
+        try:
+            OrganisationUser.objects.get(pk=self.id)
+        except ObjectDoesNotExist:
+            return False
+        return True
+
+    def is_manager(self):
+        return ManagerUser.objects.filter(pk=self.id).exists()
+        try:
+            ManagerUser.objects.get(pk=self.id)
+        except ObjectDoesNotExist:
+            return False
+        return True
+
 
 class LegalEntity(models.Model):
-    entity = models.CharField(max_length=10, unique= True)
+    entity = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return '{0}'.format(self.entity)
@@ -146,7 +177,6 @@ class OrganisationType(models.Model):
 
 
 class Organisation(models.Model):
-
     name = models.CharField(max_length=255, unique=True)
     recognised_abbreviation = models.CharField(max_length=31, blank=True)
 
@@ -154,16 +184,14 @@ class Organisation(models.Model):
     address = models.ForeignKey(Address)
 
     telephone = models.IntegerField()
-    fax = models.IntegerField(blank = True, null = True)
-    website = URLField(max_length=255, null = True )
+    fax = models.IntegerField(blank=True, null=True)
+    website = URLField(max_length=255, null=True, blank=True)
 
     goal = models.TextField()
-    remarks = models.TextField(blank = True, null = True)
+    remarks = models.TextField(blank=True, null=True)
 
-    creation_date = models.DateTimeField(default = timezone.now)
-    active = models.BooleanField(default = True)
-
-
+    creation_date = models.DateTimeField(default=timezone.now)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -177,21 +205,37 @@ class OrganisationUser(User):
     organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation')
 
 
+def organisation_user_created(sender, **kwargs):
+    user = kwargs['instance']
+    if kwargs['created']:
+        user.groups.set([Group.objects.get(name='Organisations')])
+
+post_save.connect(organisation_user_created, sender=OrganisationUser)
+
+
 class Region(models.Model):
     class Meta:
         verbose_name = _('region')
         verbose_name_plural = _('regions')
 
-    PROVINCE_SELECT = (
-        ('ANT', _('Antwerp')),
-        ('OVL', _('East Flanders')),
-        ('WVL', _('West Flanders')),
-        ('CEN', _('Central')),
+    ANTWERP_REGION = 0
+    EAST_FLANDERS_REGION = 1
+    FLEMISH_BRABANT_REGION = 2
+    LIMBURG_REGION = 3
+    WEST_FLANDERS_REGION = 4
+    CENTRAL_REGION = 5
+    REGION_SELECT = (
+        (ANTWERP_REGION, _('Antwerp')),
+        (EAST_FLANDERS_REGION, _('East Flanders')),
+        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (LIMBURG_REGION, _('Limburg')),
+        (WEST_FLANDERS_REGION, _('West Flanders')),
+        (CENTRAL_REGION, _('Central')),
     )
-    region = models.CharField(max_length=3, unique=True, choices=PROVINCE_SELECT)
+    region = models.PositiveIntegerField(unique=True, choices=REGION_SELECT)
 
     def __str__(self):
-        return self.region
+        return str(self.REGION_SELECT[self.region][1])
 
 
 class ManagerUser(User):

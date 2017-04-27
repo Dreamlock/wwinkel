@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'cms',
     'menus',
     'treebeard',
-    'sekizai'
+    'sekizai',
+    
+    'django_extensions'
 ]
 
 HAYSTACK_CONNECTIONS = {
@@ -59,6 +61,8 @@ HAYSTACK_CONNECTIONS = {
         # 'URL': 'http://127.0.0.1:8983/solr/mysite',
     },
 }
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 MIDDLEWARE = [
     'cms.middleware.utils.ApphookReloadMiddleware',
@@ -140,6 +144,11 @@ AUTH_PASSWORD_VALIDATORS = [] if DEBUG else stock_password_validators
 
 
 AUTH_USER_MODEL = "custom_users.User"
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'custom_users.permissions_backends.QuestionPermissionsBackend',
+)
 
 SITE_ID = 1
 

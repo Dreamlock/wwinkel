@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
-from .models import User, OrganisationUser, Organisation
+from .models import User, OrganisationUser, Organisation, Address
 from django import forms
 
 
@@ -10,6 +10,7 @@ class UserCreationForm(BaseUserCreationForm):
     class Meta:
         model = User
         fields = ('email', 'telephone', 'gsm')
+
 
 
 class UserChangeForm(BaseUserChangeForm):
@@ -65,8 +66,44 @@ class LoginForm(forms.Form):
     e_mail = forms.EmailField()
     password = PasswordField()
 
+
 class OrganisationForm(forms.ModelForm):
 
     class Meta:
         model = Organisation
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'telephone','website', 'goal', 'remarks']
+
+        labels = {
+            'name': '*Naam Organisatie',
+            'recognised_abbreviation': 'Afkorting Organisatie',
+            'legal_entity': '*Juridische entiteit',
+            'telephone': 'Telefoon',
+            'website': 'website',
+            'goal': '*Doel organisatie',
+            'remarks': 'Opmerkingen'
+
+        }
+
+
+class AdressForm(forms.ModelForm):
+
+    class Meta:
+        model = Address
         fields = '__all__'
+
+        labels = {
+            'province': '*Provincie',
+            'city': '*Stad',
+            'postal_code': '*Postcode',
+            'street_name': '*Straat naam',
+            'street_number': '*PostNummer'
+        }
+
+class BaseOrganisationUserForm(OrganisationUserCreationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = OrganisationUser
+        fields = ['email', 'first_name', 'last_name', 'telephone']

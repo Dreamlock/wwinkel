@@ -3,14 +3,27 @@ from haystack import indexes
 from dbwwinkel.models import Question
 
 
-class NoteIndex(indexes.SearchIndex, indexes.Indexable):
+class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    # author = indexes.CharField(model_attr='user')
-    # pub_date = indexes.DateTimeField(model_attr='pub_date')
+
+    content_auto = indexes.EdgeNgramField(model_attr='question_text')
+
+    state = indexes.CharField(model_attr='state__state')
+    region = indexes.CharField()
+    study_field = indexes.CharField()
+    organisation = indexes.CharField(model_attr ='organisation__id' )
+
+    #Facets
+    study_field_facet = indexes.FacetMultiValueField()
+
+    def prepare_region(self, obj):
+        return [region.region for region in obj.region.all()]
+
+    def prepare_study_field(self,obj):
+        return [l.study_field for l in obj.study_field.all()]
+
+    def prepare_study_field_facet(self, obj):
+        return [l.study_field for l in obj.study_field.all()]
 
     def get_model(self):
         return Question
-
-    def index_queryset(self, using=None):
-        """Used when the entire index for model is updated."""
-        return self.get_model().objects.filter(question_text__iregex= ".")

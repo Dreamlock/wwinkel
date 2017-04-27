@@ -5,43 +5,72 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function($) {
-    $(".table-row").click(function() {
-        window.document.location = $(this).data("href");
-    });
-});
-</script>
-
+<script src="{% static "dbwwinkel/js/myjs.js" %}"></script>
 {% endblock %}
 {% block content %}
-<div class="container">
-  <table class="table table-hover ">
-    <thead>
-      <tr>
-        <th>Publicatie datum</th>
-        <th>Vraag</th>
-        <th>Deadline</th>
-      <th>Status</th>
-      </tr>
-    </thead>
-      <tbody>
-      {% for question in questions %}
-          <tr {% if question.status.id  ==  1%} class = "table-row success"
-              {% else %}  class ="table-row"
-              {% endif %}
-              data-href = "{% url 'detail_organisation' question.id %}" style="cursor: pointer;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidebar-nav-fixed affix">
+                    <div class="well">
+                        <ul class="nav ">
+                                <form name ="status" action = "{% url "list_questions" %}" method = 'post' accept-charset="utf-8">
+                                    {% csrf_token %}
+                                    <li class="nav-header">Status</li>
+                                    {% for state in states %}
+                                        <input type ="checkbox" value = "{{ state.0 }}" name ="status"> {{ state.1 }}<br>
+                                    {% endfor %}
+                                    <br>
+                                    <li class="nav-header">Onderzoeksveld</li>
+                                    {%  for study_field in study_fields %}
+                                        <input type ="checkbox" value = "{{ study_field.0 }}" name ="study_field">
+                                        {{ study_field.0 }}({{ study_field.1 }})<br>
+                                    {% endfor %}
 
-            <td>{{ question.creation_date.date }}</td>
-            <td>{{question.question_text  }}</td>
-            <td>{{ question.deadline }}</td>
-            <td>{{ question.status_name}}</td>
-          </tr>
-      {% endfor %}
-      </tbody>
-  </table>
-</div>
+                                    <div class = "row form-group">
+                                        <button type="submit" value = "select">Zoek! </button>
 
+                                    </div>
+                                </form>
+                        </ul>
+                    </div>
+                    <!--/.well -->
+                </div>
+                <!--/sidebar-nav-fixed -->
+            </div>
+            <!--/span-->
+    <div class = "container">
+        <div class = "col-md-9">
+          <table class="table table-hover ">
+            <thead>
+              <tr>
+                <th>Publicatie datum</th>
+                <th>Vraag</th>
+                <th>Deadline</th>
+              <th>Status</th>
+              </tr>
+            </thead>
+              <tbody>
+              {% for question in questions %}
+                  {# if user.has_perm('view_question', question) Todo: let the permissions work#}
+                  {#forloop.counter0 #Todo: limit to first 30 questions (then question 31-60, 61-90,...) #}
+                  <tr {% if question.object.status.id  ==  1%} class = "table-row success"
+                      {% else %}  class ="table-row"
+                      {% endif %}
+                      data-href = "{% url 'detail_organisation' question.object.id %}" style="cursor: pointer;">
+
+                    <td>{{ question.object.creation_date.date }}</td>
+                    <td>{{question.object.question_text  }}</td>
+                    <td>{{ question.object.deadline }}</td>
+                    <td>{{ question.object.state_name}}</td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+    </div>
+    </div>
+    </div>
 {% endblock %}
 {% block extra_scripts %}
 

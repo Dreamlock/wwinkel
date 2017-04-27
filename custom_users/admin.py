@@ -4,10 +4,15 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 from .forms import *
+from dbwwinkel.models import *
 
 
 class AddressInline(admin.StackedInline):
     model = Address
+
+
+class OrganisationAdmin(admin.ModelAdmin):
+    readonly_fields = ('creation_date',)
 
 
 class UserAdmin(BaseUserAdmin):
@@ -46,7 +51,7 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
 
-    inlines = (AddressInline,)
+    # inlines = (AddressInline,)
 
 
 class OrganisationUserAdmin(UserAdmin):
@@ -61,7 +66,10 @@ class OrganisationUserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Contact'), {'fields': ('telephone', 'gsm', 'organisation')}),
         (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')}),
+        (_('Permissions'), {
+            'classes': ('collapse',),
+            'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')
+        }),
     )
     readonly_fields = ('date_joined', 'last_login')
 
@@ -87,7 +95,10 @@ class ManagerUserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('region'), {'fields': ('region',)}),
         (_('Important dates'), {'fields': ('date_joined', 'last_login')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')}),
+        (_('Permissions'), {
+            'classes': ('collapse',),
+            'fields': ('is_active', 'is_superuser', 'is_staff', 'groups', 'user_permissions')
+        }),
     )
     readonly_fields = ('date_joined', 'last_login')
 
@@ -104,10 +115,12 @@ class ManagerUserAdmin(UserAdmin):
 
 
 # Register UserAdmin.
+admin.site.register(LegalEntity)
 admin.site.register(Address)
-admin.site.register(Organisation)
+admin.site.register(Organisation, OrganisationAdmin)
 admin.site.register(Province)
 admin.site.register(User, UserAdmin)
 admin.site.register(OrganisationUser, OrganisationUserAdmin)
 admin.site.register(Region)
 admin.site.register(ManagerUser, ManagerUserAdmin)
+admin.site.register(StudyField)
