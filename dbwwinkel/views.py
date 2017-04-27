@@ -70,6 +70,7 @@ def list_questions(request):
             organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
             sqs = sqs2 | organisation_extra
 
+
         elif request.user.is_manager():
 
             user = ManagerUser.objects.get(id = request.user.id)
@@ -85,8 +86,17 @@ def list_questions(request):
     else:
         sqs = sqs2
 
+    facets = sqs.facet('study_field_facet')
+    study_field = facets.facet_counts()['fields']['study_field_facet']
+
     if request.POST:
         sqs = sqs.filter(state__in= request.POST.getlist("status"))
+
+        if request.POST.getlist("study_field"):
+            sqs = sqs.filter(study_field_facet__in=request.POST.getlist("study_field"))
+        else:
+            print(request.POST.getlist("status"))
+
 
         if OrganisationUser.objects.filter(id=request.user.id).exists():
             sqs = sqs | organisation_extra
@@ -94,7 +104,8 @@ def list_questions(request):
 
 
     context = {'questions': sqs,
-               'states': visible_states
+               'states': visible_states,
+               'study_fields': study_field
                }
 
     return render(request, 'dbwwinkel/question_list.html', context)
