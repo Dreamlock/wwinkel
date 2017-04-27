@@ -8,3 +8,4 @@ wwinkel/__pycache__/
 db.sqlite3
 
 
+custom_users/migrations/0002_auto_20170401_0938.py
