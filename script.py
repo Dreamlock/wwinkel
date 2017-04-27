@@ -171,7 +171,8 @@ with open(sys.argv[3]) as f:
 
 #import questionstatus
 with open(sys.argv[4]) as f:
-    reader = csv.reader(f)
+    pass
+    '''reader = csv.reader(f)
     for row in reader:
         if (row[0]=="idquestionregstatus"):
             pass
@@ -182,7 +183,7 @@ with open(sys.argv[4]) as f:
                 print(row[1])
                 obj.save()
             except:
-                pass
+                pass'''
     f.close()
 
 #import questiontypes
@@ -215,38 +216,38 @@ with open(sys.argv[6]) as f:
         try:
             print(get_row('datecreated'), get_row('answerwithintermtext'))
             obj = dbmodels.Question(
-                id=get_row('idquestion'),
-                question_text=get_row('question'),
-                reason=get_row('resultuse'),
-                purpose=get_row('questionkickoff'),
-                own_contribution=get_row('costcontrib'),
+                id=row[0],
+                question_text=row[3],
+                reason=row[7],
+                purpose=row[6],
+                own_contribution=row[11],
 
-                remarks=get_row('remarks'),
-                internal_remarks=get_row('intakeremarks'),
+                remarks=row[15],
+                internal_remarks=row[17],
                 # how_know_WW=get_row(''),
                 how_know_WW='',
-                deadline=refactor_date(get_row('answerwithintermtext')),
+                deadline=refactor_date(row[9]),
 
-                public=get_row('resultpublic'),
+                public=row[12],
 
-                creation_date=refactor_date_time(get_row('datecreated')),
-                active=get_row('active'),
-                state=dbmodels.State.objects.get(state=state_id_map(int(get_row('reg_idquestionregstatus')))),
+                creation_date=refactorDate(row[24]),
+                active=row[25],
+                state=dbmodels.State.objects.get(state=state_id_map(int(row[20]))),
 
                 # region
 
                 # organisation=Organisation.objects.get(id=get_row('organizationcontact_idorganizationcontact')),
-                organisation=dbmodels.Organisation(id=0),
+                organisation=dbmodels.Organisation.objects.get(id=33),
 
                 # keyword
                 # question_subject
                 # study_field
             )
             obj.save()
-        except ValueError as e:
-            if '\'NULL\'' in str(e) or '\'\'' in str(e):
+        except: #ValueError as e:
+            '''if '\'NULL\'' in str(e) or '\'\'' in str(e):
                 pass
-            else:
-                pass
+            else:'''
+            pass
                 # raise
 #import questionpertype
