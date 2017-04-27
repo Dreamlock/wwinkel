@@ -30,8 +30,8 @@ def refactorDate(cdate):
     if len(cdate) < 14 or len(cdate) > 16:
         return "0001-01-01 01:01"
     fields=cdate.split('/')
-    month=fields[0]
-    day=fields[1]
+    day=fields[0]
+    month=fields[1]
     year_time=fields[2].split(' ')
     year=year_time[0]
     hour=year_time[1].split(':')[0]
@@ -42,6 +42,7 @@ def refactorDate(cdate):
 
 #path to province.csv
 with open(sys.argv[1]) as f:
+    print(f)
     reader = csv.reader(f)
     for row in reader:
         if (row[0]=="idprovince"):
