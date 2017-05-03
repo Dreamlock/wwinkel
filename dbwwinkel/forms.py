@@ -5,9 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
 
+
 class DateInput(forms.DateInput):
     input_type = 'date'
-
 
 
 class NameForm(ModelForm):
@@ -32,9 +32,13 @@ class NameForm(ModelForm):
             'deadline': DateInput()
         }
 
+
 class StudentForm(ModelForm):
 
     class Meta:
         model = Student
         fields = ['first_name']
 
+
+class QuestionForm(ModelForm):
+    pass
