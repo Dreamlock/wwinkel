@@ -202,7 +202,7 @@ class OrganisationUser(User):
         verbose_name = _('organisation user')
         verbose_name_plural = _('organisation users')
 
-    organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation')
+    organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation') TODO: OnetoOnekey
 
 
 def organisation_user_created(sender, **kwargs):
