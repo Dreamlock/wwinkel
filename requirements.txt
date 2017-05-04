@@ -24,3 +24,5 @@ pysolr
 django-haystack
 
 django-extensions
+
+django-jet

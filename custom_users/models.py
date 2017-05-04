@@ -149,20 +149,20 @@ class User(AbstractUser):
         return self.last_name + ', ' + self.first_name
 
     def is_organisation(self):
-        return OrganisationUser.objects.filter(pk=self.id).exists()
-        try:
-            OrganisationUser.objects.get(pk=self.id)
-        except ObjectDoesNotExist:
-            return False
-        return True
+        return OrganisationUser.objects.filter(id=self.id).exists()
+
+    def as_organisation(self):
+        if self.is_organisation():
+            return OrganisationUser.objects.get(id=self.id)
+        return None
 
     def is_manager(self):
-        return ManagerUser.objects.filter(pk=self.id).exists()
-        try:
-            ManagerUser.objects.get(pk=self.id)
-        except ObjectDoesNotExist:
-            return False
-        return True
+        return ManagerUser.objects.filter(id=self.id).exists()
+
+    def as_manager(self):
+        if self.is_manager():
+            return ManagerUser.objects.get(id=self.id)
+        return None
 
 
 class LegalEntity(models.Model):
@@ -245,4 +245,8 @@ class ManagerUser(User):
 
     region = models.ManyToManyField(Region)
 
+    def is_central_manager(self):
+        return self.region.filter(region=Region.CENTRAL_REGION).exists()
 
+    def is_regional_manager(self):
+        return self.region.exclude(region=Region.CENTRAL_REGION).exists()
