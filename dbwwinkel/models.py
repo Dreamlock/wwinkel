@@ -5,8 +5,68 @@ from django.core.exceptions import ValidationError
 import datetime
 from django.utils.translation import ugettext_lazy as _
 
-from custom_users.models import Region, Organisation, Address
+from custom_users.models import Region, Organisation, Address, User, Keyword
 
+
+
+class StudyField(models.Model):
+    """Represents a field of study (like biology or computer science)"""
+
+    study_field = models.CharField(max_length=33, unique=True)
+
+    def __str__(self):
+        return self.study_field
+
+class Institution(models.Model):
+
+    name = models.CharField(max_length=20)
+    address = models.ForeignKey(Address)
+
+class Faculty(models.Model):
+    name = models.TextField()
+    institution = models.ForeignKey(Institution)
+
+class Education(models.Model):
+    name = models.TextField()
+    faculty = models.ForeignKey(Faculty)
+
+class Student(models.Model):
+
+    first_name = models.CharField(max_length = 33)
+    last_name = models.CharField(max_length= 45)
+
+    mobile = models.CharField(max_length = 20)
+    email = models.EmailField()
+
+    status = models.BooleanField(default=True)
+
+    education = models.ForeignKey(Education)
+    study_field = models.ForeignKey(StudyField)
+    adres = models.ForeignKey(Address)
+
+class Promotor(User):
+    expertise = models.TextField()
+    institution = models.ManyToManyField(Institution)
+
+class InstitutionContact(User):
+    institution = models.ForeignKey(Institution)
+
+class Intake(models.Model):
+    date = models.DateTimeField(default=timezone.now)
+    remarks = models.TextField()
+
+class Attachment(models.Model):
+    name = models.TextField()
+    type = models.TextField() #docx, csv, txt, ...
+
+class LogRecord(models.Model):
+    subject = models.TextField()
+    description = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+    creator = models.ManyToManyField(User)
+
+class Log(models.Model):
+    record = models.ManyToManyField(LogRecord)
 
 class State(models.Model):
     DRAFT_QUESTION = 0
@@ -19,6 +79,9 @@ class State(models.Model):
     FINISHED_QUESTION = 7
     DENIED_QUESTION = 8
     REVOKED_QUESTION = 9
+    NEW_QUESTION = 10
+    INTAKE_QUESTION = 11
+
 
     STATE_SELECT = (
         (DRAFT_QUESTION, _('draft')),
@@ -52,13 +115,6 @@ def build_question_permissions():
     return result
 '''
 
-class Keyword(models.Model):
-    """
-    Representation of a keyword. Has a many to many relationship with Question (a question can have multiple keywords
-    and a keyword can belong to multiple questions)
-    """
-
-    key_word = models.CharField(max_length=33, unique=True)
 
 class QuestionSubject(models.Model):
     """
@@ -72,13 +128,6 @@ class QuestionSubject(models.Model):
         return self.subject
 
 
-class StudyField(models.Model):
-    """Represents a field of study (like biology or computer science)"""
-
-    study_field = models.CharField(max_length=33, unique=True)
-
-    def __str__(self):
-        return self.study_field
 
 
 class Question(models.Model):
@@ -107,6 +156,9 @@ class Question(models.Model):
 
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
+    student = models.ForeignKey(Student)
+    completion_date = models.DateTimeField()
+
     study_field = models.ManyToManyField(StudyField, blank=True)
 
     def __str__(self):
@@ -161,23 +213,3 @@ class QuestionPermissionsBackend:
         #if user_obj.id is
 '''
 
-class Institution(models.Model):
-
-    name = models.CharField(max_length=20)
-    address = models.ForeignKey(Address)
-
-
-class Student(models.Model):
-
-    first_name = models.CharField(max_length = 33)
-    last_name = models.CharField(max_length= 45)
-
-    mobile = models.CharField(max_length = 20)
-    email = models.EmailField()
-
-    status = models.BooleanField(default=True)
-
-    institution = models.ForeignKey(Institution)
-    study_field = models.ForeignKey(StudyField)
-    adres = models.ForeignKey(Address)
-    question = models.ForeignKey(Question)

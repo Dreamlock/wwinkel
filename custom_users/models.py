@@ -10,6 +10,14 @@ from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.validators import RegexValidator
 
+class Keyword(models.Model):
+    """
+    Representation of a keyword. Has a many to many relationship with Question (a question can have multiple keywords
+    and a keyword can belong to multiple questions)
+    """
+
+    key_word = models.CharField(max_length=33, unique=True)
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -185,13 +193,18 @@ class Organisation(models.Model):
 
     telephone = models.IntegerField()
     fax = models.IntegerField(blank=True, null=True)
-    website = URLField(max_length=255, null=True, blank=True)
+    website = models.URLField(max_length=255, null=True, blank=True)
+    mail = models.EmailField()
 
     goal = models.TextField()
     remarks = models.TextField(blank=True, null=True)
 
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
+
+    keyword = models.ManyToManyField(Keyword)
+    type = models.ForeignKey(OrganisationType)
+    know_how = models.TextField()
 
     def __str__(self):
         return self.name
