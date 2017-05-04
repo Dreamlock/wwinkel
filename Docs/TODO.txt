@@ -1,22 +1,28 @@
 TO do list:
 
--Functionaliteit medewerkers wwinkel(ongoing)
-
--Authenticatie organisatie met wetenschapswinkel
-
--Authenticatie user met organisatie
-
--Facet search (bezig)
-
--plug ins(later)
-
+-Facet search (bezig, Robbe)
 -change password Pagina
--edit forms gebasseerd op permissies
+-Gebruiker informatie aanpassen a.d.h.v permissies
 -Database populatie statische elementen (state's, provincies, juridische entiteiten...., schrijf dit in een migration)
--Database migratie (oude data in onze database)
--Markup Forms (zie registreer form en wat er nog aangepast aann moet worden)
 
-DONE:
+-Database migratie (bezig, Beau)
 
--success log_in re direct naar een goeie pagina (momenteel search pagina)
--success register re direct naar correcte pagina (momenteel search pagina)
+-permissies(bezig, Thomas)
+
+-Algemene front end:
+vooral detail question (kijk naar detail view van django)
+(generic list view)
+form view van django
+-Email users bij: Aanmaken vraag (naar central unit),
+                - Registereren verificatie email (Een mail naar Central unit?)(app voor mogelijk django-mailer)
+
+-Geschiedenis vragen: -Log aanpassingen vragen, opmerkingen (Django reversion of Django simple history)
+
+-Stappenplan vragen organisaties & studenten uitwerken.
+
+
+
+
+
+Vragen aan Tinne:
+Moeten Organisaties bevestigd worden?
