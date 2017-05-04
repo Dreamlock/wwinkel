@@ -4,6 +4,7 @@ from dbwwinkel.models import Question, Student
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
+from haystack.forms import FacetedSearchForm
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -37,4 +38,5 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = ['first_name']
+
 

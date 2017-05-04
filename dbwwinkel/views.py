@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from .forms import NameForm
 from .models import Question, State
 from custom_users.models import OrganisationUser, ManagerUser, Region
+from haystack.generic_views import FacetedSearchView
 
 
 @login_required
@@ -47,20 +48,18 @@ def register_question(request):
 
 def list_questions(request):
 
-    # States visible for everyone
-    visible_states = [State.STATE_SELECT[State.PUBLIC_QUESTION], State.STATE_SELECT[State.RESERVED_QUESTION]
-        , State.STATE_SELECT[State.FINISHED_QUESTION]]
-
     #search searchbox
     val = request.GET.get('search_text', '')
+
     if val == '':
         sqs = SearchQuerySet().all().models(Question)
 
     else:
         sqs = SearchQuerySet().autocomplete(content_auto=val)
 
-    sqs2 = sqs.filter(state__in=[l[0] for l in visible_states])
-
+    # States visible for everyone
+    visible_states = [State.STATE_SELECT[State.PUBLIC_QUESTION], State.STATE_SELECT[State.RESERVED_QUESTION]
+        , State.STATE_SELECT[State.FINISHED_QUESTION]]
 
     if request.user.is_authenticated():
 
@@ -68,6 +67,8 @@ def list_questions(request):
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation
             organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
+
+            sqs2 = sqs.filter(state__in=[l[0] for l in visible_states])
             sqs = sqs2 | organisation_extra
 
 
@@ -83,8 +84,10 @@ def list_questions(request):
                 visible_states.extend([State.STATE_SELECT[State.PROCESSED_QUESTION_CENTRAL],
                                        State.STATE_SELECT[State.IN_PROGRESS_QUESTION_REGIONAL]])
 
+
+
     else:
-        sqs = sqs2
+        sqs = sqs.filter(state__in=[l[0] for l in visible_states])
 
     facets = sqs.facet('study_field_facet')
     study_field = facets.facet_counts()['fields']['study_field_facet']
@@ -101,11 +104,10 @@ def list_questions(request):
         if OrganisationUser.objects.filter(id=request.user.id).exists():
             sqs = sqs | organisation_extra
 
-
-
     context = {'questions': sqs,
                'states': visible_states,
-               'study_fields': study_field
+               'study_fields': study_field,
+               'search_text': val
                }
 
     return render(request, 'dbwwinkel/question_list.html', context)

@@ -26,7 +26,7 @@
                                         <input type ="checkbox" value = "{{ study_field.0 }}" name ="study_field">
                                         {{ study_field.0 }}({{ study_field.1 }})<br>
                                     {% endfor %}
-
+                                    <input type = "hidden" value = '{{ search_text }}' name = "search_text">
                                     <div class = "row form-group">
                                         <button type="submit" value = "select">Zoek! </button>
 
