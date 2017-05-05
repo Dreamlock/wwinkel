@@ -26,3 +26,6 @@ form view van django
 
 Vragen aan Tinne:
 Moeten Organisaties bevestigd worden?
+
+Vragen algemeen:
+Zijn er velden die de organisatie moet invullen (bij het stellen van een vraag) die niet zichtbaar mogen zijn voor studenten?
