@@ -68,38 +68,6 @@ class LogRecord(models.Model):
 class Log(models.Model):
     record = models.ManyToManyField(LogRecord)
 
-class State(models.Model):
-    DRAFT_QUESTION = 0
-    IN_PROGRESS_QUESTION_CENTRAL = 1
-    PROCESSED_QUESTION_CENTRAL = 2
-    IN_PROGRESS_QUESTION_REGIONAL = 3
-    PUBLIC_QUESTION = 4
-    RESERVED_QUESTION = 5
-    ONGOING_QUESTION = 6
-    FINISHED_QUESTION = 7
-    DENIED_QUESTION = 8
-    REVOKED_QUESTION = 9
-    NEW_QUESTION = 10
-    INTAKE_QUESTION = 11
-
-
-    STATE_SELECT = (
-        (DRAFT_QUESTION, _('draft')),
-        (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
-        (PROCESSED_QUESTION_CENTRAL, _('processed central')),
-        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
-        (PUBLIC_QUESTION, _('public')),
-        (RESERVED_QUESTION, _('reserved')),
-        (ONGOING_QUESTION, _('ongoing')),
-        (FINISHED_QUESTION, _('finished')),
-        (DENIED_QUESTION, _('denied')),
-        (REVOKED_QUESTION, _('revoked')),
-    )
-
-    state = models.PositiveIntegerField(choices=STATE_SELECT, unique=True)
-
-    def __str__(self):
-        return str(self.STATE_SELECT[self.state][1])
 
 '''
 def build_question_permissions():
@@ -131,6 +99,36 @@ class QuestionSubject(models.Model):
 
 
 class Question(models.Model):
+
+    DRAFT_QUESTION = 0
+    IN_PROGRESS_QUESTION_CENTRAL = 1
+    PROCESSED_QUESTION_CENTRAL = 2
+    IN_PROGRESS_QUESTION_REGIONAL = 3
+    PUBLIC_QUESTION = 4
+    RESERVED_QUESTION = 5
+    ONGOING_QUESTION = 6
+    FINISHED_QUESTION = 7
+    DENIED_QUESTION = 8
+    REVOKED_QUESTION = 9
+    NEW_QUESTION = 10
+    INTAKE_QUESTION = 11
+
+
+
+    STATE_SELECT = (
+        (DRAFT_QUESTION, _('draft')),
+        (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
+        (PROCESSED_QUESTION_CENTRAL, _('processed central')),
+        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
+        (PUBLIC_QUESTION, _('public')),
+        (RESERVED_QUESTION, _('reserved')),
+        (ONGOING_QUESTION, _('ongoing')),
+        (FINISHED_QUESTION, _('finished')),
+        (DENIED_QUESTION, _('denied')),
+        (REVOKED_QUESTION, _('revoked')),
+    )
+
+
     # Visible and editable: mandatory
     question_text = models.TextField()
     reason = models.TextField()
@@ -140,7 +138,7 @@ class Question(models.Model):
     # Visible and editable: optional
     remarks = models.TextField(blank=True)
     internal_remarks = models.TextField(blank=True)
-    how_know_WW = models.TextField(blank=True)  # TODO: Add model with values like question_anonymized.xlsx.questionknowfrom
+
     deadline = models.DateField(blank=True, null=True)
 
     public = models.BooleanField()
@@ -148,7 +146,7 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    state = models.ForeignKey(State)
+    state = models.IntegerField(choices = STATE_SELECT, default=0)
 
     region = models.ManyToManyField(Region)
 
@@ -156,8 +154,8 @@ class Question(models.Model):
 
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
-    student = models.ForeignKey(Student)
-    completion_date = models.DateTimeField()
+    student = models.ForeignKey(Student, null=True)
+    completion_date = models.DateTimeField(null=True) # When the question was round up
 
     study_field = models.ManyToManyField(StudyField, blank=True)
 

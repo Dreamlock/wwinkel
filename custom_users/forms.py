@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
 from .models import User, OrganisationUser, Organisation, Address
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserCreationForm(BaseUserCreationForm):
@@ -29,7 +30,7 @@ class OrganisationUserCreationForm(BaseUserCreationForm):
     class Meta:
         model = OrganisationUser
         fields = ['organisation','email','first_name','last_name','telephone']
-        # fields = ('email', 'telephone', )
+
 
 
 class OrganisationUserChangeForm(BaseUserChangeForm):
@@ -71,7 +72,7 @@ class OrganisationForm(forms.ModelForm):
 
     class Meta:
         model = Organisation
-        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'telephone','website', 'goal', 'remarks']
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','website', 'goal','how_know_ww', 'remarks']
 
         labels = {
             'name': '*Naam Organisatie',
@@ -82,6 +83,9 @@ class OrganisationForm(forms.ModelForm):
             'goal': '*Doel organisatie',
             'remarks': 'Opmerkingen'
 
+        }
+        help_texts = {
+            'telephone': _('Nummer waarop we het bedrijf kunnen contacteren')
         }
 
 
@@ -107,3 +111,4 @@ class BaseOrganisationUserForm(OrganisationUserCreationForm):
     class Meta:
         model = OrganisationUser
         fields = ['email', 'first_name', 'last_name', 'telephone']
+        labels = {'telephone': 'Telefoon'}

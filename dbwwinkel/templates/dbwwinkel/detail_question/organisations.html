@@ -1,14 +1,12 @@
 {% extends 'dbwwinkel/detail_question/detail_question_base.html' %}
 
 {% block options %}
-    <div class = col-md-6>
-        <a class="btn btn-success" href = "{% url 'edit_question' question.id %}">Vraag Bewerken</a>
-    </div>
 
-    <div class = "col-md-6">
-        {% if question.state.state != 5 or question.state.state != 6 or question.state.state != 7 %}
+    <a class="btn btn-success" href = "{% url 'edit_question' question.id %}">Vraag Bewerken</a><br>
+    <br>
+    {% if question.state.state != 5 or question.state.state != 6 or question.state.state != 7 %}
         <a class="btn btn-danger" href = {% url 'revoke_question' question.id %}>Vraag Terugtrekken</a>
     {% endif %}
-    </div>
+
 
 {% endblock %}

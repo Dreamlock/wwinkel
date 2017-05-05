@@ -17,6 +17,9 @@
                                 <form name ="status" action = "{% url "list_questions" %}" method = 'post' accept-charset="utf-8">
                                     {% csrf_token %}
                                     <li class="nav-header">Status</li>
+                                    {% if own_question %}
+                                        <input type = "checkbox" value = 'own_question' name = 'own_question'> eigen vragen<br>
+                                    {% endif %}
                                     {% for state in states %}
                                         <input type ="checkbox" value = "{{ state.0 }}" name ="status"> {{ state.1 }}<br>
                                     {% endfor %}
@@ -41,6 +44,7 @@
             <!--/span-->
     <div class = "container">
         <div class = "col-md-9">
+        <h3>Gezocht op: {{ search_text }}</h3>
           <table class="table table-hover ">
             <thead>
               <tr>
@@ -62,7 +66,7 @@
                     <td>{{ question.object.creation_date.date }}</td>
                     <td>{{question.object.question_text  }}</td>
                     <td>{{ question.object.deadline }}</td>
-                    <td>{{ question.object.state_name}}</td>
+                    <td>{{ question.object.get_state_display}}</td>
                   </tr>
               {% endfor %}
               </tbody>

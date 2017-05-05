@@ -183,6 +183,9 @@ class LegalEntity(models.Model):
 class OrganisationType(models.Model):
     type = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.type
+
 
 class Organisation(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -198,6 +201,8 @@ class Organisation(models.Model):
 
     goal = models.TextField()
     remarks = models.TextField(blank=True, null=True)
+    how_know_ww = models.TextField(blank=True)  # TODO: Add model with values like question_anonymized.xlsx.questionknowfrom
+
 
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
@@ -215,7 +220,7 @@ class OrganisationUser(User):
         verbose_name = _('organisation user')
         verbose_name_plural = _('organisation users')
 
-    organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation') TODO: OnetoOnekey
+    organisation = models.OneToOneField(Organisation)  # , related_name='user_organisation') TODO: OnetoOnekey
 
 
 def organisation_user_created(sender, **kwargs):
