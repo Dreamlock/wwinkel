@@ -116,10 +116,10 @@ class Question(models.Model):
 
 
     STATE_SELECT = (
-        (DRAFT_QUESTION, _('draft')),
+        (DRAFT_QUESTION, _('nieuw')),
         (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
         (PROCESSED_QUESTION_CENTRAL, _('processed central')),
-        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
+        (IN_PROGRESS_QUESTION_REGIONAL, _('Intake')),
         (PUBLIC_QUESTION, _('public')),
         (RESERVED_QUESTION, _('reserved')),
         (ONGOING_QUESTION, _('ongoing')),

@@ -285,3 +285,15 @@ def revoke_question(request, question_id):
     return HttpResponse("Vraag is terug getrokken")
 
 
+
+def distribute_intake(request, question_id):
+    question = Question.objects.get(id=question_id)
+
+    region = Region.objects.get(region = request.POST.getlist('region')[0])
+    question.region.add(region)
+    question.state = Question.IN_PROGRESS_QUESTION_REGIONAL
+    question.save()
+
+    return redirect('detail_question',question_id =int(question_id))
+
+

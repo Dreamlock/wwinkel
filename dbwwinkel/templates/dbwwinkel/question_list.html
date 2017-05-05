@@ -61,7 +61,7 @@
                   <tr {% if question.object.status.id  ==  1%} class = "table-row success"
                       {% else %}  class ="table-row"
                       {% endif %}
-                      data-href = "{% url 'detail_organisation' question.object.id %}" style="cursor: pointer;">
+                      data-href = "{% url 'detail_question' question.object.id %}" style="cursor: pointer;">
 
                     <td>{{ question.object.creation_date.date }}</td>
                     <td>{{question.object.question_text  }}</td>
