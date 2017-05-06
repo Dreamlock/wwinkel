@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+        <link rel="stylesheet" href="{% static 'dbwwinkel/css/form.css' %} ">
+{% endblock %}
+
+{% block content %}
+    <div class ="container">
+        <form action="{% url 'internal_remark' question_id %}" method="post">
+         {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+            </form>
+    </div>
+{% endblock %}

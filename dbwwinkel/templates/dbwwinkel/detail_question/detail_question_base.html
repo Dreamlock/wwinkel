@@ -103,10 +103,10 @@
                         <h3>Opmerkingen</h3>
                         {{ question.remarks }}
                     </div>
-                    {% if intertnal == True %}
+                    {% if internal == True %}
                         <div class = 'panel-body'>
                             <h3>Interne opmerkingen</h3>
-                            {{ question.internal_remarks }}
+                            <p style ='color:green'>{{ question.internal_remarks }}</p>
                         </div>
                     {% endif %}
                 </div>

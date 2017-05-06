@@ -11,7 +11,7 @@ from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import RegisterQuestionForm
+from .forms import RegisterQuestionForm, InternalRemarkForm
 from .models import Question
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
@@ -177,9 +177,11 @@ def student_detail(request, question, organisation):
 
 
 def regional_detail(request, question, organisation):
+
     context = {'question': question,
                'organisation': organisation,
                'internal': True}
+
     return render(request, 'dbwwinkel/detail_question/regional_unit.html',context)
 
 
@@ -205,7 +207,7 @@ def organisation_detail(request, question, organisation):
 def edit_question(request, question_id):
     question = Question.objects.get(id=question_id)
     # todo: Check if the authentication works.
-    try:
+    '''try:
         if (request.user.organisation.id == question.organisation.id  # Check user same organisation as question.
                 and request.user.has_perm()):
             pass
@@ -213,13 +215,13 @@ def edit_question(request, question_id):
             raise PermissionDenied()
 
     except ValueError:
-        raise PermissionDenied()
+        raise PermissionDenied() '''
 
     form = RegisterQuestionForm(request.POST or None, instance=question)
 
     if form.is_valid():
         form.save()
-        return redirect(detail, question_id='1')
+        return redirect(detail, question_id= question_id)
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
@@ -296,4 +298,27 @@ def distribute_intake(request, question_id):
 
     return redirect('detail_question',question_id =int(question_id))
 
+
+def internal_remark(request, question_id):
+    question = Question.objects.get(id = question_id)
+
+    if request.method == 'POST':
+        form = InternalRemarkForm(request.POST)
+        if form.is_valid():
+            new_remark = form.cleaned_data['internal_remark']
+            question.internal_remarks = new_remark
+            question.save()
+            return redirect('detail_question', question_id = question_id)
+
+    else:
+        existing_remark = question.internal_remarks
+        data = {'internal_remark': existing_remark}
+        form = InternalRemarkForm(initial = data)
+
+
+    return render(request, 'dbwwinkel/internal_remark.html', {'form': form, 'question_id':question_id})
+
+
+def edit_study_field(request, question_id):
+    HttpResponse('stub')
 

@@ -40,4 +40,6 @@ class StudentForm(ModelForm):
         fields = ['first_name']
 
 
+class InternalRemarkForm(forms.Form):
+    internal_remark = forms.CharField(label = _('Interne opmerking'),widget = forms.Textarea)
 
