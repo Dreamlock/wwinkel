@@ -14,27 +14,26 @@
                 <div class="sidebar-nav-fixed affix">
                     <div class="well">
                         <ul class="nav ">
-                                <form name ="status" action = "{% url "list_questions" %}" method = 'post' accept-charset="utf-8">
-                                    {% csrf_token %}
-                                    <li class="nav-header">Status</li>
-                                    {% if own_question %}
-                                        <input type = "checkbox" value = 'own_question' name = 'own_question'> eigen vragen<br>
-                                    {% endif %}
-                                    {% for state in states %}
-                                        <input type ="checkbox" value = "{{ state.0 }}" name ="status"> {{ state.1 }}<br>
-                                    {% endfor %}
-                                    <br>
-                                    <li class="nav-header">Onderzoeksveld</li>
-                                    {%  for study_field in study_fields %}
-                                        <input type ="checkbox" value = "{{ study_field.0 }}" name ="study_field">
-                                        {{ study_field.0 }}({{ study_field.1 }})<br>
-                                    {% endfor %}
-                                    <input type = "hidden" value = '{{ search_text }}' name = "search_text">
-                                    <div class = "row form-group">
-                                        <button type="submit" value = "select">Zoek! </button>
-
-                                    </div>
-                                </form>
+                            <form name ="status" action = "{% url "list_questions" %}" method = 'post' accept-charset="utf-8">
+                                {% csrf_token %}
+                                <li class="nav-header">Status</li>
+                                {% if own_question %}
+                                    <input type = "checkbox" value = 'own_question' name = 'own_question'> eigen vragen<br>
+                                {% endif %}
+                                {% for state in states %}
+                                    <input type ="checkbox" value = "{{ state.0 }}" name ="status"> {{ state.1 }}<br>
+                                {% endfor %}
+                                <br>
+                                <li class="nav-header">Onderzoeksveld</li>
+                                {%  for study_field in study_fields %}
+                                    <input type ="checkbox" value = "{{ study_field.0 }}" name ="study_field">
+                                    {{ study_field.0 }}({{ study_field.1 }})<br>
+                                {% endfor %}
+                                <input type = "hidden" value = '{{ search_text }}' name = "search_text">
+                                <div class = "row form-group">
+                                    <button type="submit" value = "select">Zoek! </button>
+                                </div>
+                            </form>
                         </ul>
                     </div>
                     <!--/.well -->

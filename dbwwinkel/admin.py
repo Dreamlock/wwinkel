@@ -33,7 +33,7 @@ class QuestionStateListFilter(admin.SimpleListFilter):
         if not self.value():
             return queryset
 
-        for state in State.STATE_SELECT:
+        for state in Question.STATE_SELECT:
             print(self.value(), state[0], str(state[1]))
             if int(self.value()) == state[0]:
                 return queryset.filter(state__state=state[0])

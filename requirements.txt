@@ -27,3 +27,4 @@ django-extensions
 
 django-jet
 django-simple-history
+django-autocomplete-light
