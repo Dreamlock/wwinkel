@@ -11,10 +11,12 @@ from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import NameForm
-from .models import Question, State
+from .forms import RegisterQuestionForm, InternalRemarkForm
+from .models import Question
 from custom_users.models import OrganisationUser, ManagerUser, Region
-from haystack.generic_views import FacetedSearchView
+
+from .search import *
+
 
 
 @login_required
@@ -24,14 +26,14 @@ def register_question(request):
     # form = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
+        form = RegisterQuestionForm(request.POST)
 
         # check whether it's valid:
         if form.is_valid():
             question = form.save(commit=False)  # We still need to lay out the foreign keys
             org_user = OrganisationUser.objects.get(id = request.user.id)  # Error if creating a question with admin
             question.organisation = org_user.organisation  # Foreign key to the user (organisation in question...)
-            question.state = State.objects.get(state=State.DRAFT_QUESTION)
+            question.state = Question.DRAFT_QUESTION
             question.save()
             form.save_m2m()
 
@@ -40,36 +42,33 @@ def register_question(request):
 
 
     else:
-        form = NameForm()
+        form = RegisterQuestionForm()
 
-        # if a GET (or any other method) we'll create a blank form
+    # if a GET (or any other method) we'll create a blank form
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
 def list_questions(request):
-
     #search searchbox
-    val = request.GET.get('search_text', '')
-
-    if val == '':
-        sqs = SearchQuerySet().all().models(Question)
+    if request.POST:
+        val = request.POST.get('search_text')
 
     else:
-        sqs = SearchQuerySet().autocomplete(content_auto=val)
+        val = request.GET.get('search_text', '')
+
+    sqs = autocomplete(SearchQuerySet().all().models(Question),val, Question)
 
     # States visible for everyone
-    visible_states = [State.STATE_SELECT[State.PUBLIC_QUESTION], State.STATE_SELECT[State.RESERVED_QUESTION]
-        , State.STATE_SELECT[State.FINISHED_QUESTION]]
+    visible_states = [Question.STATE_SELECT[Question.PUBLIC_QUESTION], Question.STATE_SELECT[Question.RESERVED_QUESTION]
+        , Question.STATE_SELECT[Question.FINISHED_QUESTION]]
 
+    # Fetching all the data specified on user
     if request.user.is_authenticated():
 
         if request.user.is_organisation():
             user = OrganisationUser.objects.get(id = request.user.id)
             organisation = user.organisation
-            organisation_extra = SearchQuerySet().filter(organisation = organisation.id)
-
-            sqs2 = sqs.filter(state__in=[l[0] for l in visible_states])
-            sqs = sqs2 | organisation_extra
+            organisation_extra = SearchQuerySet().filter(organisation = organisation.id) # the organisations own questions
 
 
         elif request.user.is_manager():
@@ -77,38 +76,64 @@ def list_questions(request):
             user = ManagerUser.objects.get(id = request.user.id)
 
             if user.region.filter(region = Region.CENTRAL_REGION).exists():
-                visible_states = State.STATE_SELECT
+                visible_states = Question.STATE_SELECT
 
             else:
-                sqs = sqs | SearchQuerySet().filter(region__in = [region.region for region in user.region.all()])
-                visible_states.extend([State.STATE_SELECT[State.PROCESSED_QUESTION_CENTRAL],
-                                       State.STATE_SELECT[State.IN_PROGRESS_QUESTION_REGIONAL]])
+                regional_extra = SearchQuerySet().filter(region__in = [region.region for region in user.region.all()])
 
 
 
-    else:
-        sqs = sqs.filter(state__in=[l[0] for l in visible_states])
-
-    facets = sqs.facet('study_field_facet')
-    study_field = facets.facet_counts()['fields']['study_field_facet']
-
-    if request.POST:
+    if request.POST: #start filtering
         sqs = sqs.filter(state__in= request.POST.getlist("status"))
 
         if request.POST.getlist("study_field"):
             sqs = sqs.filter(study_field_facet__in=request.POST.getlist("study_field"))
-        else:
-            print(request.POST.getlist("status"))
-
 
         if OrganisationUser.objects.filter(id=request.user.id).exists():
-            sqs = sqs | organisation_extra
+            if request.POST.getlist('own_question'):
+                sqs = sqs | organisation_extra
+
+    else:
+        if request.user.is_authenticated():
+            if request.user.is_organisation():
+                organisation_extra = autocomplete(organisation_extra,val,Question)
+                sqs = sqs.filter(state__in=[l[0] for l in visible_states]) | organisation_extra
+
+            elif request.user.is_manager():
+
+                user = ManagerUser.objects.get(id=request.user.id)
+
+                if user.region.filter(region=Region.CENTRAL_REGION).exists(): #No extra filters to apply
+                    pass
+
+                else: # + the extra ones bound to this region
+                    regional_extra = autocomplete(regional_extra,val,Question)
+                    sqs = sqs | regional_extra
+
+        else: # is student
+            sqs = sqs.filter(state__in=[l[0] for l in visible_states])
+
+
+    facets = sqs.facet('study_field_facet')
+    study_field = facets.facet_counts()['fields']['study_field_facet']
+
+
+    own_question = False
+    if request.user.is_authenticated() and request.user.is_organisation():
+        own_question = True
+
+    true_states = []
+    for state in visible_states:
+        tuple =(state[0], state[1], True)
+        true_states.append(tuple)
 
     context = {'questions': sqs,
-               'states': visible_states,
+               'states': true_states,
                'study_fields': study_field,
-               'search_text': val
+               'search_text': val,
+               'own_question': own_question
                }
+
 
     return render(request, 'dbwwinkel/question_list.html', context)
 
@@ -116,50 +141,65 @@ def list_questions(request):
 def detail(request, question_id):
 
     question = Question.objects.get(id=question_id)
+    organisation = question.organisation
+
     if request.user.is_authenticated == False: # Then the user is a student
         return student_detail(request, question)
 
     elif OrganisationUser.objects.filter(id = request.user.id).exists():
         organisation = (OrganisationUser.objects.get(id = request.user.id)).organisation
         if organisation == question.organisation:
-            return organisation_detail(request, question)
+            return organisation_detail(request, question, organisation)
 
     elif request.user.is_manager():
         user = ManagerUser.objects.get(id=request.user.id)
         if user.region.filter(region=Region.CENTRAL_REGION).exists():
-            return central_detail(request, question)
+            return central_detail(request, question, organisation)
 
         elif not set(user.region.all()).isdisjoint(question.region.all()):
-            return regional_detail(request, question)
+            return regional_detail(request, question, organisation)
 
 
     context = {'question': question,
-               'question_id': question_id}
+               'question_id': question_id,
+               'organisation': organisation,
+               'internal': False}
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
 
 
-def student_detail(request, question):
-    context = {'question': question}
+def student_detail(request, question, organisation):
+    context = {'question': question,
+               'organisation': organisation,
+               'internal': False
+               }
     return render(request, 'dbwwinkel/detail_question/student.html', context)
 
 
-def regional_detail(request, question):
-    context = {'question': question}
+def regional_detail(request, question, organisation):
+
+    context = {'question': question,
+               'organisation': organisation,
+               'internal': True}
+
     return render(request, 'dbwwinkel/detail_question/regional_unit.html',context)
 
 
-def central_detail(request, question):
+def central_detail(request, question, organisation):
     region_list = []
     for region in Region.objects.all():
         if region.region != Region.CENTRAL_REGION:
             region_list.append((region, region.region))
     context = {'question': question,
-               'region_lst': region_list}
+               'region_lst': region_list,
+               'organisation': organisation,
+               'internal': True}
     return render(request, 'dbwwinkel/detail_question/central_unit.html',context)
 
-def organisation_detail(request, question):
-    context = {'question': question}
+def organisation_detail(request, question, organisation):
+    context = {'question': question,
+               'organisation': organisation,
+               'internal': False}
     return render(request, 'dbwwinkel/detail_question/organisations.html', context)
 
 
@@ -167,7 +207,7 @@ def organisation_detail(request, question):
 def edit_question(request, question_id):
     question = Question.objects.get(id=question_id)
     # todo: Check if the authentication works.
-    try:
+    '''try:
         if (request.user.organisation.id == question.organisation.id  # Check user same organisation as question.
                 and request.user.has_perm()):
             pass
@@ -175,23 +215,23 @@ def edit_question(request, question_id):
             raise PermissionDenied()
 
     except ValueError:
-        raise PermissionDenied()
+        raise PermissionDenied() '''
 
-    form = NameForm(request.POST or None, instance=question)
+    form = RegisterQuestionForm(request.POST or None, instance=question)
 
     if form.is_valid():
         form.save()
-        return redirect(detail, question_id='1')
+        return redirect(detail, question_id= question_id)
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
 def reserve_question(request, question_id):
     question = Question.objects.get(id=question_id)
-    if request.user.is_authenticated == False and question.state.state == State.PUBLIC_QUESTION :
+    if request.user.is_authenticated == False and question.state.state == Question.PUBLIC_QUESTION :
         add = ""
         for region in question.region.all():
             add += "{0} ".format(region)
-        question.state = State.objects.get(state = State.RESERVED_QUESTION)
+        question.state = Question.RESERVED_QUESTION
         question.save()
         return HttpResponse("Vraag gereserveerd."
                             "\nGelieve contact op te nemen met de medewerker(s) van: {0}".format(add) )
@@ -206,8 +246,7 @@ def distribute_question(request, question_id):
         region_obj = Region.objects.get(region = region)
         question.region.add(region_obj)
 
-    state = State.objects.get(state= State.PROCESSED_QUESTION_CENTRAL)
-    question.state = state
+    question.state = Question.IN_PROGRESS_QUESTION_REGIONAL
     question.save()
 
     return HttpResponse("Toegewezen")
@@ -215,19 +254,19 @@ def distribute_question(request, question_id):
 def open_question(request, question_id):
 
     question = Question.objects.get(id = question_id)
-    question.state = State.objects.get(state= State.PUBLIC_QUESTION)
+    question.state = Question.PUBLIC_QUESTION
     question.save()
     return HttpResponse("Vraag staat publiek")
 
 def assign_question(request, question_id):
     question = Question.objects.get(id = question_id)
-    question.state = State.objects.get(state= State.ONGOING_QUESTION)
+    question.state = Question.ONGOING_QUESTION
     question.save()
     return HttpResponse("Vraag is nu lopend")
 
 def round_up_question(request, question_id):
     question = Question.objects.get(id = question_id)
-    question.state = State.objects.get(state= State.FINISHED_QUESTION)
+    question.state = Question.FINISHED_QUESTION
     question.save()
     return HttpResponse("Vraag is afgerond")
 
@@ -235,7 +274,7 @@ def deny_question(request, question_id):
     """FAKE NEWS"""
 
     question = Question.objects.get(id = question_id)
-    question.state = State.objects.get(state= State.DENIED_QUESTION)
+    question.state = Question.DENIED_QUESTION
     question.save()
     return HttpResponse("Vraag is geweigerd")
 
@@ -243,8 +282,43 @@ def deny_question(request, question_id):
 def revoke_question(request, question_id):
 
     question = Question.objects.get(id = question_id)
-    question.state = State.objects.get(state= State.REVOKED_QUESTION)
+    question.state = Question.REVOKED_QUESTION
     question.save()
     return HttpResponse("Vraag is terug getrokken")
 
+
+
+def distribute_intake(request, question_id):
+    question = Question.objects.get(id=question_id)
+
+    region = Region.objects.get(region = request.POST.getlist('region')[0])
+    question.region.add(region)
+    question.state = Question.IN_PROGRESS_QUESTION_REGIONAL
+    question.save()
+
+    return redirect('detail_question',question_id =int(question_id))
+
+
+def internal_remark(request, question_id):
+    question = Question.objects.get(id = question_id)
+
+    if request.method == 'POST':
+        form = InternalRemarkForm(request.POST)
+        if form.is_valid():
+            new_remark = form.cleaned_data['internal_remark']
+            question.internal_remarks = new_remark
+            question.save()
+            return redirect('detail_question', question_id = question_id)
+
+    else:
+        existing_remark = question.internal_remarks
+        data = {'internal_remark': existing_remark}
+        form = InternalRemarkForm(initial = data)
+
+
+    return render(request, 'dbwwinkel/internal_remark.html', {'form': form, 'question_id':question_id})
+
+
+def edit_study_field(request, question_id):
+    HttpResponse('stub')
 

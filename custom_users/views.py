@@ -42,30 +42,6 @@ def login_view(request):
             # redirect to a new URL:
     return render(request, "custom_users/login_form.html", {'form': form})
 
-
-def register_user_view(request):
-    if request.user.is_authenticated(): # TODO this looks like a decorator?
-        return HttpResponse("Already logged in") # TODO redirect to a 404?
-
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        user_form = OrganisationUserCreationForm(request.POST)
-        # check whether it's valid:
-        if user_form.is_valid():
-            user_form.save()
-            user = OrganisationUser.objects.get(email=user_form.cleaned_data['email'])
-            if user is not None:
-                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?"""
-        else:
-            return render(request, "custom_users/user_registration_form.html", {'form': user_form})
-    else:
-        organisation_form = OrganisationUserCreationForm()
-
-            # redirect to a new URL:
-    return render(request, "custom_users/user_registration_form.html", {'form': organisation_form})
-
-
 def register_organisation(request):
 
     address_form = None

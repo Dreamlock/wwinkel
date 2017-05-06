@@ -11,22 +11,22 @@ class QuestionStateListFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         if request.user.is_superuser:
-            return State.STATE_SELECT
+            return Question.STATE_SELECT
 
         if request.user.is_manager():
             user = ManagerUser.objects.get(id=request.user.id)
             print(str(user.region.all()))
             if Region.CENTRAL_REGION in user.region.all():
                 return (
-                    (State.STATE_SELECT[State.DRAFT_QUESTION]),
-                    (State.STATE_SELECT[State.IN_PROGRESS_QUESTION_CENTRAL]),
-                    (State.STATE_SELECT[State.PROCESSED_QUESTION_CENTRAL]),
+                    (Question.STATE_SELECT[Question.DRAFT_QUESTION]),
+                    (Question.STATE_SELECT[Question.IN_PROGRESS_QUESTION_CENTRAL]),
+                    (Question.STATE_SELECT[Question.PROCESSED_QUESTION_CENTRAL]),
                 )
             else:
                 return (
-                    (State.STATE_SELECT[State.DRAFT_QUESTION]),
-                    (State.STATE_SELECT[State.IN_PROGRESS_QUESTION_CENTRAL]),
-                    (State.STATE_SELECT[State.PROCESSED_QUESTION_CENTRAL]),
+                    (Question.STATE_SELECT[Question.DRAFT_QUESTION]),
+                    (Question.STATE_SELECT[Question.IN_PROGRESS_QUESTION_CENTRAL]),
+                    (Question.STATE_SELECT[Question.PROCESSED_QUESTION_CENTRAL]),
                 )
 
     def queryset(self, request, queryset):

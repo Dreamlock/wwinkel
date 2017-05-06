@@ -1,9 +1,10 @@
 from django.utils import translation
 from custom_users.models import *
-from dbwwinkel.models import Question, State
+from dbwwinkel.models import Question
+from django.contrib.auth.backends import ModelBackend
 
 
-class QuestionPermissionsBackend:
+class QuestionPermissionsBackend(ModelBackend):
     def has_perm(self, user_obj, perm, question=None):
         # perm = 'edit_question', 'view_question'
         if not question:

@@ -2,87 +2,116 @@
 {% load cms_tags menu_tags sekizai_tags staticfiles %}
 
 {% block content %}
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-9">
-                <h1>{{ question.question_text }}</h1>
-                    <p></p>
+    <div class = "row">
+        <div class = "page-header">
+            <div class = "container">
+                <h1>Detail weergave vraag</h1>
+            </div>
+        </div>
+    </div>
+        <div class = "col-md-2">
+            <div class="col-md-2">
+                <div class="sidebar-nav-fixed affix">
+                    <div class="well">
+                        <ul class="nav ">
+                            Opties: <br>
+                            {% block options %}
+                            {% endblock %}
+                        </ul>
+                    </div>
+                    <!--/.well -->
                 </div>
-            <div class = "col-md-3">
-                <br>
-                {% block options %}
-                {% endblock %}
+                <!--/sidebar-nav-fixed -->
             </div>
         </div>
-    </div>
-    <hr />
-       <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Feedback van de wetenschapswinkel</h2>
-                <p>{{ question.internal_remarks }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Hoe is uw vraag ontstaan?</h2>
-                <p>{{ question.reason }}</p>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Hoe wilt u de resultaten van de vraag gebruiken?</h2>
-                <p>{{ question.purpose }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-        <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Kunt u bijdragen tot de kosten?</h2>
-                <p>{{ question.own_contribution }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-       <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Opmerking</h2>
-                <p>{{ question.remarks }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
+        <div class = "col-md-10">
+            <div class = "container">
+                <div class = "panel panel-info">
+                    <div class = 'panel-heading'>
+                        <h2><strong>Vraag: </strong>{{ question.question_text }}</h2>
+                    </div>
+                    <div class = "panel panel-body">
+                        <div class = col-md-4>
+                            <h3>Organisatie</h3>
+                            <strong>Naam:   </strong> {{organisation.name}}<br>
+                            <strong>Straat: </strong> {{ organisation.address.street_name }}<br>
+                            <strong>Nummer: </strong> {{ organisation.address.street_number }}<br>
+                            <strong>Plaats: </strong> {{ organisation.address.postal_code }}  {{ organisation.address.city }} <br>
+                            <strong>Tel:    </strong> {{ organisation.telephone }} <br>
+                            <strong>Website:</strong> <a href = "{{organisation.website}}" target="_blank">{{ organisation.website }}</a>
+                        </div>
 
-       <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Gaat u ermee akkoort dat de resultaten openbaar zijn en gepubliceerd worden?</h2>
-                {% if question.public is True  %}
-                <p>Ja</p>
-                {% else %}
-                <p>Nee</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Deadline</h2>
-                <p>{{ question.deadline }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
+                        <div class = col-md-4>
+                            <h3>Contactpersoon</h3>
+                            <strong>Naam:  </strong> {{organisation.organisationuser.first_name  }}
+                            {{organisation.organisationuser.last_name  }}<br>
+                            <strong>Email: </strong> {{organisation.organisationuser.email  }}<br>
+                            <strong>Tel:</strong> {{ organisation.organisationuser.telephone }}
+                        </div>
+                        <div class = "col-md-4">
+                            <h3>Info </h3>
+                            <strong>Status: </strong>{{ question.get_state_display }} <br>
+                            <strong>Regio(s)</strong>:
+                            {% for region in question.region.all  %}
+                                {{ region }}
+                            {% endfor %}
 
+                        </div>
+
+                    </div>
+
+                    <div class = 'panel-body'>
+                       <h3>Doel van de organisatie:</h3>
+                        {{ organisation.goal }}
+                    </div>
+
+                    <div class = 'panel-body'>
+                        <h3>Hoe is uw vraag ontstaan?</h3>
+                        {{ question.reason }}
+                    </div>
+
+                    <div class = 'panel-body'>
+                        <h3>Hoe wilt u de resultaten van uw vraag gebruiken?</h3>
+                        {{ question.purpose }}
+                    </div>
+
+                    <div class = 'panel-body'>
+                        <h3>Deadline vraag:</h3>
+                        {% if question.deadline == Null %}
+                            Geen
+                        {% else %}
+                            {{ question.deadline }}
+                        {% endif %}
+
+                    </div>
+
+                    <div class = 'panel-body'>
+                        <h3>In welke mate kunt u een bijdrage leveren aan de kosten?</h3>
+                        {{ question.own_contribution }}
+                    </div>
+
+                    <div class = 'panel-body'>
+                        <h3>Gaat u ermee akkoord dat de resultaten openbaar zijn en gepubliceerd worden?</h3>
+                        {% if question.public == True %}
+                            Ja
+                        {% else %}
+                            Nee
+                        {% endif %}
+                    </div>
+
+                    <div class = 'panel-body'>
+                        <h3>Opmerkingen</h3>
+                        {{ question.remarks }}
+                    </div>
+                    {% if internal == True %}
+                        <div class = 'panel-body'>
+                            <h3>Interne opmerkingen</h3>
+                            <p style ='color:green'>{{ question.internal_remarks }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
