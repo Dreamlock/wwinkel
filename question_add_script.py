@@ -13,7 +13,7 @@ import sys
 
 def refactor_date_time(cdate):
     if '/' not in cdate:
-        return "0000-00-00 00:00"
+        return "0001-01-01 00:00"
     fields = cdate.split('/')
     day = fields[0]
     month = fields[1]
@@ -27,7 +27,7 @@ def refactor_date_time(cdate):
 
 def refactor_date(cdate):
     if '/' not in cdate:
-        return "0000-00-00"
+        return "0001-01-01"
     fields = cdate.split('/')
     day = fields[0]
     month = fields[1]
@@ -102,6 +102,8 @@ with open(sys.argv[1], newline='') as f:
 
                 # keyword
                 # question_subject
+                completion_date=refactor_date_time(get_row('dateregcompleted'))
+
                 # study_field
             )
             obj.save()

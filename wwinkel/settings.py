@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'treebeard',
     'sekizai',
     
-    'django_extensions'
+    'django_extensions',
+    'simple_history',
 ]
 
 # enables color select in admin.
@@ -113,7 +114,8 @@ MIDDLEWARE = [
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware'
+    'cms.middleware.language.LanguageCookieMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'wwinkel.urls'

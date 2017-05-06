@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-
+from simple_history import admin as history_admin
 from .models import *
 from custom_users.models import ManagerUser, OrganisationUser
 
@@ -39,7 +39,8 @@ class QuestionStateListFilter(admin.SimpleListFilter):
                 return queryset.filter(state__state=state[0])
 
 
-class QuestionAdmin(admin.ModelAdmin):
+# class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(history_admin.SimpleHistoryAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
 

@@ -26,3 +26,4 @@ django-haystack
 django-extensions
 
 django-jet
+django-simple-history

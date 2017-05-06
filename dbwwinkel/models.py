@@ -1,12 +1,12 @@
+import datetime
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
-from django.core.exceptions import ValidationError
-import datetime
 from django.utils.translation import ugettext_lazy as _
+from simple_history.models import HistoricalRecords
 
 from custom_users.models import Region, Organisation, Address, User, Keyword
-
 
 
 class StudyField(models.Model):
@@ -38,7 +38,7 @@ class Student(models.Model):
     mobile = models.CharField(max_length = 20)
     email = models.EmailField()
 
-    status = models.BooleanField(default=True)
+    status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
     education = models.ForeignKey(Education)
     study_field = models.ForeignKey(StudyField)
@@ -140,7 +140,17 @@ class Question(models.Model):
     # Visible and editable: optional
     remarks = models.TextField(blank=True)
     internal_remarks = models.TextField(blank=True)
-    how_know_WW = models.TextField(blank=True)  # TODO: Add model with values like question_anonymized.xlsx.questionknowfrom
+
+    KNOW_FROM_SELECT = (
+        (0, 'zoekrobot'),
+        (1, 'link op een website'),
+        (2, 'mond-aan-mondreclame'),
+        (3, 'promomailing'),
+        (4, 'brochure'),
+        (5, 'advertentie'),
+    )
+    how_know_WW = models.PositiveIntegerField(choices=KNOW_FROM_SELECT)
+    # question_anonymized.xlsx.questionknowfrom
     deadline = models.DateField(blank=True, null=True)
 
     public = models.BooleanField()
@@ -148,7 +158,7 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    state = models.ForeignKey(State)
+    state = models.ForeignKey(State, default=State.NEW_QUESTION)
 
     region = models.ManyToManyField(Region)
 
@@ -156,10 +166,12 @@ class Question(models.Model):
 
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
-    student = models.ForeignKey(Student)
-    completion_date = models.DateTimeField()
+    student = models.ForeignKey(Student, null=True, blank=True)
+    completion_date = models.DateTimeField(null=True, blank=True)
 
     study_field = models.ManyToManyField(StudyField, blank=True)
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.question_text
