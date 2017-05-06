@@ -1,6 +1,7 @@
 
 from . import views
 from django.conf.urls import url, include
+from .views import StudyFieldAutocomplete
 
 urlpatterns = [
     url(r'^register_question', views.register_question, name='register_question'),
@@ -17,6 +18,7 @@ urlpatterns = [
     url(r'distribute_intake/(?P<question_id>[0-9]+)',views.distribute_intake, name = 'distribute_intake'),
     url(r'internal_remark/(?P<question_id>[0-9]+)', views.internal_remark, name = 'internal_remark'),
     url(r'edit_study_field/(?P<question_id>[0-9]+)', views.edit_study_field, name = 'edit_study_field'),
-    url(r'^search/', include('haystack.urls'))
+    url(r'^search/', include('haystack.urls')),
+    url(r'^study_field-autocomplete/$',StudyFieldAutocomplete.as_view(),name='study_field-autocomplete'),
 
     ]
