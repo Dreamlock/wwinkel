@@ -146,7 +146,7 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    state = models.IntegerField(choices = STATE_SELECT, default=Question.DRAFT_QUESTION)
+    state = models.IntegerField(choices = STATE_SELECT, default=DRAFT_QUESTION)
 
     region = models.ManyToManyField(Region)
 

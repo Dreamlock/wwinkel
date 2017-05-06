@@ -203,13 +203,20 @@ class Organisation(models.Model):
     remarks = models.TextField(blank=True, null=True)
     how_know_ww = models.TextField(blank=True)  # TODO: Add model with values like question_anonymized.xlsx.questionknowfrom
 
-
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
 
     keyword = models.ManyToManyField(Keyword)
     type = models.ForeignKey(OrganisationType)
-    know_how = models.TextField()
+    KNOW_FROM_SELECT = (
+        (0, 'zoekrobot'),
+        (1, 'link op een website'),
+        (2, 'mond-aan-mondreclame'),
+        (3, 'promomailing'),
+        (4, 'brochure'),
+        (5, 'advertentie'),
+    )
+    know_from = models.PositiveIntegerField(choices=KNOW_FROM_SELECT)
 
     def __str__(self):
         return self.name
