@@ -3,6 +3,6 @@
     {% if question.state == question.IN_PROGRESS_QUESTION_REGIONAL %}
         <a class="btn btn-warning " href = {% url "edit_question" question.id %}>Vraag wijzigen</a><br><br>
         <a class ="btn btn-info" href = {% url "internal_remark" question.id %}>Opmerking toevoegen</a><br><br>
-        <a class = "btn btn-info" href = {% url %}
+        <a class = "btn btn-info" href = {% url 'edit_study_field' question.id %}> Bewerk studeer veld </a><br><br>
     {% endif %}
 {% endblock %}
