@@ -10,9 +10,10 @@ from haystack.query import SearchQuerySet
 from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
+from dal import autocomplete as lightcomplete
 
-from .forms import RegisterQuestionForm
-from .models import Question
+from .forms import RegisterQuestionForm, InternalRemarkForm, StudyFieldForm
+from .models import Question, StudyField
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
 from .search import *
@@ -177,9 +178,11 @@ def student_detail(request, question, organisation):
 
 
 def regional_detail(request, question, organisation):
+
     context = {'question': question,
                'organisation': organisation,
                'internal': True}
+
     return render(request, 'dbwwinkel/detail_question/regional_unit.html',context)
 
 
@@ -205,7 +208,7 @@ def organisation_detail(request, question, organisation):
 def edit_question(request, question_id):
     question = Question.objects.get(id=question_id)
     # todo: Check if the authentication works.
-    try:
+    '''try:
         if (request.user.organisation.id == question.organisation.id  # Check user same organisation as question.
                 and request.user.has_perm()):
             pass
@@ -213,13 +216,13 @@ def edit_question(request, question_id):
             raise PermissionDenied()
 
     except ValueError:
-        raise PermissionDenied()
+        raise PermissionDenied() '''
 
     form = RegisterQuestionForm(request.POST or None, instance=question)
 
     if form.is_valid():
         form.save()
-        return redirect(detail, question_id='1')
+        return redirect(detail, question_id= question_id)
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
@@ -284,4 +287,54 @@ def revoke_question(request, question_id):
     question.save()
     return HttpResponse("Vraag is terug getrokken")
 
+
+
+def distribute_intake(request, question_id):
+    question = Question.objects.get(id=question_id)
+
+    region = Region.objects.get(region = request.POST.getlist('region')[0])
+    question.region.add(region)
+    question.state = Question.IN_PROGRESS_QUESTION_REGIONAL
+    question.save()
+
+    return redirect('detail_question',question_id =int(question_id))
+
+
+def internal_remark(request, question_id):
+    question = Question.objects.get(id = question_id)
+
+    if request.method == 'POST':
+        form = InternalRemarkForm(request.POST)
+        if form.is_valid():
+            new_remark = form.cleaned_data['internal_remark']
+            question.internal_remarks = new_remark
+            question.save()
+            return redirect('detail_question', question_id = question_id)
+
+    else:
+        existing_remark = question.internal_remarks
+        data = {'internal_remark': existing_remark}
+        form = InternalRemarkForm(initial = data)
+
+
+    return render(request, 'dbwwinkel/internal_remark.html', {'form': form, 'question_id':question_id})
+
+
+class StudyFieldAutocomplete(lightcomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+
+        qs = StudyField.objects.all()
+
+        if self.q:
+            qs = qs.filter(study_field__istartswith=self.q)
+
+        return qs
+
+
+def edit_study_field(request, question_id):
+
+    form = StudyFieldForm()
+    return render(request, 'dbwwinkel/edit_study_field.html', {'form': form})
 

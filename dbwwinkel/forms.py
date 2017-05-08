@@ -5,6 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
 from haystack.forms import FacetedSearchForm
+from .models import StudyField
+from dal import autocomplete
 
 
 class DateInput(forms.DateInput):
@@ -40,4 +42,9 @@ class StudentForm(ModelForm):
         fields = ['first_name']
 
 
+class InternalRemarkForm(forms.Form):
+    internal_remark = forms.CharField(label = _('Interne opmerking'),widget = forms.Textarea)
 
+class StudyFieldForm(forms.Form):
+    study_field = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
+                                         widget=autocomplete.ModelSelect2Multiple(url='study_field-autocomplete'))

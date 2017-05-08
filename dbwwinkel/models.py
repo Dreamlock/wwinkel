@@ -96,8 +96,6 @@ class QuestionSubject(models.Model):
         return self.subject
 
 
-
-
 class Question(models.Model):
 
     DRAFT_QUESTION = 0
@@ -116,10 +114,10 @@ class Question(models.Model):
 
 
     STATE_SELECT = (
-        (DRAFT_QUESTION, _('draft')),
+        (DRAFT_QUESTION, _('nieuw')),
         (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
         (PROCESSED_QUESTION_CENTRAL, _('processed central')),
-        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
+        (IN_PROGRESS_QUESTION_REGIONAL, _('Intake')),
         (PUBLIC_QUESTION, _('public')),
         (RESERVED_QUESTION, _('reserved')),
         (ONGOING_QUESTION, _('ongoing')),
@@ -166,12 +164,6 @@ class Question(models.Model):
         if self.deadline is not None and self.deadline < datetime.date.today():
             raise ValidationError({'deadline': _('Deadlines kunnen niet in het verleden zijn')})
 
-    def get_state_name(self):
-
-        return self.state
-
-    state_name = property(get_state_name)
-
     class Meta:
         default_permissions = ('add', 'delete')
         permissions = (
@@ -202,12 +194,4 @@ class Question(models.Model):
         )
         # permissions = build_question_permissions()
 
-'''
-class QuestionPermissionsBackend:
-
-    def has_perm(self, user_obj, perm, obj=None):
-        if not obj:
-            return False
-        #if user_obj.id is
-'''
 

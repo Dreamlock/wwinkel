@@ -1,11 +1,12 @@
 
 from . import views
 from django.conf.urls import url, include
+from .views import StudyFieldAutocomplete
 
 urlpatterns = [
     url(r'^register_question', views.register_question, name='register_question'),
     url(r'^list_questions', views.list_questions, name = 'list_questions'),
-    url(r'^detail_organisation/(?P<question_id>[0-9]+)', views.detail, name='detail_organisation'),
+    url(r'^detail_question/(?P<question_id>[0-9]+)', views.detail, name='detail_question'),
     url(r'^edit_question/(?P<question_id>[0-9]+)',views.edit_question, name = 'edit_question'),
     url(r'^distribute_question/(?P<question_id>[0-9]+)',views.distribute_question, name = 'distribute_question'),
     url(r'^open_question/(?P<question_id>[0-9]+)',views.open_question, name = 'open_question'),
@@ -14,6 +15,10 @@ urlpatterns = [
     url(r'round_up_question/(?P<question_id>[0-9]+)',views.round_up_question, name = 'round_up_question'),
     url(r'deny_question/(?P<question_id>[0-9]+)',views.deny_question, name = 'deny_question'),
     url(r'revoke_question/(?P<question_id>[0-9]+)',views.revoke_question, name = 'revoke_question'),
-    url(r'^search/', include('haystack.urls'))
+    url(r'distribute_intake/(?P<question_id>[0-9]+)',views.distribute_intake, name = 'distribute_intake'),
+    url(r'internal_remark/(?P<question_id>[0-9]+)', views.internal_remark, name = 'internal_remark'),
+    url(r'edit_study_field/(?P<question_id>[0-9]+)', views.edit_study_field, name = 'edit_study_field'),
+    url(r'^search/', include('haystack.urls')),
+    url(r'^study_field-autocomplete/$',StudyFieldAutocomplete.as_view(),name='study_field-autocomplete'),
 
     ]
