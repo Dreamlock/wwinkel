@@ -51,7 +51,214 @@ class StateIndex:
         REVOKED_QUESTION: set(),
     }
 
+    VIEWABLE_STATES_STUDENT = {
+        PUBLIC_QUESTION,
+        RESERVED_QUESTION,
+        FINISHED_QUESTION,
+    }
+
+    def get_viewable_states_student(self):
+        return {
+            Question.PUBLIC_QUESTION,
+            Question.RESERVED_QUESTION,
+            Question.FINISHED_QUESTION,
+        }
+
+    def get_viewable_fields_student(self, question):
+        result = set()
+        if question.public:
+            result = {
+                'question_text',
+                'reason',
+                'purpose',
+                'remarks',
+                'deadline',
+                'state',
+                'organisation',
+                'question_subject',
+                'study_field',
+            }
+            if question.state == Question.FINISHED_QUESTION:
+                result |= {'student', 'completion_date'}
+        return result
+
+    def get_viewable_states_organisation(self):
+        return {
+            state[0] for state in Question.STATE_SELECT  # every state
+        }
+
+    def get_viewable_fields_organisation(self, question):
+        result = {
+            'question_text',
+            'reason',
+            'purpose',
+            'own_contribution',
+            'remarks',
+            'deadline',
+            'public',
+            'creation_date',
+            'state',
+            'organisation',
+            'keyword',
+            'question_subject',
+            'study_field',
+        }
+        if question.state == Question.ONGOING_QUESTION:
+            result |= {'student'}
+        if question.state == Question.FINISHED_QUESTION:
+            result |= {'student', 'completion_date'}
+        return result
+
+    def get_viewable_states_central_manager(self):
+        return {
+            Question.DRAFT_QUESTION,
+            Question.NEW_QUESTION,
+            Question.IN_PROGRESS_QUESTION_CENTRAL,
+            Question.PROCESSED_QUESTION_CENTRAL,
+            Question.PUBLIC_QUESTION,
+            Question.RESERVED_QUESTION,
+            Question.FINISHED_QUESTION,
+        }
+
+    def get_viewable_fields_central_manager(self, question):
+        result = {
+            'question_text',
+            'reason',
+            'purpose',
+            'own_contribution',
+            'remarks',
+            'deadline',
+            'public',
+            'creation_date',
+            'state',
+            'organisation',
+            'region',
+            'keyword',
+            'question_subject',
+            'study_field',
+        }
+        if question.state == Question.ONGOING_QUESTION:
+            result |= {'student'}
+        if question.state == Question.FINISHED_QUESTION:
+            result |= {'student', 'completion_date'}
+        return result
+
+    def get_viewable_states_regional_manager(self):
+        return {
+            Question.INTAKE_QUESTION,
+            Question.IN_PROGRESS_QUESTION_REGIONAL,
+            Question.PUBLIC_QUESTION,
+            Question.RESERVED_QUESTION,
+            Question.FINISHED_QUESTION,
+        }
+
+    def get_viewable_fields_regional_manager(self, question):
+        result = {
+            'question_text',
+            'reason',
+            'purpose',
+            'own_contribution',
+            'remarks',
+            'deadline',
+            'public',
+            'creation_date',
+            'state',
+            'organisation',
+            'region',
+            'keyword',
+            'question_subject',
+            'study_field',
+        }
+        if question.state == Question.ONGOING_QUESTION:
+            result |= {'student'}
+        if question.state == Question.FINISHED_QUESTION:
+            result |= {'student', 'completion_date'}
+        return result
+
+    def get_editable_states_student(self):
+        return set()
+
+    def get_editable_fields_student(self, question):
+        return set()
+
+    def get_editable_states_organisation(self):
+        return {
+            Question.DRAFT_QUESTION,
+        }
+
+    def get_editable_fields_organisation(self, question):
+        result = self.get_viewable_fields_organisation(question)
+        result -= {
+            'creation_date',
+            'state',
+        }
+        return result
+
+    def get_editable_states_central_manager(self):
+        return {
+            Question.DRAFT_QUESTION,
+            Question.NEW_QUESTION,
+            Question.IN_PROGRESS_QUESTION_CENTRAL,
+            Question.PROCESSED_QUESTION_CENTRAL,
+        }
+
+    def get_editable_fields_central_manager(self, question):
+        if question.state == Question.DRAFT_QUESTION:
+            result = {'state'}
+        else:
+            result = {
+                'question_text',
+                'reason',
+                'purpose',
+                'own_contribution',
+                'remarks',
+                'deadline',
+                'public',
+                'state',
+                'organisation',
+                'region',
+                'keyword',
+                'question_subject',
+                'study_field',
+            }
+        return result
+
+    def get_editable_states_regional_manager(self):
+        return {
+            Question.INTAKE_QUESTION,
+            Question.IN_PROGRESS_QUESTION_REGIONAL,
+            Question.PUBLIC_QUESTION,
+            Question.RESERVED_QUESTION,
+            Question.FINISHED_QUESTION,
+        }
+
+    def get_editable_fields_regional_manager(self, question):
+        result = {
+            'question_text',
+            'reason',
+            'purpose',
+            'own_contribution',
+            'remarks',
+            'deadline',
+            'public',
+            'state',
+            'organisation',
+            'keyword',
+            'question_subject',
+            'study_field',
+        }
+        if question.state == Question.ONGOING_QUESTION:
+            result |= {'student'}
+        if question.state == Question.FINISHED_QUESTION:
+            result |= {'student', 'completion_date'}
+        return result
+
+
     VIEWABLE_FIELDS_STUDENT = {
+        'question_text', 'reason', 'purpose', 'remarks', 'organisation'
+    }
+
+    VIEWABLE_FIELDS_STUDENT_2 = {
         DRAFT_QUESTION: {},
         NEW_QUESTION: {},
         INTAKE_QUESTION: {},
