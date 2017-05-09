@@ -186,6 +186,8 @@ class OrganisationType(models.Model):
     def __str__(self):
         return self.type
 
+class KnowFrom(models.Model):
+    knowfrom = models.TextField()
 
 class Organisation(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -201,15 +203,14 @@ class Organisation(models.Model):
 
     goal = models.TextField()
     remarks = models.TextField(blank=True, null=True)
-    how_know_ww = models.TextField(blank=True)  # TODO: Add model with values like question_anonymized.xlsx.questionknowfrom
-
 
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
 
     keyword = models.ManyToManyField(Keyword)
     type = models.ForeignKey(OrganisationType)
-    know_how = models.TextField()
+
+    know_from = models.ForeignKey(KnowFrom)
 
     def __str__(self):
         return self.name

@@ -72,7 +72,7 @@ class OrganisationForm(forms.ModelForm):
 
     class Meta:
         model = Organisation
-        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','website', 'goal','how_know_ww', 'remarks']
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','website', 'goal','know_from', 'remarks']
 
         labels = {
             'name': '*Naam Organisatie',
