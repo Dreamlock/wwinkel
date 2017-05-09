@@ -155,7 +155,7 @@ class Question(models.Model):
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     student = models.ForeignKey(Student, null=True)
-    completion_date = models.DateTimeField(null=True) # When the question was round up
+    completion_date = models.DateTimeField(null=True)  # When the question was round up
 
     study_field = models.ManyToManyField(StudyField, blank=True)
 

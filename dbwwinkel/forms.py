@@ -65,3 +65,13 @@ class MetaFieldForm(forms.Form):
                                                         label = 'Verwijderen',required = False)
 
 
+class QuestionForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+    class Meta:
+        model = Question
+        fields = ()
+
+

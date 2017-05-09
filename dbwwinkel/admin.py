@@ -69,4 +69,5 @@ class QuestionAdmin(history_admin.SimpleHistoryAdmin):
 
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(QuestionType)
 #admin.site.register(State)
