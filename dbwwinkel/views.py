@@ -12,7 +12,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete as lightcomplete
 
-from .forms import RegisterQuestionForm, InternalRemarkForm, StudyFieldForm
+from .forms import RegisterQuestionForm, InternalRemarkForm, MetaFieldForm
 from .models import Question, StudyField
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
@@ -84,15 +84,23 @@ def list_questions(request):
 
 
 
+
     if request.POST: #start filtering
         sqs = sqs.filter(state__in= request.POST.getlist("status"))
-
-        if request.POST.getlist("study_field"):
-            sqs = sqs.filter(study_field_facet__in=request.POST.getlist("study_field"))
 
         if OrganisationUser.objects.filter(id=request.user.id).exists():
             if request.POST.getlist('own_question'):
                 sqs = sqs | organisation_extra
+
+        if request.user.is_authenticated and request.user.is_manager():
+            user = ManagerUser.objects.get(id=request.user.id)
+            if not user.region.filter(region=Region.CENTRAL_REGION).exists():
+                if request.POST.getlist('own_question'):
+                    sqs = sqs | regional_extra
+
+        if request.POST.getlist("study_field"):
+            sqs = sqs.filter(study_field_facet__in=request.POST.getlist("study_field"))
+
 
     else:
         if request.user.is_authenticated():
@@ -122,6 +130,13 @@ def list_questions(request):
     own_question = False
     if request.user.is_authenticated() and request.user.is_organisation():
         own_question = True
+
+    if request.user.is_authenticated and request.user.is_manager():
+        user = ManagerUser.objects.get(id=request.user.id)
+        if  not user.region.filter(region=Region.CENTRAL_REGION).exists():
+            own_question = True
+
+
 
     true_states = []
     for state in visible_states:
@@ -324,17 +339,48 @@ class StudyFieldAutocomplete(lightcomplete.Select2QuerySetView):
 
     def get_queryset(self):
         # Don't forget to filter out results depending on the visitor !
-
         qs = StudyField.objects.all()
-
         if self.q:
             qs = qs.filter(study_field__istartswith=self.q)
 
         return qs
 
 
-def edit_study_field(request, question_id):
 
-    form = StudyFieldForm()
-    return render(request, 'dbwwinkel/edit_study_field.html', {'form': form})
+def edit_meta_info(request, question_id):
+    # if this is a POST request we need to process the form data
+    question = Question.objects.get(id = question_id)
+    if request.method == 'POST':
+
+        # create a form instance and populate it with data from the request:
+        form = MetaFieldForm(request.POST, question_id= question_id)
+
+        # check whether it's valid:
+        if form.is_valid():
+            for field in form.cleaned_data['study_field_delete']:
+                field.question_set.remove(question)
+                question.study_field.remove(field)
+                field.save()
+                question.save()
+
+            new_one = form.cleaned_data['study_field_new']
+            if new_one != '':
+                new_st_field = StudyField(study_field=new_one)
+                new_st_field.save()
+                question.study_field.add(new_st_field)
+
+            for field in form.cleaned_data['study_field']:
+                question.study_field.add(field)
+
+            question.save()
+            form = MetaFieldForm(question_id=question_id)
+            return render(request, 'dbwwinkel/edit_meta_data.html', {'form': form, 'question': question})
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = MetaFieldForm(question_id= question_id)
+        print("bla")
+
+
+    return render(request, 'dbwwinkel/edit_meta_data.html', {'form': form,'question': question})
 

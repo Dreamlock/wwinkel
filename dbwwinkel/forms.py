@@ -7,6 +7,7 @@ import datetime
 from haystack.forms import FacetedSearchForm
 from .models import StudyField
 from dal import autocomplete
+from django.urls import reverse
 
 
 class DateInput(forms.DateInput):
@@ -45,6 +46,22 @@ class StudentForm(ModelForm):
 class InternalRemarkForm(forms.Form):
     internal_remark = forms.CharField(label = _('Interne opmerking'),widget = forms.Textarea)
 
-class StudyFieldForm(forms.Form):
-    study_field = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
-                                         widget=autocomplete.ModelSelect2Multiple(url='study_field-autocomplete'))
+class MetaFieldForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.question_id = kwargs.pop('question_id')
+        super(MetaFieldForm, self).__init__(*args, **kwargs)
+        question = Question.objects.get(id = self.question_id)
+        self.fields['study_field_delete'].queryset = question.study_field
+
+    study_field = forms.ModelMultipleChoiceField(queryset= StudyField.objects.all(),
+                                                 widget=autocomplete.ModelSelect2Multiple(url='study_field-autocomplete',)
+                                                 ,label='Voeg toe',
+                                                 required = False)
+
+    study_field_new = forms.CharField(max_length=50, label="Niet in de lijst?", required= False)
+
+    study_field_delete = forms.ModelMultipleChoiceField(queryset = StudyField.objects.all(),
+                                                        widget = forms.CheckboxSelectMultiple(),
+                                                        label = 'Verwijderen',required = False)
+
+

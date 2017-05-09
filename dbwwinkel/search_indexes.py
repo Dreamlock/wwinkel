@@ -9,8 +9,7 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     content_auto = indexes.EdgeNgramField(model_attr='question_text')
 
     state = indexes.IntegerField(model_attr='state')
-    region = indexes.CharField()
-    study_field = indexes.CharField()
+    region = indexes.MultiValueField()
     organisation = indexes.CharField(model_attr ='organisation__id' )
 
     #Facets

@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{# Don't forget that one ! #}
+{% load static %}
+
+{% block content %}
+    <div class = "row">
+        <div class = "container-fluid">
+            <div class = "page-header">
+                <h1> Pas hier alle extra info van de vraag aan</h1>
+            </div>
+        </div>
+    </div>
+<div class ="container">
+    <form action="{% url 'edit_meta_info' question.id %} " method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class ="Row">
+            <h2>Onderzoeksveld(en)</h2>
+            <p> <strong>Huidig velden:</strong> {% for field in question.study_field.all %} {{ field }} {% endfor %}</p>
+        </div>
+        <div class ="row">
+            <div class="container-fluid">
+            <div class = 'col-md-4'>
+                <div class="fieldWrapper">
+                    {{ form.study_field.errors }}<br>
+                    {{ form.study_field.label_tag }}<br>
+                    {{ form.study_field }}
+                </div>
+            </div>
+            <div class = "col-md-4">
+                    <div class="fieldWrapper">
+                    {{ form.study_field_new.errors }}<br>
+                    {{ form.study_field_new.label_tag }}<br>
+                    {{ form.study_field_new }}
+                </div>
+            </div>
+            <div class ="col-md-4">
+                {{ form.study_field_delete.errors }}<br>
+                {{ form.study_field_delete.label_tag }}<br>
+                {{ form.study_field_delete }}
+            </div>
+                </div>
+        </div>
+        <input class ='btn btn-info' type="submit" value="Pas aan" />
+        <a class = 'btn btn-success' href = '{% url 'detail_question' question.id %}'>Klaar</a>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ form.media }}
+{% endblock %}
+
+

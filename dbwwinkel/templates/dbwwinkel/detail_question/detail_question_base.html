@@ -54,6 +54,10 @@
                             <strong>Regio(s)</strong>:
                             {% for region in question.region.all  %}
                                 {{ region }}
+                            {% endfor %}<br>
+                            <strong>Onderzoeksveld(en):</strong>
+                            {% for study_field in question.study_field.all %}
+                                {{ study_field }}
                             {% endfor %}
 
                         </div>
