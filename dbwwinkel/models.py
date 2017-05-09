@@ -83,6 +83,9 @@ def build_question_permissions():
     return result
 '''
 
+class QuestionType(models.Model):
+    type = models.TextField()
+
 
 class QuestionSubject(models.Model):
     """
@@ -155,6 +158,8 @@ class Question(models.Model):
     completion_date = models.DateTimeField(null=True) # When the question was round up
 
     study_field = models.ManyToManyField(StudyField, blank=True)
+
+    type = models.ForeignKey(QuestionType)
 
     history = HistoricalRecords()
 
