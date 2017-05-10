@@ -3,49 +3,104 @@
 {% load static %}
 
 {% block content %}
-    <div class = "row">
-        <div class = "container-fluid">
-            <div class = "page-header">
-                <h1> Pas hier alle extra info van de vraag aan</h1>
-            </div>
-        </div>
-    </div>
-<div class ="container">
     <form action="{% url 'edit_meta_info' question.id %} " method="POST">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        <div class ="Row">
-            <h2>Onderzoeksveld(en)</h2>
-            <p> <strong>Huidig velden:</strong> {% for field in question.study_field.all %} {{ field }} {% endfor %}</p>
-        </div>
-        <div class ="row">
-            <div class="container-fluid">
-            <div class = 'col-md-4'>
-                <div class="fieldWrapper">
-                    {{ form.study_field.errors }}<br>
-                    {{ form.study_field.label_tag }}<br>
-                    {{ form.study_field }}
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+                <h1> Pas hier alle extra info van de vraag aan</h1>
+            </div>
+            <div class ='panel panel-body'>
+                <div class ='col-md-3 col-lg-2'>
+                    <strong>Instelling(en)</strong><br>
+                    <p><strong>Huidig:</strong>{% for field in question.institution.all %}
+                        {{ field }}{% endfor %}</p>
+                </div>
+                <div class = 'col-md-3'>
+                    <div class ='container-fluid'>
+                    {{ form.institution.errors }}
+                    {{ form.institution.label_tag }}
+                    {{ form.institution }}
+                    </div>
+                </div>
+                <div class = 'col-md-3'>
+                    <div class = 'container-fluid'>
+                        <a href = '{% url 'register_institution' question.id %}'>Instelling niet in de lijst? Klik hier</a>
+                    </div>
+                </div>
+                <div class = 'col-md-3'>
+                    <div class = 'container-fluid'>
+                        {{ form.institution_delete.errors }}
+                        {{ form.institution_delete.label_tag }}
+                        {{ form.institution_delete }}
+                    </div>
                 </div>
             </div>
-            <div class = "col-md-4">
-                    <div class="fieldWrapper">
-                    {{ form.study_field_new.errors }}<br>
-                    {{ form.study_field_new.label_tag }}<br>
-                    {{ form.study_field_new }}
+            <div class=' panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Onderzoeksveld(en)</strong><br>
+                    <p><strong>Huidig:</strong> {% for field in question.study_field.all %}
+                        {{ field }} {% endfor %}</p>
+                </div>
+                <div class='col-md-3'>
+                    <div class="container-fluid">
+                        {{ form.study_field.errors }}
+                        {{ form.study_field.label_tag }}
+                        {{ form.study_field }}
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="container-fluid">
+                        {{ form.study_field_new.errors }}
+                        {{ form.study_field_new.label_tag }}
+                        {{ form.study_field_new }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {{ form.study_field_delete.errors }}
+                    {{ form.study_field_delete.label_tag }}
+                    {{ form.study_field_delete }}
                 </div>
             </div>
-            <div class ="col-md-4">
-                {{ form.study_field_delete.errors }}<br>
-                {{ form.study_field_delete.label_tag }}<br>
-                {{ form.study_field_delete }}
-            </div>
+            <div class='panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Onderwerp(en)</strong><br>
+                    <p><strong>Huidig:</strong> {% for field in question.question_subject.all %}
+                        {{ field }} {% endfor %}</p>
                 </div>
-        </div>
-        <input class ='btn btn-info' type="submit" value="Pas aan" />
-        <a class = 'btn btn-success' href = '{% url 'detail_question' question.id %}'>Klaar</a>
-    </form>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.subject.errors }}
+                        {{ form.subject.label_tag }}
+                        {{ form.subject }}
+                    </div>
 
-</div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.subject_new.errors }}
+                        {{ form.subject_new.label_tag }}
+                        {{ form.subject_new }}
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.subject_delete.errors }}
+                        {{ form.subject_delete.label_tag }}
+                        {{ form.subject_delete }}
+                    </div>
+                </div>
+            </div>
+            <div class='panel panel-body'>
+                <input class='btn btn-info' type="submit" value="Pas aan"/>
+                <a class='btn btn-success' href='{% url 'detail_question' question.id %}'>Klaar</a>
+            </div>
+            <div class='container-fluid'>
+                <br>
+
+            </div>
+        </div>
+    </form>
 {% endblock %}
 
 {% block extra_scripts %}

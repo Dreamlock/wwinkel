@@ -58,6 +58,10 @@
                             <strong>Onderzoeksveld(en):</strong>
                             {% for study_field in question.study_field.all %}
                                 {{ study_field }}
+                            {% endfor %}<br>
+                            <strong>Onderwerp(en): </strong>
+                            {% for subject in question.question_subject.all %}
+                                {{ subject }}
                             {% endfor %}
 
                         </div>

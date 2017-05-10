@@ -19,16 +19,16 @@ class StudyField(models.Model):
 
 class Institution(models.Model):
 
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
     address = models.ForeignKey(Address)
+
+    def __str__(self):
+        return self.name
+
 
 class Faculty(models.Model):
     name = models.TextField()
     institution = models.ForeignKey(Institution)
-
-class Education(models.Model):
-    name = models.TextField()
-    faculty = models.ForeignKey(Faculty)
 
 class Student(models.Model):
 
@@ -40,7 +40,7 @@ class Student(models.Model):
 
     status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
-    education = models.ForeignKey(Education)
+
     study_field = models.ForeignKey(StudyField)
     adres = models.ForeignKey(Address)
 
@@ -68,20 +68,6 @@ class LogRecord(models.Model):
 class Log(models.Model):
     record = models.ManyToManyField(LogRecord)
 
-
-'''
-def build_question_permissions():
-    """
-    Generate a list of permissions given the different states that a Question can be in.
-    For example: a new Question is editable by the organisation that made the question, but an active Question is not.
-    :return: a list of tuples containing all the permissions for the Question based on the STATE_SELECT member of State.
-    """
-    result = set()
-    for element in State.STATE_SELECT:
-        result.add(('view_'+element[1].replace(' ', '_')+'_question', str(_('Can view '))+str(element[1])+str(_(' question'))))
-        result.add(('change_'+element[1].replace+'_question', str(_('Can change '))+str(element[1])+str(_(' question'))))
-    return result
-'''
 
 class QuestionType(models.Model):
     type = models.TextField()
@@ -138,29 +124,27 @@ class Question(models.Model):
     # Visible and editable: optional
     remarks = models.TextField(blank=True)
     internal_remarks = models.TextField(blank=True)
-
     deadline = models.DateField(blank=True, null=True)
-
     public = models.BooleanField()
 
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     state = models.IntegerField(choices = STATE_SELECT, default=DRAFT_QUESTION)
-
     region = models.ManyToManyField(Region)
 
     organisation = models.ForeignKey(Organisation)
 
+    #Faceting data
+    institution = models.ManyToManyField(Institution, null = True)
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     student = models.ForeignKey(Student, null=True)
-    completion_date = models.DateTimeField(null=True) # When the question was round up
-
     study_field = models.ManyToManyField(StudyField, blank=True)
 
-    type = models.ForeignKey(QuestionType)
 
+    completion_date = models.DateTimeField(null=True) # When the question was round up
+    type = models.ForeignKey(QuestionType)
     history = HistoricalRecords()
 
     def __str__(self):
