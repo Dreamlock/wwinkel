@@ -346,7 +346,6 @@ class StudyFieldAutocomplete(lightcomplete.Select2QuerySetView):
         return qs
 
 
-
 def edit_meta_info(request, question_id):
     # if this is a POST request we need to process the form data
     question = Question.objects.get(id = question_id)
@@ -380,7 +379,6 @@ def edit_meta_info(request, question_id):
     else:
         form = MetaFieldForm(question_id= question_id)
         print("bla")
-
 
     return render(request, 'dbwwinkel/edit_meta_data.html', {'form': form,'question': question})
 
