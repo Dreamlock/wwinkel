@@ -34,16 +34,15 @@ class QuestionStateListFilter(admin.SimpleListFilter):
             return queryset
 
         for state in Question.STATE_SELECT:
-            print(self.value(), state[0], str(state[1]))
+            #print(self.value(), state[0], str(state[1]))
             if int(self.value()) == state[0]:
-                return queryset.filter(state__state=state[0])
+                return queryset.filter(state=state[0])
 
 
 # class QuestionAdmin(admin.ModelAdmin):
 class QuestionAdmin(history_admin.SimpleHistoryAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-
         if request.user.is_superuser:
             return qs
 
@@ -63,9 +62,11 @@ class QuestionAdmin(history_admin.SimpleHistoryAdmin):
     filter_horizontal = ('region', 'keyword', 'question_subject', 'study_field')
     readonly_fields = ('creation_date',)
 
-    list_display = ('question_text', 'state', 'organisation')
+    list_display = ('question_text', 'state',) # 'organisation')
     list_editable = ('state',)
-    list_display_links = ('organisation',)
+    list_display_links = ('question_text',)
+
+
 
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)

@@ -71,8 +71,7 @@ def QuestionFormFactory(user, question):
 class QuestionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields = ('question_text',)
 
     class Meta:
         model = Question
-        #fields = ()
+        fields = ()

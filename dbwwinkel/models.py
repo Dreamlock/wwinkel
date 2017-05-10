@@ -2,6 +2,8 @@ import datetime
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from simple_history.models import HistoricalRecords
@@ -177,6 +179,7 @@ class Question(models.Model):
             # ('delete_question', _('Can delete question')),
             # ('view_question', _('Can view question (don\'t assign to user)')),
             # ('edit_question', _('Can edit question (don\'t assign to user)')),
+
             ('view_draft_question', _('Can view draft question')),
             ('edit_draft_question', _('Can edit draft question')),
             ('view_in_progress_central_question', _('Can view in progress question central')),
@@ -196,8 +199,14 @@ class Question(models.Model):
             ('view_denied_question', _('Can view denied question')),
             ('edit_denied_question', _('Can edit denied question')),
             ('view_revoked_question', _('Can view revoked question')),
-            ('edit_revoked_question', _('Can edit revoked question')),
+            ('edit_revoked_question', _('Can edit revoked question')),  # TODO: add permissions for new/intake question
         )
         # permissions = build_question_permissions()
 
 
+@receiver(post_save, sender=Question)
+def question_changed_status(sender, **kwargs):
+    question = kwargs['instance']
+    if kwargs['created']:
+        print('send mail: question added')
+    # print(kwargs['update_fields'])
