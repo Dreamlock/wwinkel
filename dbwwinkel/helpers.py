@@ -253,7 +253,60 @@ class StateIndex:
             result |= {'student', 'completion_date'}
         return result
 
-
+    def get_viewable_states(self, user):
+        result = self.get_viewable_states_student()
+        if user.is_organisation():
+            result |= self.get_viewable_states_organisation()
+        if user.is_manager():
+            user = user.as_manager()
+            if user.is_central_manager():
+                result |= self.get_viewable_states_central_manager()
+            if user.is_regional_manager():
+                result |= self.get_viewable_states_regional_manager()
+        return result
+    
+    def get_editable_states(self, user):
+        result = self.get_editable_states_student()
+        if user.is_organisation():
+            result |= self.get_editable_states_organisation()
+        if user.is_manager():
+            user = user.as_manager()
+            if user.is_central_manager():
+                result |= self.get_editable_states_central_manager()
+            if user.is_regional_manager():
+                result |= self.get_editable_states_regional_manager()
+        return result
+    
+    def get_viewable_fields(self, user, question):
+        result = set()
+        if question.state in self.get_viewable_states(user):
+            result = self.get_viewable_fields_student(question)
+            if user.is_organisation():
+                result |= self.get_viewable_fields_organisation(question)
+            if user.is_manager():
+                user = user.as_manager()
+                if user.is_central_manager():
+                    result |= self.get_viewable_fields_central_manager(question)
+                if user.is_regional_manager():
+                    result |= self.get_viewable_fields_regional_manager(question)
+        return result
+    
+    def get_editable_fields(self, user, question):
+        result = set()
+        if question.state in self.get_editable_states(user):
+            result = self.get_editable_fields_student(question)
+            if user.is_organisation():
+                result |= self.get_editable_fields_organisation(question)
+            if user.is_manager():
+                user = user.as_manager()
+                if user.is_central_manager():
+                    result |= self.get_editable_fields_central_manager(question)
+                if user.is_regional_manager():
+                    result |= self.get_editable_fields_regional_manager(question)
+        return result
+    
+    
+    """
     VIEWABLE_FIELDS_STUDENT = {
         'question_text', 'reason', 'purpose', 'remarks', 'organisation'
     }
@@ -410,6 +463,7 @@ class StateIndex:
                 pass
             if user.is_regional_manager():
                 pass
+    """
     """
     def get_next_states(self, state):
         next_states = {

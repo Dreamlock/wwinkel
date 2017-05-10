@@ -94,3 +94,15 @@ class MetaFieldForm(forms.Form):
     subject_delete = forms.ModelMultipleChoiceField(queryset=QuestionSubject.objects.all(),
                                                     widget=forms.CheckboxSelectMultiple(),
                                                     label='Verwijderen', required=False)
+
+
+class QuestionForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+    class Meta:
+        model = Question
+        fields = ()
+
+

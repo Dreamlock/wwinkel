@@ -124,13 +124,16 @@ class Question(models.Model):
     # Visible and editable: optional
     remarks = models.TextField(blank=True)
     internal_remarks = models.TextField(blank=True)
+
     deadline = models.DateField(blank=True, null=True)
+
     public = models.BooleanField()
 
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     state = models.IntegerField(choices = STATE_SELECT, default=DRAFT_QUESTION)
+
     region = models.ManyToManyField(Region)
 
     organisation = models.ForeignKey(Organisation)
