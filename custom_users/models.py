@@ -117,12 +117,14 @@ class Province(models.Model):
     FLEMISH_BRABANT_REGION = 2
     LIMBURG_REGION = 3
     WEST_FLANDERS_REGION = 4
+    BRUSSELS_REGION = 5
     PROVINCE_SELECT = (
         (ANTWERP_REGION, _('Antwerpen')),
         (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
         (FLEMISH_BRABANT_REGION, _('Vlaams-Brabant')),
         (LIMBURG_REGION, _('Limburg')),
-        (WEST_FLANDERS_REGION, _('West-Vlaanderen' )),
+        (WEST_FLANDERS_REGION, _('West-Vlaanderen')),
+        (BRUSSELS_REGION, _('Brussel')),
     )
 
     province = models.PositiveIntegerField(unique=True, choices=PROVINCE_SELECT)
