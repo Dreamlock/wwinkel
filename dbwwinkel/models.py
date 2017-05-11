@@ -48,16 +48,30 @@ class Student(models.Model):
 
     status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
-    education= models.ForeignKey(Education)
+    education = models.ForeignKey(Education)
     adres = models.ForeignKey(Address)
 
 
-class Promotor(User):
+class Person(models.Model):
+    class Meta:
+        abstract = True
+
+    first_name = models.CharField(max_length=33)
+    last_name = models.CharField(max_length=33)
+
+    email = models.EmailField()
+    tel = models.CharField(max_length=18)
+
+    address = models.ForeignKey(Address)
+
+
+class Promotor(Person):
     expertise = models.TextField()
-    institution = models.ManyToManyField(Institution)
+    institution = models.ForeignKey(Institution)
+    promo_class = models.CharField(max_length=20, null=True)
 
 
-class InstitutionContact(User):
+class InstitutionContact(Person):
     institution = models.ForeignKey(Institution)
 
 
@@ -152,13 +166,14 @@ class Question(models.Model):
 
     # Faceting data
     institution = models.ManyToManyField(Institution)
+
     education = models.ManyToManyField(Education)
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     student = models.ForeignKey(Student, null=True)
 
     completion_date = models.DateTimeField(null=True)  # When the question was round up
-    type = models.ForeignKey(QuestionType, null = True)
+    type = models.ForeignKey(QuestionType, null=True)
     history = HistoricalRecords()
 
     def __str__(self):
