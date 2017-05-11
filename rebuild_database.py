@@ -75,4 +75,6 @@ if True:
 
 # print('creating regional user (user:regional@manager.be, pw:admin, region:antwerp)...')
 
-
+# print('generating haystack schema.xml...')
+# call_command('build_solr_schema')
+# print('  done')
