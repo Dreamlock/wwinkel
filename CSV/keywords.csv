@@ -1,0 +1,659 @@
+idorganizationkeyword,keywordname,active
+16,alcohol,1
+17,bijzondere jeugdzorg,1
+18,AIDS,0
+19,beeldvorming,1
+20,allochtonen,1
+21,Brussel,1
+22,buddysysteem,1
+23,buurtcomité,1
+24,communicatie,1
+25,dementie,1
+26,depressie,1
+27,duurzame ontwikkeling,1
+28,echtscheiding,1
+29,etnische minderheden,1
+30,Europa,1
+31,geestelijke gezondheidszorg,1
+32,gehandicapten,1
+33,geweld,1
+34,gezondheidszorg,1
+35,hetero,1
+36,holebi,1
+37,homo,1
+38,homoparen,1
+39,homoseksualiteit,1
+40,internet,1
+41,intrafamiliaal geweld,1
+42,jeugd,1
+43,jongeren,1
+44,kinderen,1
+45,kunst,1
+46,lesbisch,1
+47,lesbische paren,1
+48,mantelzorg,1
+49,media,1
+50,mensen met handicap,1
+51,mensen zonder papieren,1
+52,mensenhandel,1
+53,mensenrechten,1
+54,milieu,1
+55,minderheden,1
+56,mindervaliden,1
+57,mode,1
+58,mondiale vorming,1
+59,morele dienstverlening,1
+60,multicultureel,1
+61,muziek,1
+62,onderwijs,1
+63,ontheemse tochten,1
+64,ontwikkelingssamenwerking,1
+65,ouderen,1
+66,participatie,1
+67,partnergeweld,1
+68,perceptie,1
+69,pleeggezin,1
+70,preventie,1
+71,psychiatrie,1
+72,radio,1
+73,rusthuizen,1
+74,senioren,1
+75,sex,1
+76,seksualiteit,1
+77,soa,1
+78,stofwisselingsziekte,1
+79,televisie,1
+80,theater,1
+81,time-out,1
+82,uitwisseling,1
+83,Vlaanderen,1
+84,vluchtelingen,1
+85,vrijwilliger,1
+86,vrijwilligerswerk,1
+87,vrouwen,1
+88,welbevinden,1
+89,welzijn,1
+90,werkloosheid,1
+91,zelfmoord,1
+92,analyse,1
+93,behoefteonderzoek,1
+94,case-studie,1
+95,cultuur,1
+96,gezin,1
+97,spel,0
+98,sensibilisering,0
+99,educatie,1
+100,wonen,1
+101,huisvesting,1
+102,gezondheid,1
+103,sport,1
+104,gemeenschap,1
+105,gemeenschapscentrum,0
+106,gemeenschapsleven,0
+107,patiënt,0
+108,patient,0
+109,hulpverlening,0
+110,verpleegkundige,0
+111,adoptie,1
+112,wetenschappelijk,0
+113,ongeneeselijk,0
+114,erfelijk,0
+115,ziek,0
+116,behandeling,0
+117,verzorging,0
+118,roma,1
+119,centrum,0
+120,duurzaam,0
+121,ecologie,1
+122,project,0
+123,regionaal,0
+124,dienstencentrum,0
+125,tehuizen,0
+126,serviceflat,0
+127,woonwagenbewoner,0
+128,verenigingsleven,1
+129,handicap,1
+130,sensibiliseren,0
+131,burgerrechten,0
+132,organisatie,0
+133,discriminatie,1
+134,promotie,0
+135,steunpunt,0
+136,ziekte,1
+137,risico,0
+138,risicodrager,0
+139,huntington,0
+140,opvoeding,0
+141,pleegouder,0
+142,pleegouders,0
+143,wereldburger,0
+144,wereldburgerschap,1
+145,kleur,0
+146,straathoek,0
+147,straathoekwerk,1
+148,buurtwerk,0
+149,ouderenbeleid,0
+150,jenever,0
+151,museum,0
+152,productie,0
+153,jeugdrechtbank,0
+154,jeugdzorg,0
+155,erfgoed,1
+156,amateur,0
+157,woonwagenbewoners,1
+158,oud,0
+159,studenten,0
+160,alumni,1
+161,vrij,0
+162,onderzoek,0
+163,afgestudeerden,0
+164,juridische,0
+165,ondersteuning,0
+166,opvang,0
+167,informatie,0
+168,vorming,1
+169,begeleiding,0
+170,slachtoffer,0
+171,migrant,0
+172,sociale,0
+173,rechten,0
+174,wettig,0
+175,kansarm,0
+176,gehandicaptenzorg,0
+177,mobilisatie,0
+178,beleidsadvies,0
+179,vrijetijd,1
+180,vrijetijdsbesteding,0
+181,respect,0
+182,diversiteit,1
+183,vlaams,0
+184,federaal,0
+185,aids,1
+186,seksuele,0
+187,hiv,1
+188,seksueel,0
+189,allochtone,0
+190,meisjes,0
+191,emancipatie,0
+192,boeken,0
+193,lezen,1
+194,tv,0
+195,brussel,0
+196,omproep,0
+197,communicatiecentrum,0
+198,non-profit,0
+199,bedrijf,0
+200,bedrijven,0
+201,vrouwenvereniging,0
+202,welvoelen,0
+203,amateurkunst,0
+204,verklaring,0
+205,mens,0
+206,bescherming,0
+207,toelating,0
+208,onrecht,0
+209,ongelijkheid,0
+210,samenleving,1
+211,wereldproblematiek,0
+212,milieuproblematie,0
+213,artsen,1
+214,jurist,0
+215,leefbaar,0
+216,bemiddeling,1
+217,wijk,0
+218,wijkcomité,0
+219,militair,0
+220,hospitaal,0
+221,beweging,0
+222,verdrukking,0
+223,open,0
+224,daklozen,1
+225,moeders,1
+226,gevangenen,1
+227,zigeuners,0
+228,spelen,1
+229,samenleven,0
+230,jeugdvereniging,0
+231,jeugdactiviteiten,0
+232,publicaties,0
+233,producten,0
+234,woonwagenbewoners,0
+235,revalidatie,0
+236,revalidatiecentrum,0
+237,drugs,1
+238,kostuum,0
+239,geschiedenis,0
+240,kostuumgeschiedenis,0
+241,school,1
+242,comité,0
+243,ouders,1
+244,hematologie,0
+245,sanguïnfonds,0
+246,speelplein,1
+247,leefbaarheid,0
+248,stadswijk,0
+249,buurtvereniging,0
+250,zelfstandig,0
+251,ondernemer,0
+252,ondernemers,0
+253,zelfstandige,0
+254,integratie,1
+255,armen,0
+256,gemeente,0
+257,gemeentebestuur,0
+258,cgg,0
+259,geestelijke,0
+260,psychische,0
+261,randgroepen,0
+262,racisme,0
+263,cm,0
+264,vakantie,1
+265,arbeidszorg,0
+266,werkegeversfederatie,0
+267,arbeid,1
+268,werkegever,0
+269,mishandelink,0
+270,kindermishandeling,1
+271,huiselijk,0
+272,ouderenzorg,0
+273,rusthuis,0
+274,autonomie,0
+275,kringloop,0
+276,kringloopcentra,0
+277,inzameling,0
+278,kringloopwinkel,0
+279,visueel,0
+280,deeltijds,0
+281,technisch,0
+282,antwerpen,0
+283,vrijzinnig,0
+284,emancipatorisch,0
+285,samenwerking,0
+286,chronische,0
+287,ziekten,0
+288,socio-cultureel,0
+289,pyschotisch,0
+290,contactstoornis,0
+291,bijzonder,0
+292,ambacht,0
+293,klimaat,0
+294,klompen,0
+295,klompenmakerij,0
+296,universiteit,0
+297,forum,0
+298,verzorgingstehuis,0
+299,serviceflats,0
+300,fiets,1
+301,mobiliteit,1
+302,fietsers,0
+303,minderhedenforum,0
+304,stadsmuseum,0
+305,Hasselaren,0
+306,wetenschapscommunicatie,1
+307,ICT,0
+308,technologie,1
+309,jeugdbeweging,0
+310,incest,1
+311,cultureel,0
+312,beeldende,0
+313,kunstenaars,0
+314,verhuur,0
+315,atelier,0
+316,Bijzondere,0
+317,historisch,0
+318,natuurvereniging,0
+319,sportvereniging,0
+320,platform,0
+321,organisaties,0
+322,streekontwikkeling,0
+323,ontwikkeling,0
+324,bejaardenzorg,0
+325,kind,0
+326,kinderopvang,1
+327,thuiszorg,1
+328,leerlingenraad,0
+329,scholieren,1
+330,leerlingenparticipatie,1
+331,spreekbuis,0
+332,amateurdans,0
+333,dans,1
+334,dansschool,0
+335,jongerenbeweging,0
+336,minderhedencentrum,0
+337,werk,0
+338,energie,0
+339,publiek,0
+340,jeugdwerk,1
+341,stadsbestuur,0
+342,kortrijk,0
+343,dienstverlening,0
+344,opvangcentrum,0
+345,revallidatie,0
+346,zwangerschap,1
+347,relatievorming,0
+348,tienerzwangerschap,1
+349,abortus,1
+350,volwassenonderwijs,1
+351,vrouwenraad,0
+352,gelijke kansen,1
+353,afkomst,0
+354,geslacht,0
+355,milieuvriendelijk,0
+356,vrijzinnigheid,1
+357,verpleegkundigen,0
+358,spoedgeval,0
+359,spoedgevallen,0
+360,wo2,0
+361,Tweede,0
+362,Wereldoorlog,0
+363,generatie,0
+364,tehuis,0
+365,psychatrie,0
+366,mentaal,0
+367,welzijnsorganisatie,0
+368,vlaamse,0
+369,rand,0
+370,duikschool,0
+371,duiken,0
+372,sportduiken,0
+373,leefomgeving,1
+374,jeugdwelzijnsbeleid,1
+375,lanaken,0
+376,jeugddienst,0
+377,jeugdwerker,0
+378,patiëntenrecht,0
+379,Oost-Vlaanderen,0
+380,samenlevingsopbouw,0
+381,burgerparticipatie,0
+382,leefkwaliteit,0
+383,drugsproblematiek,0
+384,verslaving,1
+385,auto,0
+386,voertuig,0
+387,verkeer,1
+388,verkeersveiligheid,0
+389,terminaal,0
+390,gelijke,0
+391,kansen,0
+392,behandelin,0
+393,ms,0
+394,toerisme,1
+395,zwerfwatgens,0
+396,motorhomes,0
+397,kampeerwagen,0
+398,cultuurorganisatie,0
+399,Noord-Zuid,0
+400,ouders,0
+401,wetenschapswinkel,0
+402,studentencontract,0
+403,groep,0
+404,groepbijeenkomst,0
+405,groepsamenkomst,0
+406,armoede,1
+407,armoedeaanpak,0
+408,sportinfrastructuur,0
+409,recreatie,0
+410,vredesbeweging,0
+411,wijkdienst,0
+412,wijkwerking,0
+413,Chiro,0
+414,taalstimulering,0
+415,anderstaligen,0
+416,Nederlands,0
+417,interculturele ontmoeting,0
+418,zelfredzaamheid,0
+419,museaccc,0
+420,kunsteducatie,0
+421,internationaal,0
+422,research,0
+423,advies en consultatie,0
+424,schoonmaak,0
+425,wijkoverleg,0
+426,kanker,0
+427,verstandelijke toegankelijkheid,0
+428,ontwikkelingspsychologie,0
+429,hooggevoeligheid,0
+430,gevoelig,0
+431,stressgerelateerde aandoeningen,0
+432,CVS,0
+433,burn-out,0
+434,fibromyalgie,0
+435,anorexia,0
+436,blinden,0
+437,slechtzienden,0
+438,ontwikkeling software,0
+439,kinesistherapie,0
+440,manueel blaaspijp welke trillingen voortbrengt,0
+441,gebruiken als besturing van een videoogame,0
+442,politiek,0
+443,directe financiering,0
+444,PAB persoonlijk assistentiebudget,0
+445,PGB persoonsgebonden budget,0
+446,kwaliteit van bestaan,0
+447,kwaliteit van leven,0
+448,vraagsturing,0
+449,vraagfinanciering,0
+450,marktwerking,0
+451,inclusie,0
+452,empowerment,0
+453,ervaringsdeskundigheid,0
+454,voeding en beweging,0
+455,geestelijke gezondheidsbevordering,0
+456,tabakspreventie,0
+457,stoppen met roken,0
+458,ongevallenpreventie,0
+459,gezond ouder worden,0
+460,vaccinaties,0
+461,sensibilisatie borstkankerscreening,0
+462,Lokaal gezondheidsoverleg,0
+463,gezond werken,0
+464,gezondheidspromotie,0
+465,social profit,0
+466,toegankelijkheid,0
+467,architectuur,1
+468,stedenbouw,0
+469,ruimtelijke ordening,0
+470,Geluidsoverlast,0
+471,(ultra)fijn stof,0
+472,0,0
+473,sociaal toerisme,1
+474,lobbying,0
+475,herbruikbare verpakking,0
+476,waarden,0
+477,waarden in beweging,0
+478,ethisch bewust leven,0
+479,het beste in mensen versterken,0
+480,duurzaam geluk verhogen,0
+481,bestuurlijke ontwikkelingen,0
+482,opvoedingsproblemen,0
+483,onderwijsvernieuwing,0
+484,kwaliteitszorg,0
+485,onderwijsprofessionalisering ...,0
+486,prostitutie,0
+487,eenzaamheid,0
+488,erkenning,0
+489,economie,0
+490,landbouw,0
+491,tuinbouw,0
+492,IT,0
+493,socoi-economische vragen,0
+494,lotgenotenvereniging,0
+495,maatschappelijke integratie in heel ruime zin,0
+496,Opvang van asielzoekers,0
+497,natuur; natuurstudie; natuurbeheer; vriendschap,0
+498,musea,0
+499,fotografie,0
+500,film,0
+501,cornea erosie ten gevolge van handzeep,0
+502,psychotherapie,0
+503,filosofische praktijk,0
+504,gezondheidspsychologie,0
+505,natuur,0
+506,kwalitatieve analyse,0
+507,innovatie,0
+508,pleegzorg,0
+509,woonzorgcentrum,0
+510,werklast,0
+511,ethiek,0
+512,bio-ethiek,0
+513,biotechnologie,0
+514,medische ethiek,0
+515,levenseinde,0
+516,orgaandonatie,0
+517,genetica,0
+518,brein,0
+519,stamceldonatie,0
+520,medicalisering,0
+521,genetisch testen,0
+522,bos,0
+523,multifunctioneel bosbeheer,0
+524,bosuitbreiding,0
+525,gender,0
+526,doelgroepen,0
+527,transgender,0
+528,maatschappelijk verantwoord ondernemen,0
+529,soortbescherming,0
+530,Nederlandse taal,0
+531,literatuur,0
+532,bedrijfsmatige,0
+533,technische,0
+534,administratieve,0
+535,financiële,0
+536,emotionele,0
+537,sociale elementen,0
+538,regenboog,0
+539,label,0
+540,certificatie,0
+541,samenhuizen,0
+542,cohousing,0
+543,1,0
+544,reclame,0
+545,marketing,0
+546,adverteren,0
+547,uba,0
+548,pers,0
+549,dagbladen,0
+550,magazine,0
+551,out of home,0
+552,affichage,0
+553,digital,0
+554,mobile,0
+555,social media,0
+556,biologische,0
+557,fruit,0
+558,groenten,0
+559,pluimvee,0
+560,glasgroenten,0
+561,akkerbouw,0
+562,ontwikkelingsleeftijd,0
+563,geletterdheid,0
+564,voorlezen,0
+565,geestelijke gezondheid,0
+566,woonondersteuning op alle levensdomeinen,0
+567,diensten sector,0
+568,drop-out,0
+569,CRM; klantgerichtheid; Relatiebeheer; Relatienetwerken,0
+570,gedetineerden,0
+571,gevangenis,0
+572,netwerk,0
+573,ASO,0
+574,taalvaardigheidsontwikkeling,0
+575,zangcultuur,0
+576,boerderij,0
+577,vroeger nadenken over later,0
+578,duurzame voeding,0
+579,eerlijke handel,0
+580,beleid,0
+581,Paarden,0
+582,vergunningen,0
+583,therapie,0
+584,dierenwelzijn,0
+585,veiligheid,0
+586,eigendom,0
+587,fiscaliteit,0
+588,fokkerij,0
+589,voedselveiligheid,0
+590,ondernemen,0
+591,singles,0
+592,pesten,0
+593,sportbeleid,0
+594,bewegen,0
+595,onderzoek,1
+596,innovatie,1
+597,zorg,1
+598,jazz,0
+599,folk,0
+600,muzikant,0
+601,tijdschrift,0
+602,training,0
+603,gebarentaal,0
+604,doof,0
+605,tolk,0
+606,relaties,0
+607,identiteit,0
+608,zingeving,0
+609,groepsdynamica,0
+610,ervaringsleren,0
+611,weerbaarheid,0
+612,bioscoopbezoek,0
+613,culturele uitstap,0
+614,vrijetijdsactiviteiten,0
+615,anderstalige nieuwkomers,0
+616,testen,0
+617,binnenmilieu,0
+618,CO2-meter,0
+619,vakantiekampen,0
+620,vele maatschappelijk relevante problematieken,0
+621,industrie,0
+622,ambachten,0
+623,technische ontwikkeling,0
+624,bedrijfsarchieven,0
+625,transport,0
+626,mobiel erfgoed,0
+627,roerend erfgoed,0
+628,oude technieken,0
+629,Industrieel erfgoed,0
+630,Voeding,0
+631,devotionalia,0
+632,volksdevotie,0
+633,prentcultuur,0
+634,Eerste Wereldoorlog,0
+635,alternatieve samenlevingsvormen,0
+636,bouwgeschiedenis,0
+637,sociaal werk; sociaal ondernemen,0
+638,religie,0
+639,mijnbouw; cultureel erfgoed,0
+640,oorlog,0
+641,oambachten,0
+642,hernieuwbare energie,0
+643,waterbeheer,0
+644,Natuur,0
+645,veeteelt,0
+646,transitie,0
+647,waterbeleid,0
+648,biodiversiteit,0
+649,duurzame energie,0
+650,duurzame consumptie,0
+651,deeleconomie,0
+652,bedrijvigheid,0
+653,open ruimte,0
+654,natuurverbinding,0
+655,kust,0
+656,kustveiligheid,0
+657,soortenbescherming,0
+658,voeding,0
+659,fair trade,0
+660,lokale economie,0
+661,duurzaamheid,0
+662,wetenschapspopularisering,0
+663,actualiteit,0
+664,informeren,0
+665,Afrika; Afrikaanse diaspora's,0
+666,euthanasie,0
+667,mijnbouw,0
+668,autismespectrumstoornissen,0
+669,ADHD,0
+670,studentenonderzoek,0
+671,citizen science,0
+672,burgerwetenschap,0
+673,hoger onderwijs,0
