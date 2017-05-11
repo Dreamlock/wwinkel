@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="page-header">
+        <div class="container">
+            <h1>Nieuwe instelling</h1>
+        </div>
+    </div>
+    <div class="container">
+        <form action="{% url 'register_institution' question_id %}" method="post">
+            {% csrf_token %}
+            {% for field in institution_form %}
+                <div class="form-group">
+                    {{ field.errors }} <br/>
+                    {{ field.label_tag }}<br/>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            {% for field in address_form %}
+                {{ field.errors }} <br/>
+                {{ field.label_tag }}<br/>
+                {{ field }}
+            {% endfor %}
+            <div class="row">
+                <div class='container'>
+                    <br>
+                    <button type="submit" class="btn btn-default" value="Registreer">Registreer</button>
+                </div>
+            </div>
+    </form>
+    </div>
+
+{% endblock %}
