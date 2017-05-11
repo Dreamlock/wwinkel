@@ -26,9 +26,9 @@ urlpatterns = [
         name = 'institution-autocomplete'),
 
 
-    url(r'^study_field-autocomplete/$',
-        StudyFieldAutocomplete.as_view(create_field = 'study_field'),
-        name='study_field-autocomplete'),
+    url(r'^education-autocomplete/$',
+       EducationAutocomplete.as_view(create_field = 'education'),
+        name='education-autocomplete'),
 
 
     url(r'^subject-autocomplete/$',

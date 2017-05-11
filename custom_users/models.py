@@ -118,11 +118,11 @@ class Province(models.Model):
     LIMBURG_REGION = 3
     WEST_FLANDERS_REGION = 4
     PROVINCE_SELECT = (
-        (ANTWERP_REGION, _('Antwerp')),
-        (EAST_FLANDERS_REGION, _('East Flanders')),
-        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (ANTWERP_REGION, _('Antwerpen')),
+        (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
+        (FLEMISH_BRABANT_REGION, _('Vlaams-Brabant')),
         (LIMBURG_REGION, _('Limburg')),
-        (WEST_FLANDERS_REGION, _('West Flanders')),
+        (WEST_FLANDERS_REGION, _('West-Vlaanderen' )),
     )
 
     province = models.PositiveIntegerField(unique=True, choices=PROVINCE_SELECT)
@@ -211,7 +211,7 @@ class Organisation(models.Model):
     keyword = models.ManyToManyField(Keyword)
     type = models.ForeignKey(OrganisationType)
 
-    know_from = models.ForeignKey(KnowFrom)
+    know_from = models.ForeignKey(KnowFrom, null= True, blank= True)
 
     def __str__(self):
         return self.name
@@ -254,12 +254,12 @@ class Region(models.Model):
     WEST_FLANDERS_REGION = 4
     CENTRAL_REGION = 5
     REGION_SELECT = (
-        (ANTWERP_REGION, _('Antwerp')),
-        (EAST_FLANDERS_REGION, _('East Flanders')),
-        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (ANTWERP_REGION, _('Antwerpen')),
+        (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
+        (FLEMISH_BRABANT_REGION, _('Vlaams-Brabant')),
         (LIMBURG_REGION, _('Limburg')),
-        (WEST_FLANDERS_REGION, _('West Flanders')),
-        (CENTRAL_REGION, _('Central')),
+        (WEST_FLANDERS_REGION, _('West-Vlaanderen')),
+        (CENTRAL_REGION, _('Centraal')),
     )
     region = models.PositiveIntegerField(unique=True, choices=REGION_SELECT)
 

@@ -11,16 +11,16 @@ from simple_history.models import HistoricalRecords
 from custom_users.models import Region, Organisation, Address, User, Keyword
 
 
-class StudyField(models.Model):
+class Education(models.Model):
     """Represents a field of study (like biology or computer science)"""
 
-    study_field = models.CharField(max_length=33, unique=True)
+    education = models.CharField(max_length=33, unique=True)
 
     def __str__(self):
-        return self.study_field
+        return self.education
+
 
 class Institution(models.Model):
-
     name = models.CharField(max_length=40)
     address = models.ForeignKey(Address)
 
@@ -30,42 +30,53 @@ class Institution(models.Model):
 
 class Faculty(models.Model):
     name = models.TextField()
-    institution = models.ForeignKey(Institution)
+    institution = models.ManyToManyField(Institution, through='FacultyOf')
+
+
+class FacultyOf(models.Model):
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    education = models.ManyToManyField(Education)
+
 
 class Student(models.Model):
+    first_name = models.CharField(max_length=33)
+    last_name = models.CharField(max_length=45)
 
-    first_name = models.CharField(max_length = 33)
-    last_name = models.CharField(max_length= 45)
-
-    mobile = models.CharField(max_length = 20)
+    mobile = models.CharField(max_length=20)
     email = models.EmailField()
 
     status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
-
-    study_field = models.ForeignKey(StudyField)
+    education= models.ForeignKey(Education)
     adres = models.ForeignKey(Address)
+
 
 class Promotor(User):
     expertise = models.TextField()
     institution = models.ManyToManyField(Institution)
 
+
 class InstitutionContact(User):
     institution = models.ForeignKey(Institution)
+
 
 class Intake(models.Model):
     date = models.DateTimeField(default=timezone.now)
     remarks = models.TextField()
 
+
 class Attachment(models.Model):
     name = models.TextField()
-    type = models.TextField() #docx, csv, txt, ...
+    type = models.TextField()  # docx, csv, txt, ...
+
 
 class LogRecord(models.Model):
     subject = models.TextField()
     description = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)
     creator = models.ManyToManyField(User)
+
 
 class Log(models.Model):
     record = models.ManyToManyField(LogRecord)
@@ -88,7 +99,6 @@ class QuestionSubject(models.Model):
 
 
 class Question(models.Model):
-
     DRAFT_QUESTION = 0
     NEW_QUESTION = 1
     INTAKE_QUESTION = 2
@@ -134,22 +144,21 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    state = models.IntegerField(choices = STATE_SELECT, default=DRAFT_QUESTION)
+    state = models.IntegerField(choices=STATE_SELECT, default=DRAFT_QUESTION)
 
     region = models.ManyToManyField(Region)
 
     organisation = models.ForeignKey(Organisation)
 
-    #Faceting data
-    institution = models.ManyToManyField(Institution, null = True)
+    # Faceting data
+    institution = models.ManyToManyField(Institution)
+    education = models.ManyToManyField(Education)
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     student = models.ForeignKey(Student, null=True)
-    study_field = models.ManyToManyField(StudyField, blank=True)
 
-
-    completion_date = models.DateTimeField(null=True) # When the question was round up
-    type = models.ForeignKey(QuestionType)
+    completion_date = models.DateTimeField(null=True)  # When the question was round up
+    type = models.ForeignKey(QuestionType, null = True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -196,4 +205,4 @@ def question_changed_status(sender, **kwargs):
     question = kwargs['instance']
     if kwargs['created']:
         print('send mail: question added')
-    # print(kwargs['update_fields'])
+        # print(kwargs['update_fields'])

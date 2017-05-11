@@ -59,7 +59,7 @@ class QuestionAdmin(history_admin.SimpleHistoryAdmin):
 
     list_filter = (QuestionStateListFilter, 'region')
 
-    filter_horizontal = ('region', 'keyword', 'question_subject', 'study_field')
+    filter_horizontal = ('region', 'keyword', 'question_subject')
     readonly_fields = ('creation_date',)
 
     list_display = ('question_text', 'state',) # 'organisation')

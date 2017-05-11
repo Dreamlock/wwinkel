@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from custom_users.forms import AdressForm
 from .forms import *
-from .models import Question, StudyField, QuestionSubject
+from .models import Question, Education, QuestionSubject
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
 from .search import *
@@ -95,8 +95,8 @@ def list_questions(request):
                 if request.POST.getlist('own_question'):
                     sqs = sqs | regional_extra
 
-        if request.POST.getlist("study_field"):
-            sqs = sqs.filter(study_field_facet__in=request.POST.getlist("study_field"))
+        if request.POST.getlist("education"):
+            sqs = sqs.filter(education_facet__in=request.POST.getlist("education"))
 
 
     else:
@@ -119,8 +119,8 @@ def list_questions(request):
         else:  # is student
             sqs = sqs.filter(state__in=[l[0] for l in visible_states])
 
-    facets = sqs.facet('study_field_facet')
-    study_field = facets.facet_counts()['fields']['study_field_facet']
+    # facets = sqs.facet('education_facet')
+    # education = facets.facet_counts()['fields']['education_facet']
 
     own_question = False
     if request.user.is_authenticated() and request.user.is_organisation():
@@ -138,7 +138,7 @@ def list_questions(request):
 
     context = {'questions': sqs,
                'states': true_states,
-               'study_fields': study_field,
+               #'educations': education,
                'search_text': val,
                'own_question': own_question
                }
@@ -343,20 +343,20 @@ def edit_meta_info(request, question_id):
             for field in form.cleaned_data['institution']:
                 question.institution.add(field)
 
-            for field in form.cleaned_data['study_field_delete']:
+            for field in form.cleaned_data['education_delete']:
                 field.question_set.remove(question)
-                question.study_field.remove(field)
+                question.education.remove(field)
                 field.save()
                 question.save()
 
-            new_one = form.cleaned_data['study_field_new']
+            new_one = form.cleaned_data['education_new']
             if new_one != '':
-                new_st_field = StudyField(study_field=new_one)
+                new_st_field = Education(education=new_one)
                 new_st_field.save()
-                question.study_field.add(new_st_field)
+                question.education.add(new_st_field)
 
-            for field in form.cleaned_data['study_field']:
-                question.study_field.add(field)
+            for field in form.cleaned_data["education"]:
+                question.education.add(field)
 
             new_one = form.cleaned_data['subject_new']
             if new_one != '':
@@ -383,12 +383,10 @@ def edit_meta_info(request, question_id):
     return render(request, 'dbwwinkel/edit_meta_data.html', {'form': form, 'question': question})
 
 
-def register_institution(request,question_id):
-
+def register_institution(request, question_id):
     if request.method == 'POST':
-        print("bla")
-        institution_form = InstitutionForm(request.POST, prefix ='institution')
-        address_form = AdressForm(request.POST, prefix = 'address')
+        institution_form = InstitutionForm(request.POST, prefix='institution')
+        address_form = AdressForm(request.POST, prefix='address')
 
         if institution_form.is_valid() and address_form.is_valid():
             institution = institution_form.save(commit=False)
@@ -397,18 +395,18 @@ def register_institution(request,question_id):
             institution.address = address
             institution.save()
 
-            question = Question.objects.get(id = question_id)
+            question = Question.objects.get(id=question_id)
             question.institution.add(institution)
             question.save()
 
-            return redirect('edit_meta_info', question_id = question_id)
+            return redirect('edit_meta_info', question_id=question_id)
     else:
-        institution_form = InstitutionForm(prefix ='institution')
-        address_form = AdressForm(prefix = 'address')
+        institution_form = InstitutionForm(prefix='institution')
+        address_form = AdressForm(prefix='address')
 
     context = {
         'institution_form': institution_form,
         'address_form': address_form,
         'question_id': question_id
-                }
+    }
     return render(request, 'dbwwinkel/create_institution.html', context)

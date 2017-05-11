@@ -81,7 +81,8 @@ class OrganisationForm(forms.ModelForm):
             'telephone': 'Telefoon',
             'website': 'website',
             'goal': '*Doel organisatie',
-            'remarks': 'Opmerkingen'
+            'remarks': 'Opmerkingen',
+            'know_from': 'Van waar ken je ons?'
 
         }
         help_texts = {

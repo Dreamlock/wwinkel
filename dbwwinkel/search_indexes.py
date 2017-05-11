@@ -10,19 +10,13 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
 
     state = indexes.IntegerField(model_attr='state')
     region = indexes.MultiValueField()
-    organisation = indexes.CharField(model_attr ='organisation__id' )
+    organisation = indexes.CharField(model_attr='organisation__id')
 
-    #Facets
-    study_field_facet = indexes.FacetMultiValueField()
+    # Facets
+    # education_facet = indexes.FacetMultiValueField()
 
     def prepare_region(self, obj):
         return [region.region for region in obj.region.all()]
-
-    def prepare_study_field(self,obj):
-        return [l.study_field for l in obj.study_field.all()]
-
-    def prepare_study_field_facet(self, obj):
-        return [l.study_field for l in obj.study_field.all()]
 
     def get_model(self):
         return Question

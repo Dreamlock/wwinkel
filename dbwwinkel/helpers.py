@@ -82,7 +82,7 @@ def get_viewable_fields_student(question):
             'state',
             'organisation',
             'question_subject',
-            'study_field',
+            'education',
         }
         if question.state == Question.FINISHED_QUESTION:
             result |= {'student', 'completion_date'}
@@ -109,7 +109,7 @@ def get_viewable_fields_organisation(question):
         'organisation',
         'keyword',
         'question_subject',
-        'study_field',
+        'education',
     }
     if question.state == Question.ONGOING_QUESTION:
         result |= {'student'}
@@ -145,7 +145,7 @@ def get_viewable_fields_central_manager(question):
         'region',
         'keyword',
         'question_subject',
-        'study_field',
+        'education',
     }
     if question.state == Question.ONGOING_QUESTION:
         result |= {'student'}
@@ -179,7 +179,7 @@ def get_viewable_fields_regional_manager(question):
         'region',
         'keyword',
         'question_subject',
-        'study_field',
+        'education',
     }
     if question.state == Question.ONGOING_QUESTION:
         result |= {'student'}
@@ -237,7 +237,7 @@ def get_editable_fields_central_manager(question):
             'region',
             'keyword',
             'question_subject',
-            'study_field',
+            'education',
         }
     return result
 
@@ -265,7 +265,7 @@ def get_editable_fields_regional_manager(question):
         'organisation',
         'keyword',
         'question_subject',
-        'study_field',
+        'education',
     }
     if question.state == Question.ONGOING_QUESTION:
         result |= {'student'}

@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
 from haystack.forms import FacetedSearchForm
-from .models import StudyField
+from .models import Education
 from dal import autocomplete
 from dbwwinkel.helpers import get_viewable_states, get_editable_fields
 from django.urls import reverse
@@ -46,6 +46,7 @@ class InstitutionForm(ModelForm):
             'name': _('*Naam instelling')
         }
 
+
 class StudentForm(ModelForm):
     class Meta:
         model = Student
@@ -61,7 +62,7 @@ class MetaFieldForm(forms.Form):
         self.question_id = kwargs.pop('question_id')
         super(MetaFieldForm, self).__init__(*args, **kwargs)
         question = Question.objects.get(id=self.question_id)
-        self.fields['study_field_delete'].queryset = question.study_field
+        self.fields['education_delete'].queryset = question.education
         self.fields['subject_delete'].queryset = question.question_subject
         self.fields['institution_delete'].queryset = question.institution
 
@@ -75,21 +76,21 @@ class MetaFieldForm(forms.Form):
                                                         widget=forms.CheckboxSelectMultiple(),
                                                         label='Verwijderen', required=False)
 
-    study_field = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
-                                                 widget=autocomplete.ModelSelect2Multiple(
-                                                     url='study_field-autocomplete', )
-                                                 , label='Voeg toe',
-                                                 required=False)
-    study_field = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
-                                                 widget=autocomplete.ModelSelect2Multiple(url='study_field-autocomplete', ),
-                                                 label='Voeg toe',
-                                                 required=False)
+    education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
+                                               widget=autocomplete.ModelSelect2Multiple(
+                                                   url='education-autocomplete', )
+                                               , label='Voeg toe',
+                                               required=False)
+    education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
+                                               widget=autocomplete.ModelSelect2Multiple(url='education-autocomplete', ),
+                                               label='Voeg toe',
+                                               required=False)
 
-    study_field_new = forms.CharField(max_length=50, label="Niet in de lijst?", required=False)
+    education_new = forms.CharField(max_length=50, label="Niet in de lijst?", required=False)
 
-    study_field_delete = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
-                                                        widget=forms.CheckboxSelectMultiple(),
-                                                        label='Verwijderen', required=False)
+    education_delete = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
+                                                      widget=forms.CheckboxSelectMultiple(),
+                                                      label='Verwijderen', required=False)
 
     subject = forms.ModelMultipleChoiceField(queryset=QuestionSubject.objects.all(),
                                              widget=autocomplete.ModelSelect2Multiple(url='subject-autocomplete', )
@@ -101,13 +102,14 @@ class MetaFieldForm(forms.Form):
     subject_delete = forms.ModelMultipleChoiceField(queryset=QuestionSubject.objects.all(),
                                                     widget=forms.CheckboxSelectMultiple(),
                                                     label='Verwijderen', required=False)
-    study_field_delete = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
-                                                        widget=forms.CheckboxSelectMultiple(),
-                                                        label='Verwijderen', required=False)
+    education_delete = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
+                                                      widget=forms.CheckboxSelectMultiple(),
+                                                      label='Verwijderen', required=False)
 
 
 def QuestionFormFactory(user, question):
     return modelform_factory(Question, tuple(get_editable_fields(user, question)))
+
 
 class QuestionForm(ModelForm):
     def __init__(self, *args, **kwargs):
