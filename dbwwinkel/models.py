@@ -193,6 +193,10 @@ class Question(models.Model):
 
             ('view_draft_question', _('Can view draft question')),
             ('edit_draft_question', _('Can edit draft question')),
+            ('view_new_question', _('Can view new question')),
+            ('edit_new_question', _('Can edit new question')),
+            ('view_intake_question', _('Can view intake question')),
+            ('edit_intake_question', _('Can edit intake question')),
             ('view_in_progress_central_question', _('Can view in progress question central')),
             ('edit_in_progress_central_question', _('Can edit in progress question central')),
             ('view_processed_central_question', _('Can view processed question central')),
@@ -210,7 +214,7 @@ class Question(models.Model):
             ('view_denied_question', _('Can view denied question')),
             ('edit_denied_question', _('Can edit denied question')),
             ('view_revoked_question', _('Can view revoked question')),
-            ('edit_revoked_question', _('Can edit revoked question')),  # TODO: add permissions for new/intake question
+            ('edit_revoked_question', _('Can edit revoked question')),
         )
         # permissions = build_question_permissions()
 
