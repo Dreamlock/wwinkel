@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import EmailField, URLField, TextField
@@ -224,12 +225,21 @@ class OrganisationUser(User):
     organisation = models.OneToOneField(Organisation)  # , related_name='user_organisation') TODO: OnetoOnekey
 
 
+@receiver(post_save, sender=OrganisationUser)
 def organisation_user_created(sender, **kwargs):
     user = kwargs['instance']
     if kwargs['created']:
         user.groups.set([Group.objects.get(name='Organisations')])
-
-post_save.connect(organisation_user_created, sender=OrganisationUser)
+        print('send mail: org added')
+        """
+        send_mail(
+            'Organisatie toegevoegd',
+            'Hey, er is een nieuwe org toegevoegd',
+            'wwinkel.noreply@gmail.com',
+            ['EMAIL', 'MANAGERS'],
+            fail_silently=True,
+        )
+        """
 
 
 class Region(models.Model):
@@ -269,3 +279,13 @@ class ManagerUser(User):
 
     def is_regional_manager(self):
         return self.region.exclude(region=Region.CENTRAL_REGION).exists()
+
+
+@receiver(post_save, sender=ManagerUser)
+def manager_user_created(sender, **kwargs):
+    user = kwargs['instance']
+    if kwargs['created']:
+        if user.is_central_manager():
+            user.groups.set([Group.objects.get(name='Central Managers')])
+        if user.is_regional_manager():
+            user.groups.set([Group.objects.get(name='Regional Managers')])

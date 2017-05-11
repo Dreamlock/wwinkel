@@ -1,12 +1,15 @@
 from django import forms
 from django.forms import ModelForm
 from dbwwinkel.models import Question, Student, QuestionSubject, Institution
+from django.forms import ModelForm, modelform_factory
+from dbwwinkel.models import Question, Student
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
 from haystack.forms import FacetedSearchForm
 from .models import StudyField
 from dal import autocomplete
+from dbwwinkel.helpers import get_viewable_states, get_editable_fields
 from django.urls import reverse
 
 
@@ -77,6 +80,10 @@ class MetaFieldForm(forms.Form):
                                                      url='study_field-autocomplete', )
                                                  , label='Voeg toe',
                                                  required=False)
+    study_field = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
+                                                 widget=autocomplete.ModelSelect2Multiple(url='study_field-autocomplete', ),
+                                                 label='Voeg toe',
+                                                 required=False)
 
     study_field_new = forms.CharField(max_length=50, label="Niet in de lijst?", required=False)
 
@@ -94,15 +101,18 @@ class MetaFieldForm(forms.Form):
     subject_delete = forms.ModelMultipleChoiceField(queryset=QuestionSubject.objects.all(),
                                                     widget=forms.CheckboxSelectMultiple(),
                                                     label='Verwijderen', required=False)
+    study_field_delete = forms.ModelMultipleChoiceField(queryset=StudyField.objects.all(),
+                                                        widget=forms.CheckboxSelectMultiple(),
+                                                        label='Verwijderen', required=False)
 
+
+def QuestionFormFactory(user, question):
+    return modelform_factory(Question, tuple(get_editable_fields(user, question)))
 
 class QuestionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-
     class Meta:
         model = Question
         fields = ()
-
-
