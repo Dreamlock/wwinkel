@@ -144,21 +144,23 @@ with open(sys.argv[5]) as f:
                 le = cmmodels.LegalEntity.objects.get(id=row[4])
                 tp = cmmodels.OrganisationType.objects.get(id=1)
                 kf = cmmodels.KnowFrom.objects.get(id=1)
-                obj,created = cmmodels.Organisation.objects.get_or_create(id=row[0],
-                                                                          name=row[2],
-                                                                          recognised_abbreviation=row[3],
-                                                                          legal_entity=le,
-                                                                          address=adr,
-                                                                          telephone=498119433,
-                                                                          fax=498119433,
-                                                                          website=row[12],
-                                                                          mail="info@test.be",
-                                                                          goal=row[14],
-                                                                          remarks=row[16],
-                                                                          know_from = kf,
-                                                                          creation_date=refactored_date,
-                                                                          active=row[17],
-                                                                          type=tp)
+                obj, created = cmmodels.Organisation.objects.get_or_create(
+                    id=row[0],
+                    name=row[2],
+                    recognised_abbreviation=row[3],
+                    legal_entity=le,
+                    address=adr,
+                    telephone=498119433,
+                    fax=498119433,
+                    website=row[12],
+                    mail="info@test.be",
+                    goal=row[14],
+                    remarks=row[16],
+                    know_from = kf,
+                    creation_date=refactored_date,
+                    active=row[17],
+                    type=tp
+                )
                 obj.save()
             except:
                 pass

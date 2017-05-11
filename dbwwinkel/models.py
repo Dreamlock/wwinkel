@@ -49,7 +49,7 @@ class Student(models.Model):
     status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
     education = models.ForeignKey(Education)
-    adres = models.ForeignKey(Address)
+    address = models.ForeignKey(Address)
 
 
 class Person(models.Model):
