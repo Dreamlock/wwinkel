@@ -40,6 +40,10 @@ csv_files = [
     'knowfrom',
     'organiation_details',
     'questiontypes',
+    'institution',
+    'faculty',
+    'education',
 ]
+
 call(['python', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
 print('  done')
