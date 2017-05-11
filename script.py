@@ -179,3 +179,62 @@ with open(sys.argv[6]) as f:
                 pass
     f.close()
 
+#import institution
+with open(sys.argv[7]) as f:
+    reader = csv.reader(f)
+    for row in reader:
+        if (row[0] == "idschool"):
+            pass
+        else:
+            try:
+                prov = cmmodels.Province.objects.get(id=row[1])
+                adr, created = cmmodels.Address.objects.update_or_create(
+                    province=prov,
+                    city=row[7],
+                    postal_code=row[6],
+                    street_name=row[2],
+                    street_number=row[5],
+                )
+                adr.save()
+                obj, created = dbmodels.Institution.objects.update_or_create(id=row[0], name=row[4], address=adr)
+                obj.save()
+            except:
+                pass
+    f.close()
+
+#import faculty
+with open(sys.argv[8]) as f:
+    reader = csv.reader(f)
+    for row in reader:
+        if (row[0] == "idfaculty"):
+            pass
+        else:
+            try:
+                inst = dbmodels.Institution.objects.get(id=row[1])
+                print(inst)
+                obj, created = dbmodels.Faculty.objects.update_or_create(id=row[0], name=row[2])
+                obj.save()
+                obj2, created = dbmodels.FacultyOf.objects.update_or_create(faculty=obj, institution=inst)
+                obj2.save()
+                #print("faculty {0} added".format(obj))
+            except:
+                #print("faculty failure", sys.exc_info())
+                pass
+    f.close()
+
+#import education
+with open(sys.argv[9]) as f:
+    reader = csv.reader(f)
+    for row in reader:
+        if (row[0] == "ideducation"):
+            pass
+        else:
+            try:
+                fac = dbmodels.Faculty.objects.get(id=row[2])
+                obj, created = dbmodels.Education.objects.update_or_create(id=row[0], education=row[3])
+                obj.save()
+                #print("education {0} added".format(obj))
+            except:
+                #print("education failure", sys.exc_info())
+                pass
+    f.close()
