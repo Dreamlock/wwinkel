@@ -28,6 +28,10 @@ urlpatterns = [
         InstitutionAutocomplete.as_view(),
         name='institution-autocomplete'),
 
+    url(r'^promotor-autocomplete/$',
+        PromotorAutocomplete.as_view(),
+        name='promotor-autocomplete'),
+
     url(r'^education-autocomplete/$',
         EducationAutocomplete.as_view(create_field='education'),
         name='education-autocomplete'),
@@ -35,4 +39,5 @@ urlpatterns = [
     url(r'^subject-autocomplete/$',
         SubjectAutocomplete.as_view(create_field='subject'),
         name='subject-autocomplete'),
+
 ]

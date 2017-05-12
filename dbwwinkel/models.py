@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 from simple_history.models import HistoricalRecords
 
 from custom_users.models import Region, Organisation, Address, User, Keyword
@@ -64,12 +65,14 @@ class Person(models.Model):
 
     address = models.ForeignKey(Address)
 
+    def __str__(self):
+        return '{0} {1}'.format(self.first_name,self.last_name)
+
 
 class Promotor(Person):
     expertise = models.TextField()
     institution = models.ForeignKey(Institution)
     promo_class = models.CharField(max_length=100, null=True)
-
 
 class InstitutionContact(Person):
     institution = models.ForeignKey(Institution)
@@ -176,8 +179,25 @@ class Question(models.Model):
 
     history = HistoricalRecords()
 
+    #methods on objects
+    #build ins overwritten
     def __str__(self):
         return self.question_text
+
+    def get_absolute_url(self):
+        return reverse('detail', question_id = self.id)
+
+    #own
+    @property
+    def possible_promotors(self):
+
+        institutions = self.institution.all()
+
+        promotor_list = Promotor.objects.none()
+        for institution in institutions:
+            promotor_list = promotor_list | institution.promotor_set.all()
+
+        return promotor_list
 
     def clean(self):
         if self.deadline is not None and self.deadline < datetime.date.today():
