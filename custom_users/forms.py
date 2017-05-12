@@ -94,7 +94,7 @@ class AdressForm(forms.ModelForm):
 
     class Meta:
         model = Address
-        fields = '__all__'
+        fields = ['province', 'city', 'postal_code', 'street_name', 'street_number']
 
         labels = {
             'province': '*Provincie',

@@ -43,8 +43,6 @@ def login_view(request):
     return render(request, "custom_users/login_form.html", {'form': form})
 
 def register_organisation(request):
-
-    address_form = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         organisation_form = OrganisationForm(request.POST, prefix="organisation")
@@ -66,21 +64,21 @@ def register_organisation(request):
             # todo: add permissions.
             user.save()
 
+            user.login(request, user)
+
             return(HttpResponseRedirect('/dbwwinkel/list_questions?search_text='))
-        else:
-            return render(request, "custom_users/organisation_registration_form.html", {
-                'organisation_form': organisation_form,
-                'address_form': address_form,
-                'user_form': user_form})
     else:
         organisation_form = OrganisationForm(prefix="organisation")
         address_form = AdressForm( prefix='address')
-        user_form = BaseOrganisationUserForm(prefix='user')
+        user_form =BaseOrganisationUserForm(prefix='user')
         # redirect to a new URL:
-    return render(request, "custom_users/organisation_registration_form.html", {
+
+    context = {
         'organisation_form': organisation_form,
         'address_form': address_form,
-        'user_form': user_form})
+        'user_form': user_form
+    }
+    return render(request, "custom_users/organisation_registration_form.html",context    )
 
 @login_required
 def organisation_detail(request):

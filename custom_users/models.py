@@ -11,6 +11,7 @@ from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.validators import RegexValidator
 
+
 class Keyword(models.Model):
     """
     Representation of a keyword. Has a many to many relationship with Question (a question can have multiple keywords
@@ -47,7 +48,6 @@ class UserManager(BaseUserManager):
 
 
 class OrganisationManager(UserManager):
-
     def is_organisation(self):
         return True
 
@@ -75,7 +75,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(
         _('is active'),
         default=True,
-        help_text=_('Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
+        help_text=_(
+            'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
     )
 
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
@@ -189,8 +190,13 @@ class OrganisationType(models.Model):
     def __str__(self):
         return self.type
 
+
 class KnowFrom(models.Model):
     knowfrom = models.TextField()
+
+    def __str__(self):
+        return self.knowfrom
+
 
 class Organisation(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -213,7 +219,7 @@ class Organisation(models.Model):
     keyword = models.ManyToManyField(Keyword)
     type = models.ForeignKey(OrganisationType)
 
-    know_from = models.ForeignKey(KnowFrom, null= True, blank= True)
+    know_from = models.ForeignKey(KnowFrom, null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -17,6 +17,7 @@ from .models import Question, Education, QuestionSubject
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
 from .search import *
+from .helpers import delete_institution_from_question
 
 
 @login_required
@@ -138,7 +139,7 @@ def list_questions(request):
 
     context = {'questions': sqs,
                'states': true_states,
-               #'educations': education,
+               # 'educations': education,
                'search_text': val,
                'own_question': own_question
                }
@@ -335,13 +336,19 @@ def edit_meta_info(request, question_id):
         if form.is_valid():
 
             for field in form.cleaned_data['institution_delete']:
-                field.question_set.remove(question)
-                question.institution.remove(field)
-                field.save()
-                question.save()
+                delete_institution_from_question(question, field)
 
             for field in form.cleaned_data['institution']:
                 question.institution.add(field)
+
+            for field in form.cleaned_data['promotor_delete']:
+                field.question_set.remove(question)
+                question.promotor.remove(field)
+                field.save()
+                question.save()
+
+            for field in form.cleaned_data['promotor']:
+                question.promotor.add(field)
 
             for field in form.cleaned_data['education_delete']:
                 field.question_set.remove(question)
@@ -410,3 +417,28 @@ def register_institution(request, question_id):
         'question_id': question_id
     }
     return render(request, 'dbwwinkel/create_institution.html', context)
+
+
+def register_promotor(request, question_id):
+    if request.method == 'POST':
+        promotor_form = PromotorForm(request.POST)
+
+        if promotor_form.is_valid():
+            promotor = promotor_form.save(commit=False)
+
+            promotor.address = promotor.institution.address
+            promotor.save()
+
+            question = Question.objects.get(id=question_id)
+            question.promotor.add(promotor)
+            question.save()
+
+            return redirect('edit_meta_info', question_id=question_id)
+    else:
+        promotor_form = PromotorForm()
+
+    context = {
+        'promotor_form': promotor_form,
+        'question_id': question_id
+    }
+    return render(request, 'dbwwinkel/create_promotor.html', context)

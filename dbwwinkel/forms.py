@@ -1,14 +1,10 @@
 from django import forms
-from django.forms import ModelForm
-from dbwwinkel.models import Question, Student, QuestionSubject, Institution
+from dbwwinkel.models import QuestionSubject, Institution, Promotor
 from django.forms import ModelForm, modelform_factory
 from dbwwinkel.models import Question, Student
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
-import datetime
-from haystack.forms import FacetedSearchForm
 from .models import Education
-from dal import autocomplete
+from dal import autocomplete, forward
 from dbwwinkel.helpers import get_viewable_states, get_editable_fields
 from django.urls import reverse
 
@@ -47,6 +43,23 @@ class InstitutionForm(ModelForm):
         }
 
 
+class PromotorForm(ModelForm):
+    class Meta:
+        model = Promotor
+        fields = ['first_name', 'last_name', 'email', 'tel', 'institution', 'promo_class', 'expertise']
+
+        labels = {
+            'first_name': _('*Voornaam'),
+            'last_name': _('*Achternaam'),
+            'email': _('*E-Mail'),
+            'tel': _('Telefoon nummer'),
+            'institution': _('*Instelling'),
+            'promo_class': _('Bureau'),
+            'expertise': _('*Expertise veld')
+
+        }
+
+
 class StudentForm(ModelForm):
     class Meta:
         model = Student
@@ -62,19 +75,41 @@ class MetaFieldForm(forms.Form):
         self.question_id = kwargs.pop('question_id')
         super(MetaFieldForm, self).__init__(*args, **kwargs)
         question = Question.objects.get(id=self.question_id)
-        self.fields['education_delete'].queryset = question.education
-        self.fields['subject_delete'].queryset = question.question_subject
+
+        qs = Institution.objects.exclude(id__in=[inst.id for inst in question.institution.all()])
+        self.fields['institution'] = forms.ModelMultipleChoiceField(queryset=qs,
+                                                                    widget=autocomplete.ModelSelect2Multiple(
+                                                                        url='institution-autocomplete',
+                                                                        forward=(forward.Const(self.question_id,
+                                                                                               'question_id'),)),
+                                                                    label='Voeg toe',
+                                                                    required=False)
+
         self.fields['institution_delete'].queryset = question.institution
 
-    institution = forms.ModelMultipleChoiceField(queryset=Institution.objects.all(),
-                                                 widget=autocomplete.ModelSelect2Multiple(
-                                                     url='institution-autocomplete', )
-                                                 , label='Voeg toe',
-                                                 required=False)
+        self.fields['promotor'] = forms.ModelMultipleChoiceField(queryset= Promotor.objects.all(),
+                                                                 required=False,
+                                                                 label='Voeg toe',
+                                                                 widget=autocomplete.ModelSelect2Multiple(
+                                                                     url='promotor-autocomplete'
+                                                                     , forward=(
+                                                                         forward.Const(self.question_id, 'question_id'),
+                                                                         'institution',)))
+        self.fields['promotor_delete'].queryset = question.promotor
 
+        self.fields['subject_delete'].queryset = question.question_subject
+
+        self.fields['education_delete'].queryset = question.education
+
+    institution = forms.ModelMultipleChoiceField(queryset=None)
     institution_delete = forms.ModelMultipleChoiceField(queryset=Institution.objects.all(),
                                                         widget=forms.CheckboxSelectMultiple(),
                                                         label='Verwijderen', required=False)
+
+    promotor = forms.ModelMultipleChoiceField(queryset=None)
+    promotor_delete = forms.ModelMultipleChoiceField(queryset=Promotor.objects.all(),
+                                                     widget=forms.CheckboxSelectMultiple(),
+                                                     label='Verwijderen', required=False)
 
     education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
                                                widget=autocomplete.ModelSelect2Multiple(
@@ -82,7 +117,8 @@ class MetaFieldForm(forms.Form):
                                                , label='Voeg toe',
                                                required=False)
     education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
-                                               widget=autocomplete.ModelSelect2Multiple(url='education-autocomplete', ),
+                                               widget=autocomplete.ModelSelect2Multiple(
+                                                   url='education-autocomplete'),
                                                label='Voeg toe',
                                                required=False)
 
