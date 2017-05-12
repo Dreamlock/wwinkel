@@ -410,3 +410,6 @@ def register_institution(request, question_id):
         'question_id': question_id
     }
     return render(request, 'dbwwinkel/create_institution.html', context)
+
+def register_promotor(request, question_id):
+    return HttpResponse('register promotor stub')

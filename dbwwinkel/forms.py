@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from dbwwinkel.models import Question, Student, QuestionSubject, Institution
+from dbwwinkel.models import QuestionSubject, Institution, Promotor
 from django.forms import ModelForm, modelform_factory
 from dbwwinkel.models import Question, Student
 from django.utils.translation import ugettext_lazy as _
@@ -68,13 +68,20 @@ class MetaFieldForm(forms.Form):
 
     institution = forms.ModelMultipleChoiceField(queryset=Institution.objects.all(),
                                                  widget=autocomplete.ModelSelect2Multiple(
-                                                     url='institution-autocomplete', )
-                                                 , label='Voeg toe',
-                                                 required=False)
+                                                     url='institution-autocomplete')
+                                                 , label='Voeg toe', required=False)
 
     institution_delete = forms.ModelMultipleChoiceField(queryset=Institution.objects.all(),
                                                         widget=forms.CheckboxSelectMultiple(),
                                                         label='Verwijderen', required=False)
+
+    promotor = forms.ModelMultipleChoiceField(queryset=Promotor.objects.all(),
+                                              widget=autocomplete.ModelSelect2Multiple(url='institution-autocomplete'),
+                                              required=False, label='Voeg toe')
+
+    promotor_delete = forms.ModelMultipleChoiceField(queryset=Promotor.objects.all(),
+                                                     widget=forms.CheckboxSelectMultiple(),
+                                                     label='Verwijderen', required=False)
 
     education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
                                                widget=autocomplete.ModelSelect2Multiple(
@@ -82,7 +89,7 @@ class MetaFieldForm(forms.Form):
                                                , label='Voeg toe',
                                                required=False)
     education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
-                                               widget=autocomplete.ModelSelect2Multiple(url='education-autocomplete', ),
+                                               widget=autocomplete.ModelSelect2Multiple(url='education-autocomplete'),
                                                label='Voeg toe',
                                                required=False)
 

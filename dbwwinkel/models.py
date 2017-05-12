@@ -68,7 +68,7 @@ class Person(models.Model):
 class Promotor(Person):
     expertise = models.TextField()
     institution = models.ForeignKey(Institution)
-    promo_class = models.CharField(max_length=20, null=True)
+    promo_class = models.CharField(max_length=100, null=True)
 
 
 class InstitutionContact(Person):
@@ -150,30 +150,30 @@ class Question(models.Model):
     # Visible and editable: optional
     remarks = models.TextField(blank=True)
     internal_remarks = models.TextField(blank=True)
-
     deadline = models.DateField(blank=True, null=True)
-
     public = models.BooleanField()
+
+    #The corresponding organisation
+    organisation = models.ForeignKey(Organisation)
 
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     state = models.IntegerField(choices=STATE_SELECT, default=DRAFT_QUESTION)
-
     region = models.ManyToManyField(Region)
-
-    organisation = models.ForeignKey(Organisation)
 
     # Faceting data
     institution = models.ManyToManyField(Institution)
-
+    promotor = models.ManyToManyField(Promotor)
+    faculty = models.ManyToManyField(Faculty)
     education = models.ManyToManyField(Education)
     keyword = models.ManyToManyField(Keyword)
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
-    student = models.ForeignKey(Student, null=True)
-
-    completion_date = models.DateTimeField(null=True)  # When the question was round up
     type = models.ForeignKey(QuestionType, null=True)
+
+    student = models.ForeignKey(Student, null=True)
+    completion_date = models.DateTimeField(null=True)  # When the question was round up
+
     history = HistoricalRecords()
 
     def __str__(self):
