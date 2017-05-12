@@ -18,7 +18,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "", ["solr_install_path="])
     except getopt.GetoptError:
-        print('help msg')
+        print('usage: rebuild_database [--solr_install_path <solr installation directory>]')
         sys.exit(2)
     for opt, arg in opts:
         if opt == "--solr_install_path":
