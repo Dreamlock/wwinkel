@@ -1,5 +1,5 @@
 from django import forms
-from dbwwinkel.models import QuestionSubject, Institution, Promotor
+from dbwwinkel.models import QuestionSubject, Institution, Promotor, Faculty
 from django.forms import ModelForm, modelform_factory
 from dbwwinkel.models import Question, Student
 from django.utils.translation import ugettext_lazy as _
@@ -84,7 +84,6 @@ class MetaFieldForm(forms.Form):
                                                                                                'question_id'),)),
                                                                     label='Voeg toe',
                                                                     required=False)
-
         self.fields['institution_delete'].queryset = question.institution
 
         self.fields['promotor'] = forms.ModelMultipleChoiceField(queryset= Promotor.objects.all(),
@@ -96,6 +95,16 @@ class MetaFieldForm(forms.Form):
                                                                          forward.Const(self.question_id, 'question_id'),
                                                                          'institution',)))
         self.fields['promotor_delete'].queryset = question.promotor
+
+        self.fields['faculty'] = forms.ModelMultipleChoiceField(queryset=qs,
+                                                                    widget=autocomplete.ModelSelect2Multiple(
+                                                                    url='faculty-autocomplete',
+                                                                    forward=(forward.Const(self.question_id,
+                                                                                           'question_id'),)),
+                                                                    label='Voeg toe',
+                                                                    required=False)
+
+        self.fields['faculty'].queryset = question.faculty
 
         self.fields['subject_delete'].queryset = question.question_subject
 
@@ -110,6 +119,13 @@ class MetaFieldForm(forms.Form):
     promotor_delete = forms.ModelMultipleChoiceField(queryset=Promotor.objects.all(),
                                                      widget=forms.CheckboxSelectMultiple(),
                                                      label='Verwijderen', required=False)
+
+    faculty = forms.ModelMultipleChoiceField(queryset=None)
+    faculty_delete = forms.ModelMultipleChoiceField(queryset=Faculty.objects.all(),
+                                                    widget=forms.CheckboxSelectMultiple(),
+                                                    label='Verwijderen', required=False)
+
+    faculty_new = forms.CharField(max_length=50, label="Niet in de lijst?", required=False)
 
     education = forms.ModelMultipleChoiceField(queryset=Education.objects.all(),
                                                widget=autocomplete.ModelSelect2Multiple(

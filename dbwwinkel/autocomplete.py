@@ -1,5 +1,5 @@
 from dal import autocomplete as lightcomplete
-from .models import Education, QuestionSubject, Institution, Promotor, Question
+from .models import Education, QuestionSubject, Institution, Promotor, Question, Faculty
 from django.db.models import Q
 
 
@@ -30,6 +30,16 @@ class PromotorAutocomplete(lightcomplete.Select2QuerySetView):
             id__in=[promotor.id for promotor in question.promotor.all()])
         if self.q:
             qs = qs.filter(Q(first_name__istartswith=self.q) | Q(last_name__istartswith=self.q))
+
+        return qs
+
+
+class FacultyAutocomplete(lightcomplete.Select2QuerySetView):
+    def get_queryset(self):
+
+        qs = Faculty.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
 
         return qs
 
