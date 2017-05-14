@@ -23,19 +23,40 @@ def province_map(old_province_id):
     return idmap[old_province_id]
 
 def refactorDate(cdate):
-    if len(cdate) < 14 or len(cdate) > 16:
-        return "0001-01-01 01:01"
-    if cdate == '':
-        return "0001-01-01 01:01"
-    fields=cdate.split('/')
-    day=fields[1]
-    month=fields[0]
-    year_time=fields[2].split(' ')
-    year=year_time[0]
-    hour=year_time[1].split(':')[0]
-    minute=year_time[1].split(':')[1]
-    refactored_date = "{0}-{1}-{2} {3}:{4}".format(year,month,day,hour,minute)
-    return refactored_date
+    try:
+        if len(cdate) < 14 or len(cdate) > 16:
+            return "0001-01-01 01:01 +00:00"
+        if cdate == '':
+            return "0001-01-01 01:01 +00:00"
+        fields=cdate.split('/')
+        day=fields[1]
+        month=fields[0]
+        year_time=fields[2].split(' ')
+        year=year_time[0]
+        hour=year_time[1].split(':')[0]
+        minute=year_time[1].split(':')[1]
+        refactored_date = "{0}-{1}-{2} {3}:{4} +00:00".format(year,month,day,hour,minute)
+        return refactored_date
+    except:
+        return "0001-01-01 01:01 +00:00"
+
+def refactorDate2(cdate):
+    try:
+        if len(cdate) < 14 or len(cdate) > 16:
+            return "0001-01-01"
+        if cdate == '':
+            return "0001-01-01"
+        fields=cdate.split('/')
+        day=fields[1]
+        month=fields[0]
+        year_time=fields[2].split(' ')
+        year=year_time[0]
+        hour=year_time[1].split(':')[0]
+        minute=year_time[1].split(':')[1]
+        refactored_date = "{0}-{1}-{2}".format(year,month,day)
+        return refactored_date
+    except:
+        return "0001-01-01"
 
 def state_map(old_state_id):
     idmap={
@@ -43,10 +64,10 @@ def state_map(old_state_id):
         '2':1,
         '3':8,
         '4':1,
-        '5':2,
+        '5':1,
         '6':0,
-        '7':4,
-        '8':3,
+        '7':3,
+        '8':4,
         '9':8,
         '10':9,
         '11':5,
@@ -123,7 +144,7 @@ with open(sys.argv[4]) as f:
     f.close()
 
 #import organisation
-with open(sys.argv[5], encoding='utf8') as f:
+with open(sys.argv[5]) as f:
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idorganization"):
@@ -131,7 +152,7 @@ with open(sys.argv[5], encoding='utf8') as f:
         else:
             try:
                 prov = cmmodels.Province.objects.get(id=row[9])
-                adr,created = cmmodels.Address.objects.update_or_create(
+                adr,created = cmmodels.Address.objects.get_or_create(
                     province=prov,
                     city=row[8],
                     postal_code=row[7],
@@ -144,23 +165,21 @@ with open(sys.argv[5], encoding='utf8') as f:
                 le = cmmodels.LegalEntity.objects.get(id=row[4])
                 tp = cmmodels.OrganisationType.objects.get(id=1)
                 kf = cmmodels.KnowFrom.objects.get(id=1)
-                obj, created = cmmodels.Organisation.objects.get_or_create(
-                    id=row[0],
-                    name=row[2],
-                    recognised_abbreviation=row[3],
-                    legal_entity=le,
-                    address=adr,
-                    telephone=498119433,
-                    fax=498119433,
-                    website=row[12],
-                    mail="info@test.be",
-                    goal=row[14],
-                    remarks=row[16],
-                    know_from = kf,
-                    creation_date=refactored_date,
-                    active=row[17],
-                    type=tp
-                )
+                obj,created = cmmodels.Organisation.objects.get_or_create(id=row[0],
+                                                                          name=row[2],
+                                                                          recognised_abbreviation=row[3],
+                                                                          legal_entity=le,
+                                                                          address=adr,
+                                                                          telephone=498119433,
+                                                                          fax=498119433,
+                                                                          website=row[12],
+                                                                          mail="info@test.be",
+                                                                          goal=row[14],
+                                                                          remarks=row[16],
+                                                                          know_from = kf,
+                                                                          creation_date=refactored_date,
+                                                                          active=row[17],
+                                                                          type=tp)
                 obj.save()
             except:
                 pass
@@ -213,7 +232,7 @@ with open(sys.argv[8]) as f:
         else:
             try:
                 inst = dbmodels.Institution.objects.get(id=row[1])
-                print(inst)
+                #print(inst)
                 obj, created = dbmodels.Faculty.objects.update_or_create(id=row[0], name=row[2])
                 obj.save()
                 obj2, created = dbmodels.FacultyOf.objects.update_or_create(faculty=obj, institution=inst)
@@ -239,4 +258,144 @@ with open(sys.argv[9]) as f:
             except:
                 #print("education failure", sys.exc_info())
                 pass
+    f.close()
+
+#import students
+with open(sys.argv[10]) as f:
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    adr, created=cmmodels.Address.objects.get_or_create(
+        province=cmmodels.Province.objects.get(id=1),
+        city="Merksem",
+        postal_code=2170,
+        street_name="trammezandlei",
+        street_number=122,
+    )
+    adr.save()
+    for row in reader:
+        try:
+            if (get_row('studenteducation') != "NULL"):
+                #print(get_row('studenteducation'))
+                try:
+                    ed = dbmodels.Education.objects.get(education=get_row('studenteducation'))
+                    #print(ed)
+                except:
+                    ed = dbmodels.Education.objects.get(education='Rechten')
+            if (get_row('studenteducation') == "NULL"):
+                ed = dbmodels.Education.objects.get(education='Rechten')
+                #print(ed)
+            if (get_row('studentname') != "NULL"):
+                sname = get_row('studentname')
+                if sname != "":
+                    sfname = sname.split(' ')[0]
+                    slname = sname.split(' ')[1:]
+            else:
+                sfname = "Joske"
+                slname = "Vemeulen"
+            stud, created=dbmodels.Student.objects.update_or_create(
+                first_name=sfname,
+            last_name = slname,
+            mobile = 498119433,
+            email = "test@test.be",
+                address=adr,
+                education=ed
+            )
+            stud.save()
+        except:
+            print(sys.exc_info())
+            pass
+    f.close()
+
+#import question
+with open(sys.argv[10]) as f:
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    adr, created=cmmodels.Address.objects.get_or_create(
+        province=cmmodels.Province.objects.get(id=1),
+        city="Merksem",
+        postal_code=2170,
+        street_name="trammezandlei",
+        street_number=122,
+    )
+    adr.save()
+    for row in reader:
+        try:
+            if (get_row('studenteducation') != "NULL"):
+                try:
+                    ed = dbmodels.Education.objects.get(education=get_row('studenteducation'))
+                except:
+                    ed = dbmodels.Education.objects.get(education='Rechten')
+            if (get_row('studenteducation') == "NULL"):
+                ed = dbmodels.Education.objects.get(education='Rechten')
+
+            if (get_row('studentname') != "NULL"):
+                sname = get_row('studentname')
+                if sname != "":
+                    sfname = sname.split(' ')[0]
+                    slname = sname.split(' ')[1:]
+            else:
+                sfname = "Joske"
+                slname = "Vemeulen"
+            stud=dbmodels.Student.objects.get(
+                first_name=sfname,
+            last_name = slname,
+            mobile = 498119433,
+            email = "test@test.be",
+                address=adr,
+                education=ed
+            )
+
+            date = get_row('answerwithintermtext')
+            rdate = refactorDate2(date)
+            date2 = get_row('datecreated')
+            cdate = refactorDate(date2)
+
+            if (get_row('school_idschool') != "NULL"):
+                try:
+                    if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
+                        inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                    else:
+                        inst = dbmodels.Institution.objects.get(id=16)
+                except:
+                    inst = dbmodels.Institution.objects.get(id=16)
+            else:
+                inst = dbmodels.Institution.objects.get(id=16)
+
+            org = dbmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
+            compdate=refactorDate(get_row('dateregcompleted'))
+            obj, created = dbmodels.Question.objects.update_or_create(
+                id=get_row('idquestion'),
+                question_text=get_row('question'),
+                reason=get_row('questionkickoff'),
+                purpose=get_row('resultuse'),
+                own_contribution=get_row('costcontrib'),
+                remarks=get_row('remarks'),
+                internal_remarks=get_row('intakeremarks'),
+                deadline=rdate,
+                public=int(get_row('resultpublic')),
+                creation_date=cdate,
+                active=int(get_row('active')),
+                organisation=org,
+                institution=inst,
+                student=stud,
+                completion_date=compdate,
+                education=(ed,)
+            )
+            obj.save()
+        except:
+            print(sys.exc_info())
+            break
     f.close()
