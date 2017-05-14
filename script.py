@@ -25,9 +25,9 @@ def province_map(old_province_id):
 def refactorDate(cdate):
     try:
         if len(cdate) < 14 or len(cdate) > 16:
-            return "0001-01-01 01:01 +00:00"
+            return "0001-01-01 01:01"
         if cdate == '':
-            return "0001-01-01 01:01 +00:00"
+            return "0001-01-01 01:01"
         fields=cdate.split('/')
         day=fields[1]
         month=fields[0]
@@ -35,10 +35,10 @@ def refactorDate(cdate):
         year=year_time[0]
         hour=year_time[1].split(':')[0]
         minute=year_time[1].split(':')[1]
-        refactored_date = "{0}-{1}-{2} {3}:{4} +00:00".format(year,month,day,hour,minute)
+        refactored_date = "{0}-{1}-{2} {3}:{4}".format(year,month,day,hour,minute)
         return refactored_date
     except:
-        return "0001-01-01 01:01 +00:00"
+        return "0001-01-01 01:01"
 
 def refactorDate2(cdate):
     try:
@@ -96,6 +96,7 @@ def state_id_map(state_id):
 
 #path to province.csv
 with open(sys.argv[1]) as f:
+    print("importing provinces")
     print(f)
     reader = csv.reader(f)
     for row in reader:
@@ -105,10 +106,12 @@ with open(sys.argv[1]) as f:
             new_id = province_map(row[0])
             obj = cmmodels.Province(id=row[0], province=new_id)
             obj.save()
+    print("done")
     f.close()
 
 #path to JuridicalEntity.csv
 with open(sys.argv[2]) as f:
+    print("importing legal entities")
     reader = csv.reader(f)
     for row in reader:
         if (row[0]=="idjuridicalentity"):
@@ -119,10 +122,12 @@ with open(sys.argv[2]) as f:
                 )
             obj.entity=row[1]
             obj.save()
+    print("done")
     f.close()
 
 #import organisation types
 with open(sys.argv[3]) as f:
+    print("importing organizations types")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idorganizationtype"):
@@ -130,10 +135,12 @@ with open(sys.argv[3]) as f:
         else:
             obj, created = cmmodels.OrganisationType.objects.update_or_create(id=row[0], type=row[1])
             obj.save()
+    print("done")
     f.close()
 
 #import knowfrom
 with open(sys.argv[4]) as f:
+    print("importing know froms")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idquestionknowfrom"):
@@ -141,10 +148,12 @@ with open(sys.argv[4]) as f:
         else:
             obj,created = cmmodels.KnowFrom.objects.update_or_create(id=row[0],knowfrom=row[1])
             obj.save()
+    print("done")
     f.close()
 
 #import organisation
 with open(sys.argv[5]) as f:
+    print("importing organizations")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idorganization"):
@@ -182,12 +191,15 @@ with open(sys.argv[5]) as f:
                                                                           type=tp)
                 obj.save()
             except:
+                print(sys.exc_info())
                 pass
 
+    print("done")
     f.close()
 
 #import question types
 with open(sys.argv[6]) as f:
+    print("importing question types")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idquestioninvestigationtype"):
@@ -198,10 +210,12 @@ with open(sys.argv[6]) as f:
                 obj.save()
             except:
                 pass
+    print("done")
     f.close()
 
 #import institution
 with open(sys.argv[7]) as f:
+    print("importing institutions")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idschool"):
@@ -221,10 +235,12 @@ with open(sys.argv[7]) as f:
                 obj.save()
             except:
                 pass
+    print("done")
     f.close()
 
 #import faculty
 with open(sys.argv[8]) as f:
+    print("importing faculties")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idfaculty"):
@@ -241,10 +257,12 @@ with open(sys.argv[8]) as f:
             except:
                 #print("faculty failure", sys.exc_info())
                 pass
+    print("done")
     f.close()
 
 #import education
 with open(sys.argv[9]) as f:
+    print("importing educations")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "ideducation"):
@@ -258,10 +276,12 @@ with open(sys.argv[9]) as f:
             except:
                 #print("education failure", sys.exc_info())
                 pass
+    print("done")
     f.close()
 
 #import students
 with open(sys.argv[10]) as f:
+    print("importing students")
     reader = csv.reader(f)
 
     first_row = next(reader)
@@ -311,10 +331,12 @@ with open(sys.argv[10]) as f:
         except:
             print(sys.exc_info())
             pass
+    print("done")
     f.close()
 
 #import question
 with open(sys.argv[10]) as f:
+    print("importing questions")
     reader = csv.reader(f)
 
     first_row = next(reader)
@@ -397,5 +419,6 @@ with open(sys.argv[10]) as f:
             obj.save()
         except:
             print(sys.exc_info())
-            break
+            pass
+    print("done")
     f.close()
