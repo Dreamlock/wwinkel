@@ -191,7 +191,6 @@ with open(sys.argv[5]) as f:
                                                                           type=tp)
                 obj.save()
             except:
-                print(sys.exc_info())
                 pass
 
     print("done")
@@ -388,13 +387,17 @@ with open(sys.argv[10]) as f:
             if (get_row('school_idschool') != "NULL"):
                 try:
                     if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
-                        inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                        #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                        inst=get_row('school_idschool')
                     else:
-                        inst = dbmodels.Institution.objects.get(id=16)
+                         #inst = dbmodels.Institution.objects.get(id=12)
+                        inst="12"
                 except:
-                    inst = dbmodels.Institution.objects.get(id=16)
+                    #inst = dbmodels.Institution.objects.get(id=12)
+                    inst="12"
             else:
-                inst = dbmodels.Institution.objects.get(id=16)
+                #inst = dbmodels.Institution.objects.get(id=12)
+                inst="12"
 
             org = dbmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
             compdate=refactorDate(get_row('dateregcompleted'))
@@ -414,11 +417,11 @@ with open(sys.argv[10]) as f:
                 institution=inst,
                 student=stud,
                 completion_date=compdate,
-                education=(ed,)
+                education="85",
             )
             obj.save()
         except:
-            print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
