@@ -1,7 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from simple_history import admin as history_admin
-from .models import *
+from dbwwinkel.models import *
+from dbwwinkel.forms import QuestionFormFactory
 from custom_users.models import ManagerUser, OrganisationUser
 
 
@@ -56,6 +57,18 @@ class QuestionAdmin(history_admin.SimpleHistoryAdmin):
 
     def has_add_permission(self, request):
         return super().has_add_permission(request)
+
+    def has_change_permission(self, request, obj=None):
+        # if request.user.has_perm('edit', obj)
+        return super().has_add_permission(request)
+
+    def get_fields(self, request, obj=None):
+        result = super().get_fields(request, obj)
+        print(str(result))
+        return result
+
+    def get_fieldsets(self, request, obj=None):
+        return super().get_fieldsets(request, obj)
 
     list_filter = (QuestionStateListFilter, 'region')
 
