@@ -25,9 +25,9 @@ def province_map(old_province_id):
 def refactorDate(cdate):
     try:
         if len(cdate) < 14 or len(cdate) > 16:
-            return "0001-01-01 01:01"
+            return "0001-01-01 01:01:00.000123"
         if cdate == '':
-            return "0001-01-01 01:01"
+            return "0001-01-01 01:01:00.000123"
         fields=cdate.split('/')
         day=fields[1]
         month=fields[0]
@@ -35,10 +35,10 @@ def refactorDate(cdate):
         year=year_time[0]
         hour=year_time[1].split(':')[0]
         minute=year_time[1].split(':')[1]
-        refactored_date = "{0}-{1}-{2} {3}:{4}".format(year,month,day,hour,minute)
+        refactored_date = "{0}-{1}-{2} {3}:{4}:00.000123".format(year,month,day,hour,minute)
         return refactored_date
     except:
-        return "0001-01-01 01:01"
+        return "0001-01-01 01:01:00.000123"
 
 def refactorDate2(cdate):
     try:
@@ -191,6 +191,7 @@ with open(sys.argv[5]) as f:
                                                                           type=tp)
                 obj.save()
             except:
+                #print(sys.exc_info())
                 pass
 
     print("done")
@@ -417,11 +418,12 @@ with open(sys.argv[10]) as f:
                 institution=inst,
                 student=stud,
                 completion_date=compdate,
-                education="85",
+                education=str(ed.id),
+                state=int(get_row("reg_idquestionregstatus")),
             )
             obj.save()
         except:
-            #print(sys.exc_info())
+            print(sys.exc_info())
             pass
     print("done")
     f.close()
