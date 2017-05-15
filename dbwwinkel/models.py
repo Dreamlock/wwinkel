@@ -22,7 +22,7 @@ class Education(models.Model):
 
 
 class Institution(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
     address = models.ForeignKey(Address)
 
     def __str__(self):
@@ -30,8 +30,11 @@ class Institution(models.Model):
 
 
 class Faculty(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length = 40, unique=True)
     institution = models.ManyToManyField(Institution, through='FacultyOf')
+
+    def __str__(self):
+        return self.name
 
 
 class FacultyOf(models.Model):
@@ -66,13 +69,14 @@ class Person(models.Model):
     address = models.ForeignKey(Address)
 
     def __str__(self):
-        return '{0} {1}'.format(self.first_name,self.last_name)
+        return '{0} {1}'.format(self.first_name, self.last_name)
 
 
 class Promotor(Person):
     expertise = models.TextField()
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     promo_class = models.CharField(max_length=100, null=True)
+
 
 class InstitutionContact(Person):
     institution = models.ForeignKey(Institution)
@@ -110,6 +114,7 @@ class QuestionSubject(models.Model):
     """
 
     subject = models.CharField(max_length=33, unique=True)
+    education = models.ManyToManyField(Education)
 
     def __str__(self):
         return self.subject
@@ -156,7 +161,7 @@ class Question(models.Model):
     deadline = models.DateField(blank=True, null=True)
     public = models.BooleanField()
 
-    #The corresponding organisation
+    # The corresponding organisation
     organisation = models.ForeignKey(Organisation)
 
     # metadata: invisible
@@ -179,15 +184,15 @@ class Question(models.Model):
 
     history = HistoricalRecords()
 
-    #methods on objects
-    #build ins overwritten
+    # methods on objects
+    # build ins overwritten
     def __str__(self):
         return self.question_text
 
     def get_absolute_url(self):
-        return reverse('detail', question_id = self.id)
+        return reverse('detail', question_id=self.id)
 
-    #own
+    # own
     @property
     def possible_promotors(self):
 
@@ -198,6 +203,85 @@ class Question(models.Model):
             promotor_list = promotor_list | institution.promotor_set.all()
 
         return promotor_list
+
+    @property
+    def possible_faculty(self):
+
+        institutions = self.institution.all()
+
+        faculty_list = Promotor.objects.none()
+        for institution in institutions:
+            faculty_list = faculty_list | institution.faculty_set.all()
+
+
+        return faculty_list
+
+    @property
+    def possible_education(self):
+
+        p_education = Education.objects.none()
+        for inst in self.institution.all():
+            for fac in self.faculty.all():
+                if FacultyOf.objects.filter(institution=inst, faculty=fac).exists():
+                    fac_of = FacultyOf.objects.get(institution=inst, faculty=fac)
+                    p_education  = p_education | fac_of.education.all()
+
+        return p_education
+
+    def remove_faculty(self, faculty):
+
+        f_of_lst = []
+        for inst in self.institution.all():
+            if FacultyOf.objects.filter(institution= inst, faculty = faculty).exists():
+                f_of = FacultyOf.objects.get(institution= inst, faculty = faculty)
+                f_of_lst.append(f_of)
+
+        for eu in self.education.all():
+            to_remove = True
+            for f_of in f_of_lst:
+                if eu in f_of.education.all():
+                    if f_of.faculty != faculty:
+                        to_remove  = False
+
+            if to_remove:
+                self.education.remove(eu)
+
+        self.faculty.remove(faculty)
+        self.save()
+
+
+    def remove_institution(self, institution):
+
+        proms_institution = institution.promotor_set.all()
+        proms_question = self.promotor.all()
+
+        intersect = proms_institution & proms_question
+
+        for prom in intersect:
+            self.promotor.remove(prom)
+
+        self.institution.remove(institution)
+        institution.question_set.remove(self)
+        institution.save()
+        self.save()
+
+        faculty_institution = institution.faculty_set.all()
+        faculty_question = self.faculty.all()
+
+        intersect = faculty_institution & faculty_question
+
+        for fac in intersect:
+            to_remove = True
+            for inst in self.institution.all():
+                if inst != institution:
+                    if fac in inst.faculty_set.all():
+                        to_remove = False
+
+            if to_remove:
+                self.remove_faculty(fac)
+        self.save()
+
+
 
     def clean(self):
         if self.deadline is not None and self.deadline < datetime.date.today():
