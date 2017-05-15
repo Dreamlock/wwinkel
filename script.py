@@ -4,12 +4,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wwinkel.settings")
 django.setup()
 from custom_users import models as cmmodels
 from dbwwinkel import models as dbmodels
-import csv, sys
-
+import csv, sys, datetime
 
 """ paths to csv files can be passed by commandline in following order:
 
 """
+
+start_time=datetime.datetime.now()
 
 def province_map(old_province_id):
     idmap = {
@@ -95,7 +96,7 @@ def state_id_map(state_id):
     return state_dict[state_id]
 
 #path to province.csv
-with open(sys.argv[1]) as f:
+with open(sys.argv[1], encoding='utf8') as f:
     print("importing provinces")
     print(f)
     reader = csv.reader(f)
@@ -110,7 +111,7 @@ with open(sys.argv[1]) as f:
     f.close()
 
 #path to JuridicalEntity.csv
-with open(sys.argv[2]) as f:
+with open(sys.argv[2], encoding='utf8') as f:
     print("importing legal entities")
     reader = csv.reader(f)
     for row in reader:
@@ -126,7 +127,7 @@ with open(sys.argv[2]) as f:
     f.close()
 
 #import organisation types
-with open(sys.argv[3]) as f:
+with open(sys.argv[3], encoding='utf8') as f:
     print("importing organizations types")
     reader = csv.reader(f)
     for row in reader:
@@ -139,7 +140,7 @@ with open(sys.argv[3]) as f:
     f.close()
 
 #import knowfrom
-with open(sys.argv[4]) as f:
+with open(sys.argv[4], encoding='utf8') as f:
     print("importing know froms")
     reader = csv.reader(f)
     for row in reader:
@@ -152,7 +153,7 @@ with open(sys.argv[4]) as f:
     f.close()
 
 #import organisation
-with open(sys.argv[5]) as f:
+with open(sys.argv[5], encoding='utf8') as f:
     print("importing organizations")
     reader = csv.reader(f)
     for row in reader:
@@ -198,7 +199,7 @@ with open(sys.argv[5]) as f:
     f.close()
 
 #import question types
-with open(sys.argv[6]) as f:
+with open(sys.argv[6], encoding='utf8') as f:
     print("importing question types")
     reader = csv.reader(f)
     for row in reader:
@@ -214,7 +215,7 @@ with open(sys.argv[6]) as f:
     f.close()
 
 #import institution
-with open(sys.argv[7]) as f:
+with open(sys.argv[7], encoding='utf8') as f:
     print("importing institutions")
     reader = csv.reader(f)
     for row in reader:
@@ -239,7 +240,7 @@ with open(sys.argv[7]) as f:
     f.close()
 
 #import faculty
-with open(sys.argv[8]) as f:
+with open(sys.argv[8], encoding='utf8') as f:
     print("importing faculties")
     reader = csv.reader(f)
     for row in reader:
@@ -261,7 +262,7 @@ with open(sys.argv[8]) as f:
     f.close()
 
 #import education
-with open(sys.argv[9]) as f:
+with open(sys.argv[9], encoding='utf8') as f:
     print("importing educations")
     reader = csv.reader(f)
     for row in reader:
@@ -280,7 +281,7 @@ with open(sys.argv[9]) as f:
     f.close()
 
 #import students
-with open(sys.argv[10]) as f:
+with open(sys.argv[10], encoding='utf8') as f:
     print("importing students")
     reader = csv.reader(f)
 
@@ -329,13 +330,13 @@ with open(sys.argv[10]) as f:
             )
             stud.save()
         except:
-            print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
 
 #import question
-with open(sys.argv[10]) as f:
+with open(sys.argv[10], encoding='utf8') as f:
     print("importing questions")
     reader = csv.reader(f)
 
@@ -423,7 +424,101 @@ with open(sys.argv[10]) as f:
             )
             obj.save()
         except:
+            #print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
+
+#import keywords
+with open(sys.argv[11], encoding='utf8') as f:
+    print("importing keywords")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    for row in reader:
+        try:
+            kw, created = cmmodels.Keyword.objects.get_or_create(
+                id=int(get_row('idorganizationkeyword')),
+                key_word=get_row('keywordname')
+            )
+            kw.save()
+        except:
+            pass
+    print("done")
+    f.close()
+
+#add keywords to organizations
+with open(sys.argv[12], encoding='utf8') as f:
+    print("adding keywords to organisations")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+
+    for row in reader:
+        try:
+            org = cmmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
+            kw = cmmodels.Keyword.objects.get(id=int(get_row('organizationkeyword_idorganizationkeyword')))
+            org.keyword=str(kw.id)
+            org.save()
+        except:
+            pass
+    print("done")
+    f.close()
+
+#import promotors
+with open(sys.argv[13], encoding='utf8') as f:
+    print("importing promotors")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    for row in reader:
+        try:
+            if (get_row('Promotor_Institution') == "VUB") or (get_row('Promotor_Institution') == "VUB Etterbeek") or (get_row('Promotor_Institution') == "VUB Jette"):
+                inst=dbmodels.Institution.objects.get(id=13)
+            else:
+                inst=dbmodels.Institution.objects.get(name=get_row('Promotor_Institution'))
+            if (get_row('Promotor_Expertise') == "''"):
+                exp=" "
+            else:
+                exp=get_row('Promotor_Expertise')
+            adr=inst.address
+            promotor, created=dbmodels.Promotor.objects.get_or_create(
+                id=int(get_row('Promotor_ID')),
+                address=adr,
+                institution=inst,
+                email="test@test.be",
+                expertise=exp,
+                first_name=get_row('Promotor_FirstName'),
+                last_name=get_row('Promotor_LastName'),
+                promo_class=get_row('Promotor_Class'),
+                tel=498119433
+            )
+            promotor.save()
+        except:
             print(sys.exc_info())
             pass
     print("done")
     f.close()
+
+
+end_time=datetime.datetime.now()
+print(start_time)
+print(end_time)
