@@ -22,6 +22,8 @@ organisation_perms = (
 central_manager_perms = (
     'view_draft_question',
     'edit_draft_question',
+    'view_new_question',
+    'edit_new_question',
     'view_in_progress_central_question',
     'edit_in_progress_central_question',
     'view_processed_central_question',
@@ -29,6 +31,8 @@ central_manager_perms = (
 )
 
 regional_manager_perms = (
+    'view_intake_question',
+    'edit_intake_question',
     'view_processed_central_question',
     'view_in_progress_regional_question',
     'edit_in_progress_regional_question',

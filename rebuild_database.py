@@ -3,8 +3,11 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wwinkel.settings")
 django.setup()
 from django.core.management import call_command
+from django.utils import timezone
+from custom_users.models import User
 from subprocess import call
 from glob import glob
+from cms.api import create_page
 
 if True:
     print('deleting old db...')
@@ -32,18 +35,46 @@ if True:
     call_command('migrate')
     print('  done')
 
-print('importing data from csv')
-csv_files = [
-    'Province',
-    'JuridicalEntity',
-    'organisationtyes',
-    'knowfrom',
-    'organiation_details',
-    'questiontypes',
-    'institution',
-    'faculty',
-    'education',
-]
+if True:
+    print('importing data from csv...')
+    csv_files = [
+        'Province',
+        'JuridicalEntity',
+        'organisationtyes',
+        'knowfrom',
+        'organiation_details',
+        'questiontypes',
+        'institution',
+        'faculty',
+        'education',
+    ]
+    call(['python', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
+    print('  done')
 
-call(['python', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
-print('  done')
+    print('creating permission groups...')
+    call(['python', 'add_perm_group_script.py'])
+    print('  done')
+
+if True:
+    print('creating home page...')
+    create_page(
+        title='Home', slug='home', template='INHERIT', language='nl', publication_date=timezone.now(), published=True
+    )
+    print('  done')
+
+if True:
+    print('creating superuser (user:admin@admin.be, pw:admin)...')
+    call_command('createsuperuser', '--email', 'admin@admin.be')
+    admin = User.objects.get(email='admin@admin.be')
+    admin.set_password('admin')
+    admin.save()
+    print('  done')
+
+# print('creating manager user (user:central@manager.be, pw:admin)...')
+
+
+# print('creating regional user (user:regional@manager.be, pw:admin, region:antwerp)...')
+
+# print('generating haystack schema.xml...')
+# call_command('build_solr_schema')
+# print('  done')

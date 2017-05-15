@@ -123,7 +123,7 @@ with open(sys.argv[4]) as f:
     f.close()
 
 #import organisation
-with open(sys.argv[5]) as f:
+with open(sys.argv[5], encoding='utf8') as f:
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idorganization"):
