@@ -65,7 +65,7 @@ def main(argv):
             'question',
             'question',
         ]
-        call(['python', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
+        call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
 
         print('creating permission groups...')

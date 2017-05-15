@@ -289,7 +289,7 @@ with open(sys.argv[9], encoding='utf8') as f:
     f.close()
 
 # import students
-with open(sys.argv[10], encoding='utf8') as f:
+with open(sys.argv[10], encoding='latin1') as f:
     print("importing students")
     reader = csv.reader(f)
 
@@ -345,7 +345,7 @@ with open(sys.argv[10], encoding='utf8') as f:
     f.close()
 
 # import question
-with open(sys.argv[10], encoding='utf8') as f:
+with open(sys.argv[10], encoding='latin1') as f:
     print("importing questions")
     reader = csv.reader(f)
 
