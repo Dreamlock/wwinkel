@@ -353,5 +353,6 @@ class Question(models.Model):
 def question_changed_status(sender, **kwargs):
     question = kwargs['instance']
     if kwargs['created']:
-        print('send mail: question added')
+        pass
+        # print('send mail: question added')
         # print(kwargs['update_fields'])
