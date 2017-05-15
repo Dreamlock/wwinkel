@@ -80,16 +80,23 @@ class EducationAutocomplete(lightcomplete.Select2QuerySetView):
 
 
 class SubjectAutocomplete(lightcomplete.Select2QuerySetView):
+
     def get_queryset(self):
 
         question_id = self.forwarded.get('question_id', None)
+        print(question_id)
         question = Question.objects.get(id=question_id)
         new_lst = self.forwarded.get('education')
+        real_time_educations = Education.objects.filter(id__in=new_lst)
 
-        
+        real_subject = QuestionSubject.objects.none()
+        for edu in real_time_educations:
+            real_education = real_education | edu.questionsubject_set.all()
 
-        qs = QuestionSubject.objects.all()
+        qs = (question.possible_subject | real_subject).exclude(
+            id__in=[subject.id for subject in question.question_subject.all()])
         if self.q:
-            qs = qs.filter(subject__istartswith=self.q)
+            qs = qs.filter(name__istartswith=self.q)
 
         return qs
+
