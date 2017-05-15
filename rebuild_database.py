@@ -62,6 +62,8 @@ def main(argv):
             'institution',
             'faculty',
             'education',
+            'question',
+            'question',
         ]
         call(['python', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
