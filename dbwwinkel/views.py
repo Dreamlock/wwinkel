@@ -380,7 +380,7 @@ def edit_meta_info(request, question_id):
 
             for field in form.cleaned_data['education_delete']:
                 field.question_set.remove(question)
-                question.education.remove(field)
+                question.remove_education(field)
                 field.save()
                 question.save()
 

@@ -175,13 +175,6 @@ class MetaFieldForm(forms.Form):
         label='Verwijderen', required=False
     )
 
-    subject = forms.ModelMultipleChoiceField(
-        queryset=QuestionSubject.objects.all(),
-        widget=autocomplete.ModelSelect2Multiple(url='subject-autocomplete', ),
-        label='Voeg toe',
-        required=False
-    )
-
     subject_new = forms.CharField(max_length=50, label="Niet in de lijst?", required=False)
 
     subject_delete = forms.ModelMultipleChoiceField(

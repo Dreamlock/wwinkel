@@ -228,6 +228,32 @@ class Question(models.Model):
 
         return p_education
 
+    @property
+    def possible_subject(self):
+
+        subject = QuestionSubject.objects.none()
+        for edu in self.education.all():
+            subject = subject | edu.questionsubject_set.all()
+
+        return subject
+
+    def remove_education(self, education):
+        subject_education = education.questionsubject_set.all()
+
+
+        intersect = subject_education & self.question_subject.all()
+
+        for subject in intersect:
+            to_remove = True
+            for edu in self.education.all():
+                if edu != education:
+                    if subject in edu.questionsubject_set.all():
+                        to_remove = False
+
+            if to_remove:
+                self.remove_faculty(subject)
+        self.save()
+
     def remove_faculty(self, faculty):
 
         f_of_lst = []
@@ -244,7 +270,7 @@ class Question(models.Model):
                         to_remove  = False
 
             if to_remove:
-                self.education.remove(eu)
+                self.remove_education(eu)
 
         self.faculty.remove(faculty)
         self.save()
