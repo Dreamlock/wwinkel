@@ -13,11 +13,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from custom_users.forms import AdressForm
 from .forms import *
-from .models import Question, Education, QuestionSubject
+from .models import Question, Education, QuestionSubject, FacultyOf
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
 from .search import *
-from .helpers import delete_institution_from_question
+
 
 
 @login_required
@@ -336,7 +336,7 @@ def edit_meta_info(request, question_id):
         if form.is_valid():
 
             for field in form.cleaned_data['institution_delete']:
-                delete_institution_from_question(question, field)
+                question.remove_institution(field)
 
             for field in form.cleaned_data['institution']:
                 question.institution.add(field)
@@ -350,17 +350,65 @@ def edit_meta_info(request, question_id):
             for field in form.cleaned_data['promotor']:
                 question.promotor.add(field)
 
+            for field in form.cleaned_data['faculty_delete']:
+                field.question_set.remove(question)
+                question.remove_faculty(field)
+                field.save()
+                question.save()
+
+            for field in form.cleaned_data['faculty']:
+                question.faculty.add(field)
+
+            new_one = form.cleaned_data['faculty_new']
+            if new_one != '':
+                if Faculty.objects.filter(name = new_one).exists():
+                    fac = Faculty.objects.get(name = new_one)
+                    for inst in question.institution.all():
+                        f1 = FacultyOf.objects.create(institution=inst, faculty=fac)
+                        f1.save()
+                    question.faculty.add(fac)
+                    question.save()
+                else:
+                    new_fac_field = Faculty.objects.create(name=new_one)
+
+                    for inst in question.institution.all():
+                        f1 = FacultyOf.objects.create(institution = inst, faculty = new_fac_field)
+                        f1.save()
+                    new_fac_field.save()
+                    question.faculty.add(new_fac_field)
+                    new_fac_field.save()
+
             for field in form.cleaned_data['education_delete']:
                 field.question_set.remove(question)
                 question.education.remove(field)
                 field.save()
                 question.save()
 
+
             new_one = form.cleaned_data['education_new']
             if new_one != '':
-                new_st_field = Education(education=new_one)
-                new_st_field.save()
-                question.education.add(new_st_field)
+                if Education.objects.filter(education = new_one).exists():
+                    educ = Education.objects.get(education = new_one)
+                    for inst in question.institution.all():
+                        for fac in question.faculty.all():
+                            if FacultyOf.objects.filter(institution=inst, faculty=fac).exists():
+                                fac_of = FacultyOf.objects.get(institution=inst, faculty=fac)
+                                fac_of.education.add(educ)
+                                fac_of.save()
+                                question.education.add(educ)
+                                question.save()
+                else:
+
+                    new_st_field = Education(education=new_one)
+                    new_st_field.save()
+
+                    for inst in question.institution.all():
+                        for fac in question.faculty.all():
+                            if FacultyOf.objects.filter(institution= inst, faculty = fac).exists():
+                                fac_of = FacultyOf.objects.get(institution = inst, faculty = fac)
+                                fac_of.education.add(new_st_field)
+                                fac_of.save()
+                    question.education.add(new_st_field)
 
             for field in form.cleaned_data["education"]:
                 question.education.add(field)
