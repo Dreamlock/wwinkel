@@ -64,8 +64,7 @@ def register_organisation(request):
             # todo: add permissions.
             user.save()
 
-            user.login(request, user)
-
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return(HttpResponseRedirect('/dbwwinkel/list_questions?search_text='))
     else:
         organisation_form = OrganisationForm(prefix="organisation")

@@ -190,6 +190,14 @@ class MetaFieldForm(forms.Form):
     )
 
 
+class FacetForm(forms.Form):
+
+
+    own_questions = forms.BooleanField(required = False, label = _('Eigen vragen'))
+    status = forms.MultipleChoiceField(required = False, label = _('Status'), choices= Question.STATE_SELECT)
+    institution = forms.MultipleChoiceField(required= False, label = _('Instelling'), choices = Question.STATE_SELECT)
+
+
 def QuestionFormFactory(user, question):
     return modelform_factory(Question, tuple(get_editable_fields(user, question)))
 

@@ -68,8 +68,9 @@ class EducationAutocomplete(lightcomplete.Select2QuerySetView):
         real_education = Education.objects.none()
         for fac in real_time_faculties:
             for inst in real_time_inst:
-                fac_of = FacultyOf.objects.get(faculty=fac, institution=inst)
-                real_education = real_education | fac_of.education.all()
+                if FacultyOf.objects.filter(faculty=fac, institution=inst).exists():
+                    fac_of = FacultyOf.objects.get(faculty=fac, institution=inst)
+                    real_education = real_education | fac_of.education.all()
 
         qs = ((real_education | question.possible_education).distinct()).exclude(
             id__in = [education.id for education in question.education.all()])
