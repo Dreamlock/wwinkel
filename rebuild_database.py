@@ -63,7 +63,10 @@ def main(argv):
             'faculty',
             'education',
             'question',
-            'question',
+            'keywords',
+            'organisation_has_keyword',
+            'promotor',
+            'organisationcontact',
         ]
         call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
