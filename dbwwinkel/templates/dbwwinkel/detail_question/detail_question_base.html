@@ -38,7 +38,7 @@
                             <strong>Nummer: </strong> {{ organisation.address.street_number }}<br>
                             <strong>Plaats: </strong> {{ organisation.address.postal_code }}  {{ organisation.address.city }} <br>
                             <strong>Tel:    </strong> {{ organisation.telephone }} <br>
-                            <strong>Website:</strong> <a href = "{{organisation.website}}" target="_blank">{{ organisation.website }}</a>
+                            <strong>Website:</strong> <a href = "http://{{organisation.website}}" target="_blank">{{ organisation.website }}</a>
                         </div>
 
                         <div class = col-md-4>
@@ -58,7 +58,7 @@
                             <strong>Instelling(en)</strong>{% for institution  in question.institution.all %}
                                                                 {{institution  }}{% endfor %}<br>
                             <strong>Onderzoeksveld(en):</strong>
-                            {% for study_field in question.study_field.all %}
+                            {% for study_field in question.education.all %}
                                 {{ study_field }}
                             {% endfor %}<br>
                             <strong>Onderwerp(en): </strong>

@@ -171,6 +171,14 @@ class User(AbstractUser):
     def is_manager(self):
         return ManagerUser.objects.filter(id=self.id).exists()
 
+    def is_central_manager(self):
+        if self.is_manager:
+            m_user = ManagerUser.objects.get(id = self.id)
+            if m_user.region.filter(region = Region.CENTRAL_REGION).exists():
+                return True
+
+        return False
+
     def as_manager(self):
         if self.is_manager():
             return ManagerUser.objects.get(id=self.id)
@@ -248,6 +256,7 @@ def organisation_user_created(sender, **kwargs):
             fail_silently=True,
         )
         """
+
 
 
 class Region(models.Model):
