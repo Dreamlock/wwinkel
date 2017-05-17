@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load index %}
 
 {% block extra_head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -15,6 +16,7 @@
                     <div class="well">
                         <ul class="nav ">
                             <form name="status" action="{% url "list_questions" %}" method='GET' accept-charset="utf-8">
+                                <input type = "hidden" name="search_text" value="{{ search_text }}" >
                                 {% for field in facet_form %}
                                     <div class='form-group'>
 
@@ -38,15 +40,15 @@
                                             {% endfor %}
                                     {% else %}
                                             <strong>{{ field.label }}</strong>
-                                            {% for value,facet_count in field.field.choices %}
-                                                <div class ="checkbox">
-                                                <label><input type="checkbox" name={{ field.label }} value="{{ value }}"
-                                                              {{ field.initial }}
-                                                            {% if value in field.initial %}
-                                                                  checked='checked'{% endif %}>
-                                                        {{ value }}({{ facet_count }})
-                                                </label>
+                                            {% for checkbox in field %}
+                                                <div class = 'checkbox'>
+                                                    {% with  forloop.counter0 as checkboxcounter %}
+                                                        {% with forloop.parentloop.counter0 as parentc  %}
+
+                                                        {{checkbox}}({{facet_count|index:parentc|index:checkboxcounter|index:1}})
                                                 </div>
+                                                    {% endwith %}
+                                                {% endwith %}
                                             {% endfor %}
                                     {% endif %}
 
