@@ -1,6 +1,5 @@
 import os
 import django
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wwinkel.settings")
 django.setup()
 from custom_users import models as cmmodels
@@ -11,8 +10,7 @@ import csv, sys, datetime
 
 """
 
-start_time = datetime.datetime.now()
-
+start_time=datetime.datetime.now()
 
 def province_map(old_province_id):
     idmap = {
@@ -25,6 +23,21 @@ def province_map(old_province_id):
     }
     return idmap[old_province_id]
 
+def refactorDeadline(cdate):
+    try:
+        if len(cdate) < 14 or len(cdate) > 16:
+            return "9999-01-01"
+        if cdate == '':
+            return "9999-01-01"
+        fields=cdate.split('/')
+        day=fields[1]
+        month=fields[0]
+        year_time=fields[2].split(' ')
+        year=year_time[0]
+        refactored_date = "{0}-{1}-{2}".format(year,month,day)
+        return refactored_date
+    except:
+        return "9999-01-01"
 
 def refactorDate(cdate):
     try:
@@ -32,18 +45,17 @@ def refactorDate(cdate):
             return "0001-01-01 01:01:00.000123"
         if cdate == '':
             return "0001-01-01 01:01:00.000123"
-        fields = cdate.split('/')
-        day = fields[1]
-        month = fields[0]
-        year_time = fields[2].split(' ')
-        year = year_time[0]
-        hour = year_time[1].split(':')[0]
-        minute = year_time[1].split(':')[1]
-        refactored_date = "{0}-{1}-{2} {3}:{4}:00.000123".format(year, month, day, hour, minute)
+        fields=cdate.split('/')
+        day=fields[1]
+        month=fields[0]
+        year_time=fields[2].split(' ')
+        year=year_time[0]
+        hour=year_time[1].split(':')[0]
+        minute=year_time[1].split(':')[1]
+        refactored_date = "{0}-{1}-{2} {3}:{4}:00.000123".format(year,month,day,hour,minute)
         return refactored_date
     except:
         return "0001-01-01 01:01:00.000123"
-
 
 def refactorDate2(cdate):
     try:
@@ -51,37 +63,35 @@ def refactorDate2(cdate):
             return "0001-01-01"
         if cdate == '':
             return "0001-01-01"
-        fields = cdate.split('/')
-        day = fields[1]
-        month = fields[0]
-        year_time = fields[2].split(' ')
-        year = year_time[0]
-        hour = year_time[1].split(':')[0]
-        minute = year_time[1].split(':')[1]
-        refactored_date = "{0}-{1}-{2}".format(year, month, day)
+        fields=cdate.split('/')
+        day=fields[1]
+        month=fields[0]
+        year_time=fields[2].split(' ')
+        year=year_time[0]
+        hour=year_time[1].split(':')[0]
+        minute=year_time[1].split(':')[1]
+        refactored_date = "{0}-{1}-{2}".format(year,month,day)
         return refactored_date
     except:
         return "0001-01-01"
 
-
 def state_map(old_state_id):
-    idmap = {
-        '1': 0,
-        '2': 1,
-        '3': 8,
-        '4': 1,
-        '5': 1,
-        '6': 0,
-        '7': 3,
-        '8': 4,
-        '9': 8,
-        '10': 9,
-        '11': 5,
-        '12': 6,
-        '13': 7
+    idmap={
+        '1':0,
+        '2':1,
+        '3':8,
+        '4':1,
+        '5':1,
+        '6':0,
+        '7':3,
+        '8':4,
+        '9':8,
+        '10':9,
+        '11':5,
+        '12':6,
+        '13':7
     }
     return idmap[old_state_id]
-
 
 def state_id_map(state_id):
     state_dict = {
@@ -101,14 +111,13 @@ def state_id_map(state_id):
     }
     return state_dict[state_id]
 
-
-# path to province.csv
-with open(sys.argv[1], encoding='utf8') as f:
+#path to province.csv
+with open(sys.argv[1], encoding='latin1') as f:
     print("importing provinces")
     print(f)
     reader = csv.reader(f)
     for row in reader:
-        if (row[0] == "idprovince"):
+        if (row[0]=="idprovince"):
             pass
         else:
             new_id = province_map(row[0])
@@ -117,24 +126,24 @@ with open(sys.argv[1], encoding='utf8') as f:
     print("done")
     f.close()
 
-# path to JuridicalEntity.csv
-with open(sys.argv[2], encoding='utf8') as f:
+#path to JuridicalEntity.csv
+with open(sys.argv[2], encoding='latin1') as f:
     print("importing legal entities")
     reader = csv.reader(f)
     for row in reader:
-        if (row[0] == "idjuridicalentity"):
+        if (row[0]=="idjuridicalentity"):
             pass
         else:
             obj, created = cmmodels.LegalEntity.objects.update_or_create(
                 id=row[0],
-            )
-            obj.entity = row[1]
+                )
+            obj.entity=row[1]
             obj.save()
     print("done")
     f.close()
 
-# import organisation types
-with open(sys.argv[3], encoding='utf8') as f:
+#import organisation types
+with open(sys.argv[3], encoding='latin1') as f:
     print("importing organizations types")
     reader = csv.reader(f)
     for row in reader:
@@ -146,21 +155,21 @@ with open(sys.argv[3], encoding='utf8') as f:
     print("done")
     f.close()
 
-# import knowfrom
-with open(sys.argv[4], encoding='utf8') as f:
+#import knowfrom
+with open(sys.argv[4], encoding='latin1') as f:
     print("importing know froms")
     reader = csv.reader(f)
     for row in reader:
         if (row[0] == "idquestionknowfrom"):
             pass
         else:
-            obj, created = cmmodels.KnowFrom.objects.update_or_create(id=row[0], knowfrom=row[1])
+            obj,created = cmmodels.KnowFrom.objects.update_or_create(id=row[0],knowfrom=row[1])
             obj.save()
     print("done")
     f.close()
 
-# import organisation
-with open(sys.argv[5], encoding='utf8') as f:
+#import organisation
+with open(sys.argv[5], encoding='latin1') as f:
     print("importing organizations")
     reader = csv.reader(f)
     for row in reader:
@@ -169,7 +178,7 @@ with open(sys.argv[5], encoding='utf8') as f:
         else:
             try:
                 prov = cmmodels.Province.objects.get(id=row[9])
-                adr, created = cmmodels.Address.objects.get_or_create(
+                adr,created = cmmodels.Address.objects.get_or_create(
                     province=prov,
                     city=row[8],
                     postal_code=row[7],
@@ -178,36 +187,35 @@ with open(sys.argv[5], encoding='utf8') as f:
                 )
                 adr.save()
                 cdate = row[18]
-                refactored_date = refactorDate(cdate)
+                refactored_date=refactorDate(cdate)
                 le = cmmodels.LegalEntity.objects.get(id=row[4])
                 tp = cmmodels.OrganisationType.objects.get(id=1)
                 kf = cmmodels.KnowFrom.objects.get(id=1)
-                obj, created = cmmodels.Organisation.objects.get_or_create(
-                    id=row[0],
-                    name=row[2],
-                    recognised_abbreviation=row[3],
-                    legal_entity=le,
-                    address=adr,
-                    telephone=498119433,
-                    fax=498119433,
-                    website=row[12],
-                    mail="info@test.be",
-                    goal=row[14],
-                    remarks=row[16],
-                    know_from=kf,
-                    creation_date=refactored_date,
-                    active=row[17],
-                    type=tp)
+                obj,created = cmmodels.Organisation.objects.get_or_create(id=row[0],
+                                                                          name=row[2],
+                                                                          recognised_abbreviation=row[3],
+                                                                          legal_entity=le,
+                                                                          address=adr,
+                                                                          telephone=498119433,
+                                                                          fax=498119433,
+                                                                          website=row[12],
+                                                                          mail="info@test.be",
+                                                                          goal=row[14],
+                                                                          remarks=row[16],
+                                                                          know_from = kf,
+                                                                          creation_date=refactored_date,
+                                                                          active=row[17],
+                                                                          type=tp)
                 obj.save()
             except:
-                # print(sys.exc_info())
+                #print(sys.exc_info())
                 pass
 
     print("done")
     f.close()
 
-# import question types
-with open(sys.argv[6], encoding='utf8') as f:
+#import question types
+with open(sys.argv[6], encoding='latin1') as f:
     print("importing question types")
     reader = csv.reader(f)
     for row in reader:
@@ -222,8 +230,8 @@ with open(sys.argv[6], encoding='utf8') as f:
     print("done")
     f.close()
 
-# import institution
-with open(sys.argv[7], encoding='utf8') as f:
+#import institution
+with open(sys.argv[7], encoding='latin1') as f:
     print("importing institutions")
     reader = csv.reader(f)
     for row in reader:
@@ -243,12 +251,13 @@ with open(sys.argv[7], encoding='utf8') as f:
                 obj, created = dbmodels.Institution.objects.update_or_create(id=row[0], name=row[4], address=adr)
                 obj.save()
             except:
+                #print(sys.exc_info())
                 pass
     print("done")
     f.close()
 
-# import faculty
-with open(sys.argv[8], encoding='utf8') as f:
+#import faculty
+with open(sys.argv[8], encoding='latin1') as f:
     print("importing faculties")
     reader = csv.reader(f)
     for row in reader:
@@ -257,20 +266,20 @@ with open(sys.argv[8], encoding='utf8') as f:
         else:
             try:
                 inst = dbmodels.Institution.objects.get(id=row[1])
-                # print(inst)
+                #print(inst)
                 obj, created = dbmodels.Faculty.objects.update_or_create(id=row[0], name=row[2])
                 obj.save()
-                obj2, created = dbmodels.FacultyOf.objects.update_or_create(faculty=obj, institution=inst)
-                obj2.save()
-                # print("faculty {0} added".format(obj))
+                obj.institution.add(inst)
+                obj.save()
+                #print("faculty {0} added".format(obj))
             except:
-                # print("faculty failure", sys.exc_info())
+                #print("faculty failure", sys.exc_info())
                 pass
     print("done")
     f.close()
 
-# import education
-with open(sys.argv[9], encoding='utf8') as f:
+#import education
+with open(sys.argv[9], encoding='latin1') as f:
     print("importing educations")
     reader = csv.reader(f)
     for row in reader:
@@ -281,14 +290,14 @@ with open(sys.argv[9], encoding='utf8') as f:
                 fac = dbmodels.Faculty.objects.get(id=row[2])
                 obj, created = dbmodels.Education.objects.update_or_create(id=row[0], education=row[3])
                 obj.save()
-                # print("education {0} added".format(obj))
+                #print("education {0} added".format(obj))
             except:
-                # print("education failure", sys.exc_info())
+                #print("education failure", sys.exc_info())
                 pass
     print("done")
     f.close()
 
-# import students
+#import students
 with open(sys.argv[10], encoding='latin1') as f:
     print("importing students")
     reader = csv.reader(f)
@@ -300,8 +309,7 @@ with open(sys.argv[10], encoding='latin1') as f:
     def get_row(string):
         return row[name_dict[string]]
 
-
-    adr, created = cmmodels.Address.objects.get_or_create(
+    adr, created=cmmodels.Address.objects.get_or_create(
         province=cmmodels.Province.objects.get(id=1),
         city="Merksem",
         postal_code=2170,
@@ -312,15 +320,15 @@ with open(sys.argv[10], encoding='latin1') as f:
     for row in reader:
         try:
             if (get_row('studenteducation') != "NULL"):
-                # print(get_row('studenteducation'))
+                #print(get_row('studenteducation'))
                 try:
                     ed = dbmodels.Education.objects.get(education=get_row('studenteducation'))
-                    # print(ed)
+                    #print(ed)
                 except:
                     ed = dbmodels.Education.objects.get(education='Rechten')
             if (get_row('studenteducation') == "NULL"):
                 ed = dbmodels.Education.objects.get(education='Rechten')
-                # print(ed)
+                #print(ed)
             if (get_row('studentname') != "NULL"):
                 sname = get_row('studentname')
                 if sname != "":
@@ -329,22 +337,22 @@ with open(sys.argv[10], encoding='latin1') as f:
             else:
                 sfname = "Joske"
                 slname = "Vemeulen"
-            stud, created = dbmodels.Student.objects.update_or_create(
+            stud, created=dbmodels.Student.objects.update_or_create(
                 first_name=sfname,
-                last_name=slname,
-                mobile=498119433,
-                email="test@test.be",
+            last_name = slname,
+            mobile = 498119433,
+            email = "test@test.be",
                 address=adr,
                 education=ed
             )
             stud.save()
         except:
-            # print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
 
-# import question
+#import question
 with open(sys.argv[10], encoding='latin1') as f:
     print("importing questions")
     reader = csv.reader(f)
@@ -352,12 +360,10 @@ with open(sys.argv[10], encoding='latin1') as f:
     first_row = next(reader)
     name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
 
-
     def get_row(string):
         return row[name_dict[string]]
 
-
-    adr, created = cmmodels.Address.objects.get_or_create(
+    adr, created=cmmodels.Address.objects.get_or_create(
         province=cmmodels.Province.objects.get(id=1),
         city="Merksem",
         postal_code=2170,
@@ -383,37 +389,33 @@ with open(sys.argv[10], encoding='latin1') as f:
             else:
                 sfname = "Joske"
                 slname = "Vemeulen"
-            stud = dbmodels.Student.objects.get(
+            stud=dbmodels.Student.objects.get(
                 first_name=sfname,
-                last_name=slname,
-                mobile=498119433,
-                email="test@test.be",
-                address=adr,
-                education=ed
+            last_name = slname,
             )
 
             date = get_row('answerwithintermtext')
-            rdate = refactorDate2(date)
+            rdate = refactorDeadline(date)
             date2 = get_row('datecreated')
             cdate = refactorDate(date2)
 
             if (get_row('school_idschool') != "NULL"):
                 try:
                     if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
-                        # inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
-                        inst = get_row('school_idschool')
+                        #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                        inst=get_row('school_idschool')
                     else:
-                        # inst = dbmodels.Institution.objects.get(id=12)
-                        inst = "12"
+                         #inst = dbmodels.Institution.objects.get(id=12)
+                        inst="12"
                 except:
-                    # inst = dbmodels.Institution.objects.get(id=12)
-                    inst = "12"
+                    #inst = dbmodels.Institution.objects.get(id=12)
+                    inst="12"
             else:
-                # inst = dbmodels.Institution.objects.get(id=12)
-                inst = "12"
+                #inst = dbmodels.Institution.objects.get(id=12)
+                inst="12"
 
             org = dbmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
-            compdate = refactorDate(get_row('dateregcompleted'))
+            compdate=refactorDate(get_row('dateregcompleted'))
             obj, created = dbmodels.Question.objects.update_or_create(
                 id=get_row('idquestion'),
                 question_text=get_row('question'),
@@ -427,21 +429,24 @@ with open(sys.argv[10], encoding='latin1') as f:
                 creation_date=cdate,
                 active=int(get_row('active')),
                 organisation=org,
-                institution=inst,
+                #institution=inst,
                 student=stud,
                 completion_date=compdate,
-                education=str(ed.id),
+                #education=str(ed.id),
                 state=int(get_row("reg_idquestionregstatus")),
             )
             obj.save()
+            obj.institution.add(inst)
+            obj.education.add(ed)
+            obj.save()
         except:
-            # print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
 
-# import keywords
-with open(sys.argv[11], encoding='utf8') as f:
+#import keywords
+with open(sys.argv[11], encoding='latin1') as f:
     print("importing keywords")
     reader = csv.reader(f)
 
@@ -451,7 +456,6 @@ with open(sys.argv[11], encoding='utf8') as f:
 
     def get_row(string):
         return row[name_dict[string]]
-
 
     for row in reader:
         try:
@@ -465,8 +469,8 @@ with open(sys.argv[11], encoding='utf8') as f:
     print("done")
     f.close()
 
-# add keywords to organizations
-with open(sys.argv[12], encoding='utf8') as f:
+#add keywords to organizations
+with open(sys.argv[12], encoding='latin1') as f:
     print("adding keywords to organisations")
     reader = csv.reader(f)
 
@@ -482,15 +486,15 @@ with open(sys.argv[12], encoding='utf8') as f:
         try:
             org = cmmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
             kw = cmmodels.Keyword.objects.get(id=int(get_row('organizationkeyword_idorganizationkeyword')))
-            org.keyword = str(kw.id)
+            org.keyword.add(kw)
             org.save()
         except:
             pass
     print("done")
     f.close()
 
-# import promotors
-with open(sys.argv[13], encoding='utf8') as f:
+#import promotors
+with open(sys.argv[13], encoding='latin1') as f:
     print("importing promotors")
     reader = csv.reader(f)
 
@@ -501,20 +505,18 @@ with open(sys.argv[13], encoding='utf8') as f:
     def get_row(string):
         return row[name_dict[string]]
 
-
     for row in reader:
         try:
-            if (get_row('Promotor_Institution') == "VUB") or (get_row('Promotor_Institution') == "VUB Etterbeek") or (
-                get_row('Promotor_Institution') == "VUB Jette"):
-                inst = dbmodels.Institution.objects.get(id=13)
+            if (get_row('Promotor_Institution') == "VUB") or (get_row('Promotor_Institution') == "VUB Etterbeek") or (get_row('Promotor_Institution') == "VUB Jette"):
+                inst=dbmodels.Institution.objects.get(id=13)
             else:
-                inst = dbmodels.Institution.objects.get(name=get_row('Promotor_Institution'))
+                inst=dbmodels.Institution.objects.get(name=get_row('Promotor_Institution'))
             if (get_row('Promotor_Expertise') == "''"):
-                exp = " "
+                exp=" "
             else:
-                exp = get_row('Promotor_Expertise')
-            adr = inst.address
-            promotor, created = dbmodels.Promotor.objects.get_or_create(
+                exp=get_row('Promotor_Expertise')
+            adr=inst.address
+            promotor, created=dbmodels.Promotor.objects.get_or_create(
                 id=int(get_row('Promotor_ID')),
                 address=adr,
                 institution=inst,
@@ -532,6 +534,33 @@ with open(sys.argv[13], encoding='utf8') as f:
     print("done")
     f.close()
 
-end_time = datetime.datetime.now()
+#add education to questions
+with open(sys.argv[15], encoding='latin1') as f:
+    print("adding educations and faculties to questions")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+
+    for row in reader:
+        try:
+            quest = dbmodels.Question.objects.get(id=int(get_row('question_idquestion')))
+            ed = dbmodels.Education.objects.get(id=int(get_row('education_ideducation')))
+            fac = dbmodels.FacultyOf.objects.get(institution=quest.institution, education=ed)
+            quest.keyword.add(ed)
+            quest.add(fac)
+            quest.save()
+        except:
+            pass
+    print("done")
+    f.close()
+
+
+end_time=datetime.datetime.now()
 print(start_time)
 print(end_time)
