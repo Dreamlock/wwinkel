@@ -46,18 +46,14 @@ def register_question(request):
 
 
 def list_questions(request):
-    # We will start filtering from here
+    # Text based search, now we're set up for our facets
+    val = request.GET.get('search_text', '')
+    sqs = search(SearchQuerySet(), val, Question)
 
-    sqs = SearchQuerySet().all().models(Question)
     facet_form = FacetForm(request.GET)
-
-    if not facet_form.is_valid():
-
-        return HttpResponse("Dit is een probleem")
-    print(request.GET)
     status_lst = Question.STATE_SELECT
     # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
-    if not (request.user.is_authenticated() and request.user.is_manager() and request.user.is_central_manager()):
+    if not request.user.is_authenticated() or not request.user.is_central_manager():
         status_lst = [
             status_lst[Question.PUBLIC_QUESTION],
             status_lst[Question.RESERVED_QUESTION],
@@ -65,34 +61,45 @@ def list_questions(request):
         ]
         sqs = sqs.filter(state__in=[status[0] for status in status_lst])
 
-        facet_form.fields['status'].choices = status_lst
+    facet_form.fields['status'].choices = status_lst
+
+    print(facet_form.data)
 
     # Filter out the status of questions needed
-    if facet_form.cleaned_data['status']:
-        data = facet_form.cleaned_data['status']
+    if facet_form.data.get('status', False):
+        data = facet_form.data['status']
         facet_form.fields['status'].initial = list(map(int, data))
         sqs = query_on_states(sqs, data)
 
     # Check if some extra questions need to be added to the queryset
-    if facet_form.cleaned_data['own_questions']:
+    if facet_form.data.get('own_questions', False):
         sqs = query_extra_content(request.user, sqs)
 
-    # Text based search, now we're set up for our facets
-    val = request.GET.get('search_text', '')
-    sqs = search(sqs, val, Question)
+    # Filter based on Facets
+    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor']
+    for field in field_lst:
+        facet_data = facet_form.data.getlist(field, False)
+        if facet_data:
+            sqs = sqs.filter(**{'{0}_facet__in'.format(field):facet_data})
+            facet_form.fields[field].initial = list(map(str, facet_data))
 
-    sqs = sqs.facet('institution_facet')
-    choice_institution = sqs.facet_counts()['fields']['institution_facet']
-    facet_form.fields['institution'].choices = choice_institution
-    if facet_form.cleaned_data['institution']:
-        sqs = sqs.filter(institution_facet__in = facet_form.cleaned_data['institution'])
-        facet_form.fields['institution'].initial = list(map(str, facet_form.cleaned_data['institution']))
+    # Calculate the facets
+    facet_count = [None, None]
+    for field in field_lst:
+        sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
+        choice_facet = (sqs.facet_counts()['fields']['{0}_facet'.format(field)])
+        helper_lst = []
+        for choice in choice_facet:
+            helper_lst.append((choice[0], choice[0]))
+        facet_form.fields[field].choices = helper_lst
+        facet_count.append(choice_facet)
 
-    context = {
-        'questions': sqs,
-        'facet_form': facet_form,
-        'search_text': val,
-    }
+
+    context = {'questions': sqs,
+               'facet_form': facet_form,
+               'search_text': val,
+               'facet_count': facet_count
+               }
 
     return render(request, 'dbwwinkel/question_list.html', context)
 

@@ -195,7 +195,20 @@ class FacetForm(forms.Form):
 
     own_questions = forms.BooleanField(required = False, label = _('Eigen vragen'))
     status = forms.MultipleChoiceField(required = False, label = _('Status'), choices= Question.STATE_SELECT)
-    institution = forms.MultipleChoiceField(required= False, label = _('Instelling'), choices = Question.STATE_SELECT)
+    institution = forms.MultipleChoiceField(required= False, label = _('Instelling'), choices = Question.STATE_SELECT,
+                                            widget =forms.CheckboxSelectMultiple)
+
+    faculty = forms.MultipleChoiceField(required= False, label = _('Faculteit'), choices = Question.STATE_SELECT,
+                                            widget =forms.CheckboxSelectMultiple)
+
+    education = forms.MultipleChoiceField(required= False, label = _('Opleiding'), choices = Question.STATE_SELECT,
+                                            widget =forms.CheckboxSelectMultiple)
+
+    subject = forms.MultipleChoiceField(required= False, label = _('Onderwerp'), choices = Question.STATE_SELECT,
+                                            widget =forms.CheckboxSelectMultiple)
+
+    promotor = forms.MultipleChoiceField(required= False, label = _('Promotor'), choices = Question.STATE_SELECT,
+                                            widget =forms.CheckboxSelectMultiple)
 
 
 def QuestionFormFactory(user, question):
