@@ -66,37 +66,35 @@ def list_questions(request):
     print(facet_form.data)
 
     # Filter out the status of questions needed
-    if facet_form.data.get('status',False):
+    if facet_form.data.get('status', False):
         data = facet_form.data['status']
         facet_form.fields['status'].initial = list(map(int, data))
         sqs = query_on_states(sqs, data)
 
-
-
     # Check if some extra questions need to be added to the queryset
-    if facet_form.data.get('own_questions',False):
+    if facet_form.data.get('own_questions', False):
         sqs = query_extra_content(request.user, sqs)
 
+    # Filter based on Facets
+    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor']
+    for field in field_lst:
+        facet_data = facet_form.data.getlist(field, False)
+        if facet_data:
+            sqs = sqs.filter(**{'{0}_facet__in'.format(field):facet_data})
+            facet_form.fields[field].initial = list(map(str, facet_data))
+
+    # Calculate the facets
+    facet_count = [None, None]
+    for field in field_lst:
+        sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
+        choice_facet = (sqs.facet_counts()['fields']['{0}_facet'.format(field)])
+        helper_lst = []
+        for choice in choice_facet:
+            helper_lst.append((choice[0], choice[0]))
+        facet_form.fields[field].choices = helper_lst
+        facet_count.append(choice_facet)
 
 
-
-
-
-    if facet_form.data.get('institution',False):
-        t = facet_form.data.get('institution')
-        print(type(t))
-        sqs = sqs.filter(institution_facet__in=facet_form.data.getlist('institution'))
-        facet_form.fields['institution'].initial = list(map(str, facet_form.data['institution']))
-
-
-    sqs = sqs.facet('institution_facet',mincount = 1, limit = 5)
-    choice_institution = (sqs.facet_counts()['fields']['institution_facet'])
-    helper_lst = []
-    for choice in choice_institution:
-        helper_lst.append((choice[0], choice[0]))
-    facet_form.fields['institution'].choices = helper_lst
-
-    facet_count = [None, None, choice_institution]
     context = {'questions': sqs,
                'facet_form': facet_form,
                'search_text': val,
