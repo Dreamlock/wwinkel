@@ -18,7 +18,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "", ["solr_install_path="])
     except getopt.GetoptError:
-        print('help msg')
+        print('usage: rebuild_database [--solr_install_path <solr installation directory>]')
         sys.exit(2)
     for opt, arg in opts:
         if opt == "--solr_install_path":
@@ -62,8 +62,13 @@ def main(argv):
             'institution',
             'faculty',
             'education',
+            'question',
+            'keywords',
+            'organisation_has_keyword',
+            'promotor',
+            'organisationcontact',
         ]
-        call(['python', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
+        call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
 
         print('creating permission groups...')

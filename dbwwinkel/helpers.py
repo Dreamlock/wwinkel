@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from dbwwinkel.models import Question
 from custom_users.models import User, OrganisationUser, ManagerUser
 
+
 # get all fields: [f.name for f in Question._meta.get_fields()]
 
 
@@ -92,7 +93,7 @@ def get_viewable_fields_student(question):
 def get_viewable_states_organisation():
     return {
         state[0] for state in Question.STATE_SELECT  # every state
-        }
+    }
 
 
 def get_viewable_fields_organisation(question):
@@ -328,19 +329,3 @@ def get_editable_fields(user, question):
             if user.is_regional_manager():
                 result |= get_editable_fields_regional_manager(question)
     return result
-
-
-def delete_institution_from_question(question, institution):
-
-    proms_institution = institution.promotor_set.all()
-    proms_question = question.promotor.all()
-
-    intersect = proms_institution & proms_question
-
-    for prom in intersect:
-        question.promotor.remove(prom)
-
-    question.institution.remove(institution)
-    institution.question_set.remove(question)
-    institution.save()
-    question.save()

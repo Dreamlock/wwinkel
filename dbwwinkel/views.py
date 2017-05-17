@@ -2,22 +2,18 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.urls import reverse
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, render_to_response
+
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from haystack.query import SearchQuerySet
-from django.core.exceptions import PermissionDenied
-from django.template import RequestContext
-from django.utils.translation import ugettext_lazy as _
 
 from custom_users.forms import AdressForm
 from .forms import *
-from .models import Question, Education, QuestionSubject
+from .models import Question, Education, QuestionSubject, FacultyOf
 from custom_users.models import OrganisationUser, ManagerUser, Region
 
-from .search import *
-from .helpers import delete_institution_from_question
+from .search import autocomplete as search, query_extra_content, query_on_states
 
 
 @login_required
@@ -50,22 +46,73 @@ def register_question(request):
 
 
 def list_questions(request):
-    # search searchbox
-    if request.POST:
-        val = request.POST.get('search_text')
+    # Text based search, now we're set up for our facets
+    val = request.GET.get('search_text', '')
+    sqs = search(SearchQuerySet(), val, Question)
 
-    else:
-        val = request.GET.get('search_text', '')
+    facet_form = FacetForm(request.GET)
+    status_lst = Question.STATE_SELECT
+    # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
+    if not request.user.is_authenticated() or not request.user.is_central_manager():
+        status_lst = [
+            status_lst[Question.PUBLIC_QUESTION],
+            status_lst[Question.RESERVED_QUESTION],
+            status_lst[Question.FINISHED_QUESTION]
+        ]
+        sqs = sqs.filter(state__in=[status[0] for status in status_lst])
 
-    sqs = autocomplete(SearchQuerySet().all().models(Question), val, Question)
+    facet_form.fields['status'].choices = status_lst
 
+    print(facet_form.data)
+
+    # Filter out the status of questions needed
+    if facet_form.data.get('status', False):
+        data = facet_form.data['status']
+        facet_form.fields['status'].initial = list(map(int, data))
+        sqs = query_on_states(sqs, data)
+
+    # Check if some extra questions need to be added to the queryset
+    if facet_form.data.get('own_questions', False):
+        sqs = query_extra_content(request.user, sqs)
+
+    # Filter based on Facets
+    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor']
+    for field in field_lst:
+        facet_data = facet_form.data.getlist(field, False)
+        if facet_data:
+            sqs = sqs.filter(**{'{0}_facet__in'.format(field):facet_data})
+            facet_form.fields[field].initial = list(map(str, facet_data))
+
+    # Calculate the facets
+    facet_count = [None, None]
+    for field in field_lst:
+        sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
+        choice_facet = (sqs.facet_counts()['fields']['{0}_facet'.format(field)])
+        helper_lst = []
+        for choice in choice_facet:
+            helper_lst.append((choice[0], choice[0]))
+        facet_form.fields[field].choices = helper_lst
+        facet_count.append(choice_facet)
+
+
+    context = {'questions': sqs,
+               'facet_form': facet_form,
+               'search_text': val,
+               'facet_count': facet_count
+               }
+
+    return render(request, 'dbwwinkel/question_list.html', context)
+
+
+def l_questions(request):
+    val = request.GET.get('search_text', '')
+    sqs = search(SearchQuerySet().all().models(Question), val, Question)
     # States visible for everyone
     visible_states = [Question.STATE_SELECT[Question.PUBLIC_QUESTION], Question.STATE_SELECT[Question.RESERVED_QUESTION]
         , Question.STATE_SELECT[Question.FINISHED_QUESTION]]
 
     # Fetching all the data specified on user
     if request.user.is_authenticated():
-
         if request.user.is_organisation():
             user = OrganisationUser.objects.get(id=request.user.id)
             organisation = user.organisation
@@ -103,7 +150,7 @@ def list_questions(request):
     else:
         if request.user.is_authenticated():
             if request.user.is_organisation():
-                organisation_extra = autocomplete(organisation_extra, val, Question)
+                organisation_extra = search(organisation_extra, val, Question)
                 sqs = sqs.filter(state__in=[l[0] for l in visible_states]) | organisation_extra
 
             elif request.user.is_manager():
@@ -114,14 +161,11 @@ def list_questions(request):
                     pass
 
                 else:  # + the extra ones bound to this region
-                    regional_extra = autocomplete(regional_extra, val, Question)
+                    regional_extra = search(regional_extra, val, Question)
                     sqs = sqs | regional_extra
 
         else:  # is student
             sqs = sqs.filter(state__in=[l[0] for l in visible_states])
-
-    # facets = sqs.facet('education_facet')
-    # education = facets.facet_counts()['fields']['education_facet']
 
     own_question = False
     if request.user.is_authenticated() and request.user.is_organisation():
@@ -152,7 +196,7 @@ def detail(request, question_id):
     organisation = question.organisation
 
     if request.user.is_authenticated == False:  # Then the user is a student
-        return student_detail(request, question)
+        return student_detail(request, question, organisation)
 
     elif OrganisationUser.objects.filter(id=request.user.id).exists():
         organisation = (OrganisationUser.objects.get(id=request.user.id)).organisation
@@ -336,7 +380,7 @@ def edit_meta_info(request, question_id):
         if form.is_valid():
 
             for field in form.cleaned_data['institution_delete']:
-                delete_institution_from_question(question, field)
+                question.remove_institution(field)
 
             for field in form.cleaned_data['institution']:
                 question.institution.add(field)
@@ -350,17 +394,64 @@ def edit_meta_info(request, question_id):
             for field in form.cleaned_data['promotor']:
                 question.promotor.add(field)
 
+            for field in form.cleaned_data['faculty_delete']:
+                field.question_set.remove(question)
+                question.remove_faculty(field)
+                field.save()
+                question.save()
+
+            for field in form.cleaned_data['faculty']:
+                question.faculty.add(field)
+
+            new_one = form.cleaned_data['faculty_new']
+            if new_one != '':
+                if Faculty.objects.filter(name=new_one).exists():
+                    fac = Faculty.objects.get(name=new_one)
+                    for inst in question.institution.all():
+                        f1 = FacultyOf.objects.create(institution=inst, faculty=fac)
+                        f1.save()
+                    question.faculty.add(fac)
+                    question.save()
+                else:
+                    new_fac_field = Faculty.objects.create(name=new_one)
+
+                    for inst in question.institution.all():
+                        f1 = FacultyOf.objects.create(institution=inst, faculty=new_fac_field)
+                        f1.save()
+                    new_fac_field.save()
+                    question.faculty.add(new_fac_field)
+                    new_fac_field.save()
+
             for field in form.cleaned_data['education_delete']:
                 field.question_set.remove(question)
-                question.education.remove(field)
+                question.remove_education(field)
                 field.save()
                 question.save()
 
             new_one = form.cleaned_data['education_new']
             if new_one != '':
-                new_st_field = Education(education=new_one)
-                new_st_field.save()
-                question.education.add(new_st_field)
+                if Education.objects.filter(education=new_one).exists():
+                    educ = Education.objects.get(education=new_one)
+                    for inst in question.institution.all():
+                        for fac in question.faculty.all():
+                            if FacultyOf.objects.filter(institution=inst, faculty=fac).exists():
+                                fac_of = FacultyOf.objects.get(institution=inst, faculty=fac)
+                                fac_of.education.add(educ)
+                                fac_of.save()
+                                question.education.add(educ)
+                                question.save()
+                else:
+
+                    new_st_field = Education(education=new_one)
+                    new_st_field.save()
+
+                    for inst in question.institution.all():
+                        for fac in question.faculty.all():
+                            if FacultyOf.objects.filter(institution=inst, faculty=fac).exists():
+                                fac_of = FacultyOf.objects.get(institution=inst, faculty=fac)
+                                fac_of.education.add(new_st_field)
+                                fac_of.save()
+                    question.education.add(new_st_field)
 
             for field in form.cleaned_data["education"]:
                 question.education.add(field)
