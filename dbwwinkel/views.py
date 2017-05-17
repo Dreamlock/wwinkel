@@ -57,7 +57,7 @@ def list_questions(request):
     print(request.GET)
     status_lst = Question.STATE_SELECT
     # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
-    if not request.user.is_authenticated() or not request.user.is_central_manager():
+    if not (request.user.is_authenticated() and request.user.is_manager() and request.user.is_central_manager()):
         status_lst = [
             status_lst[Question.PUBLIC_QUESTION],
             status_lst[Question.RESERVED_QUESTION],
@@ -88,11 +88,11 @@ def list_questions(request):
         sqs = sqs.filter(institution_facet__in = facet_form.cleaned_data['institution'])
         facet_form.fields['institution'].initial = list(map(str, facet_form.cleaned_data['institution']))
 
-
-    context = {'questions': sqs,
-               'facet_form': facet_form,
-               'search_text': val,
-               }
+    context = {
+        'questions': sqs,
+        'facet_form': facet_form,
+        'search_text': val,
+    }
 
     return render(request, 'dbwwinkel/question_list.html', context)
 
