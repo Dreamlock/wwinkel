@@ -60,7 +60,7 @@ class QuestionAdmin(history_admin.SimpleHistoryAdmin):
 
     def has_change_permission(self, request, obj=None):
         # if request.user.has_perm('edit', obj)
-        return super().has_change_permission(request,obj)
+        return super().has_change_permission(request, obj)
 
     def get_fields(self, request, obj=None):
         result = super().get_fields(request, obj)
