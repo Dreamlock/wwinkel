@@ -53,7 +53,7 @@ def list_questions(request):
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
     # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
-    if not request.user.is_authenticated() or not request.user.is_central_manager():
+    if not (request.user.is_authenticated() and request.user.is_manager() and request.user.is_central_manager()):
         status_lst = [
             status_lst[Question.PUBLIC_QUESTION],
             status_lst[Question.RESERVED_QUESTION],
