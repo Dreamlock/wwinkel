@@ -536,41 +536,41 @@ with open(sys.argv[13], encoding='latin1') as f:
     print("done")
     f.close()
 
-# #import organisation contacts
-# with open(sys.argv[14], encoding='latin1') as f:
-#     print("importing promotors")
-#     reader = csv.reader(f)
-#
-#     first_row = next(reader)
-#     name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
-#
-#
-#     def get_row(string):
-#         return row[name_dict[string]]
-#
-#     for row in reader:
-#         try:
-#             org=cmmodels.Organisation.objects.get(name=get_row('organization_idorganization'))
-#             adr, created = cmmodels.Address.objects.get_or_create(
-#                 city=get_row('city'),
-#                 postal_code=int(get_row('postal')),
-#                 street_name=get_row('street'),
-#                 street_number=int(get_row('streetnumber')),
-#             )
-#             cont, created=cmmodels.o.objects.get_or_create(
-#                 id=int(get_row('Promotor_ID')),
-#                 address=adr,
-#                 email="test@test.be",
-#                 first_name=get_row('Promotor_FirstName'),
-#                 last_name=get_row('Promotor_LastName'),
-#                 tel=498119433
-#             )
-#             cont.save()
-#         except:
-#             print(sys.exc_info())
-#             pass
-#     print("done")
-#     f.close()
+#import users
+with open(sys.argv[14], encoding='latin1') as f:
+    print("importing users")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+
+    for row in reader:
+        try:
+            superuser=0
+            isstaff=0
+            if (int(get_row('UserRole_ID')) == 1):
+                superuser=1
+                isstaff=1
+            if (int(get_row('UserRole_ID')) == 2):
+                isstaff = 1
+            usr, created = cmmodels.User.objects.update_or_create(
+                id=int(get_row('User_ID')),
+                first_name=get_row('User_Name'),
+                email="{0}@{1}.be".format(get_row('User_Name'), "wwinkel"),
+                is_superuser=superuser,
+                is_staff=isstaff
+            )
+            usr.save()
+        except:
+            print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
 
 
 end_time=datetime.datetime.now()
