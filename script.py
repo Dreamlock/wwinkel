@@ -269,8 +269,8 @@ with open(sys.argv[8], encoding='latin1') as f:
                 #print(inst)
                 obj, created = dbmodels.Faculty.objects.update_or_create(id=row[0], name=row[2])
                 obj.save()
-                obj.institution.add(inst)
-                obj.save()
+                obj2, created = dbmodels.FacultyOf.objects.update_or_create(faculty=obj, institution=inst)
+                obj2.save()
                 #print("faculty {0} added".format(obj))
             except:
                 #print("faculty failure", sys.exc_info())
@@ -288,8 +288,12 @@ with open(sys.argv[9], encoding='latin1') as f:
         else:
             try:
                 fac = dbmodels.Faculty.objects.get(id=row[2])
+                inst = dbmodels.Institution.objects.get(id=row[1])
                 obj, created = dbmodels.Education.objects.update_or_create(id=row[0], education=row[3])
                 obj.save()
+                obj2 = dbmodels.FacultyOf.objects.get(faculty=fac, institution=inst)
+                obj2.education.add(obj)
+                obj2.save()
                 #print("education {0} added".format(obj))
             except:
                 #print("education failure", sys.exc_info())
@@ -399,23 +403,12 @@ with open(sys.argv[10], encoding='latin1') as f:
             date2 = get_row('datecreated')
             cdate = refactorDate(date2)
 
-            if (get_row('school_idschool') != "NULL"):
-                try:
-                    if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
-                        #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
-                        inst=get_row('school_idschool')
-                    else:
-                         #inst = dbmodels.Institution.objects.get(id=12)
-                        inst="12"
-                except:
-                    #inst = dbmodels.Institution.objects.get(id=12)
-                    inst="12"
-            else:
-                #inst = dbmodels.Institution.objects.get(id=12)
-                inst="12"
-
             org = dbmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
             compdate=refactorDate(get_row('dateregcompleted'))
+
+            group, created = dbmodels.QuestionGroups.objects.update_or_create(id=get_row('idquestion'))
+            group.save()
+
             obj, created = dbmodels.Question.objects.update_or_create(
                 id=get_row('idquestion'),
                 question_text=get_row('question'),
@@ -434,9 +427,24 @@ with open(sys.argv[10], encoding='latin1') as f:
                 completion_date=compdate,
                 #education=str(ed.id),
                 state=int(get_row("reg_idquestionregstatus")),
+                question_group=group
             )
-            obj.save()
+            #obj.save()
+
+            if (get_row('school_idschool') != "NULL"):
+                try:
+                    if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
+                        #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                        inst=dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                    else:
+                        inst=dbmodels.Institution.objects.get(id=12)
+                except:
+                    inst = dbmodels.Institution.objects.get(id=12)
+            else:
+                inst = dbmodels.Institution.objects.get(id=12)
+
             obj.institution.add(inst)
+
             obj.education.add(ed)
             obj.save()
         except:
@@ -529,14 +537,50 @@ with open(sys.argv[13], encoding='latin1') as f:
             )
             promotor.save()
         except:
-            print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
 
-#add education to questions
+#import users
+with open(sys.argv[14], encoding='latin1') as f:
+    print("importing users")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+
+    for row in reader:
+        try:
+            superuser=0
+            isstaff=0
+            if (int(get_row('UserRole_ID')) == 1):
+                superuser=1
+                isstaff=1
+            if (int(get_row('UserRole_ID')) == 2):
+                isstaff = 1
+            usr, created = cmmodels.User.objects.update_or_create(
+                id=int(get_row('User_ID')),
+                first_name=get_row('User_Name'),
+                email="{0}@{1}.be".format(get_row('User_Name'), "wwinkel"),
+                is_superuser=superuser,
+                is_staff=isstaff
+            )
+            usr.save()
+        except:
+            #print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
+
+#add education, faculty and institution to questions
 with open(sys.argv[15], encoding='latin1') as f:
-    print("adding educations and faculties to questions")
+    print("add education, faculty and institution to questions")
     reader = csv.reader(f)
 
     first_row = next(reader)
@@ -551,11 +595,14 @@ with open(sys.argv[15], encoding='latin1') as f:
         try:
             quest = dbmodels.Question.objects.get(id=int(get_row('question_idquestion')))
             ed = dbmodels.Education.objects.get(id=int(get_row('education_ideducation')))
-            fac = dbmodels.FacultyOf.objects.get(institution=quest.institution, education=ed)
-            quest.keyword.add(ed)
-            quest.add(fac)
+
+            facsinsts = dbmodels.FacultyOf.objects.get(education=ed)
+
+            quest.faculty.add(facsinsts.faculty)
+            quest.institution.add(facsinsts.institution)
             quest.save()
         except:
+            print(sys.exc_info())
             pass
     print("done")
     f.close()

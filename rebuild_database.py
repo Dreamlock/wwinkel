@@ -66,8 +66,9 @@ def main(argv):
             'keywords',
             'organisation_has_keyword',
             'promotor',
-            'organisationcontact',
+            'organisationusers',
         ]
+
         call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
 

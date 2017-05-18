@@ -119,34 +119,33 @@ class QuestionSubject(models.Model):
     def __str__(self):
         return self.subject
 
+class QuestionGroups(models.Model):
+    pass
+
 
 class Question(models.Model):
-    DRAFT_QUESTION = 0
-    NEW_QUESTION = 1
-    INTAKE_QUESTION = 2
-    IN_PROGRESS_QUESTION_CENTRAL = 3
-    PROCESSED_QUESTION_CENTRAL = 4
-    IN_PROGRESS_QUESTION_REGIONAL = 5
-    PUBLIC_QUESTION = 6
-    RESERVED_QUESTION = 7
-    ONGOING_QUESTION = 8
-    FINISHED_QUESTION = 9
-    DENIED_QUESTION = 10
-    REVOKED_QUESTION = 11
+    NEW_QUESTION = 0
+    INTAKE_QUESTION = 1
+    IN_PROGRESS_QUESTION_CENTRAL = 2
+    IN_PROGRESS_QUESTION_REGIONAL = 3
+    PUBLIC_QUESTION = 4
+    RESERVED_QUESTION = 5
+    ONGOING_QUESTION = 6
+    FINISHED_QUESTION = 7
+    DENIED_QUESTION = 8
+    REVOKED_QUESTION = 9
 
     STATE_SELECT = (
-        (DRAFT_QUESTION, _('draft')),
-        (NEW_QUESTION, _('new')),
+        (NEW_QUESTION, _('nieuw')),
         (INTAKE_QUESTION, _('intake')),
-        (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
-        (PROCESSED_QUESTION_CENTRAL, _('processed central')),
-        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
-        (PUBLIC_QUESTION, _('public')),
-        (RESERVED_QUESTION, _('reserved')),
-        (ONGOING_QUESTION, _('ongoing')),
-        (FINISHED_QUESTION, _('finished')),
-        (DENIED_QUESTION, _('denied')),
-        (REVOKED_QUESTION, _('revoked')),
+        (IN_PROGRESS_QUESTION_CENTRAL, _('in verwerking centraal')),
+        (IN_PROGRESS_QUESTION_REGIONAL, _('in verwerking regionaal')),
+        (PUBLIC_QUESTION, _('vrij')),
+        (RESERVED_QUESTION, _('in optie')),
+        (ONGOING_QUESTION, _('lopend')),
+        (FINISHED_QUESTION, _('afgerond')),
+        (DENIED_QUESTION, _('geweigerd')),
+        (REVOKED_QUESTION, _('teruggetroken')),
     )
 
     # Visible and editable: mandatory
@@ -167,7 +166,7 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    state = models.IntegerField(choices=STATE_SELECT, default=DRAFT_QUESTION)
+    state = models.IntegerField(choices=STATE_SELECT, default=NEW_QUESTION)
     region = models.ManyToManyField(Region)
 
     # Faceting data
@@ -183,6 +182,7 @@ class Question(models.Model):
     completion_date = models.DateTimeField(null=True)  # When the question was round up
 
     history = HistoricalRecords()
+    question_group = models.ForeignKey(QuestionGroups)
 
     # methods on objects
     # build ins overwritten

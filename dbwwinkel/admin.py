@@ -19,15 +19,11 @@ class QuestionStateListFilter(admin.SimpleListFilter):
             print(str(user.region.all()))
             if Region.CENTRAL_REGION in user.region.all():
                 return (
-                    (Question.STATE_SELECT[Question.DRAFT_QUESTION]),
                     (Question.STATE_SELECT[Question.IN_PROGRESS_QUESTION_CENTRAL]),
-                    (Question.STATE_SELECT[Question.PROCESSED_QUESTION_CENTRAL]),
                 )
             else:
                 return (
-                    (Question.STATE_SELECT[Question.DRAFT_QUESTION]),
                     (Question.STATE_SELECT[Question.IN_PROGRESS_QUESTION_CENTRAL]),
-                    (Question.STATE_SELECT[Question.PROCESSED_QUESTION_CENTRAL]),
                 )
 
     def queryset(self, request, queryset):

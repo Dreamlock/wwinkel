@@ -8,11 +8,6 @@ from custom_users.models import User, OrganisationUser, ManagerUser
 
 def get_next_state(current_state):
     state_transition = {
-        Question.DRAFT_QUESTION: {
-            Question.NEW_QUESTION,
-            Question.DENIED_QUESTION,
-            Question.REVOKED_QUESTION
-        },
         Question.NEW_QUESTION: {
             Question.INTAKE_QUESTION,
             Question.DENIED_QUESTION,
@@ -24,11 +19,6 @@ def get_next_state(current_state):
             Question.REVOKED_QUESTION
         },
         Question.IN_PROGRESS_QUESTION_CENTRAL: {
-            Question.PROCESSED_QUESTION_CENTRAL,
-            Question.DENIED_QUESTION,
-            Question.REVOKED_QUESTION
-        },
-        Question.PROCESSED_QUESTION_CENTRAL: {
             Question.IN_PROGRESS_QUESTION_REGIONAL,
             Question.DENIED_QUESTION,
             Question.REVOKED_QUESTION
@@ -80,10 +70,11 @@ def get_viewable_fields_student(question):
             'purpose',
             'remarks',
             'deadline',
+            'creation_date',
             'state',
             'organisation',
-            'question_subject',
             'education',
+            'question_subject',
         }
         if question.state == Question.FINISHED_QUESTION:
             result |= {'student', 'completion_date'}
@@ -121,10 +112,8 @@ def get_viewable_fields_organisation(question):
 
 def get_viewable_states_central_manager():
     return {
-        Question.DRAFT_QUESTION,
         Question.NEW_QUESTION,
         Question.IN_PROGRESS_QUESTION_CENTRAL,
-        Question.PROCESSED_QUESTION_CENTRAL,
         Question.PUBLIC_QUESTION,
         Question.RESERVED_QUESTION,
         Question.FINISHED_QUESTION,
@@ -198,9 +187,7 @@ def get_editable_fields_student(question):
 
 
 def get_editable_states_organisation():
-    return {
-        Question.DRAFT_QUESTION,
-    }
+    return set()
 
 
 def get_editable_fields_organisation(question):
@@ -214,15 +201,13 @@ def get_editable_fields_organisation(question):
 
 def get_editable_states_central_manager():
     return {
-        Question.DRAFT_QUESTION,
         Question.NEW_QUESTION,
         Question.IN_PROGRESS_QUESTION_CENTRAL,
-        Question.PROCESSED_QUESTION_CENTRAL,
     }
 
 
 def get_editable_fields_central_manager(question):
-    if question.state == Question.DRAFT_QUESTION:
+    if question.state == Question.NEW_QUESTION:
         result = {'state'}
     else:
         result = {
