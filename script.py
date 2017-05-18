@@ -405,6 +405,10 @@ with open(sys.argv[10], encoding='latin1') as f:
 
             org = dbmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
             compdate=refactorDate(get_row('dateregcompleted'))
+
+            group, created = dbmodels.QuestionGroups.objects.update_or_create(id=get_row('idquestion'))
+            group.save()
+
             obj, created = dbmodels.Question.objects.update_or_create(
                 id=get_row('idquestion'),
                 question_text=get_row('question'),
@@ -423,6 +427,7 @@ with open(sys.argv[10], encoding='latin1') as f:
                 completion_date=compdate,
                 #education=str(ed.id),
                 state=int(get_row("reg_idquestionregstatus")),
+                question_group=group
             )
             #obj.save()
 
@@ -531,7 +536,7 @@ with open(sys.argv[13], encoding='latin1') as f:
             )
             promotor.save()
         except:
-            print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
@@ -567,7 +572,7 @@ with open(sys.argv[14], encoding='latin1') as f:
             )
             usr.save()
         except:
-            print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     f.close()
