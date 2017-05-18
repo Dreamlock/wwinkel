@@ -30,7 +30,7 @@ def register_question(request):
             question = form.save(commit=False)  # We still need to lay out the foreign keys
             org_user = OrganisationUser.objects.get(id=request.user.id)  # Error if creating a question with admin
             question.organisation = org_user.organisation  # Foreign key to the user (organisation in question...)
-            question.state = Question.DRAFT_QUESTION
+            question.state = Question.NEW_QUESTION
             question.save()
             form.save_m2m()
 
@@ -45,7 +45,7 @@ def register_question(request):
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
-def list_questions(request):
+def list_questions(request, admin_filter=None):
     # Text based search, now we're set up for our facets
     val = request.GET.get('search_text', '')
     sqs = search(SearchQuerySet(), val, Question)
@@ -64,6 +64,7 @@ def list_questions(request):
     facet_form.fields['status'].choices = status_lst
 
 
+
     # Filter out the status of questions needed
     if facet_form.data.get('status', False):
         data = facet_form.data['status']
@@ -79,7 +80,7 @@ def list_questions(request):
     for field in field_lst:
         facet_data = facet_form.data.getlist(field, False)
         if facet_data:
-            sqs = sqs.filter(**{'{0}_facet__in'.format(field):facet_data})
+            sqs = sqs.filter(**{'{0}_facet__in'.format(field): facet_data})
             facet_form.fields[field].initial = list(map(str, facet_data))
 
     # Calculate the facets
@@ -94,12 +95,13 @@ def list_questions(request):
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
 
-
-    context = {'questions': sqs,
-               'facet_form': facet_form,
-               'search_text': val,
-               'facet_count': facet_count
-               }
+    context = {
+        'questions': sqs,
+        'facet_form': facet_form,
+        'search_text': val,
+        'facet_count': facet_count,
+        'admin_filter': admin_filter_choices,
+    }
 
     return render(request, 'dbwwinkel/question_list.html', context)
 
