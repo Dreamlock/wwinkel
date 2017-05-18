@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'menus',
     'treebeard',
     'sekizai',
+    'djangocms_text_ckeditor',
+
     
     'django_extensions'
 ]
@@ -105,7 +107,8 @@ TEMPLATES = [
 ]
 
 CMS_TEMPLATES = [
-    ('base/base.html','Base template' )
+    ('base/base.html','Base template' ),
+    ('base/index.html','Home page')
 ]
 
 WSGI_APPLICATION = 'wwinkel.wsgi.application'
