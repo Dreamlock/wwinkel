@@ -1,0 +1,5 @@
+UserRole_ID,UserRole_Name,UserRole_Description,UserRole_Status,
+1,SuperAdmin,"Super Administrator, can do anything",1,
+2,Admin,"Can do anything, but not make new users",1,
+3,Guest,Guest Account,1,
+,,,,
