@@ -1,0 +1,163 @@
+{% extends 'base/base.html' %}
+{# Don't forget that one ! #}
+{% load static %}
+
+{% block content %}
+    <form action="{% url 'edit_meta_info' question.id %} " method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+                <h1> Pas hier alle extra info van de vraag aan</h1>
+            </div>
+            <div class='panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Instelling(en)</strong><br>
+                    <p><strong>Huidig:</strong>{% for field in question.institution.all %}
+                        {{ field }}{% endfor %}</p>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.institution.errors }}
+                        {{ form.institution.label_tag }}
+                        {{ form.institution }}
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        <a href='{% url 'register_institution' question.id %}'>Instelling niet in de lijst? Klik
+                            hier</a>
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.institution_delete.errors }}
+                        {{ form.institution_delete.label_tag }}
+                        {{ form.institution_delete }}
+                    </div>
+                </div>
+            </div>
+            <div class='panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Promotor(s)</strong><br>
+                    <p><strong>Huidig:</strong>{% for field in question.promotor.all %}
+                        {{ field }}{% endfor %}</p>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.promotor.errors }}
+                        {{ form.promotor.label_tag }}
+                        {{ form.promotor }}
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        <a href='{% url 'register_promotor' question.id %}'>Promotor niet in de lijst? Klik
+                            hier</a>
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.promotor_delete.errors }}
+                        {{ form.promotor_delete.label_tag }}
+                        {{ form.promotor_delete }}
+                    </div>
+                </div>
+            </div>
+            <div class='panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Faculteit(en)</strong><br>
+                    <p><strong>Huidig:</strong>{% for field in question.faculty.all %}
+                        {{ field }}{% endfor %}</p>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.faculty.errors }}
+                        {{ form.faculty.label_tag }}
+                        {{ form.faculty }}
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class="container_fluid">
+                        {{ form.faculty_new.errors }}
+                        {{ form.faculty_new.label_tag }}
+                        {{ form.faculty_new }}
+                    </div>
+
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.faculty_delete.errors }}
+                        {{ form.faculty_delete.label_tag }}
+                        {{ form.faculty_delete }}
+                    </div>
+                </div>
+            </div>
+            <div class='panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Onderzoeksveld(en)</strong><br>
+                    <p><strong>Huidig:</strong> {% for field in question.education.all %}
+                        {{ field }}{% endfor %}</p>
+                </div>
+                <div class='col-md-3'>
+                    <div class="container-fluid">
+                        {{ form.education.errors }}
+                        {{ form.education.label_tag }}
+                        {{ form.education }}
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="container-fluid">
+                        {{ form.education_new.errors }}
+                        {{ form.education_new.label_tag }}
+                        {{ form.education_new }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {{ form.education_delete.errors }}
+                    {{ form.education_delete.label_tag }}
+                    {{ form.education_delete}}
+                </div>
+            </div>
+            <div class='panel panel-body'>
+                <div class='col-md-3 col-lg-2'>
+                    <strong>Onderwerp(en)</strong><br>
+                    <p><strong>Huidig:</strong> {% for field in question.question_subject.all %}
+                        {{ field }} {% endfor %}</p>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.subject.errors }}
+                        {{ form.subject.label_tag }}
+                        {{ form.subject }}
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.subject_new.errors }}
+                        {{ form.subject_new.label_tag }}
+                        {{ form.subject_new }}
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class='container-fluid'>
+                        {{ form.subject_delete.errors }}
+                        {{ form.subject_delete.label_tag }}
+                        {{ form.subject_delete }}
+                    </div>
+                </div>
+            </div>
+            <div class='panel panel-body'>
+                <input class='btn btn-info' type="submit" value="Pas aan"/>
+                <a class='btn btn-success' href='{% url 'detail_question' question.id %}'>Klaar</a>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ form.media }}
+{% endblock %}
+
+

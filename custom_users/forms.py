@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
 from .models import User, OrganisationUser, Organisation, Address
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserCreationForm(BaseUserCreationForm):
@@ -29,7 +30,7 @@ class OrganisationUserCreationForm(BaseUserCreationForm):
     class Meta:
         model = OrganisationUser
         fields = ['organisation','email','first_name','last_name','telephone']
-        # fields = ('email', 'telephone', )
+
 
 
 class OrganisationUserChangeForm(BaseUserChangeForm):
@@ -71,7 +72,7 @@ class OrganisationForm(forms.ModelForm):
 
     class Meta:
         model = Organisation
-        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'telephone','website', 'goal', 'remarks']
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','website', 'goal','know_from', 'remarks']
 
         labels = {
             'name': '*Naam Organisatie',
@@ -80,8 +81,12 @@ class OrganisationForm(forms.ModelForm):
             'telephone': 'Telefoon',
             'website': 'website',
             'goal': '*Doel organisatie',
-            'remarks': 'Opmerkingen'
+            'remarks': 'Opmerkingen',
+            'know_from': 'Van waar ken je ons?'
 
+        }
+        help_texts = {
+            'telephone': _('Nummer waarop we het bedrijf kunnen contacteren')
         }
 
 
@@ -89,7 +94,7 @@ class AdressForm(forms.ModelForm):
 
     class Meta:
         model = Address
-        fields = '__all__'
+        fields = ['province', 'city', 'postal_code', 'street_name', 'street_number']
 
         labels = {
             'province': '*Provincie',
@@ -107,3 +112,4 @@ class BaseOrganisationUserForm(OrganisationUserCreationForm):
     class Meta:
         model = OrganisationUser
         fields = ['email', 'first_name', 'last_name', 'telephone']
+        labels = {'telephone': 'Telefoon'}

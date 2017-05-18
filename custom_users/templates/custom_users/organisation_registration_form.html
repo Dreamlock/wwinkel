@@ -19,10 +19,10 @@
         </div>
         <div class ="row">
             <h2> Adres Organisatie</h2>
-            {% for field in address_form %}
+            {% for address_field in address_form %}
                 <div class ="form-group">
-                    {{ field.label_tag }}<br/>
-                    {{ field }}
+                    {{ address_field.label_tag }}<br/>
+                    {{ address_field }}
                 </div>
             {% endfor %}
         </div>

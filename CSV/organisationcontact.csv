@@ -1,0 +1,633 @@
+idorganizationcontact,organization_idorganization,lastname,firstname,telnr,cellnr,email,jobfunction,street,streetnumber,postal,city,remarks,active
+37,32,anonymized,Joris,anonymized,anonymized,anonymized,,,,,,,1
+38,33,,Linda,,,,,,,,,,1
+39,34,,Koen,,,,,,,,,,1
+40,35,,Eddy,,,,,,,,,,1
+41,36,,Inge,,,,,,,,,,0
+42,37,,Ilse,,,,,Naamsesteenweg,130,3001,Leuven,,1
+43,38,,Ine,,,,,,,,,,1
+44,39,,Veerle,,,,,,,,,,1
+45,40,,Els,,,,,,,,,,1
+46,41,,Werner,,,,,,,,,,0
+47,42,,onbekend,,,,,,,,,,1
+48,43,,Gert,,,,,,,,,,1
+49,44,,Jeanine,,,,,,,,,,1
+50,45,,Alexandre,,,,,,,,,,1
+51,46,,West,,,,,,,,,,1
+52,47,,Michael,,,,,,,,,documentatie@chiro.be,1
+53,48,,Luc,,,,,,,,,,0
+54,49,,Veerle,,,,,,,,,,1
+55,50,,Ingrid,,,,,,,,,,1
+56,51,,Marijke,,,,,,,,,,1
+57,52,,Tina,,,,,,,,,zelf als vervanger van Isabelle Rainchon ingevoerd,1
+58,53,,Frank,,,,,De Keyserlei,,2018,Antwerpen,,1
+59,54,,Wouter,,,,Directeur,,,,,,1
+60,55,,inge,,,,,,,,,,1
+61,56,,Riet,,,,,,,,,,1
+62,57,,Liga,,,,,,,,,,1
+63,58,,Ans,,,,,,,,,,1
+64,59,,Matti,,,,,,,,,,1
+65,60,,Simon,,,,,,,,,,1
+66,61,,An,,,,,,,,,,0
+67,62,,Erik,,,,,,,,,,1
+68,63,,Sandra,,,,,,,,,,1
+69,64,,Vlaanderen,,,,,,,,,,1
+70,65,,Davy,,,,,,,,,,1
+71,66,,Jo,,,,,,,,,,1
+72,67,,Bart,,,,,,,,,,1
+73,68,,François,,,,,,,,,,1
+74,69,,Patsy,,,,,,,,,,1
+75,70,,Nele,,,,,,,,,,1
+76,71,,Magali,,,,,,,,,,1
+77,72,,Andries,,,,,,,,,,1
+78,73,,Irene,,,,,,,,,,1
+79,74,,Freek,,,,,,,,,,1
+80,75,,Katrien,,,,,,,,,contactpersoon + begeleider,1
+81,76,,Mark,,,,,,,,,,0
+82,77,,Sofie,,,,,,,,,,0
+83,78,,Judith,,,,,,,,,,1
+84,79,,Simon,,,,,,,,,,1
+85,80,,Geert,,,,,,,,,,1
+86,81,,Ingrid,,,,,,,,,,1
+87,82,,Carina,,,,,,,,,,1
+88,83,,Griet,,,,,,,,,,1
+89,84,,Abdelmalek,,,,,,,,,,0
+90,85,,Nan,,,,,,,,,zelf als vervanger van Greet Habraken ingesteld juni 2011,1
+91,86,,Sophie,,,,,,,,,,1
+92,87,,peter,,,,,,,,,,1
+93,88,,Roger,,,,,,,,,,1
+94,89,,Maria,,,,,,,,,reageert op geen enkele mail of telefoon,1
+95,90,,Yves,,,,,,,,,yves.bocklandt@filetdivers.be,1
+96,91,,Els,,,,,,,,,,1
+97,92,,Michel,,,,,,,,,,1
+98,93,,Marc,,,,,,,,,fusie tussen jeugddienst MJA en Factor10 --> nu JOETZ ,1
+99,53,,Marc,,,,,,,,,,1
+100,54,,Sanghmitra,,,,beleidsmedewerkster onderwijs en welzijn,Vooruitgangstraat,323/4,1030,Brussel,,1
+101,94,,Katrien,,,,,,,,,,0
+102,57,,Marcel,,,,,,,,,,0
+103,95,,Saartje,,,,,,,,,,1
+104,96,,Kenneth,,,,,,,,,,1
+105,97,,Suzanne,,,,,,,,,,1
+106,98,,Ann,,,,,,,,,,1
+107,99,,Elke,,,,,,,,,,1
+108,100,,Jos,,,,,,,,,,0
+109,101,,Leen,,,,,,,,,,1
+110,102,,Dirk,,,,,,,,,"enkel begeleider, geen contactpersoon",1
+111,103,,Hilde,,,,,,,,,,1
+112,104,,Erika,,,,,,,,,,1
+113,105,,Marc,,,,,,,,,,1
+114,106,,Chris,,,,,,,,,,1
+115,107,,Nele,,,,,,,,,,1
+116,108,,Katrien,,,,,,,,,,1
+117,109,,Katrien,,,,,,,,,,1
+118,110,,Aleydis,,,,,,,,,,1
+119,111,,Marc,,,,,,,,,,1
+120,112,,Inge,,,,,,,,,,0
+121,113,,Ivo,,,,,,,,,,1
+122,114,,Marleen,,,,,,,,,,1
+123,115,,Bart,,,,Stafmedewerker sociaal-culturele beweging,,,,,,1
+124,116,,Jack,,,,Tewerkstellingsbegeleiding,,,,,,1
+125,117,,Mark,,,,,,,,,,1
+126,118,,Pieter,,,,,,,,,,1
+127,119,,Bert,,,,,,,,,,1
+128,120,,Eric,,,,secretaris,Hogenakkerstr.,7,9170,De Klinge,,1
+129,121,,Machteld,,,,,,,,,,1
+130,122,,Marc,,,,,,,,,,1
+131,123,,Patrick,,,,,,,,,,0
+132,124,,Naima,,,,,,,,,,0
+133,125,,Ann,,,,,,,,,,1
+134,126,,Wim,,,,,,,,,,1
+135,127,,Brecht,,,,,,,,,,1
+136,128,,Andrea,,,,,,,,,privé-persoon,1
+137,129,,Bram,,,,,,,,,,1
+138,130,,Stefaan,,,,,,,,,replyer op databasevraag was Lieve Balcaen (lieve@steunpuntjeugdhulp.be),0
+139,131,,Bert,,,,coördinator,,,,,,1
+140,132,,Liesbeth,,,,Sporttechnisch coördinator korfbal,,,,,,1
+141,133,,Mark,,,,,,,,,,1
+142,134,,Geert,,,,Directeur,,,,,,1
+143,135,,Johan,,,,,,,,,,1
+144,136,,Ina,,,,,,,,,,1
+145,40,,Els,,,,,,,,,,0
+146,137,,Mario,,,,stafmedewerker,,,,,,1
+147,138,,Maarten,,,,,,,,,,1
+148,139,,Christel,,,,,,,,,,1
+149,140,,Joke,,,,,,,,,,0
+150,141,,Merijn,,,,,,,,,,0
+151,142,,David,,,,Teamcoördinator Onderwijs,Van Daelstraat,35,2140,Borgerhout,,1
+152,143,,Mathijs,,,,,,,,,,1
+153,144,,Hanne,,,,,,,,,,1
+154,145,,Marijn,,,,,,,,,,1
+155,146,,Inge,,,,,,,,,nu Faranet,1
+156,147,,Inge,,,,,,,,,,1
+157,148,,Helene,,,,,,,,,,0
+158,149,,Ineze,,,,,,,,,,1
+159,150,,Gaya,,,,,,,,,CMD Brussel verandert op 6/6/11 in huisvandeMens,1
+160,151,,Frederic,,,,,,,,,,0
+161,152,,Marc,,,,marc.weeghmans@imelda.be,,,,,,1
+162,153,,Jean-Pierre,,,,,,,,,,1
+163,154,,Polikseni,,,,,,,,,,0
+164,155,,Pieter,,,,,,,,,,1
+165,159,,Danny,,,,,,,,,,1
+166,160,,Karla,,,,,,,,,,1
+167,161,,Ronny,,,,,,,,,,1
+168,56,,Riet,,,,,,,,,,1
+169,162,,Yves,,,,,,,,,,1
+170,163,,Peter,,,,,,,,,,1
+171,164,,Marc,,,,,,,,,fusie tussen jeugddienst MJA en Factor10 --> nu JOETZ ,1
+172,165,,Eric,,,,,,,,,,1
+173,166,,Kim,,,,,,,,,,1
+174,167,,Nancy,,,,,,,,,,1
+175,168,,Noortje,,,,,,,,,,1
+176,169,,Reinhoud,,,,,,,,,,0
+177,170,,Bert,,,,,,,,,,1
+178,171,,Mark,,,,,,,,,,1
+179,172,,Rigo,,,,,,,,,,1
+180,173,,Greet,,,,teamcoördinator,,,,,,1
+181,174,,Jan,,,,,,,,,,1
+182,96,,Marleen,,,,,,,,,,0
+183,175,,Jean-Marie,,,,Diensthoofd Facilitaire diensten,,,,,,1
+184,176,,Jan,,,,,,,,,,1
+185,177,,Ann,,,,,,,,,,1
+186,178,,Jan,,,,popadviesverantwoordelijke,,,,,,1
+187,179,,Marie-Jeanne,,,,,,,,,,1
+188,180,,Mieke,,,,,,,,,,1
+189,181,,Hilde,,,,,,,,,,1
+190,47,,Jonas,,,,,,,,,,1
+191,53,,Marc,,,,,,,,,,0
+192,54,,Nele,,,,Beleidsmedewerkster werk,,,,,,1
+193,54,,Mohamed,,,,stafmedewerker,,,,,,0
+194,55,,Stefan,,,,,,,,,,1
+195,75,,Mark,,,,,,,,,,1
+196,75,,Ilse,,,,,,,,,"Geen contactpersoon, enkel begeleider (Ilse.vandevelde@sensoa.be)",0
+197,83,,Abdelmalek,,,,,,,,,,1
+198,83,,Reinhoud,,,,,,,,,,1
+199,103,,Frederic,,,,,,,,,,0
+200,85,,Veronique,,,,,,,,,,0
+499,420,,Ilse,,,,,,,,,,1
+201,47,,Els,,,,,,,,,,1
+202,122,,Luc,,,,,,,,,,0
+203,111,,Luc,,,,,,,,,,0
+204,75,,Sergeant,,,,,,,,,"enkel begeleider, geen contactpersoon",1
+205,157,,Isabel,,,,,,,,,,1
+573,484,,Sarah,,,,,Kroonlaan,20,1050,Elsene,,1
+206,54,,Bram,,,,communicatiemedewerker,,,,,,0
+207,143,,algemeen,,,,,,,,,,0
+208,161,,Claudia,,,,,,,,,,0
+209,144,,Anne-Marie,,,,,,,,,,1
+241,200,,El Boubkari,,,,Coordinator,,,,,,1
+210,145,,Guy,,,,,,,,,,1
+229,192,,Karen,,,,cultuurbeleidscoördinator,Gemeenteplein,1,2550,Kontich,,1
+211,102,,Leen,,,,Onderzoeker,Aromagebouw; Vooruitgangstraat,323 bus 1,1030,Brussel,1ste contactpersoon voor VMC ,1
+212,118,,Johan,,,,,,,,,,1
+213,76,,Mark,,,,,,,,,,1
+472,397,,Greet,,,,Stafmedewerker,Lange Sint Annastraat,7,2000,Antwerpen,,1
+214,156,,Peter,,,,Programmacoördinator,,,,,,1
+215,156,,Timothy,,,,,,,,,,0
+217,182,,Johan,,,,,,,,,,1
+216,158,,Isabelle,,,,,,,,,,1
+218,183,,Pascal,,,,,,,,,,1
+219,123,,Roel,,,,Coordinator beleid,,,,,,0
+220,184,,Steven,,,,,,,,,,1
+221,185,,Sofie,,,,,,,,,,1
+222,157,,Marieke,,,,diensthoofd politieke dienst,,,,,vervangt Eline Demey - kent wewi mss nog niet,1
+223,186,,Ilse,,,,,,,,,,1
+224,187,,Gio,,,,,,,,,,1
+225,188,,Jo,,,,,,,,,,1
+226,189,,Frederik,,,,,,,,,,0
+227,190,,Els,,,,,,,,,,1
+228,191,,Marc,,,,,,,,,,1
+230,193,,Els,,,,,,,,,,1
+231,194,,Paul,,,,,,,,,,1
+232,195,,Steve,,,,,,,,,,0
+233,196,,Luc,,,,,,,,,,1
+234,196,,Dirk,,,,,,,,,,1
+235,197,,Carine,,,,,,,,,heet sinds 2016 Paardenpunt Vlaanderen ism Paardenloket,1
+236,197,,Rudi,,,,,,,,,,1
+237,198,,Willy,,,,,,,,,,1
+238,198,,Katleen,,,,,,,,,,1
+239,198,,Sta,,,,,,,,,,1
+240,199,,Freddy,,,,,,,,,,1
+242,201,,Jose,,,,,,,,,,1
+243,202,,Filip,,,,projectcoördinator Woonzorgteams,Bijlkestraat,18,3600,Genk,,0
+244,203,,Valérie,,,,,Mercatorstraat,81,9100,Sint-Niklaas,,0
+245,203,,Mattias,,,,,,,,,,1
+246,204,,karen,,,,sportfunctionaris,markt,18,1750,lennik,,0
+247,205,,Philippe,,,,coördinator,Jaak De Boeckstraat,73,2170,Merksem,,1
+248,206,,Evi,,,,,,,,,,1
+249,203,,Valérie,,,,,,,,,,0
+250,207,,Willem,,,,Coördinator lokaal sociaal beleid,Woodrow Wilsonplein,1,9000,Gent,,1
+251,208,,Marianne,,,,,,,,,,1
+252,207,,Joris,,,,,,,,,,1
+253,207,,Tom,,,,,,,,,,1
+254,207,,Sylvie,,,,,,,,,,1
+255,209,,sandra,,,,ouderenbeleidscoördinator,,,,,,1
+256,210,,Willem,,,,Secretaris,,,,,,1
+257,211,,Bieke,,,,stafmedewerker,,,,,,1
+344,290,,Verlinde,,,,,,,,,,1
+258,212,,Pieter,,,,,,,,,,1
+259,213,,Silke,,,,stafmedewerker communicatie,Waversebaan,99,3050,Oud-Heverlee,,1
+260,214,,Gerhard,,,,artistiek leider,Gaucheretplein,13,1030,Schaarbeek,"indien niet bereikbaar, vraag naar Lotje van Vliet",1
+261,215,,Isabelle,,,,woondeskundige,,,,,,1
+262,216,,Elke,,,,beleidsmedewerkster,Vooruitgangstraat,333,1030,Schaarbeek,vervangt Katelijne - kent wewi mss nog niet,1
+263,217,,Anima,,,,P&O advisor,,,,,,1
+264,218,,Bram,,,,Cultuurbeleidscoördinator,,,,,Vraag wordt gezamenlijk vanuit wijkoverleg Sint-Gillis en Vorst ingediend,1
+265,218,,Sarah,,,,Cultuurbeleidscoördinator,Van Meenenplein,39,1060,Sint-Gillis,,1
+266,219,,Juliette,,,,,,,,,,1
+267,220,,Nele,,,,Stafmedewerker pedagogisch team,Haachtstesteenweg,579 PB 40,1031,Schaarbeek,,1
+268,221,,Inke,,,,,,,,,,1
+269,222,,Geert,,,,verantwoordelijke,Kaaistraat,35,8400,Oostende,,1
+270,223,,Uschi,,,,Diensthoofd,Oude Baan,207,3630,Maasmechelen,,1
+271,224,,Saar,,,,coördinator,Brusselsestraat,63,3000,Leuven,,1
+272,225,,Luc,,,,,,,,,,1
+273,226,,Karlien,,,,,,,,,,1
+274,227,,Bob,,,,Algemeen directeur,Scheestraat,74,1750,Lennik,,1
+275,228,,Leen,,,,communicatie,J.F.Willemsstraat,10a,2530,Boechout,,1
+276,229,,Peter,,,,Gedelegeerd Bestuurder,Westhelling,geen,8400,Oostende,,1
+277,58,,Arnoud,,,,coördinator,,,,,,1
+278,230,,ANNE,,,,BEDIENDE,KAUWENDAAL,12,2800,MECHELEN,,1
+279,231,,mattias,,,,directeur,,,,,,1
+280,232,,NIna,,,,stafmedewerker,Kasteelstraat,4,9100,Sint Niklaas,,1
+281,233,,Ilse,,,,Voorzitter,Oudebergstraat,21a,9500,Geraardsbergen,,1
+282,234,,Heidi,,,,consulente externe communicatie,Gasmeterlaan,107,9000,Gent,,1
+283,235,,Harry,,,,coördinator,Georges Henrilaan,278,1200,Brussel,,1
+284,236,,brigitte,,,,,,,,,,1
+285,237,,Bram,,,,coördinator verwerking,quellinstraat,42,2018,antwerpen,,1
+286,238,,Kristof,,,,,Philippe de Champagnestraat,36,1000,Brussel,,1
+287,239,,Tessa,,,,,,,,,,1
+288,240,,Damiaan,,,,verantwoordelijke vrijwilliger,H. Geeraertlaan,11,3001,Heverlee,,1
+289,241,,Georges,,,,,,,,,,1
+290,242,,Chris,,,,diensthoofd bewonerszorg,MUnkendoornstraat,115,8510,Rollegem,,1
+291,243,,Test,,,,,,,,,,0
+292,244,,Marianne,,,,,,,,,,1
+293,245,,Annelies,,,,,,,,,,1
+294,246,,jimmy,,,,,,,,,,1
+295,247,,linda,,,,adjunct directeur,,,,,,1
+296,248,,Bert,,,,Projectmedewerker,Diksmuidelaan,36a,2600,Berchem,,1
+297,249,,Dries,,,,departementshoofd dienstencentra en thuiszorg,Mandellaan,101,8800,Roeselare,,1
+298,250,,Lies,,,,beleidsadviseur non-discriminatie,,,,,,1
+299,251,,Catelijne,,,,Projectmedewerker,Handelskaai,48,1000,Brussel,,1
+300,252,,Christina,,,,projectmedewerker,,,,,,1
+301,253,,Daan,,,,,,,,,,1
+302,254,,,,,,,,,,,,1
+303,255,,Tine,,,,algemeen coördinator,Kerkhofstraat,1,8200,Brugge,,1
+304,256,,Stefan,,,,projectleider,,,,,,1
+305,257,,Marc,,,,,weerstandlaan,77,2140,Borgerhout,,1
+306,258,,De Temmerman,,,,projectmedewerker,Philippe de Champagnestraat,23,1000,Brussel,,1
+307,259,,Mieke,,,,Afdelingschef catalografie,,,,,,1
+308,260,,Ann,,,,Directeur Personeel,IJzerenveld,147,2860,Sint-Katelijne-Waver,,1
+309,261,,Georges,,,,,Valerialaan,14,2980,Zoersel,,1
+310,262,,Hanne,,,,stafmedewerker studiedienst en externe communicatie,F. Lenoirstraat,27-31,1090,Jette,,1
+311,263,,Kim,,,,,,,,,"andere contactpersoon: Walter Herrebosch, directeur",1
+312,264,,Sietske,,,,Projectverantwoordelijke,Hamerstraat,19,1000,Brussel,,1
+313,265,,Toon,,,,,,,,,,1
+314,264,,Stefan,,,,Projectverantwoordelijke,Hamerstraat,19,1000,Brussel,,1
+346,292,,Lize,,,,Coördinator lokaal sociaal beleid,J. Van Cleemputplein,1,2850,Boom,,1
+315,266,,Ine,,,,BPT-leerkracht,,,,,,1
+316,267,,Filip,,,,"Hoofd van de dienst Secretariaat, Onthaal, Archief",Brugsesteenweg,90,8800,Roeselare,,1
+317,268,,anniek,,,,beleidsmedewerker,sint)jacobsmarkt,39,2000,antwerpen,"Het opzet van BZN is om de komende 5 jaar met 10 partners uit 10 segmenten van de samenleving in een lerend netwerk op zoek te gaan naar good practices, verhalen en inspirerende voorbeelden van ethisch bewust werken/leven. Boeiend onderzoeksmateriaal?",1
+318,269,,Karen,,,,Preventiewerker,,,,,,1
+319,270,,Jacobs,,,,coördinator vorming,Paviljoenstraat,9,1030,Brussel,,1
+320,271,,Patrick,,,,educatief medewerker,,,,,,1
+321,74,,scouts & gidsen,,,,,Lange Kievitstraat,74,2018,Antwerpen,,1
+322,272,,Adelheid,,,,Directeur,Zeven Bonderstraat,78,3600,Genk,,1
+323,244,,Marianne,,,,Beleidsmedewerker,,,,,,0
+324,273,,Cynthia,,,,Onderwijskundig adviseur,,,,,,1
+325,274,,chuba,,,,,,,,,,1
+326,159,,Evy,,,,Directeur,Kapucijnenvoer,33 B1,3000,Leuven,,1
+327,275,,Johan,,,,,,,,,,1
+328,276,,Anne,,,,coördinator,Verversrui,3,2000,Antwerpen,,1
+329,277,,Hayen,,,,Onderwijscoördinator Gevangenis Antwerpen,Begijnenstraat,42,2000,Antwerpen,,1
+330,278,,Bart,,,,stafmedewerker,gemeentestraat,56,3010,Kessel-lo,,1
+331,279,,Ken,,,,zakelijke leiding,d'herbouvillekaai,36,2020,Antwerpen,,1
+332,75,,Ruth,,,,,,,,,,1
+333,280,,Herman,,,,Afgevaardigd Bestuurder,Vaartdijk,86,2800,Mechelen,,1
+334,281,,Riccy,,,,coördinator,Brouwerijstraat,1,9880,Aalter,,1
+335,282,,Stefaan,,,,,,,,,,1
+336,283,,WIM,,,,voorzitter,Snepkenshof,3,2460,LICHTAART,,1
+337,284,,katrien,,,,ecocampusbegeleiders,,,,,,1
+338,285,,Piet,,,,coördinerend directeur,Kloosterstraat,37,9120,Beveren,,1
+339,286,,Erwin,,,,Centrumverantwoordelijke,Groot Sermentstraat,8,1000,Brussel,Onderzoek in he kader van een nieuw LDc in Vorst,1
+340,287,,Gerda,,,,Bibliothecaris,Kloosterstraat,7,1745,Opwijk,,1
+341,288,,Sonja,,,,directeur,,,,,,1
+342,75,,Katrien,,,,Beleidsmedewerker Preventie van ongeplande zwangerschap | Projectverantwoordelijke Seksualiteit.be,,,,,,1
+343,289,,emelie,,,,medewerker,,,,,,1
+345,291,,Heidi,,,,stafmedewerker communicatie,Gasstraat,Dec-14,2060,Antwerpen,,1
+389,328,,Anja,,,,coördinator,Sainctelettesquare,19,1000,Brussel,,1
+480,402,,Reginald,,,,Consultant,Turfkuilen,14,2200,Herentals,,1
+347,293,,Tim,,,,,,,,,,1
+348,294,,Diederik,,,,nationaal coördinator,Huidevetersstraat,165,1000,Brussel,,1
+349,295,,Filip,,,,,,,,,,1
+350,296,,Koen,,,,Afgevaardigd Bestuurder,,,,,,1
+351,297,,Leen,,,,,,,,,,1
+352,298,,Jeffrey,,,,coördinator,K. Maria Hendrikaplein,65 b,9000,Gent,,1
+353,299,,jan,,,,,,,,,,1
+354,300,,Marieke,,,,,,,,,,1
+603,300,,Joris,,,,Diensthoofd staf beleidsondersteuning sociale dienst,,,,,,1
+355,301,,André,,,,Adjunct-Manager,Motstraat,40,2800,Mechelen,,1
+356,148,,Herlindis,,,,stafmedewerker,Middaglijnstraat,10,1210,Brussel,,1
+357,302,,birgit,,,,lector,brusselstraat,23,2018,antwerpen,,1
+358,303,,michele,,,,projectmedewerker,amerikalei,164,2000,antwerpen,,1
+359,304,,Elke,,,,"stafmedewerker beleid, onderzoek & belangenbehartiging",Abrahamstraat,13,9000,Gent,,1
+360,305,,Pieter,,,,beleidsmedewerker - afdelingsondersteuner,,,,,,1
+361,306,,Tanja,,,,Coördinator,Campus Blairon,714,2300,Turnhout,,1
+362,307,,bernadette,,,,directeur,albert giraudlaan,24,1030,brussel,,0
+363,308,,Kris,,,,Communicatieverantwoordelijke,,,,,,1
+364,309,,Hanne,,,,signaalwerker,Werkhuizenstraat,3,1080,Molenbeek,,1
+365,310,,Jan,,,,hoofd sociale dienst,Visstraat,16,9900,Eeklo,,1
+366,311,,Conny,,,,projectverantwoordelijke,Lakensestraat,76,1000,Brussel,,1
+367,189,,Frederik,,,,Diensthoofd Wijkwerking,Leuvensestraat,117,1800,Vilvoorde,,1
+368,312,,Katrien,,,,Bestuurssecretaris Sociale Dienst,Gasthuisstraat,40,9300,Aalst,,1
+369,313,,Tinne,,,,,,,,,,1
+370,314,,Maarten,,,,coördinator,Sainctelettesquare,19,1000,Brussel,,1
+371,315,,Isabelle,,,,coordinator,Carnotstraat,110,2060,Antwerpen,,1
+372,316,,Frank,,,,teamverantwoordelijke,Brusselsepoortstraat,8,2800,Mechelen,Onderwijsopbouwwerk,1
+373,317,,Tamara,,,,,,,,,,1
+374,318,,Kristien,,,,stafmedewerker gelijke kansen,Middelheimlaan,1 A221,2020,Antwerpen,,1
+375,319,,Rit,,,,Medewerker USAB,Middelheimlaan,1,2020,Antwerpen,,1
+376,320,,jan,,,,coördinator,,,,,,1
+377,258,,Philippe,,,,,,,,,,1
+378,321,,ANNICK,,,,,,,,,,1
+379,322,,Michelle,,,,coördinator,Brusselsestraat,63,3000,Leuven,,1
+380,323,,An,,,,,,,,,an@creatiefschrijven.be,1
+381,324,,Cuveliers,,,,,,,,,,1
+632,529,,Juul,,,,psychologe & projectmedewerkster,,,,,"directe collega: Sarah Heylen, sarahheylen@indigovzw.be ",1
+382,265,,Vera,,,,projectverantwoordelijke Vlieg,,,,,(werkt niet op woensdag en vrijdag),1
+385,325,,Charlotte,,,,projectverantwoordelijke,,,,,,1
+383,44,,Karolina,,,,,,,,,,1
+384,139,,Katrien,,,,,,,,,,1
+386,325,,Wouter,,,,,,,,,,1
+387,326,,Jan,,,,coördinator,Sainctelettesquare,19,1000,Brussel,,1
+388,327,,Karolina,,,,Suïcidepreventiewerker CGG Brussel,Houba de Strooperlaan,136,1020,Laken,contactpersoon voor Suïcidepreventiewerking CGG's (Gent) maar werkzaam in CGG Brussel,1
+390,329,,Diana,,,,coördinator,Vennestraat,98,3600,Genk,,1
+391,330,,Charles,,,,coördinator,,,,,,1
+392,331,,Serge,,,,verantwoordelijke PR & communicatie,Brusselsepoortstraat,8,2800,Mechelen,,1
+393,332,,Annemieke,,,,,,,,,,1
+394,333,,Nick,,,,Pedagogisch medewerker,Schoenstraat,15a,2140,Antwerpen,,1
+395,334,,Wellekens,,,,Project Manager,De Limburg Stirumlaan,80,1780,Wemmel,,1
+396,335,,Bart,,,,Stafmedewerker communicatie en kennisbeheer,Sainctelettesquare,19,1000,Brussel,,1
+397,336,,Isabel,,,,stafmedewerker,,,,,,1
+398,337,,Dimitri,,,,,,,,,,1
+399,338,,Ruth,,,,,,,,,,1
+400,298,,Kathy,,,,projectmedewerker,,,,,,1
+401,339,,Fons,,,,psychotherapeut en onderzoeker,Kerkweg,10,3212,Pellenberg,Doe bekendheidsonderzoek over filosofische praktijk,1
+402,339,,Verhoelst,,,,psychotherapeut en filosofisch consulent,Kerkweg,10,3212,Pellenberg,praktijk en onderzoek,1
+403,340,,Jeroen,,,,Marketing,Coxiestraat,11,2800,Mechelen,,1
+404,341,,Piessens,,,,Coördinator Studiedienst VWGC,,,,,,1
+405,342,,lieven,,,,regiosecretaris,Begijnenstraat,18-Feb,2800,Mechelen,,1
+406,343,,Sarah,,,,kwaliteitscoördinator,,,,,,1
+407,344,,Evelien,,,,projectmedewerkster,Kortrijksesteenweg,304,9000,Gent,,1
+408,345,,Marja,,,,directie-assistente,Huidevettersstraat,165,1000,Brussel,,1
+409,308,,Stefaan,,,,,,,,,,1
+410,346,,Nele,,,,coördinator,,,,,,1
+411,347,,Hein,,,,coördinator,Polderstraat,76 A bus 2,8310,Brugge,,1
+412,348,,Geert,,,,coördinator,zelfbestuursstraat,14,1070,Anderlecht,,1
+413,349,,Kurt,,,,Centrumleider,Kapellestraat,7,8420,De Haan,Wij zoeken een student om een enquête af te nemen van onze bezoekers en om een analyse te maken van de verkregen data.,1
+414,350,,elke,,,,stafmedewerker studiedienst,,,,,,1
+415,351,,Nicole,,,,manager O&O,,,,,,1
+416,352,,Patrick,,,,wetenschappelijk medewerker,Lokkaardstraat,8,2018,Antwerpen,,1
+417,344,,Delphine,,,,project- en campagnemedewerker,Kortrijksesteenweg,304,9000,Gent,,1
+418,353,,Leen,,,,directeur,,,,,vanaf zomer 2015: 016/29.21.27,1
+419,354,,ann,,,,directie,,,,,,1
+420,355,,Van Roy,,,,Afgevaardigd Bestuurder,,,,,,1
+421,331,,Marlies,,,,stafmedewerker,,,,,,1
+422,356,,Liesbet,,,,educatief medewerker,,,,,,1
+423,357,,Nicolas,,,,ortho-agogisch stafmedewerker,Raymond de Hemptinnelaan,33,9030,Mariakerke,,1
+424,75,,Lies,,,,beleidsmedewerker jongeren,,,,,,1
+425,358,,Rik,,,,,,,,,,1
+426,359,,Geertrui,,,,directeur,,,,,,1
+427,360,,Katrien,,,,educatief medewerkster,Kamemrstraat,22,9000,Gent,,1
+428,361,,Ben,,,,coördinator,,,,,"vervangt Frieda De Koninck, kent wewi mss nog niet",1
+429,362,,Griet,,,,,,,,,,1
+430,363,,Lieven,,,,,,,,,,1
+431,227,,Patrick,,,,psycholoog,,,,,,1
+432,364,,Ellen,,,,Directeur,Vrijdagmarkt,24,9000,Gent,,1
+433,365,,Ann,,,,office manager,Brouwerijstraat,1,9880,Aalter,,1
+434,366,,Wim,,,,,,,,,,1
+435,366,,Hannelore,,,,,,,,,,1
+436,366,,Ilse,,,,,,,,,,1
+437,366,,Els,,,,,,,,,,1
+438,367,,Geert,,,,Relatiebeheerder,Beverensestraat,68B,8850,Ardooie,,1
+439,368,,Thomas,,,,,ijzermolenstraat,,3001,heverlee,,1
+440,369,,Egbert,,,,,,,,,,1
+441,370,,Yael,,,,programmatie & boekhouding,Breughelstraat,31-33,2018 Antwerpen,Belgie,,1
+442,371,,Mieke,,,,Communicatieverantwoordelijke,Centrumgalerij blok 2,6e verdiep,1000,Brussel,,1
+443,372,,Lene,,,,jongerenwerker,Lange Lobroekstraat,34,2060,Antwerpen,,1
+444,373,,Roland,,,,,,,,,,1
+445,374,,pksktgvg,,,,1,1,1,94102,San Francisco,1,1
+446,375,,Chris,,,,CE0,Antwerpselaan,2,1853,Strombeek Bever,,1
+447,376,,An,,,,,,,,,,1
+448,377,,Werner,,,,oprichter - penningmeester,Blancefloerlaan,27,2150,Antwerpen,,1
+449,378,,Lieve,,,,erfgoedcoördinator,,,,,,1
+450,379,,Alex,,,,,Wezerenstraat,5,3400,Landen,,1
+451,380,,Carmen,,,,coördinator,Karreweg,6,9770,Kruishoutem,,1
+452,381,,Danny,,,,coördinator,Lange Winkelhaakstraat,38,2060,Antwerpen,,1
+453,382,,Siska,,,,begeleidster,,,,,,1
+454,383,,Inke,,,,Communicatieverantwoordelijke,E. Bockstaellaan,107,1020,Brussel,,1
+455,282,,Redouane,,,,,,,,,,1
+456,328,,Leen,,,,coördinator BKO,Sainctelettesquare,19,1000,Brussel,,1
+457,384,,Sofie,,,,,,,,,,1
+458,67,,Ruben,,,,Zakelijk leider,,,,,,1
+459,385,,Jan Piet H.,,,,(echt)scheidingsbemiddelaar,Ter Voortlaan,58,2650,Edegem,,1
+460,386,,Sarah,,,,algemeen directeur,Ganspoel,2,3040,Huldenberg,,1
+461,387,,Laure,,,,Coördinator,,,,,,1
+462,388,,Christian,,,,Directeur,,,,,maatschapelijkezetel nog te bepalen,1
+463,389,,Christel,,,,externe relaties,Vaartkom,4,3000,Leuven,p.a. Openbaar Entrepot voor de Kunsten (OPEK),1
+464,390,,Annie,,,,Medewerker en lid Raad van Bestuur,,,,,,1
+465,391,,Jo,,,,directie CKG Horst,Horstebaan,14,2900,Schoten,,1
+466,244,,Marianne,,,,,,,,,,1
+467,392,,Aleydis,,,,,,,,,,1
+468,393,,Els,,,,beleidsmedewerker administratie,Dries,2a,2550,Kontich,,1
+577,488,,Caroline,,,,pedagogisch stafmedewerker,Collegestraat,31,9100,Sint-Niklaas,,1
+469,394,,Veerle,,,,teamverantwoordelijke,Carnotstraat,110,2060,Antwerpen,,1
+470,395,,Dries,,,,voorzitter,Technologiestraat,1,1082,Sint-Agatha Berchem,,1
+471,396,,Tessa,,,,Handelsattaché,Kortenberglaan,4-Oct,1040,Brussel,,1
+473,398,,Patrick,,,,beleidsadviseur,Ilgatlaan,11,3500,Hasselt,,1
+474,399,,Katlijn,,,,Coördinator,Henegouwenkaai,29,1080,Molenbeek,,1
+475,282,,Berna,,,,Psycholoog,,,,Laken Brussel,,0
+476,269,,Karen,,,,Preventiewerker,J.B. Nowélei,33,1800,Vilvoorde,,0
+477,400,,Roger,,,,,Bloemenlaan,8,1861,Wolvertem,,1
+478,208,,Elise,,,,,,,,,,1
+479,401,,Stefanie,,,,Contactpersoon WLE-Vlaams-Brabant,fortbaan,22,2160,Wommelgem,,1
+481,403,,Inge,,,,,,,,,,1
+482,404,,Marijke,,,,stafmedewerker,,,,,,1
+483,405,,Annelies,,,,oprichtster en docent,,,,,,1
+484,406,,David,,,,leraar wiskunde fysica,Leon Scampartstraat,5,1040,Etterbeek,,1
+485,407,,Jamien,,,,stafmedewerker,varkensstraat,6,2800,Mechelen,,1
+486,408,,Annelies,,,,,Pijndersstraat,41,9000,Gent,,1
+487,409,,Monique,,,,directie,Schotensesteenweg,256,2100,Deurne,,1
+488,410,,Bart,,,,bestuurssecretaris,,,,,,1
+489,75,,Erika,,,,beleidsmedewerker,F. Rooseveltplaats,12,2060,Antwerpen,,1
+500,188,,Amke,,,,,Lange Ridderstraat,,2800,Mechelen,,1
+490,411,,Koenraad,,,,directeur,,,,,,1
+491,412,,Jan,,,,voorzitter,Neerhofstraat,2,1700,Dilbeek,,1
+492,413,,Lotte,,,,Educatief medewerker,Livornostraat,25,1050,Brussel,,1
+493,414,,Yves,,,,coördinator beschut wonen,Heuvelstraat,170,2530,Boechout,,1
+494,415,,Sofie,,,,Stafmedewerker participatie en informatie,,,,,,1
+495,416,,Kathleen,,,,Coördinator communicatie en onderzoek,Arduinkaai,28,1000,Brussel,,1
+496,417,,Lynn,,,,Coördinator,Edinburgstraat,26,1050,Brussel,,1
+497,418,,Jeroen,,,,,,,,,,1
+498,419,,Anke,,,,,,,,,,1
+501,421,,Michael,,,,Cel Documentatie,,,,,,1
+502,422,,Katrien,,,,Adjunct-manager,,,,,ism confederatie vanaf 2016,1
+503,423,,Loredana,,,,directrice,Werkhuizenstraat,25,1080,Brussel,,1
+504,423,,Dirk,,,,Themaverantwoordelijke Rechtsbescherming,,,,,,1
+505,424,,Sonja,,,,opleidingshoofd beeldende kunsten,,,,,,1
+506,425,,anthony,,,,student,,,,,,1
+507,426,,Zita,,,,,,,,,,1
+508,427,,Myriam,,,,coördinator,Gravin de Merodestraat,17,2260,Westerlo,,1
+509,428,,ANNEMIEKE,,,,Managing Director,,,,,,1
+510,300,,Thomas,,,,,,,,,,1
+511,429,,Greet,,,,,,,,,,1
+512,430,,Leen,,,,,,,,,,1
+513,431,,Vlaeyen,,,,leerkracht,Kouterstraat,37,3040,Loonbeek,,1
+514,432,,David,,,,directeur ISB,,,,,,1
+515,432,,Roel,,,,stafmedewerker,August De Boeckstraat,1,9100,Sint-Niklaas,,1
+516,433,,Sara,,,,,Avenue Paul Deschanel,36 B2,1030,Schaerbeek,,1
+517,434,,Jasmien,,,,,,,,,,1
+518,434,,Tine,,,,,,,,,,1
+519,435,,Tine,,,,,,,,,,1
+520,320,,Alexandra,,,,coördinator,Vaartkom,4,3000,Leuven,,1
+521,436,,hefvhgky,,,,1,1,1,94102,San Francisco,1,1
+522,437,,G5EFGMzI')); waitfor delay '0:0:6' --,,,,1,1,1,94102,San Francisco,1,1
+523,438,,yQ3ywIHF';select pg_sleep(9); --,,,,1,1,1,94102,San Francisco,1,1
+524,439,,piZm4PG8');select pg_sleep(6); --,,,,1,1,1,94102,San Francisco,1,1
+525,440,,5LlMVGUP'));select pg_sleep(9); --,,,,1,1,1,94102,San Francisco,1,1
+526,441,,jtrgldhw,,,,1,1,1,94102,San Francisco,1,1
+527,442,,jtrgldhw,,,,1,1,1,94102,San Francisco,1,1
+528,443,,jtrgldhw,,,,1,1,1,94102,San Francisco,"if(now()=sysdate(),sleep(9),0)/*'XOR(if(now()=sysdate(),sleep(9),0))OR'\XOR(if(now()=sysdate(),sleep(9),0))OR\""*/""",1
+529,444,,jtrgldhw,,,,1,1,1,94102,San Francisco,"(select(0)from(select(sleep(6)))v)/*'+(select(0)from(select(sleep(6)))v)+'\+(select(0)from(select(sleep(6)))v)+\""*/""",1
+530,445,,jtrgldhw,,,,1,1,1,94102,San Francisco,-1; waitfor delay '0:0:9' -- ,1
+531,446,,jtrgldhw,,,,1,1,1,94102,San Francisco,-1); waitfor delay '0:0:3' -- ,1
+532,447,,jtrgldhw,,,,1,1,1,94102,San Francisco,-1)); waitfor delay '0:0:6' -- ,1
+533,448,,jtrgldhw,,,,1,1,1,94102,San Francisco,nk16cR2I'; waitfor delay '0:0:3' -- ,1
+534,449,,jtrgldhw,,,,1,1,1,94102,San Francisco,xAVCoCCz'); waitfor delay '0:0:9' -- ,1
+535,450,,jtrgldhw,,,,1,1,1,94102,San Francisco,7nzvdIko')); waitfor delay '0:0:6' -- ,1
+536,451,,jtrgldhw,,,,1,1,1,94102,San Francisco,-1;select pg_sleep(9); -- ,1
+537,452,,jtrgldhw,,,,1,1,1,94102,San Francisco,-1);select pg_sleep(3); -- ,1
+538,453,,jtrgldhw,,,,1,1,1,94102,San Francisco,-1));select pg_sleep(6); -- ,1
+539,454,,jtrgldhw,,,,1,1,1,94102,San Francisco,EZdMDtBY';select pg_sleep(3); -- ,1
+540,455,,jtrgldhw,,,,1,1,1,94102,San Francisco,8kfIbl97');select pg_sleep(6); -- ,1
+541,456,,jtrgldhw,,,,1,1,1,94102,San Francisco,QhJMYkjo'));select pg_sleep(9); -- ,1
+542,457,,jtrgldhw,,,,1,1,1,94102,San Francisco,1,1
+543,458,,jtrgldhw,,,,1,1,1,94102,San Francisco,1,1
+544,459,,jtrgldhw,,,,1,"if(now()=sysdate(),sleep(3),0)/*'XOR(if(now()=sysdate(),sleep(3),0))OR'\XOR(if(now()=sysdate(),sleep(3),0))OR\""*/""",1,94102,San Francisco,1,1
+545,460,,jtrgldhw,,,,1,"(select(0)from(select(sleep(9)))v)/*'+(select(0)from(select(sleep(9)))v)+'\+(select(0)from(select(sleep(9)))v)+\""*/""",1,94102,San Francisco,1,1
+546,461,,jtrgldhw,,,,1,-1; waitfor delay '0:0:3' --,1,94102,San Francisco,1,1
+547,462,,jtrgldhw,,,,1,-1); waitfor delay '0:0:6' --,1,94102,San Francisco,1,1
+548,463,,jtrgldhw,,,,1,-1)); waitfor delay '0:0:3' --,1,94102,San Francisco,1,1
+549,464,,jtrgldhw,,,,1,8BJaSZdm'; waitfor delay '0:0:6' --,1,94102,San Francisco,1,1
+550,465,,jtrgldhw,,,,1,w6Uy0BUP'); waitfor delay '0:0:9' --,1,94102,San Francisco,1,1
+551,466,,jtrgldhw,,,,1,bHFOWArz')); waitfor delay '0:0:3' --,1,94102,San Francisco,1,1
+552,467,,jtrgldhw,,,,1,-1;select pg_sleep(9); --,1,94102,San Francisco,1,1
+553,468,,jtrgldhw,,,,1,-1);select pg_sleep(3); --,1,94102,San Francisco,1,1
+554,469,,jtrgldhw,,,,1,-1));select pg_sleep(9); --,1,94102,San Francisco,1,1
+555,470,,jtrgldhw,,,,1,smEwrLlN';select pg_sleep(3); --,1,94102,San Francisco,1,1
+556,471,,jtrgldhw,,,,1,z4HGBdo8');select pg_sleep(9); --,1,94102,San Francisco,1,1
+557,472,,jtrgldhw,,,,1,E6j6bTLL'));select pg_sleep(3); --,1,94102,San Francisco,1,1
+558,429,,Lieve,,,,inhoudelijk medewerker,Kapellekesweg,2,3010,Kessel-Lo,,1
+559,473,,Alex,,,,Directeur,,,,,,1
+560,474,,Pieter,,,,verantwoordelijke welzijn en lokale economie,Heldenplein,1,3550,Heusden-Zolder,,1
+561,304,,Katrien,,,,,,,,,,1
+562,475,,Ilse,,,,,,,,,,1
+563,476,,Smet,,,,stafmedewerker,Wijngaardstraat,5,1755,Gooik,,1
+564,476,,Ilse,,,,stafmedewerker,,,,,,1
+565,477,,Jan,,,,Coördinator Topsport,Statiestraat,64,2070,Zwijndrecht,,1
+566,478,,Dirk,,,,directeur,,,,,,1
+567,479,,Leen,,,,projectverantwoordelijke,Edinburgstraat,26,1050,Brussel,,1
+568,480,,Maria,,,,Eigenares,Beursplein,1,1000,Brussel,,1
+569,481,,Sarah,,,,,Kipdorp,30,2000,Antwerpen,,1
+570,482,,Jolien,,,,,,,,,,1
+571,483,,Marinka,,,,Parlementair medewerker,Lombardstraat,61-67,1000,Brussel,,1
+572,399,,Tom,,,,algemeen coördinator,Henegouwenkaai,29,1080,Molenbeek,,1
+574,485,,guy,,,,voorzitter,,,,,,1
+575,486,,Bart,,,,projectmedewerker tegen homofobie,,,,,,1
+576,487,,Nicole,,,,Manager O&O,,,,,,1
+578,489,,DeWolf,,,,,,,,,Om te testen,1
+579,490,,Nel,,,,medisch milieukundige,Baudelokaai,8,9000,Gent,,1
+580,491,,Willy,,,,Secretaris,Koning Albertlaa,58,3010,Kessel-Lo,,1
+581,492,,Geert,,,,,Hoogstraat,26-28,1000,Brussel,,1
+582,493,,Dries,,,,Inhoudelijk Coördinator,Limburgstraat,49-53,2020,Antwerpen,Ik coördineer de aanvragen maar kan afhankelijk van het project de effectieve opvolging doorgeven aan een collega.,1
+583,494,,Manu,,,,Coördinator,Provincieplein,,3010,Leuven,,1
+584,495,,Frédéric,,,,niet langer in functie,,,,,niet langer in dienst,1
+585,496,,Tine,,,,,Middelheimlaan,1,2020,Antwerpen,,1
+586,497,,Joris,,,,stafmedewerker,,,,,,1
+587,498,,Katrien,,,,coördinator,,,,,,1
+588,499,,Ben,,,,Kennisbeheerder,De Keyserlei,5,2018,Antwerpen,,1
+589,499,,Eva,,,,Opleidingsverantwoordelijke,Keyserlei,5,2018,Antwerpen,,1
+590,499,,Theo,,,,,,,,,,1
+591,500,,Nathalie,,,,coordinator,,,,,,1
+592,501,,Jolien,,,,coördinator,Tolpoortstraat,79,9800,Deinze,,1
+593,502,,Helena,,,,,,,,,,1
+594,503,,Isabelle,,,,psychotherapeut,Zonnelaan,29,1860,Meise,,1
+595,504,,Marc,,,,Topsportcoördinator,Gloriantlaan,51,2050,Antwerpen,,1
+596,505,,Stefanie,,,,coördinator,Nijverheidsstraat,3,9200,Dendermonde,,1
+597,506,,Derkje,,,,,,,,,,1
+598,507,,Noemi,,,,stafmedewerker,,,,,,1
+599,215,,Narges,,,,admin medewerker,Lakensestraat,76 bus 2,1000,Brussel,administratie,1
+600,508,,Elisa,,,,,,,,,,1
+601,509,,Els,,,,STCr,Boomgaardstraat,22-Jul,2600,Berchem,,1
+602,160,,Bernadette,,,,,,,,,,1
+604,300,,Katia,,,,adjunct van de directie - ouderenzorg,,,,,,1
+605,314,,Shari,,,,diversiteit,Sainctelettesquare,17,1000,Brussel,,1
+606,510,,Kathleen,,,,,,,,,contactpersoon: kathleen.fransen@stad.antwerpen.be,1
+607,511,,Katleen,,,,coördinator,,,,,,1
+608,512,,Charlotte,,,,COORDINATOR,,,,,,1
+609,495,,Riet,,,,milieucoördinator,St.-Pietersnieuwstraat,25,9000,Gent,,1
+610,513,,Inès,,,,Leerkracht Beroepsgerichte Vorming,Beekstraatdries,14,9030,Mariakerke,,1
+611,514,,Veerle,,,,teamverantwoordelijke,carnotstraat,110,2060,antwerpen,,1
+612,515,,Hannelore,,,,,,,,,,1
+613,353,,Miette,,,,,,,,,,1
+614,516,,Remi,,,,fractiemedewerker,Leuvenseweg,85,1000,BRUSSEL,,1
+615,294,,Jozefien,,,,Stafmedewerker educatie,Huidevettersstraat,165,1000,Brussel,,1
+616,353,,Belinda,,,,,,,,,,1
+617,495,,Silke,,,,medewerker duurzaamheidskantoor,,,,,,1
+618,517,,Laureline,,,,Communicatieverantwoordelijke,Kleine Gentstraat,46,9051,Sint-Denijs-Westrem,,1
+619,518,,Anny,,,,Coördinator Studiedienst,Marlylaan,15-Aug,1120,Neder-over-heembeek,,1
+620,519,,Uschi,,,,,,,,,sarah meys op zwangerschapsverlof,1
+621,520,,Robin,,,,stafmedewerker,,,,,,1
+622,521,,Clara,,,,Archivaris,Vandenlindenstraat,22,1030,Brussel,,1
+623,522,,Clara,,,,"Medewerker museum (onderzoek, expo, educatie)",Windmolenstraat,3222453779,1140,Evere,,1
+624,523,,Koen,,,,,Molenstraat 102,,1700,Dilbeek,,1
+625,524,,Saskia,,,,Archivaris - informatiebeheerder,Lange Gasthuisstraat,15,2000,Antwerpen,,1
+626,525,,Henri,,,,Raad van bestuur vzw,Doornstraat,11:00 AM,8970,Poperinge,Als vz geïnteresseerd - graag tijdig melding om project in te dienen.,1
+627,526,,Karen,,,,Wetenschappelijk medewerker,Ieperstraat,1,8980,Zonnebeke,,1
+628,526,,Lee,,,,Wetenschappelijk medewerker,Ieperstraat,1,8980,Zonnebeke,,1
+629,527,,Cathy,,,,SECRETARIS,,,,,,1
+630,527,,Carlos,,,,,Montpellier,,8310,Sint-Kruis,,1
+631,528,,Stefaan,,,,Adviseur,Parochiaanstraat,7,2000,Antwerpen,,1
+633,530,,kristina,,,,wetenschappelijk medewerker,,,,,,1
+634,531,,Leen,,,,inhoudelijk coördinator,,,,,,1
+635,532,,Ria,,,,archivaris,,,,,,1
+636,533,,Maaike,,,,,,,,,,1
+637,534,,erica,,,,secretaris rvb,paleisstraat,39-41,2018,antwerpen,,1
+638,535,,Peter,,,,Coördinator onderwijswerking,,,,,,1
+639,536,,Bart,,,,Beleidsmedewerker,Beenhouwersstraat 7/2,50707107,8000,Brugge,,1
+640,536,,Katty,,,,coordinatie,Beenhouwersstraat,7-Feb,8000,Brugge,,1
+641,499,,Eva,,,,,,,,,,1
+642,537,,Ludo,,,,Promotie en Marketing,Lange Pastoorstraat,25 -27,2600,Berchem,,1
+643,538,,Gil,,,,voorzitter/vormingswerker,,,,,,1
+644,539,,Benny,,,,medewerker,,,,,,1
+645,540,,Kristien,,,,voorzitsters,Paleisstraat,473555079,2018,Antwerpen (2018),,1
+646,534,,Hilde,,,,Vertaler tolk,Bosstraat,146,2850,Boom,,1
+647,325,,Mats,,,,,,,,,,1
+648,541,,Anna,,,,Educatief medewerker,Pleinlaan,5,1050,Elsene,,1
+649,529,,Sarah,,,,projectmedewerkster,,,,,,1
+650,328,,Marijke,,,,stafmedewerker jeugd/volwassenenwerk,Sainctelettesquare 19,3225131590,1000,Brussel,,1
+651,542,,Bambi,,,,senior researcher,Leuvensesteenweg,13,3080,Tervuren,,1
+652,417,,Lothar,,,,Coördinator,Vlasfabriekstraat,11,1060,Brussel,,1
+653,543,,Elke,,,,coördinator,,,,,,1
+654,544,,joke,,,,,Brand Whitlocklaan 87,478206437,1200,Brussel,,1
+655,545,,Leo,,,,Directeur,,,,,,1
+656,546,,Janus,,,,stafmedewerker usos,,,,,,1
+657,67,,Imke,,,,,,,,,Imke.vannuffelen@opendoek-vzw.be,1
+658,127,,Herman,,,,medewerker oud-ledenwerking en historiek,Vooruitgangstraat,225,1030,Brussel,nationaal secretariaat,1
+659,547,,silke,,,,communicatiemedewerker,Diestsevest,32 bus 3b,3000,Leuven,,1
+660,548,,Suzanne,,,,,Colignonplein,1,1030,Schaarbeek,Kabinetschef Gelijke Kansen,1
+661,75,,Kaat,,,,Beleidsmedewerker,F. Rooseveltplaats,12 bus 7,2060,Antwerpen,,1
+662,75,,Thomas,,,,beleidsmedewerker,Rooseveltplaats,12,2060,Antwerpen,,1
+663,549,,Sara,,,,,,,,,,1
+664,550,,Yvan,,,,directeur,lagaeplein,Dec-14,8501,kortrijk-Heule,,1
+665,551,,Koen,,,,Digital Producer,,,,,,1
+666,324,,Annelies,,,,stafmedewerker,bonneelsstraat,16,1210,Brussel,,1
+667,203,,Jeroen,,,,,,,,,,1
+668,552,,Tine,,,,,,,,,,1

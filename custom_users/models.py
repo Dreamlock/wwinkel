@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import EmailField, URLField, TextField
@@ -9,6 +10,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.validators import RegexValidator
+
+
+class Keyword(models.Model):
+    """
+    Representation of a keyword. Has a many to many relationship with Question (a question can have multiple keywords
+    and a keyword can belong to multiple questions)
+    """
+
+    key_word = models.CharField(max_length=33, unique=True)
 
 
 class UserManager(BaseUserManager):
@@ -38,7 +48,6 @@ class UserManager(BaseUserManager):
 
 
 class OrganisationManager(UserManager):
-
     def is_organisation(self):
         return True
 
@@ -66,7 +75,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(
         _('is active'),
         default=True,
-        help_text=_('Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
+        help_text=_(
+            'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
     )
 
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
@@ -108,12 +118,14 @@ class Province(models.Model):
     FLEMISH_BRABANT_REGION = 2
     LIMBURG_REGION = 3
     WEST_FLANDERS_REGION = 4
+    BRUSSELS_REGION = 5
     PROVINCE_SELECT = (
-        (ANTWERP_REGION, _('Antwerp')),
-        (EAST_FLANDERS_REGION, _('East Flanders')),
-        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (ANTWERP_REGION, _('Antwerpen')),
+        (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
+        (FLEMISH_BRABANT_REGION, _('Vlaams-Brabant')),
         (LIMBURG_REGION, _('Limburg')),
-        (WEST_FLANDERS_REGION, _('West Flanders')),
+        (WEST_FLANDERS_REGION, _('West-Vlaanderen')),
+        (BRUSSELS_REGION, _('Brussel')),
     )
 
     province = models.PositiveIntegerField(unique=True, choices=PROVINCE_SELECT)
@@ -149,20 +161,28 @@ class User(AbstractUser):
         return self.last_name + ', ' + self.first_name
 
     def is_organisation(self):
-        return OrganisationUser.objects.filter(pk=self.id).exists()
-        try:
-            OrganisationUser.objects.get(pk=self.id)
-        except ObjectDoesNotExist:
-            return False
-        return True
+        return OrganisationUser.objects.filter(id=self.id).exists()
+
+    def as_organisation(self):
+        if self.is_organisation():
+            return OrganisationUser.objects.get(id=self.id)
+        return None
 
     def is_manager(self):
-        return ManagerUser.objects.filter(pk=self.id).exists()
-        try:
-            ManagerUser.objects.get(pk=self.id)
-        except ObjectDoesNotExist:
-            return False
-        return True
+        return ManagerUser.objects.filter(id=self.id).exists()
+
+    def is_central_manager(self):
+        if self.is_manager:
+            m_user = ManagerUser.objects.get(id = self.id)
+            if m_user.region.filter(region = Region.CENTRAL_REGION).exists():
+                return True
+
+        return False
+
+    def as_manager(self):
+        if self.is_manager():
+            return ManagerUser.objects.get(id=self.id)
+        return None
 
 
 class LegalEntity(models.Model):
@@ -175,6 +195,16 @@ class LegalEntity(models.Model):
 class OrganisationType(models.Model):
     type = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.type
+
+
+class KnowFrom(models.Model):
+    knowfrom = models.TextField()
+
+    def __str__(self):
+        return self.knowfrom
+
 
 class Organisation(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -185,13 +215,19 @@ class Organisation(models.Model):
 
     telephone = models.IntegerField()
     fax = models.IntegerField(blank=True, null=True)
-    website = URLField(max_length=255, null=True, blank=True)
+    website = models.URLField(max_length=255, null=True, blank=True)
+    mail = models.EmailField()
 
     goal = models.TextField()
     remarks = models.TextField(blank=True, null=True)
 
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
+
+    keyword = models.ManyToManyField(Keyword)
+    type = models.ForeignKey(OrganisationType)
+
+    know_from = models.ForeignKey(KnowFrom, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -202,15 +238,25 @@ class OrganisationUser(User):
         verbose_name = _('organisation user')
         verbose_name_plural = _('organisation users')
 
-    organisation = models.ForeignKey(Organisation)  # , related_name='user_organisation')
+    organisation = models.OneToOneField(Organisation)  # , related_name='user_organisation') TODO: OnetoOnekey
 
 
+@receiver(post_save, sender=OrganisationUser)
 def organisation_user_created(sender, **kwargs):
     user = kwargs['instance']
     if kwargs['created']:
         user.groups.set([Group.objects.get(name='Organisations')])
+        print('send mail: org added')
+        """
+        send_mail(
+            'Organisatie toegevoegd',
+            'Hey, er is een nieuwe org toegevoegd',
+            'wwinkel.noreply@gmail.com',
+            ['EMAIL', 'MANAGERS'],
+            fail_silently=True,
+        )
+        """
 
-post_save.connect(organisation_user_created, sender=OrganisationUser)
 
 
 class Region(models.Model):
@@ -225,12 +271,12 @@ class Region(models.Model):
     WEST_FLANDERS_REGION = 4
     CENTRAL_REGION = 5
     REGION_SELECT = (
-        (ANTWERP_REGION, _('Antwerp')),
-        (EAST_FLANDERS_REGION, _('East Flanders')),
-        (FLEMISH_BRABANT_REGION, _('Flemish Brabant')),
+        (ANTWERP_REGION, _('Antwerpen')),
+        (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
+        (FLEMISH_BRABANT_REGION, _('Vlaams-Brabant')),
         (LIMBURG_REGION, _('Limburg')),
-        (WEST_FLANDERS_REGION, _('West Flanders')),
-        (CENTRAL_REGION, _('Central')),
+        (WEST_FLANDERS_REGION, _('West-Vlaanderen')),
+        (CENTRAL_REGION, _('Centraal')),
     )
     region = models.PositiveIntegerField(unique=True, choices=REGION_SELECT)
 
@@ -245,4 +291,18 @@ class ManagerUser(User):
 
     region = models.ManyToManyField(Region)
 
+    def is_central_manager(self):
+        return self.region.filter(region=Region.CENTRAL_REGION).exists()
 
+    def is_regional_manager(self):
+        return self.region.exclude(region=Region.CENTRAL_REGION).exists()
+
+
+@receiver(post_save, sender=ManagerUser)
+def manager_user_created(sender, **kwargs):
+    user = kwargs['instance']
+    if kwargs['created']:
+        if user.is_central_manager():
+            user.groups.set([Group.objects.get(name='Central Managers')])
+        if user.is_regional_manager():
+            user.groups.set([Group.objects.get(name='Regional Managers')])
