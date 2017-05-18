@@ -70,10 +70,11 @@ def get_viewable_fields_student(question):
             'purpose',
             'remarks',
             'deadline',
+            'creation_date',
             'state',
             'organisation',
-            'question_subject',
             'education',
+            'question_subject',
         }
         if question.state == Question.FINISHED_QUESTION:
             result |= {'student', 'completion_date'}

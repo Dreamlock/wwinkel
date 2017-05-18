@@ -54,7 +54,7 @@ def list_questions(request, admin_filter=None):
     # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
     if not (request.user.is_authenticated() and request.user.is_manager() and request.user.is_central_manager()):
         status_lst = [
-            status_lst[Question.PUBLIC_QUESTION ],
+            status_lst[Question.PUBLIC_QUESTION],
             status_lst[Question.RESERVED_QUESTION],
             status_lst[Question.FINISHED_QUESTION]
         ]
@@ -102,14 +102,12 @@ def list_questions(request, admin_filter=None):
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
 
-
+    user_type = 'student'
     if request.user.is_authenticated:
         if request.user.is_organisation():
             user_type = 'organisation'
         elif request.user.is_manager() or request.user.is_superuser:
             user_type = 'manager'
-    else:
-        user_type = 'student'
 
     if request.user.is_authenticated:
         if admin_filter is None:
@@ -122,8 +120,6 @@ def list_questions(request, admin_filter=None):
                     sqs.filter(status__in=(Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL))
                 if request.user.is_regional_manager():
                     sqs.filter(status_in=(Question.INTAKE_QUESTION, Question.IN_PROGRESS_QUESTION_REGIONAL))
-
-            # sqs.filter()
         elif admin_filter == 'alle_vragen':
             pass
 

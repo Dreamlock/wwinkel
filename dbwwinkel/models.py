@@ -136,16 +136,16 @@ class Question(models.Model):
     REVOKED_QUESTION = 9
 
     STATE_SELECT = (
-        (NEW_QUESTION, _('new')),
+        (NEW_QUESTION, _('nieuw')),
         (INTAKE_QUESTION, _('intake')),
-        (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
-        (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
-        (PUBLIC_QUESTION, _('public')),
-        (RESERVED_QUESTION, _('reserved')),
-        (ONGOING_QUESTION, _('ongoing')),
-        (FINISHED_QUESTION, _('finished')),
-        (DENIED_QUESTION, _('denied')),
-        (REVOKED_QUESTION, _('revoked')),
+        (IN_PROGRESS_QUESTION_CENTRAL, _('in verwerking centraal')),
+        (IN_PROGRESS_QUESTION_REGIONAL, _('in verwerking regionaal')),
+        (PUBLIC_QUESTION, _('vrij')),
+        (RESERVED_QUESTION, _('in optie')),
+        (ONGOING_QUESTION, _('lopend')),
+        (FINISHED_QUESTION, _('afgerond')),
+        (DENIED_QUESTION, _('geweigerd')),
+        (REVOKED_QUESTION, _('teruggetroken')),
     )
 
     # Visible and editable: mandatory
