@@ -63,7 +63,6 @@ def list_questions(request):
 
     facet_form.fields['status'].choices = status_lst
 
-    print(facet_form.data)
 
     # Filter out the status of questions needed
     if facet_form.data.get('status', False):
