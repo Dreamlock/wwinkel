@@ -22,7 +22,7 @@ def query_extra_content(user,start_query):
         return start_query | SearchQuerySet().filter(organisation = user.as_organisation().organisation.id)
 
     # The regionals want the questions assigned to them
-    elif user.is_manager() and not user.is_central_manager():
+    elif user.is_manager() and user.is_regional_manager():
         return start_query | SearchQuerySet().filter(
             region__in=[region.region for region in user.as_manager().region.all()])
 
