@@ -13,6 +13,7 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     organisation = indexes.CharField(model_attr='organisation__id')
 
     #Facets
+    state_facet = indexes.FacetIntegerField(model_attr = 'state')
     institution_facet = indexes.FacetMultiValueField()
     promotor_facet = indexes.FacetMultiValueField()
     faculty_facet = indexes.FacetMultiValueField()
