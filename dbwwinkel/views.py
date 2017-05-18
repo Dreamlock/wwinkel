@@ -92,10 +92,19 @@ def list_questions(request, admin_filter=None):
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
 
-    if request.user.is_organisation():
-        user_type = 'organisation'
-    elif request.user.is_manager() or request.user.is_superuser:
-        user_type = 'manager'
+    if admin_filter == 'nieuwe_vragen':
+        pass
+        #sqs.filter()
+    elif admin_filter == 'alle_vragen':
+        pass
+    elif admin_filter is None:
+        pass
+
+    if request.user.is_authenticated:
+        if request.user.is_organisation():
+            user_type = 'organisation'
+        elif request.user.is_manager() or request.user.is_superuser:
+            user_type = 'manager'
     else:
         user_type = 'student'
 
