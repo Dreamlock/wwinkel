@@ -37,7 +37,6 @@ def register_question(request):
             # redirect to a new URL:
             return redirect(detail, question_id=question.id)
 
-
     else:
         form = RegisterQuestionForm()
 
@@ -93,12 +92,19 @@ def list_questions(request, admin_filter=None):
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
 
+    if request.user.is_organisation():
+        user_type = 'organisation'
+    elif request.user.is_manager() or request.user.is_superuser:
+        user_type = 'manager'
+    else:
+        user_type = 'student'
+
     context = {
         'questions': sqs,
         'facet_form': facet_form,
         'search_text': val,
         'facet_count': facet_count,
-        'admin_filter': admin_filter
+        'user_type': user_type,
     }
 
     return render(request, 'dbwwinkel/question_list.html', context)
