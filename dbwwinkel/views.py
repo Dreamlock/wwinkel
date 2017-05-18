@@ -98,6 +98,7 @@ def list_questions(request, admin_filter=None):
         'facet_form': facet_form,
         'search_text': val,
         'facet_count': facet_count,
+        'admin_filter': admin_filter
     }
 
     return render(request, 'dbwwinkel/question_list.html', context)
