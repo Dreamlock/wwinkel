@@ -17,7 +17,7 @@
                 <label><input type="checkbox" name='status' value="{{ value }}"
                         {% if value in facet_form.status.initial %}
                               checked='checked'{% endif %}>
-                    {{ name }}
+                    {{ name }}({{ facet_count|index:1|index:forloop.counter0 }})
                 </label>
             </div>
         {% endfor %}

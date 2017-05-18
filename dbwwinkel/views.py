@@ -85,14 +85,12 @@ def list_questions(request, admin_filter=None):
 
     sqs = sqs.facet('state_facet')
     choice_facet = (sqs.facet_counts()['fields']['state_facet'])
-    choice_facet = sorted(choice_facet,reverse = True, key =itemgetter(1))
-    helper_lst = []
-
     choice_facet = sorted(choice_facet, key = itemgetter(0))
     status_counts = []
     for tuple in choice_facet:
-        if tuple[0] in (Question.PUBLIC_QUESTION, Question.RESERVED_QUESTION, Question.FINISHED_QUESTION):
+        if int(tuple[0]) in (Question.PUBLIC_QUESTION, Question.RESERVED_QUESTION, Question.FINISHED_QUESTION):
             status_counts.append(tuple[1])
+    print(status_counts)
     facet_count = [None, status_counts]
     for field in field_lst:
         sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
