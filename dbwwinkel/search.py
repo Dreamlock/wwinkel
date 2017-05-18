@@ -19,11 +19,11 @@ def query_extra_content(user,start_query):
 
     # a organisation_user wants to see his own questions
     if user.is_organisation():
-        return start_query | SearchQuerySet().filter(organisation = user.as_organisation().organisation.id)
+        return SearchQuerySet().filter(organisation = user.as_organisation().organisation.id)
 
     # The regionals want the questions assigned to them
     elif user.is_manager() and user.is_regional_manager():
-        return start_query | SearchQuerySet().filter(
+        return SearchQuerySet().filter(
             region__in=[region.region for region in user.as_manager().region.all()])
 
     return start_query

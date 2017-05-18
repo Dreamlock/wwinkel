@@ -269,8 +269,8 @@ with open(sys.argv[8], encoding='latin1') as f:
                 #print(inst)
                 obj, created = dbmodels.Faculty.objects.update_or_create(id=row[0], name=row[2])
                 obj.save()
-                obj.institution.add(inst)
-                obj.save()
+                obj2, created = dbmodels.FacultyOf.objects.update_or_create(faculty=obj, institution=inst)
+                obj2.save()
                 #print("faculty {0} added".format(obj))
             except:
                 #print("faculty failure", sys.exc_info())
@@ -288,8 +288,12 @@ with open(sys.argv[9], encoding='latin1') as f:
         else:
             try:
                 fac = dbmodels.Faculty.objects.get(id=row[2])
+                inst = dbmodels.Institution.objects.get(id=row[1])
                 obj, created = dbmodels.Education.objects.update_or_create(id=row[0], education=row[3])
                 obj.save()
+                obj2 = dbmodels.FacultyOf.objects.get(faculty=fac, institution=inst)
+                obj2.education.add(obj)
+                obj2.save()
                 #print("education {0} added".format(obj))
             except:
                 #print("education failure", sys.exc_info())
@@ -399,21 +403,6 @@ with open(sys.argv[10], encoding='latin1') as f:
             date2 = get_row('datecreated')
             cdate = refactorDate(date2)
 
-            if (get_row('school_idschool') != "NULL"):
-                try:
-                    if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
-                        #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
-                        inst=get_row('school_idschool')
-                    else:
-                         #inst = dbmodels.Institution.objects.get(id=12)
-                        inst="12"
-                except:
-                    #inst = dbmodels.Institution.objects.get(id=12)
-                    inst="12"
-            else:
-                #inst = dbmodels.Institution.objects.get(id=12)
-                inst="12"
-
             org = dbmodels.Organisation.objects.get(id=int(get_row('organization_idorganization')))
             compdate=refactorDate(get_row('dateregcompleted'))
             obj, created = dbmodels.Question.objects.update_or_create(
@@ -435,8 +424,21 @@ with open(sys.argv[10], encoding='latin1') as f:
                 #education=str(ed.id),
                 state=int(get_row("reg_idquestionregstatus")),
             )
-            obj.save()
-            obj.institution.add(inst)
+            #obj.save()
+
+            if (get_row('school_idschool') != "NULL"):
+                try:
+                    if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
+                        #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
+                        inst=get_row('school_idschool')
+                        obj.institution.add(inst)
+                    else:
+                        pass
+                except:
+                    pass
+            else:
+                pass
+
             obj.education.add(ed)
             obj.save()
         except:
@@ -534,31 +536,41 @@ with open(sys.argv[13], encoding='latin1') as f:
     print("done")
     f.close()
 
-#add education to questions
-with open(sys.argv[15], encoding='latin1') as f:
-    print("adding educations and faculties to questions")
-    reader = csv.reader(f)
-
-    first_row = next(reader)
-    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
-
-
-    def get_row(string):
-        return row[name_dict[string]]
-
-
-    for row in reader:
-        try:
-            quest = dbmodels.Question.objects.get(id=int(get_row('question_idquestion')))
-            ed = dbmodels.Education.objects.get(id=int(get_row('education_ideducation')))
-            fac = dbmodels.FacultyOf.objects.get(institution=quest.institution, education=ed)
-            quest.keyword.add(ed)
-            quest.add(fac)
-            quest.save()
-        except:
-            pass
-    print("done")
-    f.close()
+# #import organisation contacts
+# with open(sys.argv[14], encoding='latin1') as f:
+#     print("importing promotors")
+#     reader = csv.reader(f)
+#
+#     first_row = next(reader)
+#     name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+#
+#
+#     def get_row(string):
+#         return row[name_dict[string]]
+#
+#     for row in reader:
+#         try:
+#             org=cmmodels.Organisation.objects.get(name=get_row('organization_idorganization'))
+#             adr, created = cmmodels.Address.objects.get_or_create(
+#                 city=get_row('city'),
+#                 postal_code=int(get_row('postal')),
+#                 street_name=get_row('street'),
+#                 street_number=int(get_row('streetnumber')),
+#             )
+#             cont, created=cmmodels.o.objects.get_or_create(
+#                 id=int(get_row('Promotor_ID')),
+#                 address=adr,
+#                 email="test@test.be",
+#                 first_name=get_row('Promotor_FirstName'),
+#                 last_name=get_row('Promotor_LastName'),
+#                 tel=498119433
+#             )
+#             cont.save()
+#         except:
+#             print(sys.exc_info())
+#             pass
+#     print("done")
+#     f.close()
 
 
 end_time=datetime.datetime.now()

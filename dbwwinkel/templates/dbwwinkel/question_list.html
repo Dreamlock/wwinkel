@@ -7,8 +7,8 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="{% static "dbwwinkel/js/myjs.js" %}"></script>
-{% endblock %}
-{% block content %}
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-lg-2">
@@ -16,15 +16,15 @@
                     <div class="well">
                         <ul class="nav ">
                             <form name="status" action="{% url "list_questions" %}" method='GET' accept-charset="utf-8">
-                                <input type = "hidden" name="search_text" value="{{ search_text }}" >
+                                <input type="hidden" name="search_text" value="{{ search_text }}">
                                 {% for field in facet_form %}
                                     <div class='form-group'>
 
                                         {% if forloop.counter == 1 %}
                                             {% if user.is_authenticated %}
                                                 <div class='checkbox'>
-                                                     &nbsp
-                                                {{ facet_form.own_questions }}{{ facet_form.own_questions.label }}
+                                                    &nbsp
+                                                    {{ facet_form.own_questions }}{{ facet_form.own_questions.label }}
                                                 </div>
                                             {% endif %}
                                         {% elif forloop.counter == 2 %}
@@ -38,59 +38,62 @@
                                                     </label>
                                                 </div>
                                             {% endfor %}
-                                    {% else %}
+                                        {% else %}
                                             <strong>{{ field.label }}</strong>
                                             {% for checkbox in field %}
-                                                <div class = 'checkbox'>
+                                                <div class='checkbox'>
                                                     {% with  forloop.counter0 as checkboxcounter %}
-                                                        {% with forloop.parentloop.counter0 as parentc  %}
+                                                        {% with forloop.parentloop.counter0 as parentc %}
 
-                                                        {{checkbox}}({{facet_count|index:parentc|index:checkboxcounter|index:1}})
-                                                </div>
+                                                            {{ checkbox }}(
+                                                            {{ facet_count|index:parentc|index:checkboxcounter|index:1 }}
+                                                            )
+                                                            </div>
+                                                        {% endwith %}
                                                     {% endwith %}
-                                                {% endwith %}
                                             {% endfor %}
-                                    {% endif %}
+                                        {% endif %}
 
                                     </div>
                                 {% endfor %}
-                    <input class='btn btn-success' type="submit" value="Filter"/>
-                    </form>
-                    </ul>
+                                <input class='btn btn-success' type="submit" value="Filter"/>
+                            </form>
+                        </ul>
+                    </div>
+                    <!--/.well -->
                 </div>
-                <!--/.well -->
+                <!--/sidebar-nav-fixed -->
             </div>
-            <!--/sidebar-nav-fixed -->
-        </div>
-        <!--/span-->
-        <div class="col-md-9 col-lg-10">
-            <h3>Gezocht op: {{ search_text }}</h3>
-            <table class="table table-hover ">
-                <thead>
-                <tr>
-                    <th>Publicatie datum</th>
-                    <th>Vraag</th>
-                    <th>Deadline</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for question in questions %}
-                    {# if user.has_perm('view_question', question) Todo: let the permissions work#}
-                    {#forloop.counter0 #Todo: limit to first 30 questions (then question 31-60, 61-90,...) #}
-                    <tr data-href="{% url 'detail_question' question.object.id %}" class='table table-row'
-                        style="cursor:pointer;">
 
-                        <td>{{ question.object.creation_date.date }}</td>
-                        <td>{{ question.object.question_text }}</td>
-                        <td>{{ question.object.deadline }}</td>
-                        <td>{{ question.object.get_state_display }}</td>
+            <!--/span-->
+            <div class="col-md-9 col-lg-10">
+                <h3>Gezocht op: {{ search_text }}</h3>
+                <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                        <th>Publicatie datum</th>
+                        <th>Vraag</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for question in questions %}
+                        {# if user.has_perm('view_question', question) Todo: let the permissions work#}
+                        {#forloop.counter0 #Todo: limit to first 30 questions (then question 31-60, 61-90,...) #}
+                        <tr data-href="{% url 'detail_question' question.object.id %}" class='table table-row'
+                            style="cursor:pointer;">
+
+                            <td>{{ question.object.creation_date.date }}</td>
+                            <td>{{ question.object.question_text }}</td>
+                            <td>{{ question.object.deadline }}</td>
+                            <td>{{ question.object.get_state_display }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 {% block extra_scripts %}

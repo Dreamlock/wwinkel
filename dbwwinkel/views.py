@@ -12,7 +12,7 @@ from custom_users.forms import AdressForm
 from .forms import *
 from .models import Question, Education, QuestionSubject, FacultyOf
 from custom_users.models import OrganisationUser, ManagerUser, Region
-
+from operator import itemgetter
 from .search import autocomplete as search, query_extra_content, query_on_states
 
 
@@ -63,7 +63,6 @@ def list_questions(request, admin_filter=None):
 
     facet_form.fields['status'].choices = status_lst
 
-    print(facet_form.data)
 
     admin_filter_choices = (
         ('nieuwe vragen', 'alle_vragen') if request.user.is_manager() else (
@@ -94,6 +93,7 @@ def list_questions(request, admin_filter=None):
     for field in field_lst:
         sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
         choice_facet = (sqs.facet_counts()['fields']['{0}_facet'.format(field)])
+        choice_facet = sorted(choice_facet,reverse = True, key =itemgetter(1))
         helper_lst = []
         for choice in choice_facet:
             helper_lst.append((choice[0], choice[0]))
@@ -107,92 +107,6 @@ def list_questions(request, admin_filter=None):
         'facet_count': facet_count,
         'admin_filter_choices': admin_filter_choices,
     }
-
-    return render(request, 'dbwwinkel/question_list.html', context)
-
-
-def l_questions(request):
-    val = request.GET.get('search_text', '')
-    sqs = search(SearchQuerySet().all().models(Question), val, Question)
-    # States visible for everyone
-    visible_states = [Question.STATE_SELECT[Question.PUBLIC_QUESTION], Question.STATE_SELECT[Question.RESERVED_QUESTION]
-        , Question.STATE_SELECT[Question.FINISHED_QUESTION]]
-
-    # Fetching all the data specified on user
-    if request.user.is_authenticated():
-        if request.user.is_organisation():
-            user = OrganisationUser.objects.get(id=request.user.id)
-            organisation = user.organisation
-            organisation_extra = SearchQuerySet().filter(
-                organisation=organisation.id)  # the organisations own questions
-
-
-        elif request.user.is_manager():
-
-            user = ManagerUser.objects.get(id=request.user.id)
-
-            if user.region.filter(region=Region.CENTRAL_REGION).exists():
-                visible_states = Question.STATE_SELECT
-
-            else:
-                regional_extra = SearchQuerySet().filter(region__in=[region.region for region in user.region.all()])
-
-    if request.POST:  # start filtering
-        sqs = sqs.filter(state__in=request.POST.getlist("status"))
-
-        if OrganisationUser.objects.filter(id=request.user.id).exists():
-            if request.POST.getlist('own_question'):
-                sqs = sqs | organisation_extra
-
-        if request.user.is_authenticated and request.user.is_manager():
-            user = ManagerUser.objects.get(id=request.user.id)
-            if not user.region.filter(region=Region.CENTRAL_REGION).exists():
-                if request.POST.getlist('own_question'):
-                    sqs = sqs | regional_extra
-
-        if request.POST.getlist("education"):
-            sqs = sqs.filter(education_facet__in=request.POST.getlist("education"))
-
-    else:
-        if request.user.is_authenticated():
-            if request.user.is_organisation():
-                organisation_extra = search(organisation_extra, val, Question)
-                sqs = sqs.filter(state__in=[l[0] for l in visible_states]) | organisation_extra
-
-            elif request.user.is_manager():
-
-                user = ManagerUser.objects.get(id=request.user.id)
-
-                if user.region.filter(region=Region.CENTRAL_REGION).exists():  # No extra filters to apply
-                    pass
-
-                else:  # + the extra ones bound to this region
-                    regional_extra = search(regional_extra, val, Question)
-                    sqs = sqs | regional_extra
-
-        else:  # is student
-            sqs = sqs.filter(state__in=[l[0] for l in visible_states])
-
-    own_question = False
-    if request.user.is_authenticated() and request.user.is_organisation():
-        own_question = True
-
-    if request.user.is_authenticated and request.user.is_manager():
-        user = ManagerUser.objects.get(id=request.user.id)
-        if not user.region.filter(region=Region.CENTRAL_REGION).exists():
-            own_question = True
-
-    true_states = []
-    for state in visible_states:
-        tuple = (state[0], state[1], True)
-        true_states.append(tuple)
-
-    context = {'questions': sqs,
-               'states': true_states,
-               # 'educations': education,
-               'search_text': val,
-               'own_question': own_question
-               }
 
     return render(request, 'dbwwinkel/question_list.html', context)
 

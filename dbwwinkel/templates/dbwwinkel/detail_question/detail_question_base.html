@@ -1,7 +1,6 @@
 {% extends "base/base.html" %}
 {% load cms_tags menu_tags sekizai_tags staticfiles %}
 
-{% block content %}
     <div class = "row">
         <div class = "page-header">
             <div class = "container">
@@ -17,6 +16,7 @@
                             Opties: <br>
                             {% block options %}
                             {% endblock %}
+                        <a href = '{% url 'list_questions' %}' class ='btn btn-success'>Terug</a>
                         </ul>
                     </div>
                     <!--/.well -->
@@ -123,5 +123,5 @@
             </div>
         </div>
     </div>
-{% endblock %}
+
 
