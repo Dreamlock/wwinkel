@@ -15,3 +15,5 @@ db.sqlite3
 schema.xml
 
 custom_users/migrations/0002_auto_20170401_0938.py
+dbwwinkel/templatetags/__pycache__/
+index.xml
