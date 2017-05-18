@@ -119,13 +119,14 @@ class QuestionSubject(models.Model):
     def __str__(self):
         return self.subject
 
+class QuestionGroups(models.Model):
+    pass
+
 
 class Question(models.Model):
-    DRAFT_QUESTION = 0
     NEW_QUESTION = 1
     INTAKE_QUESTION = 2
     IN_PROGRESS_QUESTION_CENTRAL = 3
-    PROCESSED_QUESTION_CENTRAL = 4
     IN_PROGRESS_QUESTION_REGIONAL = 5
     PUBLIC_QUESTION = 6
     RESERVED_QUESTION = 7
@@ -135,11 +136,9 @@ class Question(models.Model):
     REVOKED_QUESTION = 11
 
     STATE_SELECT = (
-        (DRAFT_QUESTION, _('draft')),
         (NEW_QUESTION, _('new')),
         (INTAKE_QUESTION, _('intake')),
         (IN_PROGRESS_QUESTION_CENTRAL, _('in progress central')),
-        (PROCESSED_QUESTION_CENTRAL, _('processed central')),
         (IN_PROGRESS_QUESTION_REGIONAL, _('in progress regional')),
         (PUBLIC_QUESTION, _('public')),
         (RESERVED_QUESTION, _('reserved')),
@@ -167,7 +166,7 @@ class Question(models.Model):
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    state = models.IntegerField(choices=STATE_SELECT, default=DRAFT_QUESTION)
+    state = models.IntegerField(choices=STATE_SELECT, default=NEW_QUESTION)
     region = models.ManyToManyField(Region)
 
     # Faceting data
@@ -183,6 +182,7 @@ class Question(models.Model):
     completion_date = models.DateTimeField(null=True)  # When the question was round up
 
     history = HistoricalRecords()
+    question_group = models.ForeignKey(QuestionGroups)
 
     # methods on objects
     # build ins overwritten
