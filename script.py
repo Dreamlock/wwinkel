@@ -435,14 +435,15 @@ with open(sys.argv[10], encoding='latin1') as f:
                 try:
                     if (int(get_row('school_idschool')) >= 12) and (int(get_row('school_idschool')) <= 16):
                         #inst = dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
-                        inst=get_row('school_idschool')
-                        obj.institution.add(inst)
+                        inst=dbmodels.Institution.objects.get(id=int(get_row('school_idschool')))
                     else:
-                        pass
+                        inst=dbmodels.Institution.objects.get(id=12)
                 except:
-                    pass
+                    inst = dbmodels.Institution.objects.get(id=12)
             else:
-                pass
+                inst = dbmodels.Institution.objects.get(id=12)
+
+            obj.institution.add(inst)
 
             obj.education.add(ed)
             obj.save()
@@ -573,6 +574,35 @@ with open(sys.argv[14], encoding='latin1') as f:
             usr.save()
         except:
             #print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
+
+#add education, faculty and institution to questions
+with open(sys.argv[15], encoding='latin1') as f:
+    print("add education, faculty and institution to questions")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+
+    for row in reader:
+        try:
+            quest = dbmodels.Question.objects.get(id=int(get_row('question_idquestion')))
+            ed = dbmodels.Education.objects.get(id=int(get_row('education_ideducation')))
+
+            facsinsts = dbmodels.FacultyOf.objects.get(education=ed)
+
+            quest.faculty.add(facsinsts.faculty)
+            quest.institution.add(facsinsts.institution)
+            quest.save()
+        except:
+            print(sys.exc_info())
             pass
     print("done")
     f.close()
