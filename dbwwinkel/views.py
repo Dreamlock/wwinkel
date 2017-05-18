@@ -63,13 +63,6 @@ def list_questions(request, admin_filter=None):
 
     facet_form.fields['status'].choices = status_lst
 
-
-    admin_filter_choices = (
-        ('nieuwe vragen', 'alle_vragen') if request.user.is_manager() else (
-            ('eigen_vragen', 'alle_vragen') if request.user.is_organisation() else ()
-        )
-    )
-
     # Filter out the status of questions needed
     if facet_form.data.get('status', False):
         data = facet_form.data['status']
@@ -105,7 +98,6 @@ def list_questions(request, admin_filter=None):
         'facet_form': facet_form,
         'search_text': val,
         'facet_count': facet_count,
-        'admin_filter_choices': admin_filter_choices,
     }
 
     return render(request, 'dbwwinkel/question_list.html', context)
