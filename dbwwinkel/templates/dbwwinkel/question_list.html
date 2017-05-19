@@ -7,22 +7,24 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="{% static "dbwwinkel/js/myjs.js" %}"></script>
+    <script src="{% static "dbwwinkel/js/facet.js" %}"></script>
 
-
+{% endblock %}
+{% block content  %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-lg-4">
+            <div class="col-md-3 col-lg-3">
                 <div class="sidebar-nav-fixed affix">
                     <div class="well">
                         <ul class="nav ">
-                            <form name="status" action="{% url "list_questions" %}" method='GET' accept-charset="utf-8">
+                            <form name="form" action="{% url "list_questions" %}" method='GET' accept-charset="utf-8"
+                                id = "form">
                                 <input type="hidden" name="search_text" value="{{ search_text }}">
                                     {% if user_type == 'student' %}
                                         {% include 'dbwwinkel/Options_question_list/options_students.html' %}
                                     {% elif user_type == 'manager_user' %}
                                         {% include 'dbwwinkel/Options_question_list/options_admin.html' %}
                                     {% endif %}
-                                <input class='btn btn-success' type="submit" value="Filter"/>
                             </form>
                         </ul>
                     </div>
@@ -32,7 +34,7 @@
             </div>
 
             <!--/span-->
-            <div class="col-md-9 col-lg-8">
+            <div class="col-md-9 col-lg-19">
                 <h3>Gezocht op: {{ search_text }}</h3>
                 <table class="table table-hover ">
                     <thead>
@@ -63,5 +65,4 @@
     </div>
 {% endblock %}
 {% block extra_scripts %}
-
 {% endblock %}

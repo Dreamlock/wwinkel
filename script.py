@@ -615,6 +615,37 @@ with open(sys.argv[15], encoding='latin1') as f:
     print("done")
     f.close()
 
+#import logs
+with open(sys.argv[16], encoding='latin1') as f:
+    print("import logs")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+
+    for row in reader:
+        try:
+            log, created = dbmodels.Log.objects.get_or_create(id=int(get_row('question_idquestion')))
+            rec, created = dbmodels.LogRecord.objects.get_or_create(
+                id=int(get_row('idquestionlog')),
+                description=get_row('description'),
+                subject=get_row('event'),
+                timestamp=refactorDate(get_row('datecreated'))
+            )
+            rec.save()
+            log.record.add(rec)
+            log.save()
+        except:
+            #print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
+
 
 end_time=datetime.datetime.now()
 print(start_time)
