@@ -18,26 +18,30 @@ def main(argv):
     os.chdir(os.path.dirname(os.path.realpath(__file__)))  # make sure working dir is dir where script is saved.
 
     solr_install_path = None
+    force_delete = False
     try:
-        opts, args = getopt.getopt(argv, "", ["solr_install_path="])
+        opts, args = getopt.getopt(argv, "", ["solr_install_path=", "force_delete"])
     except getopt.GetoptError:
         print('usage: rebuild_database [--solr_install_path <solr installation directory>]')
         sys.exit(2)
     for opt, arg in opts:
         if opt == "--solr_install_path":
             solr_install_path = arg
+        if opt == "--force_delete":
+            force_delete = True
     # """
     if True:
-        print('testing need to delete the old db...')
         should_delete = True
-        buf = StringIO()
-        call_command('makemigrations', stdout=buf)
-        buf.seek(0)
-        for line in buf.readlines():
-            if 'No changes detected' in line:
-                should_delete = False
-                break
-        print('  done...')
+        if not force_delete:
+            print('testing need to delete the old db...')
+            buf = StringIO()
+            call_command('makemigrations', stdout=buf)
+            buf.seek(0)
+            for line in buf.readlines():
+                if 'No changes detected' in line:
+                    should_delete = False
+                    break
+            print('  done...')
 
         if should_delete:
             print('deleting old db...')
@@ -132,26 +136,26 @@ def main(argv):
 
         if not User.objects.filter(email='central@manager.be').exists():
             print('creating central manager (user:central@manager.be, pw:admin)...')
-            manager = ManagerUser.objects.update_or_create(
+            manager, _ = ManagerUser.objects.update_or_create(
                 first_name='',
                 last_name='',
                 telephone='0987654321',
                 email='central@manager.be'
             )
-            manager.region.add(Region.objects.get(id=Region.CENTRAL_REGION))
+            manager.region.add(Region.objects.get(region=Region.CENTRAL_REGION))
             manager.set_password('admin')
             manager.save()
             print('  done')
 
         if not User.objects.filter(email='regional@manager.be').exists():
             print('creating regional manager (user:regional@manager.be, pw:admin)...')
-            manager = ManagerUser.objects.update_or_create(
+            manager, _ = ManagerUser.objects.update_or_create(
                 first_name='',
                 last_name='',
                 telephone='0987654321',
                 email='regional@manager.be'
             )
-            manager.region.add(Region.objects.get(id=Region.ANTWERP_REGION))
+            manager.region.add(Region.objects.get(region=Region.ANTWERP_REGION))
             manager.set_password('admin')
             manager.save()
             print('  done')

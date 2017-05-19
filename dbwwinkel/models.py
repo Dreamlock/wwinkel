@@ -159,6 +159,8 @@ class Question(models.Model):
     internal_remarks = models.TextField(blank=True)
     deadline = models.DateField(blank=True, null=True)
     public = models.BooleanField()
+    intake = models.ForeignKey(Intake, null=True, blank=True)
+    attachment = models.ManyToManyField(Attachment)
 
     # The corresponding organisation
     organisation = models.ForeignKey(Organisation)
