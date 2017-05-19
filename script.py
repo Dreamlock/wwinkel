@@ -126,6 +126,14 @@ with open(sys.argv[1], encoding='latin1') as f:
     print("done")
     f.close()
 
+print("creating regions")
+for region in cmmodels.Region.REGION_SELECT:
+    new_region, _ = cmmodels.Region.objects.update_or_create(
+        region=region[0]
+    )
+    new_region.save()
+print("done")
+
 #path to JuridicalEntity.csv
 with open(sys.argv[2], encoding='latin1') as f:
     print("importing legal entities")

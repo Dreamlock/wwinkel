@@ -152,8 +152,8 @@ class Address(models.Model):
 class User(AbstractUser):
     first_name = models.CharField(_('first name'), max_length=50, null=True)
     last_name = models.CharField(_('last name'), max_length=50, null=True)
-    telephone = models.PositiveIntegerField(_('telephone number'), null=True)
-    gsm = models.PositiveIntegerField(_('gsm number'), null=True)
+    telephone = models.CharField(_('telephone number'), max_length=20, null=True)
+    gsm = models.CharField(_('gsm number'), max_length=20, null=True)
 
     def __str__(self):
         if self.first_name is None or self.last_name is None:
@@ -256,7 +256,6 @@ def organisation_user_created(sender, **kwargs):
             fail_silently=True,
         )
         """
-
 
 
 class Region(models.Model):
