@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from haystack.query import SearchQuerySet
 
@@ -15,6 +15,8 @@ from custom_users.models import OrganisationUser, ManagerUser, Region
 from operator import itemgetter
 from .search import autocomplete as search, query_extra_content, query_on_states
 import os
+
+from django.views.generic import View, ListView, DetailView
 
 
 @login_required
@@ -174,6 +176,15 @@ def detail(request, question_id):
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
 
+"""
+class QuestionDetailView(DetailView):
+    model = Question
+    template_name = 'dbwwinkel/detail_question/detail_question_base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+"""
 
 def student_detail(request, question, organisation):
     context = {'question': question,

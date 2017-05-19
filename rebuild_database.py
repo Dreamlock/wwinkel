@@ -14,6 +14,7 @@ from cms.api import create_page
 from time import sleep
 from custom_users.models import ManagerUser, OrganisationUser, Region
 
+
 def main(argv):
     os.chdir(os.path.dirname(os.path.realpath(__file__)))  # make sure working dir is dir where script is saved.
 
@@ -30,8 +31,8 @@ def main(argv):
         if opt == "--force_delete":
             force_delete = True
     # """
+    should_delete = True
     if True:
-        should_delete = True
         if not force_delete:
             print('testing need to delete the old db...')
             buf = StringIO()
@@ -109,6 +110,8 @@ def main(argv):
             'organisation_has_keyword',
             'promotor',
             'organisationusers',
+            'questionpereducation',
+            'questionlog',
         ]
 
         call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
@@ -119,11 +122,12 @@ def main(argv):
         print('  done')
 
     if True:
-        print('creating home page...')
-        create_page(
-            title='Home', slug='home', template='INHERIT', language='nl', publication_date=timezone.now(), published=True
-        )
-        print('  done')
+        if should_delete:
+            print('creating home page...')
+            create_page(
+                title='Home', slug='home', template='INHERIT', language='nl', publication_date=timezone.now(), published=True
+            )
+            print('  done')
 
     if True:
         if not User.objects.filter(email='admin@admin.be').exists():
