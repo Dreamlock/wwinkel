@@ -14,6 +14,7 @@ from .models import Question, Education, QuestionSubject, FacultyOf
 from custom_users.models import OrganisationUser, ManagerUser, Region
 from operator import itemgetter
 from .search import autocomplete as search, query_extra_content, query_on_states
+import os
 
 
 @login_required
@@ -98,7 +99,18 @@ def list_questions(request, admin_filter=None):
         choice_facet = sorted(choice_facet,reverse = True, key =itemgetter(1))
         helper_lst = []
         for choice in choice_facet:
-            helper_lst.append((choice[0], choice[0]))
+            name = choice[0]
+            if len(name) > 25:
+                counter = 0
+                for c in(name):
+                    counter +=1
+                    if c == ' ':
+                        if counter > 25:
+                            name = name[:counter] + '...'
+                            break
+
+
+            helper_lst.append((choice[0], name))
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
 

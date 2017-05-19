@@ -7,3 +7,4 @@ $(document).ready(function($) {
         window.document.location = $(this).data("href");
     });
 });
+

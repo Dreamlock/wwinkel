@@ -165,13 +165,21 @@ button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; bac
     margin-right: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 300px) {
   .navbar-nav.navbar-center {
     position: absolute;
     left: 50%;
     transform: translatex(-50%);
   }
 }
+
+ @media (max-width: 400px) {
+     .sidebar-nav-fixed {
+         position:static;
+        width: auto;
+     }
+ }
+
 
 
 
