@@ -139,7 +139,7 @@ def detail(request, question_id):
     question = Question.objects.get(id=question_id)
     organisation = question.organisation
 
-    if request.user.is_authenticated == False:  # Then the user is a student
+    if not request.user.is_authenticated:  # Then the user is a student
         return student_detail(request, question, organisation)
 
     elif OrganisationUser.objects.filter(id=request.user.id).exists():
