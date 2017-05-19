@@ -90,9 +90,9 @@ def list_questions(request, admin_filter=None):
     status_counts = []
     for tuple in choice_facet:
         if int(tuple[0]) in (Question.PUBLIC_QUESTION, Question.RESERVED_QUESTION, Question.FINISHED_QUESTION):
-            status_counts.append(tuple[1])
+            status_counts.append((None,tuple[1]))
     print(status_counts)
-    facet_count = [None, status_counts]
+    facet_count = [status_counts, status_counts]
     for field in field_lst:
         sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
         choice_facet = (sqs.facet_counts()['fields']['{0}_facet'.format(field)])
