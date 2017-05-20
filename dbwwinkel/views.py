@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 
 
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpRequest
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from haystack.query import SearchQuerySet
 
@@ -15,6 +15,8 @@ from custom_users.models import OrganisationUser, ManagerUser, Region
 from operator import itemgetter
 from .search import autocomplete as search, query_extra_content, query_on_states
 import os
+
+from django.views.generic import View, ListView, DetailView
 
 
 @login_required
@@ -53,6 +55,9 @@ def list_questions(request, admin_filter=None):
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
     # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
+
+
+
     if not (request.user.is_authenticated() and request.user.is_manager() and request.user.is_central_manager()):
         status_lst = [
             status_lst[Question.PUBLIC_QUESTION],
@@ -62,6 +67,15 @@ def list_questions(request, admin_filter=None):
         sqs = sqs.filter(state__in=[status[0] for status in status_lst])
 
     facet_form.fields['status'].choices = status_lst
+
+    sqs = sqs.facet('state_facet')
+    choice_facet = (sqs.facet_counts()['fields']['state_facet'])
+    choice_facet = sorted(choice_facet, key=itemgetter(0))
+    status_counts = []
+    for tuple in choice_facet:
+        if int(tuple[0]) in (Question.PUBLIC_QUESTION, Question.RESERVED_QUESTION, Question.FINISHED_QUESTION):
+            status_counts.append((None, tuple[1]))
+    facet_count = [status_counts, status_counts]
 
     # Filter out the status of questions needed
     if facet_form.data.get('status', False):
@@ -74,45 +88,37 @@ def list_questions(request, admin_filter=None):
         sqs = query_extra_content(request.user, sqs)
 
     # Filter based on Facets
-    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor']
-    for field in field_lst:
-        facet_data = facet_form.data.getlist(field, False)
-        if facet_data:
-            sqs = sqs.filter(**{'{0}_facet__in'.format(field): facet_data})
-            facet_form.fields[field].initial = list(map(str, facet_data))
-
+    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor','key_word']
     # Calculate the facets
-    facet_count = []
-
-    sqs = sqs.facet('state_facet')
-    choice_facet = (sqs.facet_counts()['fields']['state_facet'])
-    choice_facet = sorted(choice_facet, key = itemgetter(0))
-    status_counts = []
-    for tuple in choice_facet:
-        if int(tuple[0]) in (Question.PUBLIC_QUESTION, Question.RESERVED_QUESTION, Question.FINISHED_QUESTION):
-            status_counts.append(tuple[1])
-    print(status_counts)
-    facet_count = [None, status_counts]
     for field in field_lst:
+
         sqs = sqs.facet('{0}_facet'.format(field), mincount=1, limit=5)
         choice_facet = (sqs.facet_counts()['fields']['{0}_facet'.format(field)])
-        choice_facet = sorted(choice_facet,reverse = True, key =itemgetter(1))
+        choice_facet = sorted(choice_facet, reverse=True, key=itemgetter(1))
         helper_lst = []
         for choice in choice_facet:
             name = choice[0]
             if len(name) > 25:
                 counter = 0
-                for c in(name):
-                    counter +=1
+                for c in (name):
+                    counter += 1
                     if c == ' ':
                         if counter > 25:
                             name = name[:counter] + '...'
                             break
-
-
             helper_lst.append((choice[0], name))
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
+
+        try:
+            facet_data = facet_form.data.getlist(field, False)
+            if facet_data:
+                sqs = sqs.filter(**{'{0}_facet__in'.format(field): facet_data})
+                facet_form.fields[field].initial = list(map(str, facet_data))
+        except:
+            pass
+
+
 
     user_type = 'student'
     if request.user.is_authenticated:
@@ -134,7 +140,6 @@ def list_questions(request, admin_filter=None):
                     sqs.filter(status_in=(Question.INTAKE_QUESTION, Question.IN_PROGRESS_QUESTION_REGIONAL))
         elif admin_filter == 'alle_vragen':
             pass
-
 
     context = {
         'questions': sqs,
@@ -174,6 +179,15 @@ def detail(request, question_id):
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
 
+"""
+class QuestionDetailView(DetailView):
+    model = Question
+    template_name = 'dbwwinkel/detail_question/detail_question_base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+"""
 
 def student_detail(request, question, organisation):
     context = {'question': question,
@@ -489,3 +503,7 @@ def register_promotor(request, question_id):
         'question_id': question_id
     }
     return render(request, 'dbwwinkel/create_promotor.html', context)
+
+
+def administration_view(request):
+    return HttpResponse("admin")

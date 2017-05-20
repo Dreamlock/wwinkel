@@ -116,13 +116,13 @@ class MetaFieldForm(forms.Form):
             label='Voeg toe',
             required=False)
 
-        self.fields['faculty_new'] = forms.CharField(max_length = 33, required = False, label ="Niet in de lijst?")
+        self.fields['faculty_new'] = forms.CharField(max_length=33, required=False, label="Niet in de lijst?")
 
         self.fields['faculty_delete'] = forms.ModelMultipleChoiceField(
-            queryset= question.faculty.all(),
-            widget = forms.CheckboxSelectMultiple(),
-            label = 'Verwijderen:',
-            required = False
+            queryset=question.faculty.all(),
+            widget=forms.CheckboxSelectMultiple(),
+            label='Verwijderen:',
+            required=False
         )
 
         self.fields['education'] = forms.ModelMultipleChoiceField(
@@ -130,7 +130,7 @@ class MetaFieldForm(forms.Form):
             widget=autocomplete.ModelSelect2Multiple(
                 url='education-autocomplete',
                 forward=(forward.Const(self.question_id, 'question_id'),
-                         'faculty','institution',
+                         'faculty', 'institution',
                          )
             ),
             label='Voeg toe',
@@ -150,8 +150,6 @@ class MetaFieldForm(forms.Form):
             required=False)
 
         self.fields['subject_delete'].queryset = question.question_subject
-
-
 
     institution = forms.ModelMultipleChoiceField(queryset=None)
     institution_delete = forms.ModelMultipleChoiceField(
@@ -191,24 +189,26 @@ class MetaFieldForm(forms.Form):
 
 
 class FacetForm(forms.Form):
+    own_questions = forms.BooleanField(required=False, label=_('Eigen vragen'))
+    status = forms.MultipleChoiceField(required=False, label=_('Status'), choices=Question.STATE_SELECT,
+                                       widget=forms.CheckboxSelectMultiple)
+    institution = forms.MultipleChoiceField(required=False, label=_('Instelling'), choices=Question.STATE_SELECT,
+                                            widget=forms.CheckboxSelectMultiple)
 
+    faculty = forms.MultipleChoiceField(required=False, label=_('Faculteit'), choices=Question.STATE_SELECT,
+                                        widget=forms.CheckboxSelectMultiple)
 
-    own_questions = forms.BooleanField(required = False, label = _('Eigen vragen'))
-    status = forms.MultipleChoiceField(required = False, label = _('Status'), choices= Question.STATE_SELECT)
-    institution = forms.MultipleChoiceField(required= False, label = _('Instelling'), choices = Question.STATE_SELECT,
-                                            widget =forms.CheckboxSelectMultiple)
+    education = forms.MultipleChoiceField(required=False, label=_('Opleiding'), choices=Question.STATE_SELECT,
+                                          widget=forms.CheckboxSelectMultiple)
 
-    faculty = forms.MultipleChoiceField(required= False, label = _('Faculteit'), choices = Question.STATE_SELECT,
-                                            widget =forms.CheckboxSelectMultiple)
+    subject = forms.MultipleChoiceField(required=False, label=_('Onderwerp'), choices=Question.STATE_SELECT,
+                                        widget=forms.CheckboxSelectMultiple)
 
-    education = forms.MultipleChoiceField(required= False, label = _('Opleiding'), choices = Question.STATE_SELECT,
-                                            widget =forms.CheckboxSelectMultiple)
+    promotor = forms.MultipleChoiceField(required=False, label=_('Promotor'), choices=Question.STATE_SELECT,
+                                         widget=forms.CheckboxSelectMultiple)
 
-    subject = forms.MultipleChoiceField(required= False, label = _('Onderwerp'), choices = Question.STATE_SELECT,
-                                            widget =forms.CheckboxSelectMultiple)
-
-    promotor = forms.MultipleChoiceField(required= False, label = _('Promotor'), choices = Question.STATE_SELECT,
-                                            widget =forms.CheckboxSelectMultiple)
+    key_word = forms.MultipleChoiceField(required=False, label=_('Trefwoord'), choices=Question.STATE_SELECT,
+                                         widget=forms.CheckboxSelectMultiple)
 
 
 def QuestionFormFactory(user, question):

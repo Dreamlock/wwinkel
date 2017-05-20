@@ -10,17 +10,6 @@
                 {{ facet_form.own_questions }}{{ facet_form.own_questions.label }}
             </div>
         {% endif %}
-    {% elif forloop.counter == 2 %}
-        <strong>{{ facet_form.status.label }}:</strong>
-        {% for value,name in facet_form.status.field.choices %}
-            <div class='checkbox'>
-                <label><input type="checkbox" name='status' value="{{ value }}"
-                        {% if value in facet_form.status.initial %}
-                              checked='checked'{% endif %}>
-                    {{ name}}({{ facet_count|index:1|index:forloop.counter0 }})
-                </label>
-            </div>
-        {% endfor %}
     {% else %}
         {% if field|length != 0 %}
         <strong>{{ field.label }}</strong>
@@ -29,7 +18,6 @@
             <div class='checkbox' id ='checkbox'>
                 {% with  forloop.counter0 as checkboxcounter %}
                     {% with forloop.parentloop.counter0 as parentc %}
-
                         {{ checkbox }}({{ facet_count|index:parentc|index:checkboxcounter|index:1 }})
                         </div>
                     {% endwith %}
