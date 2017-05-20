@@ -121,8 +121,9 @@
                                 <th class ='text-center'>Publicatie datum</th>
                                 <th class ='text-center'>Organisatie</th>
                                 <th class ='text-center'>Vraag</th>
-                                <th class ='text-center'>Deadline</th>
                                 <th class ='text-center'>Status</th>
+                                <th class ='text-center'>Instelling</th>
+                                <th class ='text-center'>Opledingen</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -132,11 +133,14 @@
                                 <tr data-href="{% url 'detail_question' question.object.id %}"
                                     class='table-row'
                                     style="cursor:pointer;">
-                                    <td class = 'col-md-2'>{{ question.object.creation_date.date }}</td>
-                                    <td class = 'col-md-2'>{{ question.object.organisation_name }}</td>
-                                    <td class = 'col-md-4'>{{ question.object.question_text }}</td>
-                                    <td class = 'col-md-2'>{{ question.object.deadline }}</td>
-                                    <td class = 'col-md-2'>{{ question.object.get_state_display }}</td>
+                                    <td class = 'col-md-1'>{{ question.object.creation_date.date }}</td>
+                                    <td class = 'col-md-1'>{{ question.object.organisation_name }}</td>
+                                    <td class = 'col-md-6'>{{ question.object.question_text }}</td>
+                                    <td class = 'col-md-1'>{{ question.object.get_state_display }}</td>
+                                    <td class = 'col-md-1'>{% for inst in question.object.institution.all %}
+                                        {{ inst.name }}{% endfor %}</td>
+                                    <td class = 'col-md-1'>{% for ed in question.object.education.all %}
+                                        {{ ed }}{% endfor %}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

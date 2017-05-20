@@ -33,6 +33,9 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_faculty_facet(self,obj):
         return [faculty.name for faculty in obj.faculty.all()]
 
+    def prepare_education_facet(self, obj):
+        return [education.education for education in obj.education.all()]
+
     def prepare_subject_facet(self,obj):
         return [subject.subject for subject in obj.question_subject.all()]
 
