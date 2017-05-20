@@ -211,6 +211,9 @@ class FacetForm(forms.Form):
     promotor = forms.MultipleChoiceField(required= False, label = _('Promotor'), choices = Question.STATE_SELECT,
                                             widget =forms.CheckboxSelectMultiple)
 
+    key_word = forms.MultipleChoiceField(required=False, label=_('Trefwoord'), choices=Question.STATE_SELECT,
+                                         widget=forms.CheckboxSelectMultiple)
+
 
 def QuestionFormFactory(user, question):
     return modelform_factory(Question, tuple(get_editable_fields(user, question)))

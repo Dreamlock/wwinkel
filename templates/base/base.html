@@ -15,7 +15,9 @@
     {% render_block "css" %}
 </head>
 
+{% block body_loader %}
 <body>
+{% endblock %}
 
 {% cms_toolbar %}
 <nav class="navbar navbar-t navbar-inverse bg-inverse navbar-fixed-top">
@@ -38,13 +40,17 @@
 
     <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
-            <li>
                 <p class="navbar-text">{{ user.email }}</p>
             </li>
-            <li class="nav-item">
+            {% if user.is_manager %}
+                <li class = nav-item>
+                    <a href="{% url 'admin' %}">Administratie</a>
+                </li>
+            {% else %}
+              <li class="nav-item">
                 <a href="{% url 'register_question' %}">Stel een vraag</a>
             </li>
-
+            {% endif %}
             <li class="nav-item">
                 <a href="{% url 'logout' %}">Afmelden</a>
             </li>
