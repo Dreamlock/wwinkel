@@ -1,13 +1,13 @@
-idschool,province_idprovince,street,questioninstitution_idquestioninstitution,name,streetnumber,postal,city,active
-11,0,,10,Katholieke Hogeschool Kempen,,,,0
-12,1,Middelheimlaan,10,Universiteit Antwerpen,1,2020,Antwerpen,1
-13,6,Pleinlaan,9,Vrije Universiteit Brussel,1,1050,Brussel,1
-14,4,Onderbergen,12,Universiteit Gent,1,9000,Gent,1
-15,2,Oude Markt,13,Katholieke Universiteit Leuven,13 bus 5005,3000,Leuven,1
-16,3,Agoralaan,11,Universiteit Hasselt,,3590,Diepenbeek,1
-17,0,,9,Erasmushogeschool Brussel,,,,1
-18,0,,13,VLEKHO,,,,1
-19,0,,13,Lessius,,,,1
-20,0,,11,Hogescholen Limburg,,,,1
-21,0,,10,Hogescholen Antwerpen,,,,1
-22,0,,9,Katholieke Universiteit Brussel,,,,1
+"idschool","province_idprovince","street","questioninstitution_idquestioninstitution","name","streetnumber","postal","city","active"
+"11","0","","10","Katholieke Hogeschool Kempen","","","","0"
+"12","1","Middelheimlaan","10","Universiteit Antwerpen","1","2020","Antwerpen","1"
+"13","6","Pleinlaan","9","Vrije Universiteit Brussel","1","1050","Brussel","1"
+"14","4","Onderbergen","12","Universiteit Gent","1","9000","Gent","1"
+"15","2","Oude Markt","13","Katholieke Universiteit Leuven","13 bus 5005","3000","Leuven","1"
+"16","3","Agoralaan","11","Universiteit Hasselt","","3590","Diepenbeek","1"
+"17","0","","9","Erasmushogeschool Brussel","","","","1"
+"18","0","","13","VLEKHO","","","","1"
+"19","0","","13","Lessius","","","","1"
+"20","0","","11","Hogescholen Limburg","","","","1"
+"21","0","","10","Hogescholen Antwerpen","","","","1"
+"22","0","","9","Katholieke Universiteit Brussel","","","","1"

@@ -1,141 +1,143 @@
-ideducation,school_idschool,faculty_idfaculty,name,department,active
-23,11,19,Meetkunde,NULL,1
-24,13,42,Communicatiewetenschappen,NULL,1
-25,13,21,Agogische Wetenschappen,NULL,1
-26,12,29,Sociologie,NULL,1
-27,12,29,Communicatiewetenschappen,NULL,1
-28,12,29,Sociaal Werk,NULL,1
-29,12,25,Rechten,NULL,1
-30,12,23,Verpleeg- en Vroedkunde,NULL,1
-31,12,23,Huisartsgeneeskunde,NULL,1
-32,12,29,Opleidings- en Onderwijswetenschappen,NULL,1
-33,14,37,Pedagogische Wetenschappen,NULL,1
-34,13,41,Rechten,NULL,1
-35,17,97,Toegepaste informatica,NULL,1
-36,13,42,Handelsingenieur,NULL,1
-37,13,42,Economische Wetenschappen,NULL,1
-38,13,42,Toegepaste Economische Wetenschappen,NULL,1
-39,13,42,Politieke Wetenschappen,NULL,1
-40,13,42,Sociologie,NULL,1
-41,13,21,Psychologie,NULL,1
-42,13,21,Pedagogische Wetenschappen,NULL,1
-43,13,44,Computerwetenschappen,NULL,1
-44,13,44,Wiskunde,NULL,1
-45,13,44,Fysica,NULL,1
-46,13,44,Chemie,NULL,1
-47,13,44,Biologie,NULL,1
-48,13,44,Bio-ingenieurswetenschappen,NULL,1
-49,13,44,Geografie,NULL,1
-50,13,49,Biomedische Wetenschappen,NULL,1
-51,13,49,Farmaceutische Wetenschappen,NULL,1
-52,13,49,Geneeskunde,NULL,1
-53,13,20,Wijsbegeerte en Moraalwetenschappen,NULL,1
-54,13,20,Geschiedenis,NULL,1
-55,13,20,Kunstwetenschappen en Archeologie,NULL,1
-56,13,20,Toegepaste Taalkunde,NULL,1
-57,17,98,Journalistiek,NULL,1
-58,13,50,Ingenieurswetenschappen,NULL,1
-59,13,47,Lichamelijke Opvoeding en Bewegingswetenschappen,NULL,1
-60,13,47,Revalidatiewetenschappen en Kinesitherapie,NULL,1
-61,12,29,Politieke wetenschappen,NULL,1
-62,17,97,Industriële Wetenschappen: electronica - ICT,NULL,1
-63,12,24,Letteren en Wijsbegeerte,NULL,1
-64,21,81,Sociaal - Agogisch werk,NULL,1
-65,21,77,Gezondheidszorg,NULL,1
-66,14,40,Politieke en Sociale Wetenschappen,NULL,1
-67,14,31,Criminologie,NULL,1
-68,14,33,Geneeskunde en Gezondheidswetenschappen,NULL,1
-69,15,71,Criminologie,NULL,1
-70,16,59,Toegepaste Economische Wetenschappen,NULL,1
-71,18,95,Handelswetenschappen,NULL,1
-72,13,49,Management en Beleid van Gezondheidszorg,NULL,1
-73,21,75,Architectuur,NULL,0
-74,21,76,Audiovisuele en beeldende kunst,NULL,1
-75,12,28,"Farmacie, Biomedische en Diergeneeskunde",NULL,1
-76,12,26,Toegepaste Economische Wetenschappen,NULL,1
-77,14,30,Letteren en Wijsbegeerte,NULL,1
-78,15,70,Psychologie,NULL,1
-79,12,27,Wetenschappen,NULL,0
-80,12,23,Geneeskunde,NULL,1
-81,13,21,Onderwijskunde,NULL,1
-82,13,49,Gerontologie,NULL,1
-83,13,50,Burgerlijk Ingenieur,NULL,1
-84,13,44,Elektronica,NULL,1
-85,13,50,Informatica,NULL,1
-86,15,64,Economie,NULL,1
-87,15,68,Ingenieurswetenschappen,NULL,1
-88,15,70,Pedagogische Wetenschappen,NULL,1
-89,14,35,Economie en Bedrijfskunde,NULL,1
-90,14,38,Bio-Ingenieurswetenschappen,NULL,1
-91,14,34,Ingenieurswetenschappen,NULL,1
-92,14,32,Wetenschappen,NULL,1
-93,12,105,Erfgoedstudies,NULL,1
-94,12,26,Sociaal Economische Wetenschappen,NULL,0
-95,12,24,Taal- en Letterkunde,NULL,1
-96,12,24,Geschiedenis,NULL,1
-97,12,24,Wijsbegeerte,NULL,1
-98,21,101,Bedrijfsmanagement,NULL,1
-99,12,29,Filmstudies en Visuele Cultuur,NULL,1
-100,15,69,Culturele Studies,NULL,1
-101,15,69,Sociale Wetenschappen,NULL,1
-102,15,69,Musicologie,NULL,1
-103,12,26,Cultuurmanagement,NULL,1
-104,15,69,Geschiedenis,NULL,1
-105,15,69,Archeologie,NULL,1
-106,15,69,Kunstwetenschap,NULL,1
-107,15,69,Taal- en letterkunde,NULL,1
-108,15,64,Handelsingenieur,NULL,1
-109,15,64,Management,NULL,1
-110,15,72,Communicatiewetenschappen,NULL,1
-111,15,72,Politieke en sociale wetenschappen,NULL,1
-112,15,72,Sociologie,NULL,1
-113,15,72,Sociale en culturele antropologie,NULL,1
-114,15,72,Bedrijfscommunicatie,NULL,1
-115,15,72,Sociaal werk,NULL,1
-116,15,70,Educatieve Studies,NULL,1
-117,15,73,Informatica,NULL,1
-118,15,73,Toerisme,NULL,1
-119,15,73,Geografie,NULL,1
-120,15,68,Architectuur,NULL,1
-121,15,68,Statistiek,NULL,1
-122,15,63,Bio-ingenieurswetenschappen,NULL,1
-123,15,62,Revalidatiewetenschappen & Kinesitherapie,NULL,1
-124,15,62,Lichamelijke opvoeding en bewegingswetenschappen,NULL,1
-125,15,66,Tandheelkunde,NULL,1
-126,15,66,Geneeskunde,NULL,1
-127,15,66,Biomedische Wetenschappen,NULL,0
-128,15,66,Logopedische en audiologische wetenschappen,NULL,1
-129,15,66,Seksuologie,NULL,1
-130,15,65,Farmaceutische Wetenschappen,NULL,1
-131,15,71,Rechten,NULL,1
-135,13,42,Toerisme,NULL,1
-132,15,73,Biologie,NULL,1
-133,14,31,Rechten,NULL,1
-134,13,49,Sociale geneeskunde,NULL,1
-136,13,41,Criminologie,NULL,1
-137,14,37,Psychologie,NULL,1
-138,14,30,Geschiedenis,NULL,1
-139,12,26,Meertalige Professionele Communicatie,NULL,1
-140,21,106,Orthopedagogie,NULL,1
-141,12,75,Architectuur,NULL,0
-142,21,101,marketing,NULL,1
-143,12,104,Elektronica-ICT,NULL,1
-144,13,20,Journalistiek,NULL,1
-145,12,26,Sociaal economische wetenschappen,NULL,1
-146,12,105,Productonwikkeling,NULL,1
-147,12,108,Specifieke Lerarenopleiding,NULL,0
-148,17,98,Communicatiemanagement,NULL,1
-149,13,20,Gender & Diversiteit,NULL,1
-150,13,20,Vertalen,NULL,1
-151,13,20,Tolken,NULL,1
-152,12,23,Ergotherapeutische wetenschap,NULL,1
-153,12,104,Electromechanica,NULL,1
-154,12,104,Chemie,NULL,1
-155,12,104,Bouwkunde,NULL,1
-156,12,105,Conservatie en Restauratie,NULL,1
-157,12,27,Milieuwetenschappen,NULL,1
-158,12,27,Biologie,NULL,1
-159,12,27,Informatica,NULL,1
-160,12,24,Taal- en letterkunde,NULL,1
-161,12,24,Taalkunde,NULL,1
-162,12,24,Theater- en filmwetenschappen,NULL,1
+"ideducation","school_idschool","faculty_idfaculty","name","department","active"
+"23","11","19","Meetkunde","NULL","1"
+"24","13","42","Communicatiewetenschappen","NULL","1"
+"25","13","21","Agogische Wetenschappen","NULL","1"
+"26","12","29","Sociologie","NULL","1"
+"27","12","29","Communicatiewetenschappen","NULL","1"
+"28","12","29","Sociaal Werk","NULL","1"
+"29","12","25","Rechten","NULL","1"
+"30","12","23","Verpleeg- en Vroedkunde","NULL","1"
+"31","12","23","Huisartsgeneeskunde","NULL","1"
+"32","12","29","Opleidings- en Onderwijswetenschappen","NULL","1"
+"33","14","37","Pedagogische Wetenschappen","NULL","1"
+"34","13","41","Rechten","NULL","1"
+"35","17","97","Toegepaste informatica","NULL","1"
+"36","13","42","Handelsingenieur","NULL","1"
+"37","13","42","Economische Wetenschappen","NULL","1"
+"38","13","42","Toegepaste Economische Wetenschappen","NULL","1"
+"39","13","42","Politieke Wetenschappen","NULL","1"
+"40","13","42","Sociologie","NULL","1"
+"41","13","21","Psychologie","NULL","1"
+"42","13","21","Pedagogische Wetenschappen","NULL","1"
+"43","13","44","Computerwetenschappen","NULL","1"
+"44","13","44","Wiskunde","NULL","1"
+"45","13","44","Fysica","NULL","1"
+"46","13","44","Chemie","NULL","1"
+"47","13","44","Biologie","NULL","1"
+"48","13","44","Bio-ingenieurswetenschappen","NULL","1"
+"49","13","44","Geografie","NULL","1"
+"50","13","49","Biomedische Wetenschappen","NULL","1"
+"51","13","49","Farmaceutische Wetenschappen","NULL","1"
+"52","13","49","Geneeskunde","NULL","1"
+"53","13","20","Wijsbegeerte en Moraalwetenschappen","NULL","1"
+"54","13","20","Geschiedenis","NULL","1"
+"55","13","20","Kunstwetenschappen en Archeologie","NULL","1"
+"56","13","20","Toegepaste Taalkunde","NULL","1"
+"57","17","98","Journalistiek","NULL","1"
+"58","13","50","Ingenieurswetenschappen","NULL","1"
+"59","13","47","Lichamelijke Opvoeding en Bewegingswetenschappen","NULL","1"
+"60","13","47","Revalidatiewetenschappen en Kinesitherapie","NULL","1"
+"61","12","29","Politieke wetenschappen","NULL","1"
+"62","17","97","Industriële Wetenschappen: electronica - ICT","NULL","1"
+"63","12","24","Letteren en Wijsbegeerte","NULL","1"
+"64","21","81","Sociaal - Agogisch werk","NULL","1"
+"65","21","77","Gezondheidszorg","NULL","1"
+"66","14","40","Politieke en Sociale Wetenschappen","NULL","1"
+"67","14","31","Criminologie","NULL","1"
+"68","14","33","Geneeskunde en Gezondheidswetenschappen","NULL","1"
+"69","15","71","Criminologie","NULL","1"
+"70","16","59","Toegepaste Economische Wetenschappen","NULL","1"
+"71","18","95","Handelswetenschappen","NULL","1"
+"72","13","49","Management en Beleid van Gezondheidszorg","NULL","1"
+"73","21","75","Architectuur","NULL","0"
+"74","21","76","Audiovisuele en beeldende kunst","NULL","1"
+"75","12","28","Farmacie, Biomedische en Diergeneeskunde","NULL","1"
+"76","12","26","Toegepaste Economische Wetenschappen","NULL","1"
+"77","14","30","Letteren en Wijsbegeerte","NULL","1"
+"78","15","70","Psychologie","NULL","1"
+"79","12","27","Wetenschappen","NULL","0"
+"80","12","23","Geneeskunde","NULL","1"
+"81","13","21","Onderwijskunde","NULL","1"
+"82","13","49","Gerontologie","NULL","1"
+"83","13","50","Burgerlijk Ingenieur","NULL","1"
+"84","13","44","Elektronica","NULL","1"
+"85","13","50","Informatica","NULL","1"
+"86","15","64","Economie","NULL","1"
+"87","15","68","Ingenieurswetenschappen","NULL","1"
+"88","15","70","Pedagogische Wetenschappen","NULL","1"
+"89","14","35","Economie en Bedrijfskunde","NULL","1"
+"90","14","38","Bio-Ingenieurswetenschappen","NULL","1"
+"91","14","34","Ingenieurswetenschappen","NULL","1"
+"92","14","32","Wetenschappen","NULL","1"
+"93","12","105","Erfgoedstudies","NULL","1"
+"94","12","26","Sociaal Economische Wetenschappen","NULL","0"
+"95","12","24","Taal- en Letterkunde","NULL","1"
+"96","12","24","Geschiedenis","NULL","1"
+"97","12","24","Wijsbegeerte","NULL","1"
+"98","21","101","Bedrijfsmanagement","NULL","1"
+"99","12","29","Filmstudies en Visuele Cultuur","NULL","1"
+"100","15","69","Culturele Studies","NULL","1"
+"101","15","69","Sociale Wetenschappen","NULL","1"
+"102","15","69","Musicologie","NULL","1"
+"103","12","26","Cultuurmanagement","NULL","1"
+"104","15","69","Geschiedenis","NULL","1"
+"105","15","69","Archeologie","NULL","1"
+"106","15","69","Kunstwetenschap","NULL","1"
+"107","15","69","Taal- en letterkunde","NULL","1"
+"108","15","64","Handelsingenieur","NULL","1"
+"109","15","64","Management","NULL","1"
+"110","15","72","Communicatiewetenschappen","NULL","1"
+"111","15","72","Politieke en sociale wetenschappen","NULL","1"
+"112","15","72","Sociologie","NULL","1"
+"113","15","72","Sociale en culturele antropologie","NULL","1"
+"114","15","72","Bedrijfscommunicatie","NULL","1"
+"115","15","72","Sociaal werk","NULL","1"
+"116","15","70","Educatieve Studies","NULL","1"
+"117","15","73","Informatica","NULL","1"
+"118","15","73","Toerisme","NULL","1"
+"119","15","73","Geografie","NULL","1"
+"120","15","68","Architectuur","NULL","1"
+"121","15","68","Statistiek","NULL","1"
+"122","15","63","Bio-ingenieurswetenschappen","NULL","1"
+"123","15","62","Revalidatiewetenschappen & Kinesitherapie","NULL","1"
+"124","15","62","Lichamelijke opvoeding en bewegingswetenschappen","NULL","1"
+"125","15","66","Tandheelkunde","NULL","1"
+"126","15","66","Geneeskunde","NULL","1"
+"127","15","66","Biomedische Wetenschappen","NULL","0"
+"128","15","66","Logopedische en audiologische wetenschappen","NULL","1"
+"129","15","66","Seksuologie","NULL","1"
+"130","15","65","Farmaceutische Wetenschappen","NULL","1"
+"131","15","71","Rechten","NULL","1"
+"135","13","42","Toerisme","NULL","1"
+"132","15","73","Biologie","NULL","1"
+"133","14","31","Rechten","NULL","1"
+"134","13","49","Sociale geneeskunde","NULL","1"
+"136","13","41","Criminologie","NULL","1"
+"137","14","37","Psychologie","NULL","1"
+"138","14","30","Geschiedenis","NULL","1"
+"139","12","26","Meertalige Professionele Communicatie","NULL","1"
+"140","21","106","Orthopedagogie","NULL","1"
+"141","12","75","Architectuur","NULL","0"
+"142","21","101","marketing","NULL","1"
+"143","12","104","Elektronica-ICT","NULL","1"
+"144","13","20","Journalistiek","NULL","1"
+"145","12","26","Sociaal economische wetenschappen","NULL","1"
+"146","12","105","Productonwikkeling","NULL","1"
+"147","12","108","Specifieke Lerarenopleiding","NULL","0"
+"148","17","98","Communicatiemanagement","NULL","1"
+"149","13","20","Gender & Diversiteit","NULL","1"
+"150","13","20","Vertalen","NULL","1"
+"151","13","20","Tolken","NULL","1"
+"152","12","23","Ergotherapeutische wetenschap","NULL","1"
+"153","12","104","Electromechanica","NULL","1"
+"154","12","104","Chemie","NULL","1"
+"155","12","104","Bouwkunde","NULL","1"
+"156","12","105","Conservatie en Restauratie","NULL","1"
+"157","12","27","Milieuwetenschappen","NULL","1"
+"158","12","27","Biologie","NULL","1"
+"159","12","27","Informatica","NULL","1"
+"160","12","24","Taal- en letterkunde","NULL","1"
+"161","12","24","Taalkunde","NULL","1"
+"162","12","24","Theater- en filmwetenschappen","NULL","1"
+"163","12","26","Organisatie en Management","NULL","1"
+"164","12","29","Gender en Diversiteit","NULL","1"
