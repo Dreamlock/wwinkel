@@ -186,6 +186,7 @@ class Question(models.Model):
     history = HistoricalRecords()
     question_group = models.ForeignKey(QuestionGroups)
 
+
     # methods on objects
     # build ins overwritten
     def __str__(self):
@@ -205,6 +206,10 @@ class Question(models.Model):
             promotor_list = promotor_list | institution.promotor_set.all()
 
         return promotor_list
+
+    @property
+    def organisation_name(self):
+        return self.organisation.name
 
     @property
     def possible_faculty(self):

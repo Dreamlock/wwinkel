@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from haystack.query import SearchQuerySet
@@ -148,12 +148,13 @@ def list_questions(request, admin_filter=None):
 
 
 def detail(request, question_id):
+
     question = Question.objects.get(id=question_id)
     organisation = question.organisation
 
     if not request.user.is_authenticated:  # Then the user is a student
-        return student_detail(request, question, organisation)
 
+        return student_detail(request, question, organisation)
     elif OrganisationUser.objects.filter(id=request.user.id).exists():
         organisation = (OrganisationUser.objects.get(id=request.user.id)).organisation
         if organisation == question.organisation:
@@ -176,6 +177,7 @@ def detail(request, question_id):
 
 
 def student_detail(request, question, organisation):
+    print("hier")
     context = {'question': question,
                'organisation': organisation,
                'internal': False
