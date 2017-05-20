@@ -19,6 +19,7 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
     faculty_facet = indexes.FacetMultiValueField()
     education_facet = indexes.FacetMultiValueField()
     subject_facet = indexes.FacetMultiValueField()
+    key_word_facet = indexes.FacetMultiValueField()
 
 
     def prepare_region(self, obj):
@@ -38,6 +39,9 @@ class QuestionIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_subject_facet(self,obj):
         return [subject.subject for subject in obj.question_subject.all()]
+
+    def prepare_key_word_facet(self,obj):
+        return [keyword.key_word for keyword in obj.keyword.all()]
 
     def get_model(self):
         return Question

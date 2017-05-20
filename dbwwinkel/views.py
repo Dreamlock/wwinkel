@@ -86,7 +86,7 @@ def list_questions(request, admin_filter=None):
         sqs = query_extra_content(request.user, sqs)
 
     # Filter based on Facets
-    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor']
+    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor','key_word']
     # Calculate the facets
     for field in field_lst:
 
@@ -108,10 +108,13 @@ def list_questions(request, admin_filter=None):
         facet_form.fields[field].choices = helper_lst
         facet_count.append(choice_facet)
 
-        facet_data = facet_form.data.getlist(field, False)
-        if facet_data:
-            sqs = sqs.filter(**{'{0}_facet__in'.format(field): facet_data})
-            facet_form.fields[field].initial = list(map(str, facet_data))
+        try:
+            facet_data = facet_form.data.getlist(field, False)
+            if facet_data:
+                sqs = sqs.filter(**{'{0}_facet__in'.format(field): facet_data})
+                facet_form.fields[field].initial = list(map(str, facet_data))
+        except:
+            pass
 
 
 
@@ -491,3 +494,7 @@ def register_promotor(request, question_id):
         'question_id': question_id
     }
     return render(request, 'dbwwinkel/create_promotor.html', context)
+
+
+def administration_view(request):
+    return HttpResponse("admin")
