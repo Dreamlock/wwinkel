@@ -68,12 +68,16 @@ def list_questions(request, admin_filter=None):
 
     sqs = sqs.facet('state_facet')
     choice_facet = (sqs.facet_counts()['fields']['state_facet'])
+    choice_facet2 = []
+    for choice in choice_facet:
+        choice_facet2.append((int(choice[0]), int(choice[1])))
+    choice_facet = choice_facet2
     choice_facet = sorted(choice_facet, key=itemgetter(0))
-    status_counts = []
-    for tuple in choice_facet:
-        if int(tuple[0]) in (Question.PUBLIC_QUESTION, Question.RESERVED_QUESTION, Question.FINISHED_QUESTION):
-            status_counts.append((None, tuple[1]))
-    facet_count = [status_counts, status_counts]
+    for i in range(len(choice_facet)):
+        if i != choice_facet[i][0]:
+            choice_facet.insert(i, (i, 0))
+
+    facet_count = [choice_facet, choice_facet]
 
     # Filter out the status of questions needed
     if facet_form.data.get('status', False):
@@ -86,7 +90,7 @@ def list_questions(request, admin_filter=None):
         sqs = query_extra_content(request.user, sqs)
 
     # Filter based on Facets
-    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor','key_word']
+    field_lst = ['institution', 'faculty', 'education', 'subject', 'promotor', 'key_word']
     # Calculate the facets
     for field in field_lst:
 
@@ -115,8 +119,6 @@ def list_questions(request, admin_filter=None):
                 facet_form.fields[field].initial = list(map(str, facet_data))
         except:
             pass
-
-
 
     user_type = 'student'
     if request.user.is_authenticated:
@@ -151,7 +153,6 @@ def list_questions(request, admin_filter=None):
 
 
 def detail(request, question_id):
-
     question = Question.objects.get(id=question_id)
     organisation = question.organisation
 
@@ -496,5 +497,12 @@ def register_promotor(request, question_id):
     return render(request, 'dbwwinkel/create_promotor.html', context)
 
 
-def administration_view(request):
-    return HttpResponse("admin")
+def administration_view_to_process(request):
+    # 2 Kinds of admin users, centrals want in_progress central and new questions
+    sqs = Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])
+
+    context = {
+        'query': sqs
+    }
+
+    return render(request, 'dbwwinkel/admin_page.html')

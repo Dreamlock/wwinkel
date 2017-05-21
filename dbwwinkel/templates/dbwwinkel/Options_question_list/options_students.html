@@ -4,7 +4,7 @@
 <div class='form-group'>
 
     {% if forloop.counter == 1 %}
-        {% if user.is_authenticated %}
+        {% if user.is_organisation %}
             <div class='checkbox'>
                 &nbsp
                 {{ facet_form.own_questions }}{{ facet_form.own_questions.label }}

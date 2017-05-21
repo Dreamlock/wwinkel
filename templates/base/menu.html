@@ -1,7 +1,7 @@
 
 {% load menu_tags staticfiles %}
         {% for child in children %}
-            <li class="nav-item{% if child.selected %}
+            <li{% if child.selected %}
                 nav-item active{% endif %}
                 {% if child.ancestor %}nav-item{% endif %}
                 {% if child.sibling %}nav-item{% endif %}
