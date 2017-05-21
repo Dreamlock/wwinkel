@@ -172,7 +172,7 @@ class Question(models.Model):
     organisation = models.ForeignKey(Organisation, verbose_name='organisatie')
 
     # metadata: invisible
-    creation_date = models.DateTimeField(default=timezone.now, editable=False)
+    creation_date = models.DateTimeField(default=timezone.now, editable=False, null=True, blank=True)
     active = models.BooleanField(default=True)
     state = models.IntegerField(choices=STATE_SELECT, default=NEW_QUESTION)
     region = models.ManyToManyField(
