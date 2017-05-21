@@ -16,6 +16,8 @@ from custom_users.models import ManagerUser, OrganisationUser, Region
 
 
 def main(argv):
+    p=os.path.realpath(__file__)
+    
     os.chdir(os.path.dirname(os.path.realpath(__file__)))  # make sure working dir is dir where script is saved.
 
     solr_install_path = None
@@ -94,6 +96,8 @@ def main(argv):
         os.chdir(os.path.dirname(os.path.realpath(__file__)))  # reset working directory.
 
     if True:
+        print(p)
+        os.chdir(os.path.dirname(p))
         print('importing data from csv...')
         csv_files = [
             'Province',
@@ -112,22 +116,23 @@ def main(argv):
             'organisationusers',
             'questionpereducation',
             'questionlog',
+            'questioninstitution',
+            'mediators'
         ]
 
-        call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
+        call(['python3', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
 
         print('creating permission groups...')
-        call(['python', 'add_perm_group_script.py'])
+        call(['python3', 'add_perm_group_script.py'])
         print('  done')
 
     if True:
-        if should_delete:
-            print('creating home page...')
-            create_page(
-                title='Home', slug='home', template='INHERIT', language='nl', publication_date=timezone.now(), published=True
-            )
-            print('  done')
+        print('creating home page...')
+        create_page(
+            title='Home', slug='home', template='INHERIT', language='nl', publication_date=timezone.now(), published=True
+        )
+        print('  done')
 
     if True:
         if not User.objects.filter(email='admin@admin.be').exists():
