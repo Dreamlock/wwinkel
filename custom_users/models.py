@@ -179,6 +179,13 @@ class User(AbstractUser):
 
         return False
 
+    def is_regional_manager(self):
+        if self.is_manager():
+            m_user = ManagerUser.objects.get(id=self.id)
+            if m_user.region.exclude(region=Region.CENTRAL_REGION).exists():
+                return True
+        return False
+
     def as_manager(self):
         if self.is_manager():
             return ManagerUser.objects.get(id=self.id)
@@ -292,6 +299,9 @@ class ManagerUser(User):
 
     def is_central_manager(self):
         return self.region.filter(region=Region.CENTRAL_REGION).exists()
+
+    def is_regional_manager(self):
+        return self.region.exclude(region = Region.CENTRAL_REGION).exists()
 
     def is_regional_manager(self):
         return self.region.exclude(region=Region.CENTRAL_REGION).exists()

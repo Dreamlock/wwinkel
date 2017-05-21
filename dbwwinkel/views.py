@@ -10,7 +10,7 @@ from haystack.query import SearchQuerySet
 
 from custom_users.forms import AdressForm
 from .forms import *
-from .models import Question, Education, QuestionSubject, FacultyOf
+from .models import Question, Education, QuestionSubject, FacultyOf, QuestionGroups
 from custom_users.models import OrganisationUser, ManagerUser, Region
 from operator import itemgetter
 from .search import autocomplete as search, query_extra_content, query_on_states
@@ -34,6 +34,9 @@ def register_question(request):
             org_user = OrganisationUser.objects.get(id=request.user.id)  # Error if creating a question with admin
             question.organisation = org_user.organisation  # Foreign key to the user (organisation in question...)
             question.state = Question.NEW_QUESTION
+            new_group = QuestionGroups.objects.create()
+            new_group.save()
+            question.question_group = new_group
             question.save()
             form.save_m2m()
 
@@ -55,9 +58,6 @@ def list_questions(request, admin_filter=None):
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
     # we filter all questions that are not public, reserved, or finished, we don't do this for the central maanger
-
-
-
     if not (request.user.is_authenticated() and request.user.is_manager() and request.user.is_central_manager()):
         status_lst = [
             status_lst[Question.PUBLIC_QUESTION],
@@ -181,6 +181,7 @@ def detail(request, question_id):
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
 
+
 """
 class QuestionDetailView(DetailView):
     model = Question
@@ -190,6 +191,7 @@ class QuestionDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         return context
 """
+
 
 def student_detail(request, question, organisation):
     context = {'question': question,
@@ -509,10 +511,58 @@ def register_promotor(request, question_id):
 
 def administration_view_to_process(request):
     # 2 Kinds of admin users, centrals want in_progress central and new questions
-    sqs = Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])
+    sqs = Question.objects.none()
+
+    if request.user.is_regional_manager():
+        region_lst = request.user.as_manager().region.all()
+        sqs = Question.objects.filter(region__in = region_lst)
+
+    if request.user.is_central_manager():
+        sqs = sqs | Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])
+
+
 
     context = {
         'query': sqs
     }
+    return render(request, 'dbwwinkel/admin_page.html', context)
 
-    return render(request, 'dbwwinkel/admin_page.html')
+def administration_view_new(request):
+
+    sqs = Question.objects.filter(state= Question.NEW_QUESTION)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_intake_in_progress(request):
+
+    sqs = Question.objects.none()
+    if request.user.is_manager:
+        sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_Regional)
+
+        region_lst = request.user.as_manager().region.all()
+        sqs.filter(region__in= region_lst)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_intake_done(request):
+    sqs = Question.objects.filter(state= Question.IN_PROGRESS_QUESTION_CENTRAL)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_in_regional_process(request):
+    sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
