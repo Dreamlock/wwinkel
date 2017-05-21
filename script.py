@@ -14,11 +14,16 @@ import csv, sys, datetime
 start_time = datetime.datetime.now()
 
 organisation_id_dict = {}
+organisation_user_id_dict = {}
 manager_id_dict = {}
 
 
 def add_organisation_id(old_id, new_id):
     organisation_id_dict[old_id] = new_id
+
+
+def add_organisation_user_id(old_id, new_id):
+    organisation_user_id_dict[old_id] = new_id
 
 
 def add_manager_id(old_id, new_id):
@@ -27,6 +32,10 @@ def add_manager_id(old_id, new_id):
 
 def get_new_organisation_id(old_id):
     return organisation_id_dict[old_id]
+
+
+def get_new_organisation_user_id(old_id):
+    return organisation_user_id_dict[old_id]
 
 
 def get_new_manager_id(old_id):
