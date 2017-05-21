@@ -113,7 +113,7 @@ def main(argv):
             'keywords',
             'organisation_has_keyword',
             'promotor',
-            'organisationusers',
+            'users',
             'questionpereducation',
             'questionlog',
             'questioninstitution',
