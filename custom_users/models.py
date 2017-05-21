@@ -315,3 +315,11 @@ def manager_user_created(sender, **kwargs):
             user.groups.set([Group.objects.get(name='Central Managers')])
         if user.is_regional_manager():
             user.groups.set([Group.objects.get(name='Regional Managers')])
+
+class QuestionInstitution(models.Model):
+    address = models.ForeignKey(Address)
+    name = models.TextField()
+
+class Mediator(User):
+    jobfunction = models.TextField()
+    quesiotninstitution = models.ManyToManyField(QuestionInstitution)

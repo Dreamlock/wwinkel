@@ -185,7 +185,7 @@ with open(sys.argv[5], encoding='latin1') as f:
             pass
         else:
             try:
-                prov = cmmodels.Province.objects.get(id=province_map(row[9]))
+                prov = cmmodels.Province.objects.get(id=row[9])
                 adr,created = cmmodels.Address.objects.get_or_create(
                     province=prov,
                     city=row[8],
@@ -659,6 +659,68 @@ with open(sys.argv[16], encoding='latin1') as f:
     print("done")
     f.close()
 
+#import question institutions
+with open(sys.argv[17], encoding='latin1') as f:
+    print("import question institutions")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    for row in reader:
+        try:
+            prov = cmmodels.Province.objects.get(id=get_row('province_idprovince'))
+            adr, created = cmmodels.Address.objects.get_or_create(
+                province=prov,
+                city=get_row('city'),
+                postal_code=int(get_row('postal')),
+                street_name=get_row('street'),
+                street_number=int(get_row('streetnumber')),
+            )
+            adr.save()
+            questinst, created = cmmodels.QuestionInstitution.objects.update_or_create(
+                id = int(get_row('idquestioninstitution')),
+                address = adr,
+                name = get_row('name')
+            )
+            questinst.save()
+        except:
+            print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
+
+#import mediators
+with open(sys.argv[18], encoding='latin1') as f:
+    print("import mediators")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    for row in reader:
+        try:
+            mediator, created = cmmodels.Mediator.objects.update_or_create(
+                id=int(get_row('idquestionmediator')),
+                first_name=get_row('firstname'),
+                last_name=get_row('lastname'),
+                email= "{0}.{1}@{2}.be".format(get_row('firstname'),get_row('idquestionmediator'), "wwinkel"),
+                is_superuser=0,
+                is_staff=1,
+            )
+            mediator.jobfunction=get_row('jobfunction')
+            mediator.save()
+        except:
+            print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
 
 end_time=datetime.datetime.now()
 print(start_time)
