@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'distribute_intake/(?P<question_id>[0-9]+)', views.distribute_intake, name='distribute_intake'),
     url(r'internal_remark/(?P<question_id>[0-9]+)', views.internal_remark, name='internal_remark'),
     url(r'edit_meta_info/(?P<question_id>[0-9]+)', views.edit_meta_info, name='edit_meta_info'),
-    url(r'admin', views.administration_view, name ='admin'),
+    url(r'admin_to_process/',views.administration_view_to_process, name = 'admin_to_process'),
     url(r'^search/', include('haystack.urls')),
 
     url(r'^institution-autocomplete/$',
