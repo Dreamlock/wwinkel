@@ -1,0 +1,27 @@
+idquestionmediator,lastname,firstname,jobfunction,telnr,gsmnr,email,questioninstitution_idquestioninstitution,active
+14,Vandeputte,Saskia,bemiddelaar,anonymisation,anonymisation,anonymisation,9,0
+13,Waelkens,Siska,bemiddelaar,,,,13,0
+15,Smeyers,Els,bemiddelaar,,,,11,0
+16,De Backer,Barbara,bemiddelaar,,,,12,0
+17,De Lathouwers,Mieke,bemiddelaar,,,,10,0
+18,De Marrée,Jozefien,bemiddelaar,,,,8,1
+19,De Bal,Ils,bemiddelaar,,,,9,0
+22,Goovaerts,Stefanie,bemiddelaar,,,,9,0
+20,Devoghel,Hilde,bemiddelaar,,,,13,0
+21,De  Bal,Ils,bemiddelaar,,,,8,0
+23,Donders,Edith,bemiddelaar,,,,9,0
+24,Van Den Bossche,Sofie,bemiddelaar,,,,9,0
+25,De Munter,Celine,bemiddelaar,,,,9,0
+26,De Marrée,Jozefien,bemiddelaar,,,,9,1
+27,De Donder,Liesbeth,bemiddelaar,,,,9,0
+28,Charlotte,Van Cauteren,bemiddelaar,,,,10,0
+29,Donders,Edith,student-bemiddelaar,,,,10,0
+30,Waelkens,Saskia,student-bemiddelaar,,,,13,0
+37,De Schoenmacker,Silke,student-bemiddelaar,,,,12,1
+36,DeSchoenmacker,Silke,student-bemiddelaar,,,,12,1
+34,Verkest,Sofie,bemiddelaar,,,,9,0
+31,Froyen,Heidi,bemiddelaar,,,,13,0
+32,Van de Putte,Anton,bemiddelaar,,,,13,0
+33,De Wolf,David,bemiddelaar,,,,12,1
+35,Rams,Tine,bemiddelaar,,,,10,1
+38,Fuhrmann,Noah,bemiddelaar,,,,13,1
