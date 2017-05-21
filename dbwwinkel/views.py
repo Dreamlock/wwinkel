@@ -516,6 +516,7 @@ def administration_view_to_process(request):
     if request.user.is_regional_manager():
         region_lst = request.user.as_manager().region.all()
         sqs = Question.objects.filter(region__in = region_lst)
+        sqs = sqs.filter(state__in=[Question.IN_PROGRESS_QUESTION_REGIONAL, Question.INTAKE_QUESTION])
 
     if request.user.is_central_manager():
         sqs = sqs | Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])
@@ -536,14 +537,25 @@ def administration_view_new(request):
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
+def administration_view_intake_process(request):
+
+    if request.user.is_regional_manager():
+        region_lst = request.user.as_manager().region.all()
+        sqs = Question.objects.filter(region__in = region_lst)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
 def administration_view_intake_in_progress(request):
 
     sqs = Question.objects.none()
     if request.user.is_manager:
-        sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_Regional)
+        sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
 
         region_lst = request.user.as_manager().region.all()
-        sqs.filter(region__in= region_lst)
+        sqs = sqs.filter(region__in= region_lst)
 
     context = {
         'query': sqs
@@ -559,10 +571,76 @@ def administration_view_intake_done(request):
     return render(request, 'dbwwinkel/admin_page.html', context)
 
 def administration_view_in_regional_process(request):
+
     sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
+
+    region_lst = request.user.as_manager().region.all()
+    sqs = sqs.filter(region__in=region_lst)
 
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_in_regional_process_all(request):
+
+    sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
+
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+
+def administration_view_public(request):
+
+    sqs = Question.objects.filter(state=Question.PUBLIC_QUESTION)
+
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_reserved(request):
+    sqs = Question.objects.filter(state=Question.RESERVED_QUESTION)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_on_going(request):
+    sqs = Question.objects.filter(state=Question.ONGOING_QUESTION)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_finished(request):
+    sqs = Question.objects.filter(state=Question.FINISHED_QUESTION)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_denied(request):
+    sqs = Question.objects.filter(state=Question.DENIED_QUESTION)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
+def administration_view_revoked(request):
+    sqs = Question.objects.filter(state=Question.REVOKED_QUESTION)
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
+
 

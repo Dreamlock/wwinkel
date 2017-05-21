@@ -27,8 +27,17 @@ urlpatterns = [
 
     url(r'admin_to_process/', views.administration_view_to_process, name='admin_to_process'),
     url(r'admin_new/', views.administration_view_new, name='admin_new'),
+    url(r'admin_intake_process/', views.administration_view_intake_in_progress, name='admin_intake_process'),
     url(r'admin_afer_intake/', views.administration_view_intake_done, name='admin_intake_done'),
     url(r'admin_in_progress_regional/', views.administration_view_in_regional_process, name='admin_regional_process'),
+    url(r'admin_public/', views.administration_view_public, name='admin_public'),
+    url(r'admin_reserved/', views.administration_view_reserved, name='admin_reserved'),
+    url(r'admin_ongoing/', views.administration_view_on_going, name='admin_ongoing'),
+    url(r'admin_finished/', views.administration_view_finished, name='admin_finished'),
+    url(r'admin_denied/', views.administration_view_denied, name='admin_denied'),
+    url(r'admin_revoked/', views.administration_view_revoked, name='admin_revoked'),
+    url(r'admin_regional_progress_all/', views.administration_view_in_regional_process_all,
+        name='admin_regional_process_all'),
     url(r'^search/', include('haystack.urls')),
 
     url(r'^institution-autocomplete/$',
