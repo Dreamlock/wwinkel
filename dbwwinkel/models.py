@@ -2,7 +2,7 @@ import datetime
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -15,22 +15,22 @@ from custom_users.models import Region, Organisation, Address, User, Keyword
 class Education(models.Model):
     """Represents a field of study (like biology or computer science)"""
 
-    education = models.CharField(max_length=33, unique=True)
+    education = models.CharField(verbose_name='opleiding', max_length=33, unique=True)
 
     def __str__(self):
         return self.education
 
 
 class Institution(models.Model):
-    name = models.CharField(max_length=40, unique=True)
-    address = models.ForeignKey(Address)
+    name = models.CharField(verbose_name='naam', help_text='naam van de instelling', max_length=40, unique=True)
+    address = models.ForeignKey(Address, verbose_name='adres', help_text='adres van de instelling')
 
     def __str__(self):
         return self.name
 
 
 class Faculty(models.Model):
-    name = models.CharField(max_length = 40, unique=True)
+    name = models.CharField(verbose_name='naam', help_text='naam van de faculteit', max_length=40, unique=True)
     institution = models.ManyToManyField(Institution, through='FacultyOf')
 
     def __str__(self):
@@ -44,16 +44,16 @@ class FacultyOf(models.Model):
 
 
 class Student(models.Model):
-    first_name = models.CharField(max_length=33)
-    last_name = models.CharField(max_length=45)
+    first_name = models.CharField('voornaam', max_length=33)
+    last_name = models.CharField('familienaam', max_length=45)
 
-    mobile = models.CharField(max_length=20)
-    email = models.EmailField()
+    mobile = models.CharField('gsm', max_length=20)
+    email = models.EmailField(verbose_name='email')
 
     status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
-    education = models.ForeignKey(Education)
-    address = models.ForeignKey(Address)
+    education = models.ForeignKey(Education, help_text='opleiding van de student')
+    address = models.ForeignKey(Address, help_text='adres van de student')
 
 
 class Person(models.Model):
@@ -119,6 +119,7 @@ class QuestionSubject(models.Model):
     def __str__(self):
         return self.subject
 
+
 class QuestionGroups(models.Model):
     pass
 
@@ -149,43 +150,49 @@ class Question(models.Model):
     )
 
     # Visible and editable: mandatory
-    question_text = models.TextField()
-    reason = models.TextField()
-    purpose = models.TextField()
-    own_contribution = models.TextField()
+    question_text = models.TextField('vraag', help_text='wat is uw vraag?')
+    reason = models.TextField('reden voor de vraag', help_text='hoe is uw vraag ontstaan?')
+    purpose = models.TextField('doel van de vraag', help_text='hoe wilt u de resultaten van uw vraag gebruiken?')
+    own_contribution = models.TextField('eigen bijdrage', help_text='kan u een bijdrage leveren aan de kosten?')
 
     # Visible and editable: optional
-    remarks = models.TextField(blank=True)
-    internal_remarks = models.TextField(blank=True)
-    deadline = models.DateField(blank=True, null=True)
-    public = models.BooleanField()
+    remarks = models.TextField('opmerkingen', blank=True, default='')
+    internal_remarks = models.TextField('interne opmerkingen', blank=True, default='')
+    deadline = models.DateField(
+        verbose_name='deadline vraag',
+        help_text='Moet u binnen een bepaalde termijn antwoord op uw vraag hebben?',
+        null=True,
+        blank=True
+    )
+    public = models.BooleanField('vragen zijn publiek', blank=True, default=False)
     intake = models.ForeignKey(Intake, null=True, blank=True)
-    attachment = models.ManyToManyField(Attachment)
+    attachment = models.ManyToManyField(Attachment, blank=True)
 
     # The corresponding organisation
-    organisation = models.ForeignKey(Organisation)
+    organisation = models.ForeignKey(Organisation, verbose_name='organisatie')
 
     # metadata: invisible
-    creation_date = models.DateTimeField(default=timezone.now)
+    creation_date = models.DateTimeField(default=timezone.now, editable=False)
     active = models.BooleanField(default=True)
     state = models.IntegerField(choices=STATE_SELECT, default=NEW_QUESTION)
-    region = models.ManyToManyField(Region)
+    region = models.ManyToManyField(
+        Region, verbose_name='regio', help_text='huidige regio(s) die momenteel met de vraag bezig zijn'
+    )
 
     # Faceting data
-    institution = models.ManyToManyField(Institution)
-    promotor = models.ManyToManyField(Promotor)
-    faculty = models.ManyToManyField(Faculty)
-    education = models.ManyToManyField(Education)
-    keyword = models.ManyToManyField(Keyword)
+    institution = models.ManyToManyField(Institution, verbose_name='instelling')
+    promotor = models.ManyToManyField(Promotor, verbose_name='promotor')
+    faculty = models.ManyToManyField(Faculty, verbose_name='faculteit')
+    education = models.ManyToManyField(Education, verbose_name='opleiding')
+    keyword = models.ManyToManyField(Keyword, verbose_name='trefwoorden')
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     type = models.ForeignKey(QuestionType, null=True)
 
-    student = models.ForeignKey(Student, null=True)
+    student = models.ForeignKey(Student, verbose_name='student', null=True)
     completion_date = models.DateTimeField(null=True)  # When the question was round up
 
     history = HistoricalRecords()
     question_group = models.ForeignKey(QuestionGroups)
-
 
     # methods on objects
     # build ins overwritten
@@ -220,7 +227,6 @@ class Question(models.Model):
         for institution in institutions:
             faculty_list = faculty_list | institution.faculty_set.all()
 
-
         return faculty_list
 
     @property
@@ -231,7 +237,7 @@ class Question(models.Model):
             for fac in self.faculty.all():
                 if FacultyOf.objects.filter(institution=inst, faculty=fac).exists():
                     fac_of = FacultyOf.objects.get(institution=inst, faculty=fac)
-                    p_education  = p_education | fac_of.education.all()
+                    p_education = p_education | fac_of.education.all()
 
         return p_education
 
@@ -246,7 +252,6 @@ class Question(models.Model):
 
     def remove_education(self, education):
         subject_education = education.questionsubject_set.all()
-
 
         intersect = subject_education & self.question_subject.all()
 
@@ -265,8 +270,8 @@ class Question(models.Model):
 
         f_of_lst = []
         for inst in self.institution.all():
-            if FacultyOf.objects.filter(institution= inst, faculty = faculty).exists():
-                f_of = FacultyOf.objects.get(institution= inst, faculty = faculty)
+            if FacultyOf.objects.filter(institution=inst, faculty=faculty).exists():
+                f_of = FacultyOf.objects.get(institution=inst, faculty=faculty)
                 f_of_lst.append(f_of)
 
         for eu in self.education.all():
@@ -274,14 +279,13 @@ class Question(models.Model):
             for f_of in f_of_lst:
                 if eu in f_of.education.all():
                     if f_of.faculty != faculty:
-                        to_remove  = False
+                        to_remove = False
 
             if to_remove:
                 self.remove_education(eu)
 
         self.faculty.remove(faculty)
         self.save()
-
 
     def remove_institution(self, institution):
 
@@ -313,8 +317,6 @@ class Question(models.Model):
             if to_remove:
                 self.remove_faculty(fac)
         self.save()
-
-
 
     def clean(self):
         if self.deadline is not None and self.deadline < datetime.date.today():

@@ -1,91 +1,91 @@
-idfaculty,school_idschool,name,active
-19,11,Wiskunde,1
-20,13,Letteren en Wijsbegeerte,1
-21,13,Psychologie en educatiewetenschappen,1
-22,12,Politieke en Sociale Wetenschappen,0
-23,12,Faculteit Geneeskunde en Gezondheidswetenschappen,1
-24,12,Faculteit Letteren en Wijsbegeerte,1
-25,12,Faculteit Rechten,1
-26,12,Faculteit Toegepaste Economische Wetenschappen,1
-27,12,Faculteit Wetenschappen,1
-28,12,"Faculteit Farmaceutische, Biomedische en Diergeneeskundige Wetenschappen",1
-29,12,Faculteit Sociale Wetenschappen,1
-30,14,Letteren en Wijsbegeerte,1
-31,14,Rechtsgeleerdheid,1
-32,14,Wetenschappen,1
-33,14,Geneeskunde en gezondheidswetenschappen,1
-34,14,Ingenieurswetenschappen,1
-35,14,Economie en bedrijfskunde,1
-36,14,Diergeneeskunde,1
-37,14,Psychologie en pedagogische wetenschappen,1
-38,14,Bio-ingenieurswetenschappen,1
-39,14,Farmaceutische wetenschappen,1
-40,14,Politieke en sociale wetenschappen,1
-41,13,Recht en Criminologie,1
-42,13,"Economische, Sociale en Politieke Wetenschappen en Solvay Business School",1
-43,13,Psychologie en Educatiewetenschappen,0
-44,13,Wetenschappen en Bio-ingenieurswetenschappen,1
-45,17,Koninklijk Conservatorium Brussel,0
-46,16,Handelsingenieur,0
-47,13,Lichamelijke Opvoeding en Kinesitherapie,1
-48,13,Interdisciplinaire vakgroep lerarenopleiding (IDLO),1
-49,13,Geneeskunde en Farmacie,1
-50,13,Ingenieurswetenschappen,1
-51,12,Interfacultair Instituut voor Milieu en Duurzame Ontwikkeling (IMDO),1
-52,12,Instituut voor Onderwijs- en Informatiewetenschappen,0
-53,12,Instituut voor Ontwikkelingsbeleid-en Beheer,1
-54,16,Applied Statistics,1
-55,16,Biostatistics,1
-56,16,Handelsingenieur in de Beleidsinformatica,1
-57,16,Informatica,1
-58,16,Internationaal Marketing Management,1
-59,16,Toegepaste Economische Wetenschappen,1
-60,16,Verkeerskunde,1
-61,15,Bijzondere Faculteit Kerkelijk Recht,1
-62,15,Bewegings- en Revalidatiewetenschappen,1
-63,15,Bio-ingenieurswetenschappen,1
-64,15,Economie en Bedrijfswetenschappen,1
-65,15,Farmaceutische Wetenschappen,1
-66,15,Geneeskunde,1
-67,15,Godgeleerdheid,1
-68,15,Ingenieurswetenschappen,1
-69,15,Letteren,1
-70,15,Psychologie en Pedagogische Wetenschap.,1
-71,15,Rechtsgeleerdheid,1
-72,15,Sociale Wetenschappen,1
-73,15,Wetenschappen,1
-74,15,Hoger Instituut voor Wijsbegeerte,1
-75,12,Architectuur (Ontwerpwetenschappen),0
-76,21,Audiovisuele en Beeldende kunst,1
-77,21,Gezondheidszorg,0
-78,21,Industriele Wetenschappen en Technologie,1
-79,21,Nog open,1
-80,21,Onderwijs,1
-81,21,Sociaal - Agogisch Werk,1
-82,22,Communicatiewetenschappen,1
-83,22,Economische Wetenschappen,1
-84,22,Geschiedenis,1
-85,22,Handelsingenieur,1
-86,22,Politieke Wetenschappen,1
-87,22,Rechten,1
-88,22,Sociologie,1
-89,22,Taal- en Letterkunde,1
-90,22,Theorie en Filosofie,1
-91,22,Toegepaste Economische Wetenschappen,1
-92,22,Wijsbegeerte,1
-93,20,Handelswetenschappen en Bedrijfskunde,1
-94,20,Industriele Wetenschappen en Technologie,1
-95,18,Master in de Handelswetenschappen,1
-96,19,Toegepaste Psychologie,1
-97,17,Design & Technologie,1
-98,17,"Management, Media & Maatschappij",1
-99,16,Rechten,1
-100,16,Wetenschappen,1
-101,21,Handelswetenschappen en bedrijfskunde,1
-102,15,Biologie,0
-103,15,HIVA-K.U.Leuven - Onderzoeksinstituut voor Arbeid en Samenleving,1
-108,12,Instituut voor Onderwijs- en Informatiewetenschappen,0
-104,12,Faculteit Toegepaste Ingenieurswetenschappen,1
-105,12,Faculteit Ontwerpwetenschappen,1
-106,21,Gezondheid en Welzijn,1
-107,12,Toegepaste Ingenieurswetenschappen,0
+"idfaculty","school_idschool","name","active"
+"19","11","Wiskunde","1"
+"20","13","Letteren en Wijsbegeerte","1"
+"21","13","Psychologie en educatiewetenschappen","1"
+"22","12","Politieke en Sociale Wetenschappen","0"
+"23","12","Faculteit Geneeskunde en Gezondheidswetenschappen","1"
+"24","12","Faculteit Letteren en Wijsbegeerte","1"
+"25","12","Faculteit Rechten","1"
+"26","12","Faculteit Toegepaste Economische Wetenschappen","1"
+"27","12","Faculteit Wetenschappen","1"
+"28","12","Faculteit Farmaceutische, Biomedische en Diergeneeskundige Wetenschappen","1"
+"29","12","Faculteit Sociale Wetenschappen","1"
+"30","14","Letteren en Wijsbegeerte","1"
+"31","14","Rechtsgeleerdheid","1"
+"32","14","Wetenschappen","1"
+"33","14","Geneeskunde en gezondheidswetenschappen","1"
+"34","14","Ingenieurswetenschappen","1"
+"35","14","Economie en bedrijfskunde","1"
+"36","14","Diergeneeskunde","1"
+"37","14","Psychologie en pedagogische wetenschappen","1"
+"38","14","Bio-ingenieurswetenschappen","1"
+"39","14","Farmaceutische wetenschappen","1"
+"40","14","Politieke en sociale wetenschappen","1"
+"41","13","Recht en Criminologie","1"
+"42","13","Economische, Sociale en Politieke Wetenschappen en Solvay Business School","1"
+"43","13","Psychologie en Educatiewetenschappen","0"
+"44","13","Wetenschappen en Bio-ingenieurswetenschappen","1"
+"45","17","Koninklijk Conservatorium Brussel","0"
+"46","16","Handelsingenieur","0"
+"47","13","Lichamelijke Opvoeding en Kinesitherapie","1"
+"48","13","Interdisciplinaire vakgroep lerarenopleiding (IDLO)","1"
+"49","13","Geneeskunde en Farmacie","1"
+"50","13","Ingenieurswetenschappen","1"
+"51","12","Interfacultair Instituut voor Milieu en Duurzame Ontwikkeling (IMDO)","1"
+"52","12","Instituut voor Onderwijs- en Informatiewetenschappen","0"
+"53","12","Instituut voor Ontwikkelingsbeleid-en Beheer","1"
+"54","16","Applied Statistics","1"
+"55","16","Biostatistics","1"
+"56","16","Handelsingenieur in de Beleidsinformatica","1"
+"57","16","Informatica","1"
+"58","16","Internationaal Marketing Management","1"
+"59","16","Toegepaste Economische Wetenschappen","1"
+"60","16","Verkeerskunde","1"
+"61","15","Bijzondere Faculteit Kerkelijk Recht","1"
+"62","15","Bewegings- en Revalidatiewetenschappen","1"
+"63","15","Bio-ingenieurswetenschappen","1"
+"64","15","Economie en Bedrijfswetenschappen","1"
+"65","15","Farmaceutische Wetenschappen","1"
+"66","15","Geneeskunde","1"
+"67","15","Godgeleerdheid","1"
+"68","15","Ingenieurswetenschappen","1"
+"69","15","Letteren","1"
+"70","15","Psychologie en Pedagogische Wetenschap.","1"
+"71","15","Rechtsgeleerdheid","1"
+"72","15","Sociale Wetenschappen","1"
+"73","15","Wetenschappen","1"
+"74","15","Hoger Instituut voor Wijsbegeerte","1"
+"75","12","Architectuur (Ontwerpwetenschappen)","0"
+"76","21","Audiovisuele en Beeldende kunst","1"
+"77","21","Gezondheidszorg","0"
+"78","21","Industriele Wetenschappen en Technologie","1"
+"79","21","Nog open","1"
+"80","21","Onderwijs","1"
+"81","21","Sociaal - Agogisch Werk","1"
+"82","22","Communicatiewetenschappen","1"
+"83","22","Economische Wetenschappen","1"
+"84","22","Geschiedenis","1"
+"85","22","Handelsingenieur","1"
+"86","22","Politieke Wetenschappen","1"
+"87","22","Rechten","1"
+"88","22","Sociologie","1"
+"89","22","Taal- en Letterkunde","1"
+"90","22","Theorie en Filosofie","1"
+"91","22","Toegepaste Economische Wetenschappen","1"
+"92","22","Wijsbegeerte","1"
+"93","20","Handelswetenschappen en Bedrijfskunde","1"
+"94","20","Industriele Wetenschappen en Technologie","1"
+"95","18","Master in de Handelswetenschappen","1"
+"96","19","Toegepaste Psychologie","1"
+"97","17","Design & Technologie","1"
+"98","17","Management, Media & Maatschappij","1"
+"99","16","Rechten","1"
+"100","16","Wetenschappen","1"
+"101","21","Handelswetenschappen en bedrijfskunde","1"
+"102","15","Biologie","0"
+"103","15","HIVA-K.U.Leuven - Onderzoeksinstituut voor Arbeid en Samenleving","1"
+"108","12","Instituut voor Onderwijs- en Informatiewetenschappen","0"
+"104","12","Faculteit Toegepaste Ingenieurswetenschappen","1"
+"105","12","Faculteit Ontwerpwetenschappen","1"
+"106","21","Gezondheid en Welzijn","1"
+"107","12","Toegepaste Ingenieurswetenschappen","0"

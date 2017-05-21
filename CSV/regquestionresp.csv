@@ -1,181 +1,182 @@
-idregquestionresp,keywordsexpertise_idkeywordsexpertise,lastname,firstname,telnr,email,remarks,coursegroup,location,expertise,title,active
-10,0,De Meter,Peter,anonymisation,,,NULL,,,,1
-11,0,Segers,Katia,,,,NULL,,,Prof.,1
-12,0,Kristoffersen,Ingrid,,,,NULL,3C243,,Prof.,1
-13,0,Van Loon,Tony,,,,NULL,,,,1
-14,0,Breda,Jef,,,,NULL,S.M.485,,,1
-15,0,Van Braak,Johan,,,,NULL,,,Prof.,1
-16,0,Depoorter,Anne-Marie,,,,NULL,TI,,,1
-17,0,Louckx,Freddy,,,,NULL,K213,,,1
-18,0,Van den Broeck,Wim,,,,NULL,3C244a,,,1
-19,0,Andries,Caroline,,,,NULL,3C241,,,1
-20,0,Restiau,Ludo,,,,NULL,Pleinlaan 2,,,1
-21,0,Telidja,Klai,,,,NULL,3c249a,,,1
-22,0,Jegers,Marc,,,,NULL,2c139,,,1
-23,0,Notten,Ton,,,,NULL,3b243,,,1
-24,0,Theeboom,Marc,,,,NULL,4L401,,,1
-25,0,Verté,Dominique,,,,NULL,3b237A,,,1
-26,0,Geerts,Christel,,,,NULL,3C233,,,1
-27,0,Glorieux,Ignace,,,,NULL,2B102B,,,1
-28,0,Vanwing,Tom,,,,NULL,3B243,,,1
-29,0,Elias,Willem,,,,NULL,3B231,,,1
-30,0,De Metsenaere,Machteld,,,,NULL,4B321,,,1
-31,0,Vandenbrande,Kristel,,,,NULL,,,,1
-32,0,Van Esbroeck,Raoul,,,,NULL,1F001,,,1
-33,0,Engels,Nadine,,,,NULL,3B206,"Opleidingsdidactiek, schoolcultuur en professionele ontwikkeling",,1
-34,0,Pauwels,Caroline,,,,NULL,0C008,,,1
-35,0,Vanderfaeillie,Johan,,,,NULL,3B247,klinische en levenslooppsychologie,,1
-36,0,Carpentier,Nico,,,,NULL,5B401a,,,1
-37,0,Van Limberghen,Guido,,,,NULL,4C352,,,1
-38,0,Woodward,Alison,,,,NULL,Vesalius College,,,1
-39,0,Bauwens,Jo,,,,NULL,,,,1
-40,0,Thevissen,Frank,,,,NULL,5C452,,,1
-41,0,Libotton,Arno,,,,NULL,3B253,,,1
-42,0,Cluydts,Raymond,,,,NULL,3C211A,,,1
-43,0,Corijn,Eric,,,,NULL,6f333,,,1
-44,0,Timmerman,Christiane,,,,NULL,,,,1
-45,0,De Pelsmacker,Patrick,,,,NULL,s.z.308,,,1
-46,0,Van Straaten,Dick,,,,NULL,,,,0
-47,0,Vermeire,Etienne,,,,NULL,,,,1
-48,0,Cantillon,Bea,,,,NULL,S.M.475,,,1
-49,0,Van den Bulck,Hilde,,,,NULL,S.M.183,,,1
-50,0,Cras,Patrick,,,,NULL,Uz Antwerpen Edegem,,,1
-51,0,Van Hal,Guido,,,,NULL,,,,1
-52,0,Meeus,Hubert,,,,NULL,CST.D.217,,,1
-53,0,Schramme,Annick,,,,NULL,S.S.208,,,1
-54,0,Kavadias,Dimokritos,,,,NULL,,,,1
-55,0,Maes,Gunter,,,,NULL,,,,0
-56,0,Meulemans,Herman,,,,NULL,S.M.383,,,1
-57,0,Jacobs,Therese,,,,NULL,S.M.381,,,1
-58,0,Weyns,Walter,,,,NULL,CST - D.310,,,1
-59,0,Avonts,Dirk,,,,NULL,,,,0
-60,0,Vranken,Jan,,,,NULL,S.M.231,,,1
-61,0,Joosen,Vanessa,,,,NULL,S.R.214,,,1
-62,0,Vanderkerckhove,Reinhild,,,,NULL,D.A128,,,1
-63,0,Mortelmans,Dimitri,,,,NULL,S.M.375,,,1
-64,0,Maelstaf,Hilde,,,03 257 22 88 of 0477 33 96 24,NULL,,,,1
-65,0,Stinkens,Wim,,,,NULL,,,,1
-66,0,Cuylle,Hildegarde,,,,NULL,,,,1
-67,0,Vermeulen,Gert,,,,NULL,,,,1
-68,0,Van Braak,Johan,,,,NULL,,,,1
-69,0,Van Bauwel,Sophie,,,,NULL,,,,1
-70,0,Van Hove,Geert,,,,NULL,,,,1
-71,0,Temmerman,Marleen,,,,NULL,,,,1
-72,0,Soyez,Veerle,,,,NULL,gang vakgroep Orthopedagogiek,,,1
-73,0,Brems,Eva,,,,NULL,,,,1
-74,0,Raeymaeckers,Karin,,,,NULL,Korte Meer 7-97-11,,,1
-75,0,Aertsen,Ivo,,,,NULL,02.69,,,1
-76,0,Swinnen,Gilbert,,,,NULL,,,,1
-77,0,Haverhals,Barbara,,,,NULL,,,,1
-78,0,Loots,Gerrit,,,,NULL,3B243,,,1
-79,0,Rolain,Yves,,,,NULL,6K430,,,1
-80,0,Soly,Hugo,,,,NULL,5C417,,,1
-81,0,Macharis,Cathy,,,,NULL,2C119,,,1
-82,0,Guillaume,Patricka,,,,NULL,ZW104,,,1
-83,0,De Munck,Bert,,,,NULL,S.D.125,,,1
-84,0,Vandenhole,Wouter,,,,NULL,CST.V.132,,,1
-85,0,Hillen,Sabine,,,,NULL,S.D.207,,,1
-86,0,Van Petegem,Peter,,,,NULL,S.Vre35.106,,,1
-87,0,Vloeberghs,Katrien,,,,NULL,S.L.400,,,1
-88,0,Vandebosch,Heidi,,,,NULL,CST.M185,,,1
-89,0,Nauwelaerts,Philippe,,,,NULL,S.S.151,,,0
-90,0,Swennen,Frederik,,,,NULL,D.R.314,,,1
-91,0,Mahieu,Paul,,,,NULL,S.Ve35.208,,,1
-92,0,Laporte,Dirk,,,,NULL,,,,1
-93,0,Devos,Carl,,,,NULL,,,,1
-94,0,Arnaut,Karel,,,,NULL,C01.33,,,1
-95,0,Meurs,Patrick,,,,NULL,,,,1
-96,0,Enhus,Els,,,,NULL,4B335,,,1
-97,0,Brison,Fabienne,,,,NULL,,,,1
-98,0,Vanlanduit,Steve,,,,NULL,,,,1
-99,0,Van de Craen,Piet,,,,NULL,5B414,,,1
-100,0,Leys,Marc,,,,NULL,,,,1
-101,0,Lombaerts,Koen,,,,NULL,,,,1
-102,7,Sauer,Tom,,,,NULL,S.M.273,,,1
-103,9,Sinardet,Dave,,,,NULL,S.M.276,,,0
-104,0,Gemmel,Paul,,,,NULL,"Hoveniersberg 24, 9000 Gent",Operationeel beheer in diensten en gezondheidszorg,,1
-105,0,Allaert,Georges,,,,NULL,Krijgslaan 281 S8,Civiele Techniek,,1
-106,0,Viaene,Jacques,,,,NULL,Coupure Links 653,Landbouweconomie,,1
-107,0,Verhoeven,Ronny,,,,NULL,Sint-Pietersnieuwstraat 41,Civiele Techniek,,1
-108,0,Zinzen,Evert,,,gsm: 0496/458155,NULL,L201,Bewegingsvorming en Sporttraining,,1
-109,0,Smeyers,Els,,,,NULL,,,,1
-110,0,Haezendonck,Elvia,,,,NULL,,,,1
-111,0,Brengman,Malaika,,,,NULL,,,,1
-112,0,distelmans,wim,,,,NULL,,,,1
-113,0,Deliens,Luc,,,,NULL,,,,1
-114,0,Dierckx,Danielle,,,,NULL,CST M.232,armoede,,1
-115,0,Struyf,Elke,,,,NULL,S.Ve35.103,,,1
-116,0,Malliet,Steven,,,,NULL,CST.M.184,"games, muziekindustrie",,1
-117,0,Lancksweerdt,Eric,,,,NULL,CST.V.035,,,1
-118,0,Vande Winkel,Roel,,,,NULL,CST.M.186,,,0
-119,0,Verhetsel,Ann,,,,NULL,S.B.430,,,1
-120,0,Scholliers,Peter,,,,NULL,,Geschiedenis - onderzoek smokkel van voedingswaren in grensgebied,,1
-121,0,Guy,Vanthemsche,,,,NULL,,geschiedenis,,1
-122,0,Tys,Dries,,,,NULL,,kunstwetenschappen,,1
-123,0,Swinnen,Johan,,,,NULL,,"kunstwetenschappen, cultuurwetenschappen, fotografie",,1
-124,0,Paulussen,Steve,,,,NULL,5B401a,"Media, Democratie & Journalistiek",,1
-125,0,De Mil,Stijn,,,privemail: stijndemil@gmail.com,NULL,,toegepaste informatica,,1
-126,0,Loots,Ilse,,,,NULL,CST M.379,,,1
-127,0,Bilsen,Johan,,,,NULL,112b,euthanasie,,1
-128,0,Jagers,Jan,,,privemail: jan.jagers@gmail.com,NULL,,journalistiek,,1
-129,0,Van Linthout,Ine,,,,NULL,,mediakritiek,,1
-130,0,De Pauw,Wim,,,,NULL,Y' 1.01,culturele agogiek,,1
-131,0,Baetens,Kris,,,,NULL,3B201B,experimentele en toegepaste psychologie,,1
-132,0,Brewaeys,Anne,,,,NULL,3c272A,klinische en levenslooppsychologie,,1
-133,0,Van Buggenhout,Michael,,,,NULL,,,,1
-134,0,De Rick,Katleen,,,,NULL,/,"levenslang en levensbreed leren, overgang van onderwijs naar arbeidsmarkt",onderzoeksleider,1
-135,0,Nicaise,Ides,,,,NULL,/,economische wetenschappen,"hoofd onderzoeksgroep , armoede en sociale ongelijkheid",0
-136,0,Kesteloot,Chris,,,,NULL,+32 16 322432,Sociale en Economische Geografie,,0
-137,0,Colpaert,Jozef,,,,NULL,S.Ve35.308,,,1
-138,0,Marx,Ive,,,,NULL,S.M.473,,,1
-139,0,Elseviers,Monique,,,,NULL,,,,1
-140,0,Temmerman,Martina,,,Martina.Temmerman@vub.ac.be,NULL,PLN5 3 NDL,,,1
-141,0,Wouters,Edwin,,,,NULL,S.M.371,,,1
-142,0,Zhu,Chang,,,,NULL,,educational sciences,prof.,1
-143,0,Stevens,Peter,,,,NULL,,sociologie,prof.,1
-144,0,Roelens,Kristien,,,,NULL,,seksuele gezondheid bij vrouwen,dr.,1
-145,0,Valcke,Martin,,,,NULL,,,,1
-146,0,Sinardet,Dave,,,,NULL,5B401A,,,0
-147,0,Redig,Guy,,,,NULL,,,,1
-148,0,Mommaas,Hans,,,,NULL,,,,0
-149,0,Vanthournout,Gert,,,,NULL,,,,1
-150,0,Braet,Johan,,,,NULL,,,,1
-151,0,Guerry,Marie-Anne,,,,NULL,,,,1
-152,0,Willems,Kim,,,,NULL,,Marketing & Consumer Behavior,,1
-153,0,Heyndels,Bruno,,,,NULL,,,,1
-154,0,Dusar,Ingeborg,,,,NULL,SST.B.502,,,1
-155,0,Van Nuffel,Dieter,,,,NULL,CST.B.329,,,1
-156,0,Paulussen,Steve,,,,NULL,S.M.480,,,1
-157,0,Opsomer,Marius,,,,NULL,S.Z.408,,,0
-158,0,Dens,Nathalie,,,,NULL,CST.B.236,Marketing,,1
-159,0,Oosterlynck,Stijn,,,,NULL,S.M.231,"sociale ongelijkheid, armoede en sociale uitsluiting, stedelijke ontwikkeling en beleid, ruimtelijke beleid",,1
-160,0,De Graeve,Diana,,,,NULL,CST - B128,,,1
-161,0,Van Loon,Francis,,,,NULL,,"sociologie (justitie/arbeidsrecht, bedrijfsdeontologie, hiv en identiteit Zuid-Afrika)",Prof. Dr. baron,1
-162,0,Van Hoof,Jan,,,,NULL,,onderwijsmanagement en kwaliteitszorg in onderwijs,prof. dr.,1
-163,0,Boeve-de Pauw,Jelle,,,,NULL,,,,1
-164,0,De Smet,Milou,,,,NULL,CST C459,,,1
-165,0,Poels,Karolien,,,contact eventueel via Lara Hallam,NULL,,consumentenemoties,,1
-166,0,De Donder,Liesbeth,,,,NULL,,,,1
-167,0,Smits,Wendy,,,,NULL,,,,1
-168,0,Struyven,Katrien,,,,NULL,,,,1
-169,0,De Corte,Dirk,,,,NULL,S.C.452,financieel management,,1
-170,0,Fraeyman,Jessica,,,,NULL,Campus Drie Eiken  Universiteitsplein 1 D.R.2,sociaal werk in relatie tot sociale geneeskunde,,1
-171,0,Neels,Karel,,,,NULL,tadscampus  Sint-Jacobsstraat 2 S.M.381,derzoeksgroep centrum longitudinaal levensloop onderzoek (cello),,1
-172,0,Baelus,Chistiaan,,,,NULL,MU.A.318,,,1
-173,0,Roussel,Nathalie,,,,NULL,,kinesitherapie,,1
-174,0,De Backer,Free,,,,NULL,,,,1
-175,0,Dhoest,Alexander,,,,NULL,S.M.481,communicatiewetenschappen,professor,1
-176,0,Driessens,Kristel,,,,NULL,,,,1
-177,0,Jacobs,Marc,,,,NULL,Pleinlaan 2 - 5C439b,Cultureel erfgoed,,1
-178,0,Bertels,Inge,,,,NULL,,,,1
-179,0,Vanthemsche,Guy,,,,NULL,lokaal 5C420,,,1
-180,0,Ysebaert,Walter,,,,NULL,M431,Wetenschapsgeschiedenis,,1
-181,0,Tyssens,Jeffrey,,,,NULL,5C415,,,1
-182,0,Vandebroeck,Dieter,,,,NULL,2.02,,,1
-183,0,Elskens,Marc,,,,NULL,,,,1
-184,0,Van den Bussche,Eva,,,,NULL,,,,1
-185,0,Sepp,Arvi,,,,NULL,,Centre for Literature in Translation,,1
-186,0,Humblé,Philippe,,,,NULL,,Intercultural Communication,,1
-187,0,Geenen,Sara,,,,NULL,Grauwzusters,mijnbouw ontginning,,1
-188,0,Sfirtsis,Toni,,,,NULL,,,,1
-189,0,Raeymaeckers,Peter,,,,NULL,,,,1
+"idregquestionresp","keywordsexpertise_idkeywordsexpertise","lastname","firstname","telnr","email","remarks","coursegroup","location","expertise","title","active"
+"10","0","anonymized","Peter","anonymized","anonymized","","NULL","","","","1"
+"11","0","anonymized","Katia","anonymized","anonymized","","NULL","","","Prof.","1"
+"12","0","anonymized","Ingrid","anonymized","anonymized","","NULL","3C243","","Prof.","1"
+"13","0","anonymized","Tony","anonymized","anonymized","","NULL","","","","1"
+"14","0","anonymized","Jef","anonymized","anonymized","","NULL","S.M.485","","","1"
+"15","0","anonymized","Johan","anonymized","anonymized","","NULL","","","Prof.","1"
+"16","0","anonymized","Anne-Marie","anonymized","anonymized","","NULL","TI","","","1"
+"17","0","anonymized","Freddy","anonymized","anonymized","","NULL","K213","","","1"
+"18","0","anonymized","Wim","anonymized","anonymized","","NULL","3C244a","","","1"
+"19","0","anonymized","Caroline","anonymized","anonymized","","NULL","3C241","","","1"
+"20","0","anonymized","Ludo","anonymized","anonymized","","NULL","Pleinlaan 2","","","1"
+"21","0","anonymized","Klai","anonymized","anonymized","","NULL","3c249a","","","1"
+"22","0","anonymized","Marc","anonymized","anonymized","","NULL","2c139","","","1"
+"23","0","anonymized","Ton","anonymized","anonymized","","NULL","3b243","","","1"
+"24","0","anonymized","Marc","anonymized","anonymized","","NULL","4L401","","","1"
+"25","0","anonymized","Dominique","anonymized","anonymized","","NULL","3b237A","","","1"
+"26","0","anonymized","Christel","anonymized","anonymized","","NULL","3C233","","","1"
+"27","0","anonymized","Ignace","anonymized","anonymized","","NULL","2B102B","","","1"
+"28","0","anonymized","Tom","anonymized","anonymized","","NULL","3B243","","","1"
+"29","0","anonymized","Willem","anonymized","anonymized","","NULL","3B231","","","1"
+"30","0","anonymized","Machteld","anonymized","anonymized","","NULL","4B321","","","1"
+"31","0","anonymized","Kristel","anonymized","anonymized","","NULL","","","","1"
+"32","0","anonymized","Raoul","anonymized","anonymized","","NULL","1F001","","","1"
+"33","0","anonymized","Nadine","anonymized","anonymized","","NULL","3B206","Opleidingsdidactiek, schoolcultuur en professionele ontwikkeling","","1"
+"34","0","anonymized","Caroline","anonymized","anonymized","","NULL","0C008","","","1"
+"35","0","anonymized","Johan","anonymized","anonymized","","NULL","3B247","klinische en levenslooppsychologie","","1"
+"36","0","anonymized","Nico","anonymized","anonymized","","NULL","5B401a","","","1"
+"37","0","anonymized","Guido","anonymized","anonymized","","NULL","4C352","","","1"
+"38","0","anonymized","Alison","anonymized","anonymized","","NULL","Vesalius College","","","1"
+"39","0","anonymized","Jo","anonymized","anonymized","","NULL","","","","1"
+"40","0","anonymized","Frank","anonymized","anonymized","","NULL","5C452","","","1"
+"41","0","anonymized","Arno","anonymized","anonymized","","NULL","3B253","","","1"
+"42","0","anonymized","Raymond","anonymized","anonymized","","NULL","3C211A","","","1"
+"43","0","anonymized","Eric","anonymized","anonymized","","NULL","6f333","","","1"
+"44","0","anonymized","Christiane","anonymized","anonymized","","NULL","","","","1"
+"45","0","anonymized","Patrick","anonymized","anonymized","","NULL","s.z.308","","","1"
+"46","0","anonymized","Dick","anonymized","anonymized","","NULL","","","","0"
+"47","0","anonymized","Etienne","anonymized","anonymized","","NULL","","","","1"
+"48","0","anonymized","Bea","anonymized","anonymized","","NULL","S.M.475","","","1"
+"49","0","anonymized","Hilde","anonymized","anonymized","","NULL","S.M.183","","","1"
+"50","0","anonymized","Patrick","anonymized","anonymized","","NULL","Uz Antwerpen Edegem","","","1"
+"51","0","anonymized","Guido","anonymized","anonymized","","NULL","","","","1"
+"52","0","anonymized","Hubert","anonymized","anonymized","","NULL","CST.D.217","","","1"
+"53","0","anonymized","Annick","anonymized","anonymized","","NULL","S.S.208","","","1"
+"54","0","anonymized","Dimokritos","anonymized","anonymized","","NULL","","","","1"
+"55","0","anonymized","Gunter","anonymized","anonymized","","NULL","","","","0"
+"56","0","anonymized","Herman","anonymized","anonymized","","NULL","S.M.383","","","1"
+"57","0","anonymized","Therese","anonymized","anonymized","","NULL","S.M.381","","","1"
+"58","0","anonymized","Walter","anonymized","anonymized","","NULL","CST - D.310","","","1"
+"59","0","anonymized","Dirk","anonymized","anonymized","","NULL","","","","0"
+"60","0","anonymized","Jan","anonymized","anonymized","","NULL","S.M.231","","","1"
+"61","0","anonymized","Vanessa","anonymized","anonymized","","NULL","S.R.214","","","1"
+"62","0","anonymized","Reinhild","anonymized","anonymized","","NULL","D.A128","","","1"
+"63","0","anonymized","Dimitri","anonymized","anonymized","","NULL","S.M.375","","","1"
+"64","0","anonymized","Hilde","anonymized","anonymized","03 257 22 88 of 0477 33 96 24","NULL","","","","1"
+"65","0","anonymized","Wim","anonymized","anonymized","","NULL","","","","1"
+"66","0","anonymized","Hildegarde","anonymized","anonymized","","NULL","","","","1"
+"67","0","anonymized","Gert","anonymized","anonymized","","NULL","","","","1"
+"68","0","anonymized","Johan","anonymized","anonymized","","NULL","","","","1"
+"69","0","anonymized","Sophie","anonymized","anonymized","","NULL","","","","1"
+"70","0","anonymized","Geert","anonymized","anonymized","","NULL","","","","1"
+"71","0","anonymized","Marleen","anonymized","anonymized","","NULL","","","","1"
+"72","0","anonymized","Veerle","anonymized","anonymized","","NULL","gang vakgroep Orthopedagogiek","","","1"
+"73","0","anonymized","Eva","anonymized","anonymized","","NULL","","","","1"
+"74","0","anonymized","Karin","anonymized","anonymized","","NULL","Korte Meer 7-97-11","","","1"
+"75","0","anonymized","Ivo","anonymized","anonymized","","NULL","02.69","","","1"
+"76","0","anonymized","Gilbert","anonymized","anonymized","","NULL","","","","1"
+"77","0","anonymized","Barbara","anonymized","anonymized","","NULL","","","","1"
+"78","0","anonymized","Gerrit","anonymized","anonymized","","NULL","3B243","","","1"
+"79","0","anonymized","Yves","anonymized","anonymized","","NULL","6K430","","","1"
+"80","0","anonymized","Hugo","anonymized","anonymized","","NULL","5C417","","","1"
+"81","0","anonymized","Cathy","anonymized","anonymized","","NULL","2C119","","","1"
+"82","0","anonymized","Patricka","anonymized","anonymized","","NULL","ZW104","","","1"
+"83","0","anonymized","Bert","anonymized","anonymized","","NULL","S.D.125","","","1"
+"84","0","anonymized","Wouter","anonymized","anonymized","","NULL","CST.V.132","","","1"
+"85","0","anonymized","Sabine","anonymized","anonymized","","NULL","S.D.207","","","1"
+"86","0","anonymized","Peter","anonymized","anonymized","","NULL","S.Vre35.106","","","1"
+"87","0","anonymized","Katrien","anonymized","anonymized","","NULL","S.L.400","","","1"
+"88","0","anonymized","Heidi","anonymized","anonymized","","NULL","CST.M185","","","1"
+"89","0","anonymized","Philippe","anonymized","anonymized","","NULL","S.S.151","","","0"
+"90","0","anonymized","Frederik","anonymized","anonymized","","NULL","D.R.314","","","1"
+"91","0","anonymized","Paul","anonymized","anonymized","","NULL","S.Ve35.208","","","1"
+"92","0","anonymized","Dirk","anonymized","anonymized","","NULL","","","","1"
+"93","0","anonymized","Carl","anonymized","anonymized","","NULL","","","","1"
+"94","0","anonymized","Karel","anonymized","anonymized","","NULL","C01.33","","","1"
+"95","0","anonymized","Patrick","anonymized","anonymized","","NULL","","","","1"
+"96","0","anonymized","Els","anonymized","anonymized","","NULL","4B335","","","1"
+"97","0","anonymized","Fabienne","anonymized","anonymized","","NULL","","","","1"
+"98","0","anonymized","Steve","anonymized","anonymized","","NULL","","","","1"
+"99","0","anonymized","Piet","anonymized","anonymized","","NULL","5B414","","","1"
+"100","0","anonymized","Marc","anonymized","anonymized","","NULL","","","","1"
+"101","0","anonymized","Koen","anonymized","anonymized","","NULL","","","","1"
+"102","7","anonymized","Tom","anonymized","anonymized","","NULL","S.M.273","","","1"
+"103","9","anonymized","Dave","anonymized","anonymized","","NULL","S.M.276","","","0"
+"104","0","anonymized","Paul","anonymized","anonymized","","NULL","Hoveniersberg 24, 9000 Gent","Operationeel beheer in diensten en gezondheidszorg","","1"
+"105","0","anonymized","Georges","anonymized","anonymized","","NULL","Krijgslaan 281 S8","Civiele Techniek","","1"
+"106","0","anonymized","Jacques","anonymized","anonymized","","NULL","Coupure Links 653","Landbouweconomie","","1"
+"107","0","anonymized","Ronny","anonymized","anonymized","","NULL","Sint-Pietersnieuwstraat 41","Civiele Techniek","","1"
+"108","0","anonymized","Evert","anonymized","anonymized","gsm: 0496/458155","NULL","L201","Bewegingsvorming en Sporttraining","","1"
+"109","0","anonymized","Els","anonymized","anonymized","","NULL","","","","1"
+"110","0","anonymized","Elvia","anonymized","anonymized","","NULL","","","","1"
+"111","0","anonymized","Malaika","anonymized","anonymized","","NULL","","","","1"
+"112","0","anonymized","wim","anonymized","anonymized","","NULL","","","","1"
+"113","0","anonymized","Luc","anonymized","anonymized","","NULL","","","","1"
+"114","0","anonymized","Danielle","anonymized","anonymized","","NULL","CST M.232","armoede","","1"
+"115","0","anonymized","Elke","anonymized","anonymized","","NULL","S.Ve35.103","","","1"
+"116","0","anonymized","Steven","anonymized","anonymized","","NULL","CST.M.184","games, muziekindustrie","","1"
+"117","0","anonymized","Eric","anonymized","anonymized","","NULL","CST.V.035","","","1"
+"118","0","anonymized","Roel","anonymized","anonymized","","NULL","CST.M.186","","","0"
+"119","0","anonymized","Ann","anonymized","anonymized","","NULL","S.B.430","","","1"
+"120","0","anonymized","Peter","anonymized","anonymized","","NULL","","Geschiedenis - onderzoek smokkel van voedingswaren in grensgebied","","1"
+"121","0","anonymized","Vanthemsche","anonymized","anonymized","","NULL","","geschiedenis","","1"
+"122","0","anonymized","Dries","anonymized","anonymized","","NULL","","kunstwetenschappen","","1"
+"123","0","anonymized","Johan","anonymized","anonymized","","NULL","","kunstwetenschappen, cultuurwetenschappen, fotografie","","1"
+"124","0","anonymized","Steve","anonymized","anonymized","","NULL","5B401a","Media, Democratie & Journalistiek","","1"
+"125","0","anonymized","Stijn","anonymized","anonymized","privemail: stijndemil@gmail.com","NULL","","toegepaste informatica","","1"
+"126","0","anonymized","Ilse","anonymized","anonymized","","NULL","CST M.379","","","1"
+"127","0","anonymized","Johan","anonymized","anonymized","","NULL","112b","euthanasie","","1"
+"128","0","anonymized","Jan","anonymized","anonymized","privemail: jan.jagers@gmail.com","NULL","","journalistiek","","1"
+"129","0","anonymized","Ine","anonymized","anonymized","","NULL","","mediakritiek","","1"
+"130","0","anonymized","Wim","anonymized","anonymized","","NULL","Y' 1.01","culturele agogiek","","1"
+"131","0","anonymized","Kris","anonymized","anonymized","","NULL","3B201B","experimentele en toegepaste psychologie","","1"
+"132","0","anonymized","Anne","anonymized","anonymized","","NULL","3c272A","klinische en levenslooppsychologie","","1"
+"133","0","anonymized","Michael","anonymized","anonymized","","NULL","","","","1"
+"134","0","anonymized","Katleen","anonymized","anonymized","","NULL","/","levenslang en levensbreed leren, overgang van onderwijs naar arbeidsmarkt","onderzoeksleider","1"
+"135","0","anonymized","Ides","anonymized","anonymized","","NULL","/","economische wetenschappen","hoofd onderzoeksgroep , armoede en sociale ongelijkheid","0"
+"136","0","anonymized","Chris","anonymized","anonymized","","NULL","+32 16 322432","Sociale en Economische Geografie","","0"
+"137","0","anonymized","Jozef","anonymized","anonymized","","NULL","S.Ve35.308","","","1"
+"138","0","anonymized","Ive","anonymized","anonymized","","NULL","S.M.473","","","1"
+"139","0","anonymized","Monique","anonymized","anonymized","","NULL","","","","1"
+"140","0","anonymized","Martina","anonymized","anonymized","Martina.Temmerman@vub.ac.be","NULL","PLN5 3 NDL","","","1"
+"141","0","anonymized","Edwin","anonymized","anonymized","","NULL","S.M.371","","","1"
+"142","0","anonymized","Chang","anonymized","anonymized","","NULL","","educational sciences","prof.","1"
+"143","0","anonymized","Peter","anonymized","anonymized","","NULL","","sociologie","prof.","1"
+"144","0","anonymized","Kristien","anonymized","anonymized","","NULL","","seksuele gezondheid bij vrouwen","dr.","1"
+"145","0","anonymized","Martin","anonymized","anonymized","","NULL","","","","1"
+"146","0","anonymized","Dave","anonymized","anonymized","","NULL","5B401A","","","0"
+"147","0","anonymized","Guy","anonymized","anonymized","","NULL","","","","1"
+"148","0","anonymized","Hans","anonymized","anonymized","","NULL","","","","0"
+"149","0","anonymized","Gert","anonymized","anonymized","","NULL","","","","1"
+"150","0","anonymized","Johan","anonymized","anonymized","","NULL","","","","1"
+"151","0","anonymized","Marie-Anne","anonymized","anonymized","","NULL","","","","1"
+"152","0","anonymized","Kim","anonymized","anonymized","","NULL","","Marketing & Consumer Behavior","","1"
+"153","0","anonymized","Bruno","anonymized","anonymized","","NULL","","","","1"
+"154","0","anonymized","Ingeborg","anonymized","anonymized","","NULL","SST.B.502","","","1"
+"155","0","anonymized","Dieter","anonymized","anonymized","","NULL","CST.B.329","","","1"
+"156","0","anonymized","Steve","anonymized","anonymized","","NULL","S.M.480","","","1"
+"157","0","anonymized","Marius","anonymized","anonymized","","NULL","S.Z.408","","","0"
+"158","0","anonymized","Nathalie","anonymized","anonymized","","NULL","CST.B.236","Marketing","","1"
+"159","0","anonymized","Stijn","anonymized","anonymized","","NULL","S.M.231","sociale ongelijkheid, armoede en sociale uitsluiting, stedelijke ontwikkeling en beleid, ruimtelijke beleid","","1"
+"160","0","anonymized","Diana","anonymized","anonymized","","NULL","CST - B128","","","1"
+"161","0","anonymized","Francis","anonymized","anonymized","","NULL","","sociologie (justitie/arbeidsrecht, bedrijfsdeontologie, hiv en identiteit Zuid-Afrika)","Prof. Dr. baron","1"
+"162","0","anonymized","Jan","anonymized","anonymized","","NULL","","onderwijsmanagement en kwaliteitszorg in onderwijs","prof. dr.","1"
+"163","0","anonymized","Jelle","anonymized","anonymized","","NULL","","","","1"
+"164","0","anonymized","Milou","anonymized","anonymized","","NULL","CST C459","","","1"
+"165","0","anonymized","Karolien","anonymized","anonymized","contact eventueel via Lara Hallam","NULL","","consumentenemoties","","1"
+"166","0","anonymized","Liesbeth","anonymized","anonymized","","NULL","","","","1"
+"167","0","anonymized","Wendy","anonymized","anonymized","","NULL","","","","1"
+"168","0","anonymized","Katrien","anonymized","anonymized","","NULL","","","","1"
+"169","0","anonymized","Dirk","anonymized","anonymized","","NULL","S.C.452","financieel management","","1"
+"170","0","anonymized","Jessica","anonymized","anonymized","","NULL","Campus Drie Eiken  Universiteitsplein 1 D.R.2","sociaal werk in relatie tot sociale geneeskunde","","1"
+"171","0","anonymized","Karel","anonymized","anonymized","","NULL","tadscampus  Sint-Jacobsstraat 2 S.M.381","derzoeksgroep centrum longitudinaal levensloop onderzoek (cello)","","1"
+"172","0","anonymized","Chistiaan","anonymized","anonymized","","NULL","MU.A.318","","","1"
+"173","0","anonymized","Nathalie","anonymized","anonymized","","NULL","","kinesitherapie","","1"
+"174","0","anonymized","Free","anonymized","anonymized","","NULL","","","","1"
+"175","0","anonymized","Alexander","anonymized","anonymized","","NULL","S.M.481","communicatiewetenschappen","professor","1"
+"176","0","anonymized","Kristel","anonymized","anonymized","","NULL","","","","1"
+"177","0","anonymized","Marc","anonymized","anonymized","","NULL","Pleinlaan 2 - 5C439b","Cultureel erfgoed","","1"
+"178","0","anonymized","Inge","anonymized","anonymized","","NULL","","","","1"
+"179","0","anonymized","Guy","anonymized","anonymized","","NULL","lokaal 5C420","","","1"
+"180","0","anonymized","Walter","anonymized","anonymized","","NULL","M431","Wetenschapsgeschiedenis","","1"
+"181","0","anonymized","Jeffrey","anonymized","anonymized","","NULL","5C415","","","1"
+"182","0","anonymized","Dieter","anonymized","anonymized","","NULL","2.02","","","1"
+"183","0","anonymized","Marc","anonymized","anonymized","","NULL","","","","1"
+"184","0","anonymized","Eva","anonymized","anonymized","","NULL","","","","1"
+"185","0","anonymized","Arvi","anonymized","anonymized","","NULL","","Centre for Literature in Translation","","1"
+"186","0","anonymized","Philippe","anonymized","anonymized","","NULL","","Intercultural Communication","","1"
+"187","0","anonymized","Sara","anonymized","anonymized","","NULL","Grauwzusters","mijnbouw ontginning","","1"
+"188","0","anonymized","Toni","anonymized","anonymized","","NULL","","","","1"
+"189","0","anonymized","Peter","anonymized","anonymized","","NULL","","","","1"
+"190","0","anonymized","Sarah","anonymized","anonymized","","NULL","","","","1"
