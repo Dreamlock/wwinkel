@@ -22,15 +22,15 @@ class Education(models.Model):
 
 
 class Institution(models.Model):
-    name = models.CharField(max_length=40, unique=True)
-    address = models.ForeignKey(Address)
+    name = models.CharField(verbose_name='naam', help_text='naam van de instelling', max_length=40, unique=True)
+    address = models.ForeignKey(Address, verbose_name='adres', help_text='adres van de instelling')
 
     def __str__(self):
         return self.name
 
 
 class Faculty(models.Model):
-    name = models.CharField(max_length=40, unique=True)
+    name = models.CharField(verbose_name='naam', help_text='naam van de faculteit', max_length=40, unique=True)
     institution = models.ManyToManyField(Institution, through='FacultyOf')
 
     def __str__(self):
@@ -44,16 +44,16 @@ class FacultyOf(models.Model):
 
 
 class Student(models.Model):
-    first_name = models.CharField(max_length=33)
-    last_name = models.CharField(max_length=45)
+    first_name = models.CharField('voornaam', max_length=33)
+    last_name = models.CharField('familienaam', max_length=45)
 
-    mobile = models.CharField(max_length=20)
-    email = models.EmailField()
+    mobile = models.CharField('gsm', max_length=20)
+    email = models.EmailField(verbose_name='email')
 
     status = models.BooleanField(default=True)  # Waarvoor dient dit?
 
-    education = models.ForeignKey(Education)
-    address = models.ForeignKey(Address)
+    education = models.ForeignKey(Education, help_text='opleiding van de student')
+    address = models.ForeignKey(Address, help_text='adres van de student')
 
 
 class Person(models.Model):
@@ -166,7 +166,7 @@ class Question(models.Model):
     )
     public = models.BooleanField('vragen zijn publiek', blank=True, default=False)
     intake = models.ForeignKey(Intake, null=True, blank=True)
-    attachment = models.ManyToManyField(Attachment, null=True, blank=True)
+    attachment = models.ManyToManyField(Attachment, blank=True)
 
     # The corresponding organisation
     organisation = models.ForeignKey(Organisation, verbose_name='organisatie')
@@ -180,15 +180,15 @@ class Question(models.Model):
     )
 
     # Faceting data
-    institution = models.ManyToManyField(Institution, verbose_name='instelling', null=True)
-    promotor = models.ManyToManyField(Promotor, verbose_name='promotor', null=True)
-    faculty = models.ManyToManyField(Faculty, verbose_name='faculteit', null=True)
-    education = models.ManyToManyField(Education, verbose_name='opleiding', null=True)
+    institution = models.ManyToManyField(Institution, verbose_name='instelling')
+    promotor = models.ManyToManyField(Promotor, verbose_name='promotor')
+    faculty = models.ManyToManyField(Faculty, verbose_name='faculteit')
+    education = models.ManyToManyField(Education, verbose_name='opleiding')
     keyword = models.ManyToManyField(Keyword, verbose_name='trefwoorden')
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     type = models.ForeignKey(QuestionType, null=True)
 
-    student = models.ForeignKey(Student, null=True)
+    student = models.ForeignKey(Student, verbose_name='student', null=True)
     completion_date = models.DateTimeField(null=True)  # When the question was round up
 
     history = HistoricalRecords()
