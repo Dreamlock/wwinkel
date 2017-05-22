@@ -48,10 +48,7 @@ def main(argv):
 
         if should_delete:
             print('deleting old db...')
-            try:
-                os.remove('db.sqlite3')
-            except FileNotFoundError:
-                print('no db.sqlite3 found')
+            call_command('reset_db', '--noinput')
             print('  done')
 
             print('deleting old migrations...')
