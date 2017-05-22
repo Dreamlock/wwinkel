@@ -146,7 +146,8 @@ def main(argv):
                 first_name='',
                 last_name='',
                 telephone='0987654321',
-                email='central@manager.be'
+                email='central@manager.be',
+                is_staff=True,
             )
             manager.region.add(Region.objects.get(region=Region.CENTRAL_REGION))
             manager.set_password('admin')
@@ -159,7 +160,8 @@ def main(argv):
                 first_name='',
                 last_name='',
                 telephone='0987654321',
-                email='regional@manager.be'
+                email='regional@manager.be',
+                is_staff=True,
             )
             manager.region.add(Region.objects.get(region=Region.ANTWERP_REGION))
             manager.set_password('admin')
