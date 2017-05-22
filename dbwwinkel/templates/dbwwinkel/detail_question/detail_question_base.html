@@ -1,62 +1,124 @@
 {% extends "base/base.html" %}
-{% load cms_tags menu_tags sekizai_tags staticfiles %}
+{% load cms_tags menu_tags sekizai_tags staticfiles index %}
 {% block content %}
-    <div class = "row">
-        <div class = "page-header">
-            <div class = "container">
-                <h1>Detail weergave vraag</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header">
+                <div class="container">
+                    <h1>Detail weergave vraag</h1>
+                </div>
             </div>
         </div>
-    </div>
-        <div class = "col-md-2">
-            <div class="col-md-2">
-                <div class="sidebar-nav-fixed affix">
-                    <div class="well">
-                        <ul class="nav ">
-                            Opties: <br>
-                            {% block options %}
-                            {% endblock %}
-                        <a href = '{% url 'list_questions' %}' class ='btn btn-success'>Terug</a>
-                        </ul>
-                    </div>
-                    <!--/.well -->
-                </div>
+        <div class="col-md-2">
+            <div class="span2 sidebar">
+                <h2>Opties</h2>
+                <ul class="nav nav-tabs nav-stacked">
+                    {% if user.is_central_manager %}
+                        {% if question.state == question.NEW_QUESTION %}
+                            <li>
+                                <strong>Toewijzen voor intake:</strong>
+                                <form name="region" action="{% url "distribute_intake" question.id %}" method='post'
+                                      accept-charset="utf-8">
+                                    {% csrf_token %}
+                                    {% for region in region_lst %}
+                                        <input type="radio" value="{{ region.1 }}" name="region"> {{ region.0 }}<br>
+                                    {% endfor %}
+                                    <div class="row form-group">
+                                        <button type="submit" value="select">toewijzen</button>
+                                    </div>
+                                </form>
+                            </li>
+
+                        {% elif question.state == question.IN_PROGRESS_QUESTION_CENTRAL %}
+                            <li>
+                                <strong>Toewijzen aan regio(s):</strong>
+                                <form name="region" action="{% url "distribute_question_public" question.id %}"
+                                      method='post'
+                                      accept-charset="utf-8">
+                                    {% csrf_token %}
+                                    {% for region in region_lst %}
+                                        <div class="row form-group">
+                                            <input type="checkbox" value="{{ region.region }}" name="region">
+                                            {{ region.get_region_display }}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="row form-group">
+                                        <button type="submit" value="select">toewijzen</button>
+                                    </div>
+                                </form>
+                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
+                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% if question|question_regional_user:user is True %}
+
+                        {% if question.state == question.INTAKE_QUESTION %}
+                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
+                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
+                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
+                            <li><a href='{% url 'finish_intake' question.id %}'>Rond intake af</a></li>
+
+                        {% elif question.state == question.IN_PROGRESS_QUESTION_REGIONAL %}
+                            <li><a href='{% url 'open_question' question.id %}'>Zet vraag publiek</a></li>
+                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
+                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
+                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
+
+                        {% elif question.state == question.PUBLIC_QUESTION %}
+                            <li><a>Reserveer vraag</a></li>
+                            <li><a>Vraag is gekozen</a></li>
+                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
+                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
+                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
+                        {% endif %}
+
+
+                    {% endif %}
+
+                    {% if user.is_manager %}
+                        <li><a href= {% url "deny_question" question.id %}>Vraag weigeren</a></li>
+                        <li><a>Vraag terugtrekken</a></li>
+                    {% endif %}
+                    <li><a href='{% url 'list_questions' %}'>Terug</a></li>
+                </ul>
                 <!--/sidebar-nav-fixed -->
             </div>
         </div>
-        <div class = "col-md-10">
-            <div class = "container">
-                <div class = "panel panel-info">
-                    <div class = 'panel-heading'>
+        <div class="col-md-10">
+            <div class="container">
+                <div class="panel panel-info">
+                    <div class='panel-heading'>
                         <h2><strong>Vraag: </strong>{{ question.question_text }}</h2>
                     </div>
-                    <div class = "panel panel-body">
-                        <div class = col-md-4>
+                    <div class="panel panel-body">
+                        <div class=col-md-4>
                             <h3>Organisatie</h3>
-                            <strong>Naam:   </strong> {{organisation.name}}<br>
+                            <strong>Naam: </strong> {{ organisation.name }}<br>
                             <strong>Straat: </strong> {{ organisation.address.street_name }}<br>
                             <strong>Nummer: </strong> {{ organisation.address.street_number }}<br>
-                            <strong>Plaats: </strong> {{ organisation.address.postal_code }}  {{ organisation.address.city }} <br>
-                            <strong>Tel:    </strong> {{ organisation.telephone }} <br>
-                            <strong>Website:</strong> <a href = "http://{{organisation.website}}" target="_blank">{{ organisation.website }}</a>
+                            <strong>Plaats: </strong> {{ organisation.address.postal_code }} {{ organisation.address.city }}
+                            <br>
+                            <strong>Tel: </strong> {{ organisation.telephone }} <br>
+                            <strong>Website:</strong> <a href="http://{{ organisation.website }}"
+                                                         target="_blank">{{ organisation.website }}</a>
                         </div>
 
-                        <div class = col-md-4>
+                        <div class=col-md-4>
                             <h3>Contactpersoon</h3>
-                            <strong>Naam:  </strong> {{organisation.organisationuser.first_name  }}
-                            {{organisation.organisationuser.last_name  }}<br>
-                            <strong>Email: </strong> {{organisation.organisationuser.email  }}<br>
+                            <strong>Naam: </strong> {{ organisation.organisationuser.first_name }}
+                            {{ organisation.organisationuser.last_name }}<br>
+                            <strong>Email: </strong> {{ organisation.organisationuser.email }}<br>
                             <strong>Tel:</strong> {{ organisation.organisationuser.telephone }}
                         </div>
-                        <div class = "col-md-4">
+                        <div class="col-md-4">
                             <h3>Info </h3>
                             <strong>Status: </strong>{{ question.get_state_display }} <br>
                             <strong>Regio(s)</strong>:
-                            {% for region in question.region.all  %}
+                            {% for region in question.region.all %}
                                 {{ region }}
                             {% endfor %}<br>
                             <strong>Instelling(en)</strong>{% for institution  in question.institution.all %}
-                                                                {{institution  }}{% endfor %}<br>
+                            {{ institution }}{% endfor %}<br>
                             <strong>Onderzoeksveld(en):</strong>
                             {% for study_field in question.education.all %}
                                 {{ study_field }}
@@ -70,22 +132,22 @@
 
                     </div>
 
-                    <div class = 'panel-body'>
-                       <h3>Doel van de organisatie:</h3>
+                    <div class='panel-body'>
+                        <h3>Doel van de organisatie:</h3>
                         {{ organisation.goal }}
                     </div>
 
-                    <div class = 'panel-body'>
+                    <div class='panel-body'>
                         <h3>Hoe is uw vraag ontstaan?</h3>
                         {{ question.reason }}
                     </div>
 
-                    <div class = 'panel-body'>
+                    <div class='panel-body'>
                         <h3>Hoe wilt u de resultaten van uw vraag gebruiken?</h3>
                         {{ question.purpose }}
                     </div>
 
-                    <div class = 'panel-body'>
+                    <div class='panel-body'>
                         <h3>Deadline vraag:</h3>
                         {% if question.deadline == Null %}
                             Geen
@@ -95,12 +157,12 @@
 
                     </div>
 
-                    <div class = 'panel-body'>
+                    <div class='panel-body'>
                         <h3>In welke mate kunt u een bijdrage leveren aan de kosten?</h3>
                         {{ question.own_contribution }}
                     </div>
 
-                    <div class = 'panel-body'>
+                    <div class='panel-body'>
                         <h3>Gaat u ermee akkoord dat de resultaten openbaar zijn en gepubliceerd worden?</h3>
                         {% if question.public == True %}
                             Ja
@@ -109,14 +171,14 @@
                         {% endif %}
                     </div>
 
-                    <div class = 'panel-body'>
+                    <div class='panel-body'>
                         <h3>Opmerkingen</h3>
                         {{ question.remarks }}
                     </div>
                     {% if internal == True %}
-                        <div class = 'panel-body'>
+                        <div class='panel-body'>
                             <h3>Interne opmerkingen</h3>
-                            <p style ='color:green'>{{ question.internal_remarks }}</p>
+                            <p style='color:green'>{{ question.internal_remarks }}</p>
                         </div>
                     {% endif %}
                 </div>

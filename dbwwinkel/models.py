@@ -175,9 +175,16 @@ class Question(models.Model):
     creation_date = models.DateTimeField(default=timezone.now, editable=False, null=True, blank=True)
     active = models.BooleanField(default=True)
     state = models.IntegerField(choices=STATE_SELECT, default=NEW_QUESTION)
+
+    region_processing =  region = models.ManyToManyField(
+        Region, verbose_name='regio', related_name='question_region_process')
+
     region = models.ManyToManyField(
         Region, verbose_name='regio', help_text='huidige regio(s) die momenteel met de vraag bezig zijn'
     )
+
+
+
 
     # Faceting data
     institution = models.ManyToManyField(Institution, verbose_name='instelling')

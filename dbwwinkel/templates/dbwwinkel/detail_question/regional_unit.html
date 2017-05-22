@@ -1,8 +1,0 @@
-{% extends 'dbwwinkel/detail_question/detail_question_base.html' %}
-{% block options %}
-    {% if question.state == question.IN_PROGRESS_QUESTION_REGIONAL %}
-        <a class="btn btn-warning " href = {% url "edit_question" question.id %}>Vraag wijzigen</a><br><br>
-        <a class ="btn btn-info" href = {% url "internal_remark" question.id %}>Opmerking toevoegen</a><br><br>
-        <a class = "btn btn-info" href = {% url 'edit_meta_info' question.id %}> Bewerk extra info </a><br><br>
-    {% endif %}
-{% endblock %}

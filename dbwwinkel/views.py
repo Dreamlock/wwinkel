@@ -157,91 +157,21 @@ def list_questions(request, admin_filter=None):
 def detail(request, question_id):
     question = Question.objects.get(id=question_id)
     organisation = question.organisation
-
-    if not request.user.is_authenticated:  # Then the user is a student
-        return student_detail(request, question, organisation)
-
-    elif OrganisationUser.objects.filter(id=request.user.id).exists():
-        organisation = (OrganisationUser.objects.get(id=request.user.id)).organisation
-        if organisation == question.organisation:
-            return organisation_detail(request, question, organisation)
-
-    elif request.user.is_manager():
-        user = ManagerUser.objects.get(id=request.user.id)
-        if user.region.filter(region=Region.CENTRAL_REGION).exists():
-            return central_detail(request, question, organisation)
-
-        elif not set(user.region.all()).isdisjoint(question.region.all()):
-            return regional_detail(request, question, organisation)
+    template_lst = []
 
     context = {'question': question,
                'question_id': question_id,
                'organisation': organisation,
-               'internal': False}
+               'internal': False,
+               'options': template_lst,
+               'region_lst': Region.objects.exclude(region = Region.CENTRAL_REGION)}
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
-
-
-"""
-class QuestionDetailView(DetailView):
-    model = Question
-    template_name = 'dbwwinkel/detail_question/detail_question_base.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-"""
-
-
-def student_detail(request, question, organisation):
-    context = {'question': question,
-               'organisation': organisation,
-               'internal': False
-               }
-    return render(request, 'dbwwinkel/detail_question/student.html', context)
-
-
-def regional_detail(request, question, organisation):
-    context = {'question': question,
-               'organisation': organisation,
-               'internal': True}
-
-    return render(request, 'dbwwinkel/detail_question/regional_unit.html', context)
-
-
-def central_detail(request, question, organisation):
-    region_list = []
-    for region in Region.objects.all():
-        if region.region != Region.CENTRAL_REGION:
-            region_list.append((region, region.region))
-    context = {'question': question,
-               'region_lst': region_list,
-               'organisation': organisation,
-               'internal': True}
-    return render(request, 'dbwwinkel/detail_question/central_unit.html', context)
-
-
-def organisation_detail(request, question, organisation):
-    context = {'question': question,
-               'organisation': organisation,
-               'internal': False}
-    return render(request, 'dbwwinkel/detail_question/organisations.html', context)
 
 
 @login_required
 def edit_question(request, question_id):
     question = Question.objects.get(id=question_id)
-    # todo: Check if the authentication works.
-    '''try:
-        if (request.user.organisation.id == question.organisation.id  # Check user same organisation as question.
-                and request.user.has_perm()):
-            pass
-        else:
-            raise PermissionDenied()
-
-    except ValueError:
-        raise PermissionDenied() '''
-
     form = RegisterQuestionForm(request.POST or None, instance=question)
 
     if form.is_valid():
@@ -262,54 +192,19 @@ def reserve_question(request, question_id):
                             "\nGelieve contact op te nemen met de medewerker(s) van: {0}".format(add))
 
 
-def distribute_question(request, question_id):
-    question = Question.objects.get(id=question_id)
-
-    for region in request.POST.getlist('region'):
-        region_obj = Region.objects.get(region=region)
-        question.region.add(region_obj)
-
-    question.state = Question.IN_PROGRESS_QUESTION_REGIONAL
-    question.save()
-
-    return HttpResponse("Toegewezen")
-
-
 def open_question(request, question_id):
     question = Question.objects.get(id=question_id)
     question.state = Question.PUBLIC_QUESTION
+
+
+    for region in request.user.as_manager().region.all():
+        question.region_processing.remove(region)
+
     question.save()
-    return HttpResponse("Vraag staat publiek")
+    return redirect('detail_question', question_id=question_id)
 
 
-def assign_question(request, question_id):
-    question = Question.objects.get(id=question_id)
-    question.state = Question.ONGOING_QUESTION
-    question.save()
-    return HttpResponse("Vraag is nu lopend")
 
-
-def round_up_question(request, question_id):
-    question = Question.objects.get(id=question_id)
-    question.state = Question.FINISHED_QUESTION
-    question.save()
-    return HttpResponse("Vraag is afgerond")
-
-
-def deny_question(request, question_id):
-    """FAKE NEWS"""
-
-    question = Question.objects.get(id=question_id)
-    question.state = Question.DENIED_QUESTION
-    question.save()
-    return HttpResponse("Vraag is geweigerd")
-
-
-def revoke_question(request, question_id):
-    question = Question.objects.get(id=question_id)
-    question.state = Question.REVOKED_QUESTION
-    question.save()
-    return HttpResponse("Vraag is terug getrokken")
 
 
 def distribute_intake(request, question_id):
@@ -340,6 +235,27 @@ def internal_remark(request, question_id):
         form = InternalRemarkForm(initial=data)
 
     return render(request, 'dbwwinkel/internal_remark.html', {'form': form, 'question_id': question_id})
+
+
+def finish_intake(request, question_id):
+    question = Question.objects.get(id=question_id)
+    question.state = Question.IN_PROGRESS_QUESTION_CENTRAL
+    question.save()
+    return redirect('detail_question', question_id=int(question_id))
+
+def distribute_to_public(request, question_id):
+
+    question = Question.objects.get(id=question_id)
+    print(request.POST)
+    if request.POST.getlist('region', False):
+        regions = request.POST.getlist('region', False)
+        region = Region.objects.filter(region__in = regions)
+        question.region.set(region)
+        question.region_processing.set(region)
+        question.state = question.IN_PROGRESS_QUESTION_REGIONAL
+        question.save()
+
+    return redirect('detail_question', question_id=int(question_id))
 
 
 def edit_meta_info(request, question_id):
@@ -515,63 +431,62 @@ def administration_view_to_process(request):
 
     if request.user.is_regional_manager():
         region_lst = request.user.as_manager().region.all()
-        sqs = Question.objects.filter(region__in = region_lst)
+        sqs = Question.objects.filter(region__in=region_lst)
         sqs = sqs.filter(state__in=[Question.IN_PROGRESS_QUESTION_REGIONAL, Question.INTAKE_QUESTION])
 
     if request.user.is_central_manager():
         sqs = sqs | Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])
 
-
-
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
 
 def administration_view_new(request):
-
-    sqs = Question.objects.filter(state= Question.NEW_QUESTION)
+    sqs = Question.objects.filter(state=Question.NEW_QUESTION)
 
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
 
 def administration_view_intake_process(request):
-
     if request.user.is_regional_manager():
         region_lst = request.user.as_manager().region.all()
-        sqs = Question.objects.filter(region__in = region_lst)
+        sqs = Question.objects.filter(region__in=region_lst)
 
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
-def administration_view_intake_in_progress(request):
 
+def administration_view_intake_in_progress(request):
     sqs = Question.objects.none()
     if request.user.is_manager:
         sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
 
         region_lst = request.user.as_manager().region.all()
-        sqs = sqs.filter(region__in= region_lst)
+        sqs = sqs.filter(region__in=region_lst)
 
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
 
 def administration_view_intake_done(request):
-    sqs = Question.objects.filter(state= Question.IN_PROGRESS_QUESTION_CENTRAL)
+    sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_CENTRAL)
 
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
-def administration_view_in_regional_process(request):
 
+def administration_view_in_regional_process(request):
     sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
 
     region_lst = request.user.as_manager().region.all()
@@ -582,10 +497,9 @@ def administration_view_in_regional_process(request):
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
+
 def administration_view_in_regional_process_all(request):
-
     sqs = Question.objects.filter(state=Question.IN_PROGRESS_QUESTION_REGIONAL)
-
 
     context = {
         'query': sqs
@@ -594,14 +508,13 @@ def administration_view_in_regional_process_all(request):
 
 
 def administration_view_public(request):
-
     sqs = Question.objects.filter(state=Question.PUBLIC_QUESTION)
-
 
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
 
 def administration_view_reserved(request):
     sqs = Question.objects.filter(state=Question.RESERVED_QUESTION)
@@ -611,6 +524,7 @@ def administration_view_reserved(request):
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
+
 def administration_view_on_going(request):
     sqs = Question.objects.filter(state=Question.ONGOING_QUESTION)
 
@@ -618,6 +532,7 @@ def administration_view_on_going(request):
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
 
 def administration_view_finished(request):
     sqs = Question.objects.filter(state=Question.FINISHED_QUESTION)
@@ -627,6 +542,7 @@ def administration_view_finished(request):
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
+
 def administration_view_denied(request):
     sqs = Question.objects.filter(state=Question.DENIED_QUESTION)
 
@@ -634,6 +550,7 @@ def administration_view_denied(request):
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
 
 def administration_view_revoked(request):
     sqs = Question.objects.filter(state=Question.REVOKED_QUESTION)
@@ -644,3 +561,11 @@ def administration_view_revoked(request):
     return render(request, 'dbwwinkel/admin_page.html', context)
 
 
+def administration_view_my_questions(request):
+    sqs = Question.objects.filter(region__in=request.user.as_manager().region.all())
+
+    print(request.user.as_manager().region)
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_page.html', context)
