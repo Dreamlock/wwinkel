@@ -198,7 +198,7 @@ class Question(models.Model):
     student = models.ForeignKey(Student, verbose_name='student', null=True)
     completion_date = models.DateTimeField(null=True)  # When the question was round up
 
-    history = HistoricalRecords()
+    # history = HistoricalRecords()
     question_group = models.ForeignKey(QuestionGroups)
 
     # methods on objects
