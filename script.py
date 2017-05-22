@@ -6,6 +6,7 @@ django.setup()
 from custom_users import models as cmmodels
 from dbwwinkel import models as dbmodels
 import csv, sys, datetime
+from django.core.exceptions import ObjectDoesNotExist
 
 """ paths to csv files can be passed by commandline in following order:
 
@@ -264,6 +265,7 @@ with open(sys.argv[5], encoding='latin1') as f:
             except:
                 # print(sys.exc_info())
                 pass
+    print(organisation_id_dict)
     print("done")
     f.close()
 
@@ -460,7 +462,7 @@ with open(sys.argv[10], encoding='latin1') as f:
             rdate = refactorDeadline(date)
             date2 = get_row('datecreated')
             cdate = refactorDate(date2)
-
+            print('org.id:', get_new_organisation_id(int(get_row('organization_idorganization'))), get_row('organization_idorganization'))
             org = dbmodels.Organisation.objects.get(
                 id=get_new_organisation_id(int(get_row('organization_idorganization')))
             )
@@ -515,10 +517,12 @@ with open(sys.argv[10], encoding='latin1') as f:
             # print(reg)
             obj.region.add(reg)
             obj.save()
+        except ObjectDoesNotExist:
+            print(sys.exc_info(), 'question id:', obj.id)
         except:
             # problems.write(str((sys.exc_info(), ' ', get_row('idquestion'),' ', inst.address.province,' ', inst,' ', ed)))
             # problems.write("\n")
-            # print(sys.exc_info())
+            print(sys.exc_info())
             pass
     print("done")
     # problems.close()
