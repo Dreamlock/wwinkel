@@ -301,9 +301,6 @@ class ManagerUser(User):
         return self.region.filter(region=Region.CENTRAL_REGION).exists()
 
     def is_regional_manager(self):
-        return self.region.exclude(region = Region.CENTRAL_REGION).exists()
-
-    def is_regional_manager(self):
         return self.region.exclude(region=Region.CENTRAL_REGION).exists()
 
 
