@@ -518,11 +518,11 @@ with open(sys.argv[10], encoding='latin1') as f:
             obj.region.add(reg)
             obj.save()
         except ObjectDoesNotExist:
-            print(sys.exc_info(), 'question id:', obj.id)
+            # print(sys.exc_info(), 'question id:', obj.id)
         except:
             # problems.write(str((sys.exc_info(), ' ', get_row('idquestion'),' ', inst.address.province,' ', inst,' ', ed)))
             # problems.write("\n")
-            print(sys.exc_info())
+            #print(sys.exc_info())
             pass
     print("done")
     # problems.close()
