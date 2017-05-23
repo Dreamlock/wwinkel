@@ -182,18 +182,39 @@ def edit_question(request, question_id):
 
 def reserve_question(request, question_id):
     question = Question.objects.get(id=question_id)
-    if request.user.is_authenticated == False and question.state.state == Question.PUBLIC_QUESTION:
-        add = ""
-        for region in question.region.all():
-            add += "{0} ".format(region)
-        question.state = Question.RESERVED_QUESTION
-        question.save()
-        return HttpResponse("Vraag gereserveerd."
-                            "\nGelieve contact op te nemen met de medewerker(s) van: {0}".format(add))
+    question.state = Question.RESERVED_QUESTION
+    question.save()
+    return redirect('detail_question', question_id=question_id)
+
+def assign_question(request, question_id):
+    question = Question.objects.get(id=question_id)
+    question.state = Question.ONGOING_QUESTION
+    question.save()
+    return redirect('detail_question', question_id=question_id)
+
+def round_up_question(request,question_id):
+    question = Question.objects.get(id=question_id)
+    question.state = Question.FINISHED_QUESTION
+    question.save()
+    return redirect('detail_question', question_id=question_id)
+
+def revoke_question(request, question_id):
+    question = Question.objects.get(id=question_id)
+    question.state = Question.REVOKED_QUESTION
+    question.save()
+    return redirect('detail_question', question_id=question_id)
+
+def deny_question(request, question_id):
+    question = Question.objects.get(id=question_id)
+    question.state = Question.DENIED_QUESTION_QUESTION
+    question.save()
+    return redirect('detail_question', question_id=question_id)
+
 
 
 def open_question(request, question_id):
     question = Question.objects.get(id=question_id)
+
     question.state = Question.PUBLIC_QUESTION
 
 
@@ -210,9 +231,10 @@ def open_question(request, question_id):
 def distribute_intake(request, question_id):
     question = Question.objects.get(id=question_id)
 
+    print(request.POST)
     region = Region.objects.get(region=request.POST.getlist('region')[0])
     question.region.add(region)
-    question.state = Question.IN_PROGRESS_QUESTION_REGIONAL
+    question.state = Question.INTAKE_QUESTION
     question.save()
 
     return redirect('detail_question', question_id=int(question_id))
@@ -256,6 +278,33 @@ def distribute_to_public(request, question_id):
         question.save()
 
     return redirect('detail_question', question_id=int(question_id))
+
+
+def interested_in_question_view(request,question_id):
+    # if this is a POST request we need to process the form data
+    question = Question.objects.get(id = question_id)
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = StudentForm(request.POST, prefix = 'student')
+        address_form = AdressForm(request.POST, prefix='address')
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return redirect('detail_question', question_id=int(question_id))
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = StudentForm(prefix = 'student')
+        address_form = AdressForm(prefix = 'address')
+
+    context = {'form': form,
+               'question':question,
+               'address_form':address_form,
+               }
+
+    return render(request, 'dbwwinkel/student_form.html', context )
 
 
 def edit_meta_info(request, question_id):
@@ -433,6 +482,10 @@ def administration_view_to_process(request):
         region_lst = request.user.as_manager().region.all()
         sqs = Question.objects.filter(region__in=region_lst)
         sqs = sqs.filter(state__in=[Question.IN_PROGRESS_QUESTION_REGIONAL, Question.INTAKE_QUESTION])
+
+        sqs2 = Question.objects.filter(state = Question.PUBLIC_QUESTION)
+        sqs2 = sqs2.filter(region_processing__in = region_lst)
+        sqs = sqs | sqs2
 
     if request.user.is_central_manager():
         sqs = sqs | Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])

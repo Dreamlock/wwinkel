@@ -96,7 +96,7 @@ class SubjectAutocomplete(lightcomplete.Select2QuerySetView):
         qs = (question.possible_subject | real_subject).exclude(
             id__in=[subject.id for subject in question.question_subject.all()])
         if self.q:
-            qs = qs.filter(name__istartswith=self.q)
+            qs = qs.filter(subject__istartswith=self.q)
 
         return qs
 

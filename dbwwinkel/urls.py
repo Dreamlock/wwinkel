@@ -7,21 +7,29 @@ urlpatterns = [
     url(r'^register_question', views.register_question, name='register_question'),
     url(r'register_institution/(?P<question_id>[0-9]+)', views.register_institution, name='register_institution'),
     url(r'register_promotor/(?P<question_id>[0-9]+)', views.register_promotor, name='register_promotor'),
-
     # Rest
+
     url(r'^list_questions', views.list_questions, name='list_questions'),
     url(r'^list_questions/(?P<admin_filter>[a-z]+)', views.list_questions, name='list_questions_filter'),
+
     url(r'^detail_question/(?P<question_id>[0-9]+)', views.detail, name='detail_question'),
-    # url(r'^detail_question/(?P<pk>[0-9]+)', views.QuestionDetailView.as_view(), name='detail_question'),
-    url(r'^edit_question/(?P<question_id>[0-9]+)', views.edit_question, name='edit_question'),
+
+    url(r'distribute_intake/(?P<question_id>[0-9]+)', views.distribute_intake, name='distribute_intake'),
+    url(r'finish_intake/(?P<question_id>[0-9]+)', views.finish_intake, name='finish_intake'),
     url(r'^distribute_question/(?P<question_id>[0-9]+)', views.distribute_to_public, name='distribute_question_public'),
     url(r'^open_question/(?P<question_id>[0-9]+)', views.open_question, name='open_question'),
     url(r'^reserve_question/(?P<question_id>[0-9]+)', views.reserve_question, name='reserve_question'),
-    url(r'distribute_intake/(?P<question_id>[0-9]+)', views.distribute_intake, name='distribute_intake'),
+    url(r'^interested_in_question/(?P<question_id>[0-9]+)', views.interested_in_question_view, name='interested_in_question'),
+    url(r'^assign_question/(?P<question_id>[0-9]+)', views.assign_question, name='assign_question'),
+    url(r'round_up_question/(?P<question_id>[0-9]+)', views.round_up_question, name='round_up_question'),
+    url(r'deny_question/(?P<question_id>[0-9]+)', views.deny_question, name='deny_question'),
+    url(r'revoke_question/(?P<question_id>[0-9]+)', views.revoke_question, name='revoke_question'),
+
+
+    url(r'^edit_question/(?P<question_id>[0-9]+)', views.edit_question, name='edit_question'),
     url(r'internal_remark/(?P<question_id>[0-9]+)', views.internal_remark, name='internal_remark'),
     url(r'edit_meta_info/(?P<question_id>[0-9]+)', views.edit_meta_info, name='edit_meta_info'),
-    url(r'finish_intake/(?P<question_id>[0-9]+)', views.finish_intake, name='finish_intake'),
-    url(r'finish_intake/(?P<question_id>[0-9]+)', views.finish_intake, name='deny_question'),
+
     url(r'admin_to_process/', views.administration_view_to_process, name='admin_to_process'),
     url(r'admin_new/', views.administration_view_new, name='admin_new'),
     url(r'admin_intake_process/', views.administration_view_intake_in_progress, name='admin_intake_process'),
@@ -35,9 +43,7 @@ urlpatterns = [
     url(r'admin_revoked/', views.administration_view_revoked, name='admin_revoked'),
     url(r'admin_regional_progress_all/', views.administration_view_in_regional_process_all,
         name='admin_regional_process_all'),
-
     url(r'admin_my_question/', views.administration_view_my_questions, name='admin_my_question'),
-
 
     url(r'^institution-autocomplete/$',
         InstitutionAutocomplete.as_view(),

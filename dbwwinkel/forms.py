@@ -211,6 +211,15 @@ class FacetForm(forms.Form):
                                          widget=forms.CheckboxSelectMultiple)
 
 
+class StudentForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ['first_name', 'last_name', 'mobile', 'email']
+
+
+
+
 def QuestionFormFactory(user, question):
     return modelform_factory(Question, tuple(get_editable_fields(user, question)))
 

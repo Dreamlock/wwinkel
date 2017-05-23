@@ -13,73 +13,83 @@
             <div class="span2 sidebar">
                 <h2>Opties</h2>
                 <ul class="nav nav-tabs nav-stacked">
-                    {% if user.is_central_manager %}
-                        {% if question.state == question.NEW_QUESTION %}
-                            <li>
-                                <strong>Toewijzen voor intake:</strong>
-                                <form name="region" action="{% url "distribute_intake" question.id %}" method='post'
-                                      accept-charset="utf-8">
-                                    {% csrf_token %}
-                                    {% for region in region_lst %}
-                                        <input type="radio" value="{{ region.1 }}" name="region"> {{ region.0 }}<br>
-                                    {% endfor %}
-                                    <div class="row form-group">
-                                        <button type="submit" value="select">toewijzen</button>
-                                    </div>
-                                </form>
-                            </li>
 
-                        {% elif question.state == question.IN_PROGRESS_QUESTION_CENTRAL %}
-                            <li>
-                                <strong>Toewijzen aan regio(s):</strong>
-                                <form name="region" action="{% url "distribute_question_public" question.id %}"
-                                      method='post'
-                                      accept-charset="utf-8">
-                                    {% csrf_token %}
-                                    {% for region in region_lst %}
-                                        <div class="row form-group">
-                                            <input type="checkbox" value="{{ region.region }}" name="region">
-                                            {{ region.get_region_display }}
-                                        </div>
-                                    {% endfor %}
-                                    <div class="row form-group">
-                                        <button type="submit" value="select">toewijzen</button>
-                                    </div>
-                                </form>
-                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
-                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
-                        {% endif %}
-                    {% endif %}
-                    {% if question|question_regional_user:user is True %}
-
-                        {% if question.state == question.INTAKE_QUESTION %}
-                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
-                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
-                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
-                            <li><a href='{% url 'finish_intake' question.id %}'>Rond intake af</a></li>
-
-                        {% elif question.state == question.IN_PROGRESS_QUESTION_REGIONAL %}
-                            <li><a href='{% url 'open_question' question.id %}'>Zet vraag publiek</a></li>
-                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
-                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
-                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
-
-                        {% elif question.state == question.PUBLIC_QUESTION %}
-                            <li><a>Reserveer vraag</a></li>
-                            <li><a>Vraag is gekozen</a></li>
-                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
-                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
-                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
-                        {% endif %}
-
-
+                    {% if question.state == question.NEW_QUESTION and user.is_central_manager %}
+                        <li>
+                            <strong>Toewijzen voor intake:</strong>
+                            <form name="region" action="{% url "distribute_intake" question.id %}" method='post'
+                                  accept-charset="utf-8">
+                                {% csrf_token %}
+                                {% for region in region_lst %}
+                                    <input type="radio" value="{{ region.region }}" name="region"> {{ region.get_region_display}}<br>
+                                {% endfor %}
+                                <div class="row form-group">
+                                    <button type="submit" value="select">toewijzen</button>
+                                </div>
+                            </form>
+                        </li>
                     {% endif %}
 
-                    {% if user.is_manager %}
+                    {% if question.state == question.INTAKE_QUESTION and question|question_regional_user:user %}
+                        <li><a href='{% url 'finish_intake' question.id %}'>Rond intake af</a></li>
+                    {% endif %}
+
+                    {% if question.state == question.IN_PROGRESS_QUESTION_CENTRAL and user.is_central_manager %}
+                        <li>
+                        <strong>Toewijzen aan regio(s):</strong>
+                        <form name="region" action="{% url "distribute_question_public" question.id %}"
+                              method='post'
+                              accept-charset="utf-8">
+                            {% csrf_token %}
+                            {% for region in region_lst %}
+                                <div class="row form-group">
+                                    <input type="checkbox" value="{{ region.region }}" name="region">
+                                    {{ region.get_region_display }}
+                                </div>
+                            {% endfor %}
+                            <div class="row form-group">
+                                <button type="submit" value="select">toewijzen</button>
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    {% if question.state == question.IN_PROGRESS_QUESTION_REGIONAL and question|question_regional_user:user %}
+                        <li><a href='{% url 'open_question' question.id %}'>Zet vraag publiek</a></li>
+                    {% endif %}
+
+                    {% if question.state == question.PUBLIC_QUESTION and question|question_regional_user:user %}
+                        <li><a href='{% url 'reserve_question' question.id %}'>Reserveer vraag</a></li>
+                    {% endif %}
+
+                    {% if question.state.PUBLIC_QUESTION and question|question_user_region_in_process:user %}
+                        <li><a href = '{% url 'open_question' question.id %}'>Vraag verwerkt</a></li>
+                    {% endif %}
+
+                    {% if question.state == question.RESERVED_QUESTION and question|question_regional_user:user %}
+                        <li><a href='{% url 'assign_question' question.id %}'>Wijs vraag toe</a></li>
+                    {% endif %}
+
+                    {% if question.state == question.ONGOING_QUESTION and question|question_regional_user:user %}
+                        <li><a href='{% url 'round_up_question' question.id %}'>Rond vraag af</a></li>
+                    {% endif %}
+
+                    {% if question|question_regional_user:user%}
+
+                            <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
+                            <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
+                            <li><a href= {% url 'edit_meta_info' question.id %}> Bewerk extra info</a></li>
+
+                    {% endif %}
+
+                    {% if user.is_central_manager or question|question_regional_user:user  %}
                         <li><a href= {% url "deny_question" question.id %}>Vraag weigeren</a></li>
                         <li><a>Vraag terugtrekken</a></li>
                     {% endif %}
-                    <li><a href='{% url 'list_questions' %}'>Terug</a></li>
+
+                    {% if not user.is_authenticated %}
+                        <li><a href = {% url 'interested_in_question' question.id %}>Ik heb interesse in deze vraag</a></li>
+                    {% endif %}
+                    <li><a href='{% url 'list_questions'%}'>Terug</a></li>
                 </ul>
                 <!--/sidebar-nav-fixed -->
             </div>

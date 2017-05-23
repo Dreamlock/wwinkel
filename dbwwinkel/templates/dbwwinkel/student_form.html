@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2>Gelieve het formulier in te vullen. De wetenschapwinkel ontvangt hierna een notificatie met uw
+                    gegevens.</h2>
+            </div>
+            <form action="{% url 'interested_in_question' question.id %}" method="post">
+                {% csrf_token %}
+                <div class=" panel panel-body">
+                    <div class="container">
+                        <div class='row'>
+                            <h3>Contactgegevens</h3>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-6">
+                            {% for field in form %}
+                                {% if forloop.counter == 1 or forloop.counter == 3 %}
+                                    <div class="form-group row">
+                                        {{ field.errors }}
+                                        <div class='col-md-3'>
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class='col-md-9'>
+                                            {{ field }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6">
+                            {% for field in form %}
+                                {% if forloop.counter == 2 or forloop.counter == 4 %}
+                                    <div class="form-group row">
+                                        {{ field.errors }}
+                                        <div class='col-md-3'>
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class='col-md-9'>
+                                            {{ field }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" panel panel-body">
+                    <div class="container">
+                        <div class='row'>
+                            <h3>Adres</h3>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-6">
+                            {% for field in form %}
+                                {% if forloop.counter == 1 or forloop.counter == 3 %}
+                                    <div class="form-group row">
+                                        {{ field.errors }}
+                                        <div class='col-md-3'>
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class='col-md-9'>
+                                            {{ field }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6">
+                            {% for field in form %}
+                                {% if forloop.counter == 2 or forloop.counter == 4 %}
+                                    <div class="form-group row">
+                                        {{ field.errors }}
+                                        <div class='col-md-3'>
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class='col-md-9'>
+                                            {{ field }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
