@@ -32,7 +32,6 @@
                         </div>
 
 
-
                         <div class='form-group row{% if organisation_form.legal_entity.errors %} has-error{% endif %}'>
                             {% if organisation_form.legal_entity.errors %}
                                 <label class="control-label" for="id_legal_entity">organisation_form.name.errors</label>
@@ -48,7 +47,7 @@
                         </div>
                     </div>
 
-                    <div class = 'col-md-6'>
+                    <div class='col-md-6'>
                         <div class='form-group row{% if organisation_form.recognised_abbreviation.errors %} has-error{% endif %}'>
                             {% if organisation_form.recognised_abbreviation.errors %}
                                 <label class="control-label" for="id_recognised_abbreviation">organisation_form.name.errors</label>
@@ -62,14 +61,63 @@
                                 {{ organisation_form.recognised_abbreviation }}
                             </div>
                         </div>
+
+                        <div class='form-group row{% if organisation_form.type.errors %} has-error{% endif %}'>
+                            {% if organisation_form.type.errors %}
+                                <label class="control-label" for="id_type">organisation_form.name.errors</label>
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                            {% endif %}
+                            <div class="col-md-4">
+                                {{ organisation_form.type.label_tag }}
+                            </div>
+                            <div class="col-md-3">
+                                {{ organisation_form.type }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <input type="submit" class="btn btn-info" value='Registreer'>
+                <div class='panel panel-body'>
+                    <div class="row">
+                        <h3>Contact gegevens organisatie</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <div class='form-group row{% if organisation_form.telephone.errors %} has-error{% endif %}'>
+                            {% if organisation_form.telephone.errors %}
+                                <label class="control-label"
+                                       for="id_organisation-telephone">{{ organisation_form.telephone.errors }}</label>
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                            {% endif %}
+                            <div class="col-md-4">
+                                {{ organisation_form.telephone.label_tag }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ organisation_form.telephone }}
+                            </div>
+                        </div>
+                        <div class='form-group row{% if organisation_form.mail.errors %} has-error{% endif %}'>
+                            {% if organisation_form.mail.errors %}
+                                <label class="control-label"
+                                       for="id_organisation-mail">{{ organisation_form.telephone.errors }}</label>
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                            {% endif %}
+                            <div class="col-md-4">
+                                {{ organisation_form.mail.label_tag }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ organisation_form.mail }}
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <input type="submit" class="btn btn-info" value='Registreer'>
+                        </div>
+
+                    </div>
                 </div>
-
-            </div>
-
         </form>
     </div>
 {% endblock %}
