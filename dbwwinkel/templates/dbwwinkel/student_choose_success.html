@@ -1,0 +1,8 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        <strong>Je aanvraag is verstuurd naar de wetenschapswinkel!</strong>
+        <br>Gelieve contact op te nemen met de wetenschapswinkel.
+    </div>
+    <a href ='{% url 'detail_question' question.id %}'  class = 'btn btn-success'>Verder</a>
+{% endblock %}
