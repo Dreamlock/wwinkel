@@ -144,7 +144,7 @@ class Address(models.Model):
 
     province = models.ForeignKey(Province)
     city = models.CharField(max_length=255)
-    postal_code = models.CharField(max_length=10)
+    postal_code = models.PositiveIntegerField()
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
 
@@ -217,8 +217,8 @@ class KnowFrom(models.Model):
 
 
 class Organisation(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    recognised_abbreviation = models.CharField(max_length=31, blank=True)
+    name = models.CharField('Naam', help_text='Naam van de organisatie.', max_length=255, unique=True)
+    recognised_abbreviation = models.CharField(max_length=31, blank=True, null=True)
 
     legal_entity = models.ForeignKey(LegalEntity)
     address = models.ForeignKey(Address)
