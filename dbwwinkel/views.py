@@ -288,7 +288,7 @@ def interested_in_question_view(request,question_id):
         form = StudentForm(request.POST, prefix = 'student')
         address_form = AdressForm(request.POST, prefix='address')
         # check whether it's valid:
-        if form.is_valid() and address_form.us_valid():
+        if form.is_valid() and address_form.is_valid():
 
             student = form.save(commit=False)
             address = address_form.save()
