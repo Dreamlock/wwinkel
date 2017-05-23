@@ -99,19 +99,40 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                {{ address_form.city.errors }}
+                                {{ address_form.postal_code.errors }}
                                 <div class='col-md-3'>
                                     {{ address_form.postal_code.label_tag }}
                                 </div>
                                 <div class='col-md-3'>
-                                    {{ address_form.city }}
+                                    {{ address_form.postal_code }}
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                    <div class=" panel panel-body">
+                        <div class="container">
+                            <div class='row'>
+                                <h3>Opleiding</h3>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    {{ form.education.errors }}
+                                    <div class = 'col-md-3'>
+                                        {{ form.education.label_tag }}
+                                    </div>
+                                    <div class = 'col-md-6'>
+                                        {{ form.education }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <div class="row">
                         <div class="container">
-                            <button type="submit" class="btn btn-info">Registreer</button>
+                            <input type="submit" class="btn btn-info" value='Registreer'></input>
                         </div>
                     </div>
                 </div>

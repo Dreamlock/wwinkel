@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'deny_question/(?P<question_id>[0-9]+)', views.deny_question, name='deny_question'),
     url(r'revoke_question/(?P<question_id>[0-9]+)', views.revoke_question, name='revoke_question'),
 
-
     url(r'^edit_question/(?P<question_id>[0-9]+)', views.edit_question, name='edit_question'),
     url(r'internal_remark/(?P<question_id>[0-9]+)', views.internal_remark, name='internal_remark'),
     url(r'edit_meta_info/(?P<question_id>[0-9]+)', views.edit_meta_info, name='edit_meta_info'),

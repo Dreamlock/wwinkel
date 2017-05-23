@@ -288,26 +288,31 @@ def interested_in_question_view(request,question_id):
         form = StudentForm(request.POST, prefix = 'student')
         address_form = AdressForm(request.POST, prefix='address')
         # check whether it's valid:
-        if form.is_valid() and address_form.us_valid():
+        if form.is_valid() and address_form.is_valid():
 
             student = form.save(commit=False)
             address = address_form.save()
 
             student.address = address
+            student.save()
             question.potential_students.add(student)
             question.save()
-            return redirect('detail_question', question_id=int(question_id))
+
+            return render(request,'dbwwinkel/student_choose_success.html',{'question': question})
+
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = StudentForm(prefix = 'student')
         address_form = AdressForm(prefix = 'address')
 
+    form.fields['education'].queryset = question.education.all()
+
     context = {'form': form,
                'question':question,
                'address_form':address_form,
                }
-
+    print(address_form.errors)
     return render(request, 'dbwwinkel/student_form.html', context )
 
 
