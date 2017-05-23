@@ -171,6 +171,11 @@ class Question(models.Model):
     # The corresponding organisation
     organisation = models.ForeignKey(Organisation, verbose_name='organisatie')
 
+    #student date
+    student = models.ForeignKey(Student,null = True , on_delete= models.SET_NULL)
+    potential_students = models.ManyToManyField(Student, related_name= 'potential_students')
+
+
     # metadata: invisible
     creation_date = models.DateTimeField(default=timezone.now, editable=False, null=True, blank=True)
     active = models.BooleanField(default=True)
@@ -195,7 +200,6 @@ class Question(models.Model):
     question_subject = models.ManyToManyField(QuestionSubject, blank=True)
     type = models.ForeignKey(QuestionType, null=True)
 
-    student = models.ForeignKey(Student, verbose_name='student', null=True)
     completion_date = models.DateTimeField(null=True)  # When the question was round up
 
     # history = HistoricalRecords()
