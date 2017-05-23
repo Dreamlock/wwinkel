@@ -199,6 +199,7 @@ class LegalEntity(models.Model):
     entity = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
+        print('bla')
         return '{0}'.format(self.entity)
 
 
@@ -213,6 +214,7 @@ class KnowFrom(models.Model):
     knowfrom = models.TextField()
 
     def __str__(self):
+        print('bla')
         return self.knowfrom
 
 

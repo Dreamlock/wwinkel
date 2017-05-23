@@ -43,6 +43,8 @@ def login_view(request):
     return render(request, "custom_users/login_form.html", {'form': form})
 
 def register_organisation(request):
+
+
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         organisation_form = OrganisationForm(request.POST, prefix="organisation")

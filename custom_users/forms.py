@@ -75,12 +75,12 @@ class OrganisationForm(forms.ModelForm):
         fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','website', 'goal','know_from', 'remarks']
 
         labels = {
-            'name': '*Naam Organisatie',
+            'name': 'Naam Organisatie',
             'recognised_abbreviation': 'Afkorting Organisatie',
-            'legal_entity': '*Juridische entiteit',
+            'legal_entity': 'Juridische entiteit',
             'telephone': 'Telefoon',
             'website': 'website',
-            'goal': '*Doel organisatie',
+            'goal': 'Doel organisatie',
             'remarks': 'Opmerkingen',
             'know_from': 'Van waar ken je ons?'
 
