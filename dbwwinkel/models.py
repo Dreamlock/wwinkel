@@ -55,6 +55,9 @@ class Student(models.Model):
     education = models.ForeignKey(Education, help_text='opleiding van de student')
     address = models.ForeignKey(Address, help_text='adres van de student')
 
+    def __str__(self):
+        return '{0} {1}'.format(self.first_name, self.last_name)
+
 
 class Person(models.Model):
     class Meta:

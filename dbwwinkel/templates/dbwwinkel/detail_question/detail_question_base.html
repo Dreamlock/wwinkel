@@ -67,6 +67,7 @@
 
                     {% if question.state == question.RESERVED_QUESTION and question|question_regional_user:user %}
                         <li><a href='{% url 'assign_question' question.id %}'>Wijs vraag toe</a></li>
+                        <li><a href='{% url 'open_question' question.id %}'>Zet vraag terug open</a></li>
                     {% endif %}
 
                     {% if question.state == question.ONGOING_QUESTION and question|question_regional_user:user %}
@@ -83,7 +84,7 @@
 
                     {% if user.is_central_manager or question|question_regional_user:user  %}
                         <li><a href= {% url "deny_question" question.id %}>Vraag weigeren</a></li>
-                        <li><a>Vraag terugtrekken</a></li>
+                        <li><a href={% url "revoke_question" question.id %}>Vraag terugtrekken</a></li>
                     {% endif %}
 
                     {% if not user.is_authenticated %}
