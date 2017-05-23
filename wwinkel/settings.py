@@ -149,7 +149,11 @@ TEMPLATES = [
 
 CMS_TEMPLATES = [
     ('base/base.html','Base template' ),
-    ('base/index.html','Home page')
+    ('base/index.html','Home page'),
+    ('custom_users/contact.html', 'Contact info'),
+    ('custom_users/organisaties.html', 'Organisaties'),
+    ('custom_users/partners.html', 'Partners'),
+    ('custom_users/studenten.html', 'Studenten')
 ]
 
 WSGI_APPLICATION = 'wwinkel.wsgi.application'
