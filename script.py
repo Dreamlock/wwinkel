@@ -121,40 +121,21 @@ def refactorDate2(cdate):
 
 def state_map(old_state_id):
     idmap = {
-        '1': 0,
-        '2': 1,
-        '3': 8,
-        '4': 1,
-        '5': 1,
-        '6': 0,
-        '7': 3,
-        '8': 4,
-        '9': 8,
-        '10': 9,
-        '11': 5,
-        '12': 6,
-        '13': 7
+        '1': dbmodels.Question.NEW_QUESTION,
+        '2': dbmodels.Question.INTAKE_QUESTION,
+        '3': dbmodels.Question.DENIED_QUESTION,
+        '4': dbmodels.Question.INTAKE_QUESTION,
+        '5': dbmodels.Question.IN_PROGRESS_QUESTION_REGIONAL,
+        '6': dbmodels.Question.NEW_QUESTION,  # draft to new Q
+        '7': dbmodels.Question.PUBLIC_QUESTION,
+        '8': dbmodels.Question.FINISHED_QUESTION,
+        '9': dbmodels.Question.DENIED_QUESTION,
+        '10': dbmodels.Question.REVOKED_QUESTION,
+        '11': dbmodels.Question.RESERVED_QUESTION,
+        '12': dbmodels.Question.ONGOING_QUESTION,
+        '13': dbmodels.Question.FINISHED_QUESTION,
     }
     return idmap[old_state_id]
-
-
-def state_id_map(state_id):
-    state_dict = {
-        1: 0,
-        2: 1,
-        3: 8,
-        4: 1,
-        5: 1,
-        6: 0,
-        7: 3,
-        8: 4,
-        9: 8,
-        10: 9,
-        11: 5,
-        12: 6,
-        13: 7
-    }
-    return state_dict[state_id]
 
 
 # path to province.csv

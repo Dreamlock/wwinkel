@@ -1,0 +1,100 @@
+{% extends 'base/base.html' %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+{%block extra_head %}
+<style>
+.container {
+    position: relative;
+    width: 50%;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+  padding:1cm;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+</style>
+{% endblock extra_head%}
+
+ {% block content %}
+
+<div class="container">
+  <img src="http://www.wetenschapswinkel.be/Afbeeldingen/WeWI.be_logo_zwartwit_scherm.JPG" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text">Pleinlaan 2
+1050 Brussel
+info@wetenschapswinkel.be
+www.wetenschapswinkel.be
+t +32 (0)2 629 18 34</div>
+  </div>
+</div>
+
+<div class="container">
+  <img src="http://www.wetenschapswinkel.be/Afbeeldingen/WW%20Antwerpen%20grey_for_web.jpg" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text">Universiteit Antwerpen
+Campus Middelheim
+Middelheimlaan 1
+2020 Antwerpen
+wetenschapswinkel@uantwerpen.be
+www.uantwerpen.be
+t +32 (0)3 265 31 85</div>
+  </div>
+</div>
+
+<div class="container">
+  <img src="http://www.wetenschapswinkel.be/Afbeeldingen/WW%20Brussel%20grey.gif" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text">Vrije Universiteit Brussel
+Pleinlaan 2
+1050 Brussel
+wetenschapswinkel@vub.ac.be
+www.vub.ac.be/wetenschapswinkel
+t +32 (0)2 629 18 34</div>
+  </div>
+</div>
+
+<div class="container">
+  <img src="http://www.wetenschapswinkel.be/Afbeeldingen/WW%20Gent%20grey_for_web.jpg" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text">Wetenschapswinkel Gent
+Het Pand
+Onderbergen 1
+9000 Gent
+wetenschapswinkel@UGent.be
+www.ugent.be/nl/onderzoek/maatschappij/wetenschapswinkel
+tel: +32 (0)9 264 82 54</div>
+  </div>
+</div>
+
+
+{% endblock%}
