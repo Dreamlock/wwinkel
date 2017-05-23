@@ -17,13 +17,13 @@
                     <div class='row'>
                         <div class="col-md-6">
                             {% for field in form %}
-                                {% if forloop.counter == 1 or forloop.counter == 3 %}
+                                {% if forloop.counter == 1 or forloop.counter == 2 %}
                                     <div class="form-group row">
                                         {{ field.errors }}
                                         <div class='col-md-3'>
                                             {{ field.label_tag }}
                                         </div>
-                                        <div class='col-md-9'>
+                                        <div class='col-md-6'>
                                             {{ field }}
                                         </div>
                                     </div>
@@ -32,13 +32,13 @@
                         </div>
                         <div class="col-md-6">
                             {% for field in form %}
-                                {% if forloop.counter == 2 or forloop.counter == 4 %}
+                                {% if forloop.counter == 3  or forloop.counter == 4 %}
                                     <div class="form-group row">
                                         {{ field.errors }}
                                         <div class='col-md-3'>
                                             {{ field.label_tag }}
                                         </div>
-                                        <div class='col-md-9'>
+                                        <div class='col-md-6'>
                                             {{ field }}
                                         </div>
                                     </div>
@@ -56,34 +56,62 @@
                     </div>
                     <div class='row'>
                         <div class="col-md-6">
-                            {% for field in form %}
-                                {% if forloop.counter == 1 or forloop.counter == 3 %}
-                                    <div class="form-group row">
-                                        {{ field.errors }}
-                                        <div class='col-md-3'>
-                                            {{ field.label_tag }}
-                                        </div>
-                                        <div class='col-md-9'>
-                                            {{ field }}
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            <div class="form-group row">
+                                {{ address_form.street_name.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.street_name.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ address_form.street_name }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                {{ address_form.street_number.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.street_number.label_tag }}
+                                </div>
+                                <div class='col-md-2'>
+                                    {{ address_form.street_number }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                {{ address_form.province.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.province.label_tag }}
+                                </div>
+                                <div class='col-md-4'>
+                                    {{ address_form.province }}
+                                </div>
+                            </div>
+
                         </div>
+
                         <div class="col-md-6">
-                            {% for field in form %}
-                                {% if forloop.counter == 2 or forloop.counter == 4 %}
-                                    <div class="form-group row">
-                                        {{ field.errors }}
-                                        <div class='col-md-3'>
-                                            {{ field.label_tag }}
-                                        </div>
-                                        <div class='col-md-9'>
-                                            {{ field }}
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            <div class="form-group row">
+                                {{ address_form.city.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.city.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ address_form.city }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                {{ address_form.city.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.postal_code.label_tag }}
+                                </div>
+                                <div class='col-md-3'>
+                                    {{ address_form.city }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <button type="submit" class="btn btn-info">Registreer</button>
                         </div>
                     </div>
                 </div>

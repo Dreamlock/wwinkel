@@ -288,10 +288,14 @@ def interested_in_question_view(request,question_id):
         form = StudentForm(request.POST, prefix = 'student')
         address_form = AdressForm(request.POST, prefix='address')
         # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
+        if form.is_valid() and address_form.us_valid():
+
+            student = form.save(commit=False)
+            address = address_form.save()
+
+            student.address = address
+            question.potential_students.add(student)
+            question.save()
             return redirect('detail_question', question_id=int(question_id))
 
     # if a GET (or any other method) we'll create a blank form

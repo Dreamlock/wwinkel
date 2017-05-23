@@ -94,14 +94,14 @@ class AdressForm(forms.ModelForm):
 
     class Meta:
         model = Address
-        fields = ['province', 'city', 'postal_code', 'street_name', 'street_number']
+        fields = ['street_name', 'street_number','city', 'postal_code','province']
 
         labels = {
-            'province': '*Provincie',
-            'city': '*Stad',
-            'postal_code': '*Postcode',
-            'street_name': '*Straat naam',
-            'street_number': '*PostNummer'
+            'province': 'Provincie',
+            'city': 'Stad',
+            'postal_code': 'Postcode',
+            'street_name': 'Straat naam',
+            'street_number': 'Postnummer'
         }
 
 class BaseOrganisationUserForm(OrganisationUserCreationForm):
