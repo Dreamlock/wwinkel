@@ -144,7 +144,7 @@ class Address(models.Model):
 
     province = models.ForeignKey(Province)
     city = models.CharField(max_length=255)
-    postal_code = models.PositiveIntegerField()
+    postal_code = models.CharField(max_length=10)
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
 
@@ -223,8 +223,8 @@ class Organisation(models.Model):
     legal_entity = models.ForeignKey(LegalEntity)
     address = models.ForeignKey(Address)
 
-    telephone = models.IntegerField()
-    fax = models.IntegerField(blank=True, null=True)
+    telephone = models.CharField(max_length=20)
+    fax = models.CharField(max_length=20, blank=True, null=True)
     website = models.URLField(max_length=255, null=True, blank=True)
     mail = models.EmailField()
 
