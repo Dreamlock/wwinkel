@@ -181,14 +181,43 @@ def edit_question(request, question_id):
 
 
 def reserve_question(request, question_id):
-    question = Question.objects.get(id=question_id)
-    question.state = Question.RESERVED_QUESTION
-    question.save()
-    return redirect('detail_question', question_id=question_id)
+
+    # if this is a POST request we need to process the form data
+    question = Question.objects.get(id = question_id)
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ReserveForm(request.POST)
+        form.fields['student'].queryset = question.potential_students.all()
+        # check whether it's valid:
+
+        if form.is_valid():
+
+            student = form.cleaned_data['student']
+
+            question.student = student
+            question.potential_students.remove(student)
+            question.state = Question.RESERVED_QUESTION
+            question.save()
+
+            return redirect(detail, question_id=question_id)
+
+    else:
+        form = ReserveForm()
+        form.fields['student'].queryset = question.potential_students.all()
+
+    print(question.potential_students.all())
+
+
+    return render(request,'dbwwinkel/reserve_question.html',{'form': form, 'question': question})
 
 def assign_question(request, question_id):
     question = Question.objects.get(id=question_id)
     question.state = Question.ONGOING_QUESTION
+
+    for student in question.potential_students.all():
+        student.delete()
+        student.save()
+    question.potential_students.all().delete()
     question.save()
     return redirect('detail_question', question_id=question_id)
 
@@ -206,7 +235,7 @@ def revoke_question(request, question_id):
 
 def deny_question(request, question_id):
     question = Question.objects.get(id=question_id)
-    question.state = Question.DENIED_QUESTION_QUESTION
+    question.state = Question.DENIED_QUESTION
     question.save()
     return redirect('detail_question', question_id=question_id)
 
@@ -216,6 +245,7 @@ def open_question(request, question_id):
     question = Question.objects.get(id=question_id)
 
     question.state = Question.PUBLIC_QUESTION
+    question.student = None
 
 
     for region in request.user.as_manager().region.all():
@@ -493,8 +523,12 @@ def administration_view_to_process(request):
         sqs = sqs.filter(state__in=[Question.IN_PROGRESS_QUESTION_REGIONAL, Question.INTAKE_QUESTION])
 
         sqs2 = Question.objects.filter(state = Question.PUBLIC_QUESTION)
-        sqs2 = sqs2.filter(region_processing__in = region_lst)
-        sqs = sqs | sqs2
+        sqs = sqs | sqs2.filter(region_processing__in = region_lst)
+
+        sqs = sqs | sqs2.filter(region__in = region_lst).exclude(potential_students = None)
+
+        sqs2 = Question.objects.filter(state = Question.RESERVED_QUESTION)
+        sqs = sqs | sqs2.filter(region__in = region_lst)
 
     if request.user.is_central_manager():
         sqs = sqs | Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])

@@ -218,6 +218,11 @@ class StudentForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'mobile', 'email','education']
 
 
+class ReserveForm(forms.Form):
+
+    student = forms.ModelChoiceField(queryset = None)
+
+
 
 
 def QuestionFormFactory(user, question):
