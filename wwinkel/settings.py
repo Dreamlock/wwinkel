@@ -156,6 +156,8 @@ CMS_TEMPLATES = [
     ('custom_users/studenten.html', 'Studenten')
 ]
 
+CMS_TOOLBAR_HIDE = True
+
 WSGI_APPLICATION = 'wwinkel.wsgi.application'
 
 
