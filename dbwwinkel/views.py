@@ -19,7 +19,6 @@ import os
 from django.views.generic import View, ListView, DetailView
 from haystack.generic_views import FacetedSearchView as BaseFacetedSearchView
 
-
 @login_required
 @permission_required('dbwwinkel.add_question')
 def register_question(request):
@@ -51,12 +50,15 @@ def register_question(request):
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
+
 def list_questions(request, admin_filter=None):
+
     start = time.clock()
     # Text based search, now we're set up for our facets
 
-    val = request.GET.get('search_text', '')
+    val = request.GET.get('search_text','')
     sqs = search(SearchQuerySet(), val, Question)
+
 
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
@@ -79,7 +81,7 @@ def list_questions(request, admin_filter=None):
         choice_facet2.append((int(choice[0]), int(choice[1])))
     choice_facet = choice_facet2
     choice_facet = sorted(choice_facet, key=itemgetter(0))
-    print(choice_facet)
+
     for i in range(len(choice_facet)):
         if i != choice_facet[i][0]:
             choice_facet.insert(i, (i, 0))
@@ -189,8 +191,9 @@ def edit_question(request, question_id):
 
 
 def reserve_question(request, question_id):
+
     # if this is a POST request we need to process the form data
-    question = Question.objects.get(id=question_id)
+    question = Question.objects.get(id = question_id)
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = ReserveForm(request.POST)
@@ -198,6 +201,7 @@ def reserve_question(request, question_id):
         # check whether it's valid:
 
         if form.is_valid():
+
             student = form.cleaned_data['student']
 
             question.student = student
@@ -213,8 +217,8 @@ def reserve_question(request, question_id):
 
     print(question.potential_students.all())
 
-    return render(request, 'dbwwinkel/reserve_question.html', {'form': form, 'question': question})
 
+    return render(request,'dbwwinkel/reserve_question.html',{'form': form, 'question': question})
 
 def assign_question(request, question_id):
     question = Question.objects.get(id=question_id)
@@ -227,20 +231,17 @@ def assign_question(request, question_id):
     question.save()
     return redirect('detail_question', question_id=question_id)
 
-
-def round_up_question(request, question_id):
+def round_up_question(request,question_id):
     question = Question.objects.get(id=question_id)
     question.state = Question.FINISHED_QUESTION
     question.save()
     return redirect('detail_question', question_id=question_id)
-
 
 def revoke_question(request, question_id):
     question = Question.objects.get(id=question_id)
     question.state = Question.REVOKED_QUESTION
     question.save()
     return redirect('detail_question', question_id=question_id)
-
 
 def deny_question(request, question_id):
     question = Question.objects.get(id=question_id)
@@ -249,17 +250,22 @@ def deny_question(request, question_id):
     return redirect('detail_question', question_id=question_id)
 
 
+
 def open_question(request, question_id):
     question = Question.objects.get(id=question_id)
 
     question.state = Question.PUBLIC_QUESTION
     question.student = None
 
+
     for region in request.user.as_manager().region.all():
         question.region_processing.remove(region)
 
     question.save()
     return redirect('detail_question', question_id=question_id)
+
+
+
 
 
 def distribute_intake(request, question_id):
@@ -299,13 +305,13 @@ def finish_intake(request, question_id):
     question.save()
     return redirect('detail_question', question_id=int(question_id))
 
-
 def distribute_to_public(request, question_id):
+
     question = Question.objects.get(id=question_id)
     print(request.POST)
     if request.POST.getlist('region', False):
         regions = request.POST.getlist('region', False)
-        region = Region.objects.filter(region__in=regions)
+        region = Region.objects.filter(region__in = regions)
         question.region.set(region)
         question.region_processing.set(region)
         question.state = question.IN_PROGRESS_QUESTION_REGIONAL
@@ -314,15 +320,16 @@ def distribute_to_public(request, question_id):
     return redirect('detail_question', question_id=int(question_id))
 
 
-def interested_in_question_view(request, question_id):
+def interested_in_question_view(request,question_id):
     # if this is a POST request we need to process the form data
-    question = Question.objects.get(id=question_id)
+    question = Question.objects.get(id = question_id)
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = StudentForm(request.POST, prefix='student')
+        form = StudentForm(request.POST, prefix = 'student')
         address_form = AdressForm(request.POST, prefix='address')
         # check whether it's valid:
         if form.is_valid() and address_form.is_valid():
+
             student = form.save(commit=False)
             address = address_form.save()
 
@@ -331,22 +338,22 @@ def interested_in_question_view(request, question_id):
             question.potential_students.add(student)
             question.save()
 
-            return render(request, 'dbwwinkel/student_choose_success.html', {'question': question})
+            return render(request,'dbwwinkel/student_choose_success.html',{'question': question})
 
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = StudentForm(prefix='student')
-        address_form = AdressForm(prefix='address')
+        form = StudentForm(prefix = 'student')
+        address_form = AdressForm(prefix = 'address')
 
     form.fields['education'].queryset = question.education.all()
 
     context = {'form': form,
-               'question': question,
-               'address_form': address_form,
+               'question':question,
+               'address_form':address_form,
                }
     print(address_form.errors)
-    return render(request, 'dbwwinkel/student_form.html', context)
+    return render(request, 'dbwwinkel/student_form.html', context )
 
 
 def edit_meta_info(request, question_id):
@@ -525,13 +532,13 @@ def administration_view_to_process(request):
         sqs = Question.objects.filter(region__in=region_lst)
         sqs = sqs.filter(state__in=[Question.IN_PROGRESS_QUESTION_REGIONAL, Question.INTAKE_QUESTION])
 
-        sqs2 = Question.objects.filter(state=Question.PUBLIC_QUESTION)
-        sqs = sqs | sqs2.filter(region_processing__in=region_lst)
+        sqs2 = Question.objects.filter(state = Question.PUBLIC_QUESTION)
+        sqs = sqs | sqs2.filter(region_processing__in = region_lst)
 
-        sqs = sqs | sqs2.filter(region__in=region_lst).exclude(potential_students=None)
+        sqs = sqs | sqs2.filter(region__in = region_lst).exclude(potential_students = None)
 
-        sqs2 = Question.objects.filter(state=Question.RESERVED_QUESTION)
-        sqs = sqs | sqs2.filter(region__in=region_lst)
+        sqs2 = Question.objects.filter(state = Question.RESERVED_QUESTION)
+        sqs = sqs | sqs2.filter(region__in = region_lst)
 
     if request.user.is_central_manager():
         sqs = sqs | Question.objects.filter(state__in=[Question.NEW_QUESTION, Question.IN_PROGRESS_QUESTION_CENTRAL])
@@ -663,11 +670,13 @@ def administration_view_revoked(request):
 def administration_view_my_questions(request):
     sqs = Question.objects.filter(region__in=request.user.as_manager().region.all())
 
+
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
+def admin_rganisation_table_view(request):
 
 def admin_organisation_table_view(request):
     sqs = Organisation.objects.all()
@@ -718,3 +727,17 @@ def admin_promotor_view(request):
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_organisations.html', context)
+
+class OrganisationDetail(DetailView):
+    model = Organisation
+
+    def get_context_data(self, **kwargs):
+        context = super(OrganisationDetail, self).get_context_data(**kwargs)
+        return context
+
+class InstitutionDetail(DetailView):
+    model = Institution
+
+    def get_context_data(self, **kwargs):
+        context = super(InstitutionDetail, self).get_context_data(**kwargs)
+        return context
