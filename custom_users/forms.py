@@ -1,4 +1,7 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
+from django.forms.utils import ErrorList
+
 from .models import User, OrganisationUser, Organisation, Address, OrganisationType, LegalEntity
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -61,11 +64,21 @@ class ManagerUserChangeForm(BaseUserChangeForm):
         fields = '__all__'
 
 class PasswordField(forms.CharField):
-    widget = forms.PasswordInput
+    widget = forms.PasswordInput(attrs = {'class': 'form-control'})
 
 class LoginForm(forms.Form):
+
     e_mail = forms.EmailField()
     password = PasswordField()
+
+    def clean(self):
+        if not User.objects.filter(email = self.cleaned_data['e_mail']).exists():
+            self.errors['e_mail'] = ErrorList(['Ongeldig Mail adres'])
+
+        user = authenticate(email=self.cleaned_data['e_mail'], password=self.cleaned_data['password'])
+
+        if user is None:
+            self.errors['password'] = ErrorList(['Ongeldig wachtwoord'])
 
 
 class OrganisationForm(forms.ModelForm):

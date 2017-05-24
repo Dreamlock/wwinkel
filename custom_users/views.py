@@ -36,6 +36,8 @@ def login_view(request):
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?
 
+
+
     else:
         form = LoginForm()
 
