@@ -689,3 +689,10 @@ class OrganisationDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(OrganisationDetail, self).get_context_data(**kwargs)
         return context
+
+class InstitutionDetail(DetailView):
+    model = Institution
+
+    def get_context_data(self, **kwargs):
+        context = super(InstitutionDetail, self).get_context_data(**kwargs)
+        return context

@@ -10,6 +10,7 @@ urlpatterns = [
     # Rest
 
     url(r'^detail_organisation/(?P<pk>[0-9]+)', views.OrganisationDetail.as_view(), name='detail_organisation'),
+    url(r'^institution_detail/(?P<pk>[0-9]+)', views.InstitutionDetail.as_view(), name='institution_detail'),
 
     url(r'^list_questions', views.list_questions, name='list_questions'),
     url(r'^list_questions/(?P<admin_filter>[a-z]+)', views.list_questions, name='list_questions_filter'),

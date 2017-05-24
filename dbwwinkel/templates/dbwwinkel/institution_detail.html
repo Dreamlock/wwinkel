@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles index %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header">
+                <div class="container">
+                    <h1>Detail weergave organisatie</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="container">
+                <div class="panel panel-info">
+                    <div class='panel-heading'>
+                        <h2><strong>Organisatie: </strong>{{ organisation.name }}</h2><br>
+                    </div>
+                    <div class="panel panel-body">
+                        <div class=col-md-4>
+                            <h3>Contact gegevens</h3>
+                            <strong>Straat: </strong> {{ organisation.address.street_name }}<br>
+                            <strong>Nummer: </strong> {{ organisation.address.street_number }}<br>
+                            <strong>Plaats: </strong> {{ organisation.address.postal_code }} {{ organisation.address.city }}
+                            <br>
+                            <strong>Tel: </strong> {{ organisation.telephone }} <br>
+                            <strong>Website:</strong> <a href="http://{{ organisation.website }}" target="_blank">{{ organisation.website }}</a><br>
+                            <strong>Mail: </strong>{{ organisation.mail }}<br>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Overige info</h4>
+                            <strong>Juridische entiteit: </strong>{{ organisation.legal_entity }}<br>
+                            <strong>Opmerkingen: </strong>{{ organisation.remarks }}<br>
+                            <strong>Type: </strong>{{ organisation.type }}<br>
+                            <strong>Aanmeldingsdatum: </strong>{{ organisation.creation_date }}<br>
+                            <strong>Trefwoorden: </strong>{% for keyword in organisation.keyword.all %}
+                                {{ keyword }}
+                            {% endfor %}<br>
+                        </div>
+
+                        <div class=col-md-4>
+                            <h3>Contactpersoon</h3>
+                            <strong>Naam: </strong> {{ organisation.organisationuser.first_name }}
+                            {{ organisation.organisationuser.last_name }}<br>
+                            <strong>Email: </strong> {{ organisation.organisationuser.email }}<br>
+                            <strong>Tel:</strong> {{ organisation.organisationuser.telephone }}
+                        </div>
+                    </div>
+
+                <div class="panel panel-body">
+                        <div class=col-md>
+                            <h4>Doel</h4>
+                            {{ organisation.goal }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
