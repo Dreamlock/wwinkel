@@ -97,27 +97,180 @@
                             </div>
                         </div>
                         <div class='form-group row{% if organisation_form.mail.errors %} has-error{% endif %}'>
-                            {% if organisation_form.mail.errors %}
-                                <label class="control-label"
-                                       for="id_organisation-mail">{{ organisation_form.telephone.errors }}</label>
-                                <span class="glyphicon glyphicon-remove form-control-feedback"
-                                      aria-hidden="true"></span>
-                            {% endif %}
+
                             <div class="col-md-4">
                                 {{ organisation_form.mail.label_tag }}
                             </div>
                             <div class="col-md-6">
                                 {{ organisation_form.mail }}
+                                {% if organisation_form.mail.errors %}
+                                    <label class="control-label"
+                                           for="id_organisation-mail">
+                                        {% for error in organisation_form.mail.errors %}
+                                            {{ error }}{% endfor %}</label>
+                                {% endif %}
+
                             </div>
-                        </div>
 
 
-                        <div class="row">
-                            <input type="submit" class="btn btn-info" value='Registreer'>
                         </div>
 
                     </div>
+                    <div class="col-md-6">
+                        <div class='form-group row{% if organisation_form.telephone.errors %} has-error{% endif %}'>
+                            {% if organisation_form.telephone.errors %}
+                                <label class="control-label"
+                                       for="id_organisation-website">{{ organisation_form.website.errors }}</label>
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                            {% endif %}
+                            <div class="col-md-4">
+                                {{ organisation_form.website.label_tag }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ organisation_form.website }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class='form-group row{% if organisation_form.fax.errors %} has-error{% endif %}'>
+                            {% if organisation_form.fax.errors %}
+                                <label class="control-label"
+                                       for="id_organisation-fax">{{ organisation_form.fax.errors }}</label>
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                            {% endif %}
+                            <div class="col-md-4">
+                                {{ organisation_form.fax.label_tag }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ organisation_form.fax }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class=" panel panel-body">
+                    <div class='row'>
+                        <h3>Adres organisatie</h3>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                {{ address_form.street_name.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.street_name.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ address_form.street_name }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                {{ address_form.street_number.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.street_number.label_tag }}
+                                </div>
+                                <div class='col-md-2'>
+                                    {{ address_form.street_number }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                {{ address_form.province.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.province.label_tag }}
+                                </div>
+                                <div class='col-md-4'>
+                                    {{ address_form.province }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                {{ address_form.city.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.city.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ address_form.city }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                {{ address_form.postal_code.errors }}
+                                <div class='col-md-3'>
+                                    {{ address_form.postal_code.label_tag }}
+                                </div>
+                                <div class='col-md-3'>
+                                    {{ address_form.postal_code }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" panel panel-body">
+                    <div class='row'>
+                        <h3>Extra Gegevens</h3>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                {{ organisation_form.goal.errors }}
+                                <div class='col-md-3'>
+                                    {{ organisation_form.goal.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ organisation_form.goal }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                {{ organisation_form.know_from.errors }}
+                                <div class='col-md-3'>
+                                    {{ organisation_form.know_from.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ organisation_form.know_from }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                {{ organisation_form.remarks.errors }}
+                                <div class='col-md-3'>
+                                    {{ organisation_form.remarks.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ organisation_form.remarks }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" panel panel-body">
+                    <div class='row'>
+                        <h3>Contact gegevens gebruiker</h3>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-6">
+                            {% for field in user_form %}
+                            <div class="form-group row">
+                                {{ field.errors }}
+                                <div class='col-md-3'>
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ field }}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <div class="row">
+                                <input type="submit" class="btn btn-info" value='Registreer'>
+                            </div>
+                        </div>
         </form>
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
-from .models import User, OrganisationUser, Organisation, Address
+from .models import User, OrganisationUser, Organisation, Address, OrganisationType, LegalEntity
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
@@ -70,10 +70,13 @@ class LoginForm(forms.Form):
 
 class OrganisationForm(forms.ModelForm):
 
+    def __init__(self,*args, **kwargs):
+        super(OrganisationForm,self).__init__(*args, **kwargs)
+
     class Meta:
         model = Organisation
-        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone',
-                  'mail','website', 'goal', 'remarks']
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','fax',
+                  'mail','website', 'goal', 'remarks', 'know_from']
 
         labels = {
             'name': 'Naam Organisatie',
@@ -83,6 +86,8 @@ class OrganisationForm(forms.ModelForm):
             'website': 'website',
             'goal': 'Doel organisatie',
             'remarks': 'Opmerkingen',
+            'type': 'Soort',
+            'know_from': 'Van waar ken je ons'
 
         }
         help_texts = {

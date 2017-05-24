@@ -51,6 +51,7 @@ def register_organisation(request):
         address_form = AdressForm(request.POST, prefix='address')
         user_form = BaseOrganisationUserForm(request.POST, prefix='user')
 
+
         # check whether it's valid:
         if organisation_form.is_valid() and address_form.is_valid() and user_form.is_valid():
 
@@ -72,6 +73,9 @@ def register_organisation(request):
         organisation_form = OrganisationForm(prefix="organisation")
         address_form = AdressForm( prefix='address')
         user_form =BaseOrganisationUserForm(prefix='user')
+
+        organisation_form.fields['legal_entity'].queryset = LegalEntity.objects.all()
+        organisation_form.fields['type'].queryset = OrganisationType.objects.all()
         # redirect to a new URL:
 
     context = {
@@ -79,7 +83,7 @@ def register_organisation(request):
         'address_form': address_form,
         'user_form': user_form
     }
-    return render(request, "custom_users/organisation_registration_form.html",context    )
+    return render(request, "custom_users/organisation_registration_form.html",context)
 
 @login_required
 def organisation_detail(request):

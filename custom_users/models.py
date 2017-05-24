@@ -144,7 +144,7 @@ class Address(models.Model):
 
     province = models.ForeignKey(Province)
     city = models.CharField(max_length=255)
-    postal_code = models.PositiveIntegerField()
+    postal_code = models.CharField(max_length=10)
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
 
@@ -199,7 +199,6 @@ class LegalEntity(models.Model):
     entity = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
-        print('bla')
         return '{0}'.format(self.entity)
 
 
@@ -214,7 +213,6 @@ class KnowFrom(models.Model):
     knowfrom = models.TextField()
 
     def __str__(self):
-        print('bla')
         return self.knowfrom
 
 
@@ -227,7 +225,7 @@ class Organisation(models.Model):
 
     telephone = models.CharField(max_length=20)
     fax = models.CharField(max_length=20, blank=True, null=True)
-    website = models.URLField(max_length=255, null=True, blank=True)
+    website = models.CharField(max_length=255, null=True, blank=True)
     mail = models.EmailField()
 
     goal = models.TextField()
