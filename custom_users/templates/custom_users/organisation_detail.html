@@ -35,7 +35,7 @@
                             <strong>Type: </strong>{{ organisation.type }}<br>
                             <strong>Aanmeldingsdatum: </strong>{{ organisation.creation_date }}<br>
                             <strong>Trefwoorden: </strong>{% for keyword in organisation.keyword.all %}
-                                {{ keyword }}
+                                {{ keyword }}<br>
                             {% endfor %}<br>
                         </div>
 
