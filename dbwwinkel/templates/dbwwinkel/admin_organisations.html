@@ -1,5 +1,4 @@
 {% extends 'base/base.html' %}
-{% load static %}
 {% block content %}
     {% include 'dbwwinkel/admin_options.html' %}
     <div class="col-md-10 col-lg-10">
@@ -16,14 +15,12 @@
                     class='table-row'
                     style="cursor:pointer;">
                     <td class='col-md-1 text-center'>{{ organisation.name }}</td>
+
+                    <td class='col-md-1'>{% for ed in organisation.education.all %}
+                        {{ ed }}{% endfor %}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-{% endblock %}
-{% block extra_scripts %}
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-    <script src= {% static "dbwwinkel/js/table.js" %}></script>
 {% endblock %}

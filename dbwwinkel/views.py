@@ -86,6 +86,9 @@ def list_questions(request, admin_filter=None):
         if i != choice_facet[i][0]:
             choice_facet.insert(i, (i, 0))
 
+    if not request.user.is_superuser:
+        if not request.user.is_central_manager():
+            choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
     facet_count = [choice_facet, choice_facet]
 
     # Filter out the status of questions needed
@@ -171,7 +174,7 @@ def detail(request, question_id):
                'organisation': organisation,
                'internal': False,
                'options': template_lst,
-               'region_lst': Region.objects.exclude(region = Region.CENTRAL_REGION)}
+               'region_lst': Region.objects.exclude(region=Region.CENTRAL_REGION)}
 
     return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
 
@@ -675,8 +678,50 @@ def administration_view_my_questions(request):
 
 def admin_rganisation_table_view(request):
 
+def admin_organisation_table_view(request):
     sqs = Organisation.objects.all()
 
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_organisations.html', context)
+
+def admin_organisation_contact_view(request):
+    sqs = OrganisationUser.objects.all()
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_organisations.html', context)
+
+def admin_institution_view(request):
+    sqs = Institution.objects.all()
+
+    context = {
+        'query': sqs
+        }
+    return render(request, 'dbwwinkel/admin_organisations.html', context)
+
+
+def admin_faculty_view(request):
+    sqs = Faculty.objects.all()
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_organisations.html', context)
+
+def admin_education_view(request):
+    sqs = Education.objects.all()
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_organisations.html', context)
+
+
+def admin_promotor_view(request):
+    sqs = Promotor.objects.all()
 
     context = {
         'query': sqs
