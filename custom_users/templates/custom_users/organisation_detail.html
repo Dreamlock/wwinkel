@@ -31,10 +31,12 @@
                         <div class="col-md-4">
                             <h4>Overige info</h4>
                             <strong>Juridische entiteit: </strong>{{ organisation.legal_entity }}<br>
-                            <strong>Doel: </strong>{{ organisation.goal }}<br>
                             <strong>Opmerkingen: </strong>{{ organisation.remarks }}<br>
                             <strong>Type: </strong>{{ organisation.type }}<br>
                             <strong>Aanmeldingsdatum: </strong>{{ organisation.creation_date }}<br>
+                            <strong>Trefwoorden: </strong>{% for keyword in organisation.keyword.all %}
+                                {{ keyword }}
+                            {% endfor %}<br>
                         </div>
 
                         <div class=col-md-4>
@@ -45,6 +47,14 @@
                             <strong>Tel:</strong> {{ organisation.organisationuser.telephone }}
                         </div>
                     </div>
+
+                <div class="panel panel-body">
+                        <div class=col-md>
+                            <h4>Doel</h4>
+                            {{ organisation.goal }}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
