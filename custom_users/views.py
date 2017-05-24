@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
-
+from django.views.generic import ListView
 from .forms import *
 from .models import OrganisationUser
 @login_required
@@ -86,6 +86,7 @@ def register_organisation(request):
         'user_form': user_form
     }
     return render(request, "custom_users/organisation_registration_form.html",context)
+
 
 @login_required
 def organisation_detail(request):

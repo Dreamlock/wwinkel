@@ -683,3 +683,9 @@ def admin_rganisation_table_view(request):
     }
     return render(request, 'dbwwinkel/admin_organisations.html', context)
 
+class OrganisationDetail(DetailView):
+    model = Organisation
+
+    def get_context_data(self, **kwargs):
+        context = super(OrganisationDetail, self).get_context_data(**kwargs)
+        return context

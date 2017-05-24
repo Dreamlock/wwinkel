@@ -1,122 +1,54 @@
 {% extends "base/base.html" %}
-{% load cms_tags menu_tags sekizai_tags staticfiles %}
+{% load cms_tags menu_tags sekizai_tags staticfiles index %}
 
 {% block content %}
-    <div class = "container">
+    <div class="container-fluid">
         <div class="row">
-            <div class = "col-md-10">
-                <h1>{{ organisation.name }}</h1>
-                    <p></p>
-            </div>
-            <div class = "col-md-2">
-                <br>
-                <a class="btn btn-success pull-down"
-                        href = "{% url 'edit_organisation' organisation.id %}">
-                    Organisatie Bewerken
-                </a>
+            <div class="page-header">
+                <div class="container">
+                    <h1>Detail weergave organisatie</h1>
+                </div>
             </div>
         </div>
-    </div>
-    <hr />
-       <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Naam</h2>
-                <p>{{ organisation.name }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Afkorting</h2>
-                <p>{{ organisation.recognised_abbreviation }}</p>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Entiteit</h2>
-                <p>{{ organisation.legal_entity }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-        <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Adres</h2>
-                <p>{{ organisation.address }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Telefoon</h2>
-                <p>{{ organisation.telephone }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Fax</h2>
-                <p>{{ organisation.fax }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Site</h2>
-                <p>{{ organisation.website }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Doel</h2>
-                <p>{{ organisation.goal }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Opmerkingen</h2>
-                <p>{{ organisation.remarks }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Aangemeld op</h2>
-                <p>{{ organisation.creation_date }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class = "container">
-        <div class="row">
-            <div class = "col-md-11">
-                <h2>Actief</h2>
-                <p>{{ organisation.active }}</p>
-            </div>
-        </div>
-    </div>
-    <hr/>
 
+        <div class="col-md-10">
+            <div class="container">
+                <div class="panel panel-info">
+                    <div class='panel-heading'>
+                        <h2><strong>Organisatie: </strong>{{ organisation.name }}</h2><br>
+                    </div>
+                    <div class="panel panel-body">
+                        <div class=col-md-4>
+                            <h3>Contact gegevens</h3>
+                            <strong>Straat: </strong> {{ organisation.address.street_name }}<br>
+                            <strong>Nummer: </strong> {{ organisation.address.street_number }}<br>
+                            <strong>Plaats: </strong> {{ organisation.address.postal_code }} {{ organisation.address.city }}
+                            <br>
+                            <strong>Tel: </strong> {{ organisation.telephone }} <br>
+                            <strong>Website:</strong> <a href="http://{{ organisation.website }}" target="_blank">{{ organisation.website }}</a><br>
+                            <strong>Mail: </strong>{{ organisation.mail }}<br>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Overige info</h4>
+                            <strong>Juridische entiteit: </strong>{{ organisation.legal_entity }}<br>
+                            <strong>Doel: </strong>{{ organisation.goal }}<br>
+                            <strong>Opmerkingen: </strong>{{ organisation.remarks }}<br>
+                            <strong>Type: </strong>{{ organisation.type }}<br>
+                            <strong>Aanmeldingsdatum: </strong>{{ organisation.creation_date }}<br>
+                        </div>
 
+                        <div class=col-md-4>
+                            <h3>Contactpersoon</h3>
+                            <strong>Naam: </strong> {{ organisation.organisationuser.first_name }}
+                            {{ organisation.organisationuser.last_name }}<br>
+                            <strong>Email: </strong> {{ organisation.organisationuser.email }}<br>
+                            <strong>Tel:</strong> {{ organisation.organisationuser.telephone }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
+
