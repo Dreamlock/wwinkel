@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-
+import time
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
@@ -11,13 +11,13 @@ from haystack.query import SearchQuerySet
 from custom_users.forms import AdressForm
 from .forms import *
 from .models import Question, Education, QuestionSubject, FacultyOf, QuestionGroups
-from custom_users.models import OrganisationUser, ManagerUser, Region
+from custom_users.models import OrganisationUser, ManagerUser, Region, Organisation
 from operator import itemgetter
 from .search import autocomplete as search, query_extra_content, query_on_states
 import os
 
 from django.views.generic import View, ListView, DetailView
-
+from haystack.generic_views import FacetedSearchView as BaseFacetedSearchView
 
 @login_required
 @permission_required('dbwwinkel.add_question')
@@ -50,10 +50,15 @@ def register_question(request):
     return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
 
 
+
 def list_questions(request, admin_filter=None):
+
+    start = time.clock()
     # Text based search, now we're set up for our facets
-    val = request.GET.get('search_text', '')
+
+    val = request.GET.get('search_text','')
     sqs = search(SearchQuerySet(), val, Question)
+
 
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
@@ -70,11 +75,13 @@ def list_questions(request, admin_filter=None):
 
     sqs = sqs.facet('state_facet')
     choice_facet = (sqs.facet_counts()['fields']['state_facet'])
+    print(choice_facet)
     choice_facet2 = []
     for choice in choice_facet:
         choice_facet2.append((int(choice[0]), int(choice[1])))
     choice_facet = choice_facet2
     choice_facet = sorted(choice_facet, key=itemgetter(0))
+
     for i in range(len(choice_facet)):
         if i != choice_facet[i][0]:
             choice_facet.insert(i, (i, 0))
@@ -150,7 +157,7 @@ def list_questions(request, admin_filter=None):
         'facet_count': facet_count,
         'user_type': user_type,
     }
-
+    print(time.clock() - start)
     return render(request, 'dbwwinkel/question_list.html', context)
 
 
@@ -660,8 +667,19 @@ def administration_view_revoked(request):
 def administration_view_my_questions(request):
     sqs = Question.objects.filter(region__in=request.user.as_manager().region.all())
 
-    print(request.user.as_manager().region)
+
     context = {
         'query': sqs
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
+
+def admin_rganisation_table_view(request):
+
+    sqs = Organisation.objects.all()
+
+
+    context = {
+        'query': sqs
+    }
+    return render(request, 'dbwwinkel/admin_organisations.html', context)
+

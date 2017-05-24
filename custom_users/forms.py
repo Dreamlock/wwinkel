@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
 from django.forms.utils import ErrorList
+from haystack.forms import FacetedSearchForm
 
 from .models import User, OrganisationUser, Organisation, Address, OrganisationType, LegalEntity
 from django import forms
@@ -131,3 +132,26 @@ class BaseOrganisationUserForm(OrganisationUserCreationForm):
         model = OrganisationUser
         fields = ['email', 'first_name', 'last_name', 'telephone']
         labels = {'telephone': 'Telefoon'}
+
+
+class FacetedProductSearchForm(FacetedSearchForm):
+
+    def __init__(self, *args, **kwargs):
+        data = dict(kwargs.get("data", []))
+        self.institutionns = data.get('institution', [])
+        self.brands = data.get('brand', [])
+        super(FacetedProductSearchForm, self).__init__(*args, **kwargs)
+
+    def search(self):
+        sqs = super(FacetedProductSearchForm, self).search()
+        if self.institutionns:
+            query = None
+            for institution in self.institutionns:
+                if query:
+                    query += u' OR '
+                else:
+                    query = u''
+                query += u'"%s"' % sqs.query.clean(institution)
+            sqs = sqs.narrow(u'institution_exact:%s' % query)
+
+        return sqs

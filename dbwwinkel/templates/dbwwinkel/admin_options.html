@@ -1,0 +1,59 @@
+<div class="col-md-2">
+    <div class='span2 sidebar'>
+        <h3>Vragenbeheer</h3>
+        <ul class="nav nav-tabs nav-stacked">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter op
+                    Status
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    {% if user.is_central_manager %}
+                        <li><a href='{% url 'admin_new' %}'>Nieuwe vragen</a></li>
+                    {% endif %}
+                    {% if user.is_regional_manager %}
+                        <li><a href='{% url 'admin_intake_process' %}'>Intake verwerking</a></li>
+                    {% endif %}
+                    {% if user.is_central_manager %}
+                        <li><a href='{% url 'admin_intake_done' %}'>Intake klaar</a></li>
+                    {% endif %}
+                    {% if user.is_regional_manager %}
+                        <li><a href="{% url 'admin_regional_process' %}">Open te zetten </a></li>
+                    {% endif %}
+                    <li><a href='{% url 'admin_public' %}'>Publiek</a></li>
+                    <li><a href='{% url 'admin_reserved' %}'>In optie</a></li>
+                    <li><a href='{% url 'admin_finished' %}'>Afgerond</a></li>
+                    <li><a href="{% url 'admin_denied' %}">Geweigerd</a></li>
+                    <li><a href="{% url 'admin_revoked' %}">Teruggetrokken</a></li>
+                </ul>
+            </div>
+
+            <li><a href='{% url 'admin_to_process' %}'>Te verwerken</a></li>
+
+            <li><a href='{% url 'admin_regional_process_all' %}'>Vragen in regionale verwerking</a></li>
+
+            {% if user.is_regional_manager %}
+                <li><a href='{% url 'admin_my_question' %}'>Vragen onder mijn beheer</a></li>
+            {% endif %}
+
+            <li><a href='{% url 'list_questions' %}'>Alle vragen</a></li>
+        </ul>
+    </div>
+    <div class='span2 sidebar'>
+        <h3>Organisaties</h3>
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href={% url 'admin_organisations' %}>Organisaties</a></li>
+            <li><a href='#'>Contactpersonen</a></li>
+        </ul>
+    </div>
+
+    <div class='span2 sidebar'>
+        <h3>Onderwijs</h3>
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href='#'>Instellingen</a></li>
+            <li><a href='#'>Faculteiten</a></li>
+            <li><a href="#">Opleidingen</a></li>
+            <li><a href="#">Vakgroep</a></li>
+            <li><a href="#">Promotor</a></li>
+        </ul>
+    </div>
+</div>
