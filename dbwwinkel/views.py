@@ -53,8 +53,6 @@ def register_question(request):
 
 def list_questions(request, admin_filter=None):
 
-    start = time.clock()
-    # Text based search, now we're set up for our facets
 
     val = request.GET.get('search_text','')
     sqs = search(SearchQuerySet(), val, Question)
@@ -75,7 +73,6 @@ def list_questions(request, admin_filter=None):
 
     sqs = sqs.facet('state_facet')
     choice_facet = (sqs.facet_counts()['fields']['state_facet'])
-    print(choice_facet)
     choice_facet2 = []
     for choice in choice_facet:
         choice_facet2.append((int(choice[0]), int(choice[1])))
@@ -86,7 +83,9 @@ def list_questions(request, admin_filter=None):
         if i != choice_facet[i][0]:
             choice_facet.insert(i, (i, 0))
 
-    if not request.user.is_superuser:
+    if not request.user.is_authenticated:
+        choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
+    if request.user.is_authenticated and not request.user.is_superuser:
         if not request.user.is_central_manager():
             choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
     facet_count = [choice_facet, choice_facet]
@@ -154,13 +153,12 @@ def list_questions(request, admin_filter=None):
             pass
 
     context = {
-        'questions': sqs,
+        'questions': sqs[:200],
         'facet_form': facet_form,
         'search_text': val,
         'facet_count': facet_count,
         'user_type': user_type,
     }
-    print(time.clock() - start)
     return render(request, 'dbwwinkel/question_list.html', context)
 
 
@@ -676,7 +674,6 @@ def administration_view_my_questions(request):
     }
     return render(request, 'dbwwinkel/admin_page.html', context)
 
-def admin_rganisation_table_view(request):
 
 def admin_organisation_table_view(request):
     sqs = Organisation.objects.all()
