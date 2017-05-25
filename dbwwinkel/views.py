@@ -330,7 +330,7 @@ def interested_in_question_view(request, question_id):
             question.potential_students.add(student)
             question.save()
 
-            return render(request, 'dbwwinkel/templates/confirmations/student_choose_success.html',
+            return render(request, 'dbwwinkel/question_detail/student_choose_success.html',
                           {'question': question})
 
 
@@ -346,7 +346,7 @@ def interested_in_question_view(request, question_id):
                'address_form': address_form,
                }
     print(address_form.errors)
-    return render(request, 'dbwwinkel/templates/forms_creation/student_form.html', context)
+    return render(request, 'dbwwinkel/forms_creation/student_form.html', context)
 
 
 def edit_meta_info(request, question_id):
@@ -494,6 +494,22 @@ def register_institution(request, question_id= None):
         'question_id': question_id
     }
     return render(request, 'dbwwinkel/forms_creation/create_institution.html', context)
+
+def register_faculty(request):
+
+    if request.method == 'POST':
+        form = FacultyForm(request.POST)
+        if form.is_valid():
+            faculty = form.save()
+            form.save_m2m()
+            return redirect('detail_question', question_id=question_id)
+
+    else:
+        form = FacultyForm(initial=data)
+
+    return render(request, 'dbwwinkel/question_detail/internal_remark.html', {'form': form, 'question_id': question_id})
+
+
 
 
 def register_promotor(request, question_id):

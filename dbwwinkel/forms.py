@@ -223,6 +223,22 @@ class ReserveForm(forms.Form):
     student = forms.ModelChoiceField(queryset = None)
 
 
+class FacultyForm(forms.ModelForm):
+
+    class Meta:
+        model = Faculty
+        fields = ['name', 'institution']
+
+        labels = {
+            'name': 'Naam',
+            'institution': 'Instelling'
+        }
+
+        widgets = {
+            'name': autocomplete.ModelSelect2Multiple(url='all_institution-autocomplete')
+        }
+
+
 
 
 def QuestionFormFactory(user, question):

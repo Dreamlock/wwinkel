@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'register_institution/(?P<question_id>[0-9]+)', views.register_institution, name='register_institution'),
     url(r'register_institution/', views.register_institution, name='register_institution_admin'),
     url(r'register_promotor/(?P<question_id>[0-9]+)', views.register_promotor, name='register_promotor'),
+    url(r'register_faculty/', views.register_faculty, name='register_faculty'),
     # Rest
 
     url(r'^organisation_detail/(?P<pk>[0-9]+)', views.OrganisationDetail.as_view(), name='organisation_detail'),
@@ -81,6 +82,10 @@ urlpatterns = [
     url(r'^subject-autocomplete/$',
         SubjectAutocomplete.as_view(create_field='subject'),
         name='subject-autocomplete'),
+
+url(r'^all_institution-autocomplete/$',
+        AllInstitutionAutocomplete.as_view(),
+        name='all_institution-autocomplete'),
 
     url(r'^search/', include('haystack.urls')),
 
