@@ -6,16 +6,22 @@
         <table id="admin" class="table table-striped table-hover" cellspacing="0" width=" ='100%">
             <thead>
             <tr>
-                <th class='text-center'>Organisatie</th>
+                <th class ='text-center'>Contactspersoon</th>
+                <th class ='text-center'>Organisatie</th>
+                <th class ='text-center'>Nummer</th>
+                <th class = 'text-center'>E mail</th>
 
             </tr>
             </thead>
             <tbody>
-            {% for organisation in query %}
-                <tr data-href=""
+            {% for contact in query %}
+                <tr data-href="{% url 'contact_detail' contact.id %}"
                     class='table-row'
                     style="cursor:pointer;">
-                    <td class='col-md-1 text-center'>{{ organisation.name }}</td>
+                    <td class = 'col-md-1 text-center'>{{ contact}}</td>
+                    <td class = 'col-md-1 text-center'>{{ contact.organisation }}</td>
+                    <td class = 'col-md-1 text-center'>{{ contact.telephone }}</td>
+                    <td class = 'col-md-1 text-center'>{{ contact.email }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -27,4 +33,4 @@
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
     <script src= {% static "dbwwinkel/js/table.js" %}></script>
-{% endblock %}
+{% endblock %}>
