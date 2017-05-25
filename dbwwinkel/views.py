@@ -82,10 +82,10 @@ def list_questions(request, admin_filter=None):
         if i != choice_facet[i][0]:
             choice_facet.insert(i, (i, 0))
 
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated():
         choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
 
-    elif request.user.is_organisation:
+    elif request.user.is_organisation():
         choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
 
     elif request.user.is_authenticated and not request.user.is_superuser:
