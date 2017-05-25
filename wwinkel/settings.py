@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -200,6 +199,8 @@ AUTHENTICATION_BACKENDS = (
     'custom_users.permissions_backends.QuestionPermissionsBackend',
 )
 
+LOGIN_URL = 'custom_users/login'
+
 SITE_ID = 1
 
 
@@ -224,4 +225,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static_root/'
+
+STATIC_ROOT = './static_root/'
+
+STATICFILES_DIRS = ['static', 'dbwwinkel/static']
+
