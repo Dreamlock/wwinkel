@@ -6,6 +6,7 @@ urlpatterns = [
     # Register urls
     url(r'^register_question', views.register_question, name='register_question'),
     url(r'register_institution/(?P<question_id>[0-9]+)', views.register_institution, name='register_institution'),
+    url(r'register_institution/', views.register_institution, name='register_institution_admin'),
     url(r'register_promotor/(?P<question_id>[0-9]+)', views.register_promotor, name='register_promotor'),
     # Rest
 
@@ -25,7 +26,8 @@ urlpatterns = [
     url(r'^distribute_question/(?P<question_id>[0-9]+)', views.distribute_to_public, name='distribute_question_public'),
     url(r'^open_question/(?P<question_id>[0-9]+)', views.open_question, name='open_question'),
     url(r'^reserve_question/(?P<question_id>[0-9]+)', views.reserve_question, name='reserve_question'),
-    url(r'^interested_in_question/(?P<question_id>[0-9]+)', views.interested_in_question_view, name='interested_in_question'),
+    url(r'^interested_in_question/(?P<question_id>[0-9]+)', views.interested_in_question_view,
+        name='interested_in_question'),
     url(r'^assign_question/(?P<question_id>[0-9]+)', views.assign_question, name='assign_question'),
     url(r'round_up_question/(?P<question_id>[0-9]+)', views.round_up_question, name='round_up_question'),
     url(r'deny_question/(?P<question_id>[0-9]+)', views.deny_question, name='deny_question'),

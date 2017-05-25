@@ -463,7 +463,7 @@ def edit_meta_info(request, question_id):
     return render(request, 'dbwwinkel/question_detail/edit_meta_data.html', {'form': form, 'question': question})
 
 
-def register_institution(request, question_id):
+def register_institution(request, question_id= None):
     if request.method == 'POST':
         institution_form = InstitutionForm(request.POST, prefix='institution')
         address_form = AdressForm(request.POST, prefix='address')
@@ -475,11 +475,15 @@ def register_institution(request, question_id):
             institution.address = address
             institution.save()
 
-            question = Question.objects.get(id=question_id)
-            question.institution.add(institution)
-            question.save()
+            if not  question_id == None:
+                question = Question.objects.get(id=question_id)
+                question.institution.add(institution)
+                question.save()
 
-            return redirect('edit_meta_info', question_id=question_id)
+                return redirect('edit_meta_info', question_id=question_id)
+
+            else:
+                return redirect('admin_institutions')
     else:
         institution_form = InstitutionForm(prefix='institution')
         address_form = AdressForm(prefix='address')
@@ -489,7 +493,7 @@ def register_institution(request, question_id):
         'address_form': address_form,
         'question_id': question_id
     }
-    return render(request, 'dbwwinkel/templates/forms_creation/create_institution.html', context)
+    return render(request, 'dbwwinkel/forms_creation/create_institution.html', context)
 
 
 def register_promotor(request, question_id):

@@ -6,7 +6,12 @@
         </div>
     </div>
     <div class="container">
-        <form action="{% url 'register_institution' question_id %}" method="post">
+        <form action="{% if not question_id == None%}
+                        {% url 'register_institution' question_id %}
+                    {% else %}"
+            {% url 'register_institution_admin' %}
+        {% endif %}
+              method="post">
             {% csrf_token %}
             {% for field in institution_form %}
                 <div class="form-group">
@@ -26,7 +31,7 @@
                     <button type="submit" class="btn btn-default" value="Registreer">Registreer</button>
                 </div>
             </div>
-    </form>
+        </form>
     </div>
 
 {% endblock %}
