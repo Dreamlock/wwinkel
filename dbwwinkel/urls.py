@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^faculty_detail/(?P<pk>[0-9]+)', views.FacultyDetail.as_view(), name='faculty_detail'),
     url(r'^education_detail/(?P<pk>[0-9]+)', views.EducationDetail.as_view(), name='education_detail'),
     url(r'^contact_detail/(?P<pk>[0-9]+)', views.ContactDetail.as_view(), name='contact_detail'),
+    url(r'^promotor_detail/(?P<pk>[0-9]+)', views.PromotorDetail.as_view(), name='promotor_detail'),
 
     url(r'^list_questions', views.list_questions, name='list_questions'),
     url(r'^list_questions/(?P<admin_filter>[a-z]+)', views.list_questions, name='list_questions_filter'),
