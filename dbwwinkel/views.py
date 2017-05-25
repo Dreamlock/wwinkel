@@ -712,7 +712,7 @@ def admin_education_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_education.html', context)
 
 
 def admin_promotor_view(request):
@@ -721,7 +721,7 @@ def admin_promotor_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_promotor.html', context)
 
 
 class OrganisationDetail(DetailView):

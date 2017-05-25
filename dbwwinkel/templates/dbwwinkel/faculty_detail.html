@@ -20,8 +20,10 @@
                     <div class="panel panel-body">
                         <div class=col-md-4>
                             <h3>Opleidingen</h3>
-                            {% for education in faculty.facultyof_set.education.all %}
-                                {{ education }}<br>
+                            {% for facultyof in faculty.facultyof_set.all %}
+                                {% for education in facultyof.education.all %}
+                                    {{ education }}<br>
+                                {% endfor %}
                             {% endfor %}<br>
                         </div>
                     </div>
