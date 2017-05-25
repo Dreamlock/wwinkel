@@ -47,7 +47,7 @@ def register_question(request):
         form = RegisterQuestionForm()
 
     # if a GET (or any other method) we'll create a blank form
-    return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
+    return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
 
 
 
@@ -159,7 +159,7 @@ def list_questions(request, admin_filter=None):
         'facet_count': facet_count,
         'user_type': user_type,
     }
-    return render(request, 'dbwwinkel/question_list.html', context)
+    return render(request, 'dbwwinkel/facet_results/question_list.html', context)
 
 
 def detail(request, question_id):
@@ -174,7 +174,7 @@ def detail(request, question_id):
                'options': template_lst,
                'region_lst': Region.objects.exclude(region=Region.CENTRAL_REGION)}
 
-    return render(request, 'dbwwinkel/detail_question/detail_question_base.html', context)
+    return render(request, 'dbwwinkel/detail_question/templates/dbwwinkel/detail_question.html', context)
 
 
 @login_required
@@ -185,7 +185,7 @@ def edit_question(request, question_id):
     if form.is_valid():
         form.save()
         return redirect(detail, question_id=question_id)
-    return render(request, 'dbwwinkel/vraagstelform.html', {'form': form})
+    return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
 
 
 def reserve_question(request, question_id):
@@ -216,7 +216,7 @@ def reserve_question(request, question_id):
     print(question.potential_students.all())
 
 
-    return render(request,'dbwwinkel/reserve_question.html',{'form': form, 'question': question})
+    return render(request, 'dbwwinkel/templates/confirmations/reserve_question.html', {'form': form, 'question': question})
 
 def assign_question(request, question_id):
     question = Question.objects.get(id=question_id)
@@ -294,7 +294,7 @@ def internal_remark(request, question_id):
         data = {'internal_remark': existing_remark}
         form = InternalRemarkForm(initial=data)
 
-    return render(request, 'dbwwinkel/internal_remark.html', {'form': form, 'question_id': question_id})
+    return render(request, 'dbwwinkel/question_detail/internal_remark.html', {'form': form, 'question_id': question_id})
 
 
 def finish_intake(request, question_id):
@@ -336,7 +336,7 @@ def interested_in_question_view(request,question_id):
             question.potential_students.add(student)
             question.save()
 
-            return render(request,'dbwwinkel/student_choose_success.html',{'question': question})
+            return render(request, 'dbwwinkel/templates/confirmations/student_choose_success.html', {'question': question})
 
 
     # if a GET (or any other method) we'll create a blank form
@@ -351,7 +351,7 @@ def interested_in_question_view(request,question_id):
                'address_form':address_form,
                }
     print(address_form.errors)
-    return render(request, 'dbwwinkel/student_form.html', context )
+    return render(request, 'dbwwinkel/templates/forms_creation/student_form.html', context)
 
 
 def edit_meta_info(request, question_id):
@@ -458,13 +458,13 @@ def edit_meta_info(request, question_id):
 
             question.save()
             form = MetaFieldForm(question_id=question_id)
-            return render(request, 'dbwwinkel/edit_meta_data.html', {'form': form, 'question': question})
+            return render(request, 'dbwwinkel/question_detail/edit_meta_data.html', {'form': form, 'question': question})
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = MetaFieldForm(question_id=question_id)
 
-    return render(request, 'dbwwinkel/edit_meta_data.html', {'form': form, 'question': question})
+    return render(request, 'dbwwinkel/question_detail/edit_meta_data.html', {'form': form, 'question': question})
 
 
 def register_institution(request, question_id):
@@ -493,7 +493,7 @@ def register_institution(request, question_id):
         'address_form': address_form,
         'question_id': question_id
     }
-    return render(request, 'dbwwinkel/create_institution.html', context)
+    return render(request, 'dbwwinkel/templates/forms_creation/create_institution.html', context)
 
 
 def register_promotor(request, question_id):
@@ -518,7 +518,7 @@ def register_promotor(request, question_id):
         'promotor_form': promotor_form,
         'question_id': question_id
     }
-    return render(request, 'dbwwinkel/create_promotor.html', context)
+    return render(request, 'dbwwinkel/templates/forms_creation/create_promotor.html', context)
 
 
 def administration_view_to_process(request):
@@ -544,7 +544,7 @@ def administration_view_to_process(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_new(request):
@@ -553,7 +553,7 @@ def administration_view_new(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_intake_process(request):
@@ -564,7 +564,7 @@ def administration_view_intake_process(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_intake_in_progress(request):
@@ -578,7 +578,7 @@ def administration_view_intake_in_progress(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_intake_done(request):
@@ -587,7 +587,7 @@ def administration_view_intake_done(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_in_regional_process(request):
@@ -599,7 +599,7 @@ def administration_view_in_regional_process(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_in_regional_process_all(request):
@@ -608,7 +608,7 @@ def administration_view_in_regional_process_all(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_public(request):
@@ -617,7 +617,7 @@ def administration_view_public(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_reserved(request):
@@ -626,7 +626,7 @@ def administration_view_reserved(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_on_going(request):
@@ -635,7 +635,7 @@ def administration_view_on_going(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_finished(request):
@@ -644,7 +644,7 @@ def administration_view_finished(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_denied(request):
@@ -653,7 +653,7 @@ def administration_view_denied(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_revoked(request):
@@ -662,7 +662,7 @@ def administration_view_revoked(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def administration_view_my_questions(request):
@@ -672,7 +672,7 @@ def administration_view_my_questions(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_page.html', context)
+    return render(request, 'dbwwinkel/admin/admin_page.html', context)
 
 
 def admin_organisation_table_view(request):
@@ -681,7 +681,7 @@ def admin_organisation_table_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
 
 def admin_organisation_contact_view(request):
     sqs = OrganisationUser.objects.all()
@@ -689,7 +689,7 @@ def admin_organisation_contact_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
 
 def admin_institution_view(request):
     sqs = Institution.objects.all()
@@ -697,7 +697,7 @@ def admin_institution_view(request):
     context = {
         'query': sqs
         }
-    return render(request, 'dbwwinkel/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
 
 
 def admin_faculty_view(request):
@@ -706,7 +706,7 @@ def admin_faculty_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
 
 def admin_education_view(request):
     sqs = Education.objects.all()
@@ -714,7 +714,7 @@ def admin_education_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
 
 
 def admin_promotor_view(request):
@@ -723,7 +723,7 @@ def admin_promotor_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
 
 class OrganisationDetail(DetailView):
     model = Organisation
