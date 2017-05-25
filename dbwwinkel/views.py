@@ -349,7 +349,7 @@ def interested_in_question_view(request, question_id):
                'question': question,
                'address_form': address_form,
                }
-    print(address_form.errors)
+    #print(address_form.errors)
     return render(request, 'dbwwinkel/forms_creation/student_form.html', context)
 
 
