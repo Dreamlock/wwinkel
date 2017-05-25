@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class='panel panel-info'>
+            <div class='panel-heading'>Vraag registratie</div>
+            <div class='panel panel-body'>
+                <form action="{{ request.get_full_path }} {% if from %}?next ={{ from }}{% endif %}" method="post"
+                      class="form-horizontal">
+                    {% csrf_token %}
+                    <div class='col-md-12'>
+                        {% for field in form %}
+                            <div class="form-group row">
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>Error: </strong>{{ error }}
+                                    </div>
+                                {% endfor %}
+                                <div class="col-md-4">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="col-md-8">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    <div class="container ">
+                        <div class="row form-group">
+                            <button type="submit" class="btn btn-info">Registreer vraag</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

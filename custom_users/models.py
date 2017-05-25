@@ -144,7 +144,7 @@ class Address(models.Model):
 
     province = models.ForeignKey(Province)
     city = models.CharField(max_length=255)
-    postal_code = models.PositiveIntegerField()
+    postal_code = models.CharField(max_length=10)
     street_name = models.CharField(max_length=40)
     street_number = models.CharField(max_length=15)  # char om bv. 27B toe te staan.
 
@@ -199,7 +199,6 @@ class LegalEntity(models.Model):
     entity = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
-        print('bla')
         return '{0}'.format(self.entity)
 
 
@@ -214,7 +213,6 @@ class KnowFrom(models.Model):
     knowfrom = models.TextField()
 
     def __str__(self):
-        print('bla')
         return self.knowfrom
 
 
@@ -227,7 +225,7 @@ class Organisation(models.Model):
 
     telephone = models.CharField(max_length=20)
     fax = models.CharField(max_length=20, blank=True, null=True)
-    website = models.URLField(max_length=255, null=True, blank=True)
+    website = models.CharField(max_length=255, null=True, blank=True)
     mail = models.EmailField()
 
     goal = models.TextField()
@@ -281,6 +279,7 @@ class Region(models.Model):
     LIMBURG_REGION = 3
     WEST_FLANDERS_REGION = 4
     CENTRAL_REGION = 5
+    BRUSSELS_REGION=6
     REGION_SELECT = (
         (ANTWERP_REGION, _('Antwerpen')),
         (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
@@ -288,6 +287,7 @@ class Region(models.Model):
         (LIMBURG_REGION, _('Limburg')),
         (WEST_FLANDERS_REGION, _('West-Vlaanderen')),
         (CENTRAL_REGION, _('Centraal')),
+        (BRUSSELS_REGION, _('Brussel'))
     )
     region = models.PositiveIntegerField(unique=True, choices=REGION_SELECT)
 
@@ -325,3 +325,19 @@ class QuestionInstitution(models.Model):
 class Mediator(User):
     jobfunction = models.TextField()
     quesiotninstitution = models.ManyToManyField(QuestionInstitution)
+
+class OrganisationContact(models.Model):
+    first_name = models.TextField(blank=True, null=True)
+    last_name = models.TextField(blank=True, null=True)
+    telephone = models.CharField(max_length=20)
+    cell = models.CharField(max_length=20)
+    address = models.ForeignKey(Address, null=True)
+    job_function = models.TextField()
+    email = models.EmailField(
+        _('email address'),
+        error_messages={
+            'unique': _('This email is already used.')
+        },
+    )
+    remarks = models.TextField()
+    organisation = models.ForeignKey(Organisation)

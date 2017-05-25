@@ -1,9 +1,28 @@
 {% extends "base/base.html" %}
 {% block content %}
-    <form action = "{% url 'login' %}" method = "post">
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Log in" />
+        <div class="container">
+            <div class="panel panel-info">
+                <div class="panel panel-heading">Inloggen</div>
+                <div class="panel panel-body">
+                    {% for field in form %}
+                        <div class="form-group row {% if field.errors %}has-error has-feedback{% endif %}">
+                            <div class="col-md-2">
+                                {{ field.label_tag }}
+                            </div>
+                            <div class="col-md-5">
+                                {% for error in field.errors %}
+                                    <label class="control-label" for="inputError2">{{ error }}</label>{% endfor %}
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <input class ="btn btn-info" type="submit" value="Log in"/>
+                </div>
+            </div>
+        </div>
     </form>
+
 
 {% endblock %}

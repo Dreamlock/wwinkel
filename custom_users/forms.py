@@ -1,5 +1,9 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
-from .models import User, OrganisationUser, Organisation, Address
+from django.forms.utils import ErrorList
+from haystack.forms import FacetedSearchForm
+
+from .models import User, OrganisationUser, Organisation, Address, OrganisationType, LegalEntity
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
@@ -61,18 +65,32 @@ class ManagerUserChangeForm(BaseUserChangeForm):
         fields = '__all__'
 
 class PasswordField(forms.CharField):
-    widget = forms.PasswordInput
+    widget = forms.PasswordInput(attrs = {'class': 'form-control'})
 
 class LoginForm(forms.Form):
+
     e_mail = forms.EmailField()
     password = PasswordField()
+
+    def clean(self):
+        if not User.objects.filter(email = self.cleaned_data['e_mail']).exists():
+            self.errors['e_mail'] = ErrorList(['Ongeldig Mail adres'])
+
+        user = authenticate(email=self.cleaned_data['e_mail'], password=self.cleaned_data['password'])
+
+        if user is None:
+            self.errors['password'] = ErrorList(['Ongeldig wachtwoord'])
 
 
 class OrganisationForm(forms.ModelForm):
 
+    def __init__(self,*args, **kwargs):
+        super(OrganisationForm,self).__init__(*args, **kwargs)
+
     class Meta:
         model = Organisation
-        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','website', 'goal','know_from', 'remarks']
+        fields = ['name', 'recognised_abbreviation', 'legal_entity', 'type', 'telephone','fax',
+                  'mail','website', 'goal', 'remarks', 'know_from']
 
         labels = {
             'name': 'Naam Organisatie',
@@ -82,7 +100,8 @@ class OrganisationForm(forms.ModelForm):
             'website': 'website',
             'goal': 'Doel organisatie',
             'remarks': 'Opmerkingen',
-            'know_from': 'Van waar ken je ons?'
+            'type': 'Soort',
+            'know_from': 'Van waar ken je ons'
 
         }
         help_texts = {
@@ -113,3 +132,26 @@ class BaseOrganisationUserForm(OrganisationUserCreationForm):
         model = OrganisationUser
         fields = ['email', 'first_name', 'last_name', 'telephone']
         labels = {'telephone': 'Telefoon'}
+
+
+class FacetedProductSearchForm(FacetedSearchForm):
+
+    def __init__(self, *args, **kwargs):
+        data = dict(kwargs.get("data", []))
+        self.institutionns = data.get('institution', [])
+        self.brands = data.get('brand', [])
+        super(FacetedProductSearchForm, self).__init__(*args, **kwargs)
+
+    def search(self):
+        sqs = super(FacetedProductSearchForm, self).search()
+        if self.institutionns:
+            query = None
+            for institution in self.institutionns:
+                if query:
+                    query += u' OR '
+                else:
+                    query = u''
+                query += u'"%s"' % sqs.query.clean(institution)
+            sqs = sqs.narrow(u'institution_exact:%s' % query)
+
+        return sqs

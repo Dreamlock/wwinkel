@@ -9,6 +9,13 @@ urlpatterns = [
     url(r'register_promotor/(?P<question_id>[0-9]+)', views.register_promotor, name='register_promotor'),
     # Rest
 
+    url(r'^organisation_detail/(?P<pk>[0-9]+)', views.OrganisationDetail.as_view(), name='organisation_detail'),
+    url(r'^institution_detail/(?P<pk>[0-9]+)', views.InstitutionDetail.as_view(), name='institution_detail'),
+    url(r'^faculty_detail/(?P<pk>[0-9]+)', views.FacultyDetail.as_view(), name='faculty_detail'),
+    url(r'^education_detail/(?P<pk>[0-9]+)', views.EducationDetail.as_view(), name='education_detail'),
+    url(r'^contact_detail/(?P<pk>[0-9]+)', views.ContactDetail.as_view(), name='contact_detail'),
+    url(r'^promotor_detail/(?P<pk>[0-9]+)', views.PromotorDetail.as_view(), name='promotor_detail'),
+
     url(r'^list_questions', views.list_questions, name='list_questions'),
     url(r'^list_questions/(?P<admin_filter>[a-z]+)', views.list_questions, name='list_questions_filter'),
 
@@ -42,7 +49,16 @@ urlpatterns = [
     url(r'admin_revoked/', views.administration_view_revoked, name='admin_revoked'),
     url(r'admin_regional_progress_all/', views.administration_view_in_regional_process_all,
         name='admin_regional_process_all'),
+
     url(r'admin_my_question/', views.administration_view_my_questions, name='admin_my_question'),
+
+    url(r'admin_organisations/', views.admin_organisation_table_view, name='admin_organisations'),
+    url(r'admin_contacts/', views.admin_organisation_contact_view, name='admin_contacts'),
+
+    url(r'admin_institution/', views.admin_institution_view, name='admin_institutions'),
+    url(r'admin_faculty/', views.admin_faculty_view, name='admin_faculty'),
+    url(r'admin_education/', views.admin_education_view, name='admin_education'),
+    url(r'admin_promotors/', views.admin_promotor_view, name='admin_promotor'),
 
     url(r'^institution-autocomplete/$',
         InstitutionAutocomplete.as_view(),

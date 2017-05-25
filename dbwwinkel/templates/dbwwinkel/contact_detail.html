@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles index %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header">
+                <div class="container">
+                    <h1>Detail weergave contactpersoon</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="container">
+                <div class="panel panel-info">
+                    <div class='panel-heading'>
+                        <h2><strong>Persoon: </strong>{{ organisationuser.first_name }} {{ " " }} {{ organisationuser.last_name }}</h2><br>
+                    </div>
+                    <div class="panel panel-body">
+                        <div class=col-md-4>
+                            <h3>Contact gegevens</h3>
+                            <strong>Straat: </strong> {{ organisationuser.organisation.address.street_name }}<br>
+                            <strong>Nummer: </strong> {{ organisationuser.organisation.address.street_number }}<br>
+                            <strong>Plaats: </strong> {{ organisationuser.organisation.address.postal_code }} {{ organisationuser.organisation.address.city }}<br>
+                            <strong>Werkgever: </strong>{{ organisationuser.organisation }}<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+

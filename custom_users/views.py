@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
-
+from django.views.generic import ListView
 from .forms import *
 from .models import OrganisationUser
 @login_required
@@ -36,6 +36,8 @@ def login_view(request):
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 return HttpResponseRedirect('/dbwwinkel/list_questions?search_text=') # TODO redirect to to a log in success page?
 
+
+
     else:
         form = LoginForm()
 
@@ -50,6 +52,7 @@ def register_organisation(request):
         organisation_form = OrganisationForm(request.POST, prefix="organisation")
         address_form = AdressForm(request.POST, prefix='address')
         user_form = BaseOrganisationUserForm(request.POST, prefix='user')
+
 
         # check whether it's valid:
         if organisation_form.is_valid() and address_form.is_valid() and user_form.is_valid():
@@ -72,6 +75,9 @@ def register_organisation(request):
         organisation_form = OrganisationForm(prefix="organisation")
         address_form = AdressForm( prefix='address')
         user_form =BaseOrganisationUserForm(prefix='user')
+
+        organisation_form.fields['legal_entity'].queryset = LegalEntity.objects.all()
+        organisation_form.fields['type'].queryset = OrganisationType.objects.all()
         # redirect to a new URL:
 
     context = {
@@ -79,7 +85,8 @@ def register_organisation(request):
         'address_form': address_form,
         'user_form': user_form
     }
-    return render(request, "custom_users/organisation_registration_form.html",context    )
+    return render(request, "custom_users/organisation_registration_form.html",context)
+
 
 @login_required
 def organisation_detail(request):
