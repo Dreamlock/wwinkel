@@ -215,7 +215,7 @@ def reserve_question(request, question_id):
 
     print(question.potential_students.all())
 
-    return render(request, 'dbwwinkel/question_detail/reserve_question.html',
+    return render(request, 'dbwwinkel/question_detail&/reserve_question.html',
                   {'form': form, 'question': question})
 
 
@@ -545,7 +545,7 @@ def register_education(request):
     return render(request, 'dbwwinkel/forms_creation/create_education.html', {'form': form})
 
 
-def register_promotor(request, question_id):
+def register_promotor(request, question_id = None):
     if request.method == 'POST':
         promotor_form = PromotorForm(request.POST)
 
@@ -554,12 +554,14 @@ def register_promotor(request, question_id):
 
             promotor.address = promotor.institution.address
             promotor.save()
+            if not question_id == None:
+                question = Question.objects.get(id=question_id)
+                question.promotor.add(promotor)
+                question.save()
 
-            question = Question.objects.get(id=question_id)
-            question.promotor.add(promotor)
-            question.save()
-
-            return redirect('edit_meta_info', question_id=question_id)
+                return redirect('edit_meta_info', question_id=question_id)
+            else:
+                return redirect('admin_promotor')
     else:
         promotor_form = PromotorForm()
 
@@ -567,7 +569,7 @@ def register_promotor(request, question_id):
         'promotor_form': promotor_form,
         'question_id': question_id
     }
-    return render(request, 'dbwwinkel/templates/forms_creation/create_promotor.html', context)
+    return render(request, 'dbwwinkel/forms_creation/create_promotor.html', context)
 
 
 def administration_view_to_process(request):

@@ -91,7 +91,7 @@
                         <li><a href = {% url 'interested_in_question' question.id %}>Ik heb interesse in deze vraag</a></li>
                     {% endif %}
                     <li><a href='{% if not user.is_authenticated or user.is_organisation %}
-                                    {% url 'list_question' %}
+                                    {% url 'list_questions' %}
                                 {% else %}
                                 {% url 'admin_to_process' %}{% endif %}'>Terug</a></li>
                 </ul>
