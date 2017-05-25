@@ -19,6 +19,7 @@ import os
 from django.views.generic import View, ListView, DetailView
 from haystack.generic_views import FacetedSearchView as BaseFacetedSearchView
 
+
 @login_required
 @permission_required('dbwwinkel.add_question')
 def register_question(request):
@@ -50,11 +51,9 @@ def register_question(request):
     return render(request, 'dbwwinkel/forms_creation/vraagstelform.html', {'form': form})
 
 
-
 def list_questions(request, admin_filter=None):
     val = request.GET.get('search_text', '')
     sqs = search(SearchQuerySet(), val, Question)
-
 
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
@@ -188,7 +187,7 @@ def edit_question(request, question_id):
     if form.is_valid():
         form.save()
         return redirect(detail, question_id=question_id)
-    return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
+    return render(request, 'dbwwinkel/forms_creation/vraagstelform.html', {'form': form})
 
 
 def reserve_question(request, question_id):
@@ -216,7 +215,7 @@ def reserve_question(request, question_id):
 
     print(question.potential_students.all())
 
-    return render(request, 'dbwwinkel/templates/confirmations/reserve_question.html',
+    return render(request, 'dbwwinkel/question_detail/reserve_question.html',
                   {'form': form, 'question': question})
 
 
@@ -468,7 +467,7 @@ def edit_meta_info(request, question_id):
     return render(request, 'dbwwinkel/question_detail/edit_meta_data.html', {'form': form, 'question': question})
 
 
-def register_institution(request, question_id= None):
+def register_institution(request, question_id=None):
     if request.method == 'POST':
         institution_form = InstitutionForm(request.POST, prefix='institution')
         address_form = AdressForm(request.POST, prefix='address')
@@ -480,7 +479,7 @@ def register_institution(request, question_id= None):
             institution.address = address
             institution.save()
 
-            if not  question_id == None:
+            if not question_id == None:
                 question = Question.objects.get(id=question_id)
                 question.institution.add(institution)
                 question.save()
@@ -500,16 +499,16 @@ def register_institution(request, question_id= None):
     }
     return render(request, 'dbwwinkel/forms_creation/create_institution.html', context)
 
-def register_faculty(request):
 
+def register_faculty(request):
     if request.method == 'POST':
         form = FacultyForm(request.POST)
 
         if form.is_valid():
-            faculty = form.save(commit = False)
+            faculty = form.save(commit=False)
             faculty.save()
             for inst in form.cleaned_data['institution']:
-                nof = FacultyOf.objects.create(institution = inst, faculty = faculty)
+                nof = FacultyOf.objects.create(institution=inst, faculty=faculty)
                 for edu in form.cleaned_data['opleiding']:
                     nof.education.add(edu)
                 nof.save()
@@ -523,7 +522,27 @@ def register_faculty(request):
 
     return render(request, 'dbwwinkel/forms_creation/register_faculty.html', {'form': form})
 
+def register_education(request):
+    if request.method == 'POST':
+        form = EducationForm(request.POST)
 
+        if form.is_valid():
+            education = form.save(commit=False)
+            education.save()
+            for inst in form.cleaned_data['institution']:
+                for fac in form.cleaned_data['faculteit']:
+                    nof = FacultyOf.objects.create(institution=inst, faculty=fac)
+                    nof.education.add(education)
+                    nof.save()
+                    education.facultyof_set.add(nof)
+            education.save()
+            return redirect('admin_education')
+
+    else:
+        form = EducationForm()
+        form.fields['institution'].queryset = Institution.objects.all()
+
+    return render(request, 'dbwwinkel/forms_creation/create_education.html', {'form': form})
 
 
 def register_promotor(request, question_id):
@@ -789,6 +808,7 @@ class EducationDetail(DetailView):
         context = super(EducationDetail, self).get_context_data(**kwargs)
         return context
 
+
 class ContactDetail(DetailView):
     model = OrganisationUser
 
@@ -797,6 +817,7 @@ class ContactDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ContactDetail, self).get_context_data(**kwargs)
         return context
+
 
 class PromotorDetail(DetailView):
     model = Promotor
