@@ -104,7 +104,7 @@ class SubjectAutocomplete(lightcomplete.Select2QuerySetView):
 class AllInstitutionAutocomplete(lightcomplete.Select2QuerySetView):
 
     def get_queryset(self):
-
+        print('hier')
         qs = Institution.objects.all()
         if self.q:
             qs = qs.filter(subject__istartswith=self.q)

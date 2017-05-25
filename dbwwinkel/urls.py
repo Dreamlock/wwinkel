@@ -83,9 +83,9 @@ urlpatterns = [
         SubjectAutocomplete.as_view(create_field='subject'),
         name='subject-autocomplete'),
 
-url(r'^all_institution-autocomplete/$',
-        AllInstitutionAutocomplete.as_view(),
-        name='all_institution-autocomplete'),
+    url(r'^all_institution-autocomplete/$',
+            AllInstitutionAutocomplete.as_view(),
+            name='all_institution_autocomplete'),
 
     url(r'^search/', include('haystack.urls')),
 

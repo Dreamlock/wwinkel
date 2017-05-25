@@ -225,19 +225,18 @@ class ReserveForm(forms.Form):
 
 class FacultyForm(forms.ModelForm):
 
+    opleiding = forms.ModelMultipleChoiceField(queryset=Education.objects.all())
+
+
     class Meta:
         model = Faculty
-        fields = ['name', 'institution']
+        fields = ('__all__')
 
         labels = {
             'name': 'Naam',
             'institution': 'Instelling',
         }
 
-
-        widgets = {
-            'institution': autocomplete.ModelSelect2Multiple(url='all_institution-autocomplete'),
-        }
 
 
 

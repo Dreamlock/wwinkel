@@ -506,9 +506,16 @@ def register_faculty(request):
         form = FacultyForm(request.POST)
 
         if form.is_valid():
-            faculty = form.save()
-            form.save_m2m()
-            return redirect('detail_question', question_id=question_id)
+            faculty = form.save(commit = False)
+            faculty.save()
+            for inst in form.cleaned_data['institution']:
+                nof = FacultyOf.objects.create(institution = inst, faculty = faculty)
+                for edu in form.cleaned_data['opleiding']:
+                    nof.education.add(edu)
+                nof.save()
+                faculty.facultyof_set.add(nof)
+            faculty.save()
+            return redirect('admin_faculty')
 
     else:
         form = FacultyForm()
