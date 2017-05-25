@@ -172,7 +172,7 @@ def detail(request, question_id):
                'options': template_lst,
                'region_lst': Region.objects.exclude(region=Region.CENTRAL_REGION)}
 
-    return render(request, 'dbwwinkel/detail_question/templates/dbwwinkel/detail_question.html', context)
+    return render(request, 'dbwwinkel/question_detail/detail_question.html', context)
 
 
 @login_required
@@ -694,7 +694,7 @@ def admin_institution_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_institution.html', context)
 
 
 def admin_faculty_view(request):
@@ -703,7 +703,7 @@ def admin_faculty_view(request):
     context = {
         'query': sqs
     }
-    return render(request, 'dbwwinkel/admin/admin_organisations.html', context)
+    return render(request, 'dbwwinkel/admin/admin_faculty.html', context)
 
 
 def admin_education_view(request):
@@ -758,7 +758,7 @@ class EducationDetail(DetailView):
 class ContactDetail(DetailView):
     model = OrganisationUser
 
-    template_name = 'contact_detail.html'
+    template_name = 'dbwwinkel/contact_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetail, self).get_context_data(**kwargs)

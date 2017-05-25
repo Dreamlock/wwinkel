@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'register_promotor/(?P<question_id>[0-9]+)', views.register_promotor, name='register_promotor'),
     # Rest
 
-    url(r'^detail_organisation/(?P<pk>[0-9]+)', views.OrganisationDetail.as_view(), name='detail_organisation'),
+    url(r'^organisation_detail/(?P<pk>[0-9]+)', views.OrganisationDetail.as_view(), name='organisation_detail'),
     url(r'^institution_detail/(?P<pk>[0-9]+)', views.InstitutionDetail.as_view(), name='institution_detail'),
     url(r'^faculty_detail/(?P<pk>[0-9]+)', views.FacultyDetail.as_view(), name='faculty_detail'),
     url(r'^education_detail/(?P<pk>[0-9]+)', views.EducationDetail.as_view(), name='education_detail'),
