@@ -231,11 +231,12 @@ class FacultyForm(forms.ModelForm):
 
         labels = {
             'name': 'Naam',
-            'institution': 'Instelling'
+            'institution': 'Instelling',
         }
 
+
         widgets = {
-            'name': autocomplete.ModelSelect2Multiple(url='all_institution-autocomplete')
+            'institution': autocomplete.ModelSelect2Multiple(url='all_institution-autocomplete'),
         }
 
 

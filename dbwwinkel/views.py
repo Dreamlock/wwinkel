@@ -47,7 +47,7 @@ def register_question(request):
         form = RegisterQuestionForm()
 
     # if a GET (or any other method) we'll create a blank form
-    return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
+    return render(request, 'dbwwinkel/forms_creation/vraagstelform.html', {'form': form})
 
 
 
@@ -74,6 +74,7 @@ def list_questions(request, admin_filter=None):
     choice_facet2 = []
     for choice in choice_facet:
         choice_facet2.append((int(choice[0]), int(choice[1])))
+
     choice_facet = choice_facet2
     choice_facet = sorted(choice_facet, key=itemgetter(0))
 
@@ -83,7 +84,11 @@ def list_questions(request, admin_filter=None):
 
     if not request.user.is_authenticated:
         choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
-    if request.user.is_authenticated and not request.user.is_superuser:
+
+    elif request.user.is_organisation:
+        choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
+
+    elif request.user.is_authenticated and not request.user.is_superuser:
         if not request.user.is_central_manager():
             choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
     facet_count = [choice_facet, choice_facet]
@@ -499,15 +504,17 @@ def register_faculty(request):
 
     if request.method == 'POST':
         form = FacultyForm(request.POST)
+
         if form.is_valid():
             faculty = form.save()
             form.save_m2m()
             return redirect('detail_question', question_id=question_id)
 
     else:
-        form = FacultyForm(initial=data)
+        form = FacultyForm()
+        form.fields['institution'].queryset = Institution.objects.all()
 
-    return render(request, 'dbwwinkel/question_detail/internal_remark.html', {'form': form, 'question_id': question_id})
+    return render(request, 'dbwwinkel/forms_creation/register_faculty.html', {'form': form})
 
 
 
@@ -785,7 +792,7 @@ class ContactDetail(DetailView):
         return context
 
 class PromotorDetail(DetailView):
-    model = Education
+    model = Promotor
 
     def get_context_data(self, **kwargs):
         context = super(PromotorDetail, self).get_context_data(**kwargs)
