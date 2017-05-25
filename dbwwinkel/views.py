@@ -758,6 +758,8 @@ class EducationDetail(DetailView):
 class ContactDetail(DetailView):
     model = OrganisationUser
 
+    template_name = 'contact_detail.html'
+
     def get_context_data(self, **kwargs):
         context = super(ContactDetail, self).get_context_data(**kwargs)
         return context

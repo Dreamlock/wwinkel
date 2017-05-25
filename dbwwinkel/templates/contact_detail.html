@@ -15,14 +15,14 @@
             <div class="container">
                 <div class="panel panel-info">
                     <div class='panel-heading'>
-                        <h2><strong>Persoon: </strong>{{ organisationuser.name }}</h2><br>
+                        <h2><strong>Persoon: </strong>{{ organisationuser }}</h2><br>
                     </div>
                     <div class="panel panel-body">
                         <div class=col-md-4>
                             <h3>Contact gegevens</h3>
-                            <strong>Straat: </strong> {{ organisationuser.address.street_name }}<br>
-                            <strong>Nummer: </strong> {{ organisationuser.address.street_number }}<br>
-                            <strong>Plaats: </strong> {{ organisationuser.address.postal_code }} {{ organisationuser.address.city }}<br>
+                            <strong>Straat: </strong> {{ organisationuser.organisation.address.street_name }}<br>
+                            <strong>Nummer: </strong> {{ organisationuser.organisation.address.street_number }}<br>
+                            <strong>Plaats: </strong> {{ organisationuser.organisation.address.postal_code }} {{ organisationuser.address.city }}<br>
                             <strong>Werkgever: </strong>{{ organisationuser.organisation }}<br>
                         </div>
                     </div>
