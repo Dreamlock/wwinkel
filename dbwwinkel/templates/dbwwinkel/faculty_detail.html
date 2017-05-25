@@ -6,7 +6,7 @@
         <div class="row">
             <div class="page-header">
                 <div class="container">
-                    <h1>Detail weergave instituut</h1>
+                    <h1>Detail weergave faculteit</h1>
                 </div>
             </div>
         </div>
@@ -15,16 +15,13 @@
             <div class="container">
                 <div class="panel panel-info">
                     <div class='panel-heading'>
-                        <h2><strong>Instituut: </strong>{{ institution.name }}</h2><br>
+                        <h2><strong>Faculteit: </strong>{{ faculty.name }}</h2><br>
                     </div>
                     <div class="panel panel-body">
                         <div class=col-md-4>
-                            <h3>Contact gegevens</h3>
-                            <strong>Straat: </strong> {{ institution.address.street_name }}<br>
-                            <strong>Nummer: </strong> {{ institution.address.street_number }}<br>
-                            <strong>Plaats: </strong> {{ institution.address.postal_code }} {{ institution.address.city }}<br>
-                            <strong>Faculteiten: </strong>{% for faculty in institution.faculty_set.all %}
-                                {{ faculty }}<br>
+                            <h3>Opleidingen</h3>
+                            {% for education in faculty.facultyof_set.education.all %}
+                                {{ education }}<br>
                             {% endfor %}<br>
                         </div>
                     </div>

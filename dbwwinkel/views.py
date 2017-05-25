@@ -738,3 +738,17 @@ class InstitutionDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(InstitutionDetail, self).get_context_data(**kwargs)
         return context
+
+class FacultyDetail(DetailView):
+    model = Faculty
+
+    def get_context_data(self, **kwargs):
+        context = super(FacultyDetail, self).get_context_data(**kwargs)
+        return context
+
+class EducationDetail(DetailView):
+    model = Education
+
+    def get_context_data(self, **kwargs):
+        context = super(EducationDetail, self).get_context_data(**kwargs)
+        return context
