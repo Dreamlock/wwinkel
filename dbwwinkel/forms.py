@@ -223,6 +223,36 @@ class ReserveForm(forms.Form):
     student = forms.ModelChoiceField(queryset = None)
 
 
+class FacultyForm(forms.ModelForm):
+
+    opleiding = forms.ModelMultipleChoiceField(queryset=Education.objects.all())
+
+
+    class Meta:
+        model = Faculty
+        fields = ('__all__')
+
+        labels = {
+            'name': 'Naam',
+            'institution': 'Instelling',
+        }
+
+
+
+class EducationForm(forms.ModelForm):
+
+
+    faculteit =  forms.ModelMultipleChoiceField(queryset=Faculty.objects.all())
+    institution = forms.ModelMultipleChoiceField(queryset=Institution.objects.all(), label="Instelling")
+
+    class Meta:
+        model = Education
+        fields = ('__all__')
+
+
+
+
+
 
 
 def QuestionFormFactory(user, question):

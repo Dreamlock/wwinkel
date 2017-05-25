@@ -1,0 +1,40 @@
+{{% extends 'base/base.html' %}
+{% block content %}
+    <div class="container">
+
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+                <h3>Registreer opleiding</h3>
+            </div>
+            <div class='panel-body'>
+                <form action={% url 'register_education' %} method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% for field in form %}
+                                <div class='form-group row'>
+                                    <div class="col-md-2">
+                                        {{ field.label_tag }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ field.errors }}
+                                        {{ field }}
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="container">
+                            <input class='btn btn-info' type="submit" value="Registreer"/>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

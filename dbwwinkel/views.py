@@ -19,6 +19,7 @@ import os
 from django.views.generic import View, ListView, DetailView
 from haystack.generic_views import FacetedSearchView as BaseFacetedSearchView
 
+
 @login_required
 @permission_required('dbwwinkel.add_question')
 def register_question(request):
@@ -47,14 +48,12 @@ def register_question(request):
         form = RegisterQuestionForm()
 
     # if a GET (or any other method) we'll create a blank form
-    return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
-
+    return render(request, 'dbwwinkel/forms_creation/vraagstelform.html', {'form': form})
 
 
 def list_questions(request, admin_filter=None):
     val = request.GET.get('search_text', '')
     sqs = search(SearchQuerySet(), val, Question)
-
 
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
@@ -74,6 +73,7 @@ def list_questions(request, admin_filter=None):
     choice_facet2 = []
     for choice in choice_facet:
         choice_facet2.append((int(choice[0]), int(choice[1])))
+
     choice_facet = choice_facet2
     choice_facet = sorted(choice_facet, key=itemgetter(0))
 
@@ -81,9 +81,13 @@ def list_questions(request, admin_filter=None):
         if i != choice_facet[i][0]:
             choice_facet.insert(i, (i, 0))
 
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated():
         choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
-    if request.user.is_authenticated and not request.user.is_superuser:
+
+    elif request.user.is_organisation():
+        choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
+
+    elif request.user.is_authenticated and not request.user.is_superuser:
         if not request.user.is_central_manager():
             choice_facet = [choice_facet[4], choice_facet[5], choice_facet[7]]
     facet_count = [choice_facet, choice_facet]
@@ -183,7 +187,7 @@ def edit_question(request, question_id):
     if form.is_valid():
         form.save()
         return redirect(detail, question_id=question_id)
-    return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
+    return render(request, 'dbwwinkel/forms_creation/vraagstelform.html', {'form': form})
 
 
 def reserve_question(request, question_id):
@@ -211,7 +215,7 @@ def reserve_question(request, question_id):
 
     print(question.potential_students.all())
 
-    return render(request, 'dbwwinkel/templates/confirmations/reserve_question.html',
+    return render(request, 'dbwwinkel/question_detail/reserve_question.html',
                   {'form': form, 'question': question})
 
 
@@ -330,7 +334,7 @@ def interested_in_question_view(request, question_id):
             question.potential_students.add(student)
             question.save()
 
-            return render(request, 'dbwwinkel/templates/confirmations/student_choose_success.html',
+            return render(request, 'dbwwinkel/question_detail/student_choose_success.html',
                           {'question': question})
 
 
@@ -345,8 +349,8 @@ def interested_in_question_view(request, question_id):
                'question': question,
                'address_form': address_form,
                }
-    print(address_form.errors)
-    return render(request, 'dbwwinkel/templates/forms_creation/student_form.html', context)
+    #print(address_form.errors)
+    return render(request, 'dbwwinkel/forms_creation/student_form.html', context)
 
 
 def edit_meta_info(request, question_id):
@@ -463,7 +467,7 @@ def edit_meta_info(request, question_id):
     return render(request, 'dbwwinkel/question_detail/edit_meta_data.html', {'form': form, 'question': question})
 
 
-def register_institution(request, question_id):
+def register_institution(request, question_id=None):
     if request.method == 'POST':
         institution_form = InstitutionForm(request.POST, prefix='institution')
         address_form = AdressForm(request.POST, prefix='address')
@@ -475,11 +479,15 @@ def register_institution(request, question_id):
             institution.address = address
             institution.save()
 
-            question = Question.objects.get(id=question_id)
-            question.institution.add(institution)
-            question.save()
+            if not question_id == None:
+                question = Question.objects.get(id=question_id)
+                question.institution.add(institution)
+                question.save()
 
-            return redirect('edit_meta_info', question_id=question_id)
+                return redirect('edit_meta_info', question_id=question_id)
+
+            else:
+                return redirect('admin_institutions')
     else:
         institution_form = InstitutionForm(prefix='institution')
         address_form = AdressForm(prefix='address')
@@ -489,10 +497,55 @@ def register_institution(request, question_id):
         'address_form': address_form,
         'question_id': question_id
     }
-    return render(request, 'dbwwinkel/templates/forms_creation/create_institution.html', context)
+    return render(request, 'dbwwinkel/forms_creation/create_institution.html', context)
 
 
-def register_promotor(request, question_id):
+def register_faculty(request):
+    if request.method == 'POST':
+        form = FacultyForm(request.POST)
+
+        if form.is_valid():
+            faculty = form.save(commit=False)
+            faculty.save()
+            for inst in form.cleaned_data['institution']:
+                nof = FacultyOf.objects.create(institution=inst, faculty=faculty)
+                for edu in form.cleaned_data['opleiding']:
+                    nof.education.add(edu)
+                nof.save()
+                faculty.facultyof_set.add(nof)
+            faculty.save()
+            return redirect('admin_faculty')
+
+    else:
+        form = FacultyForm()
+        form.fields['institution'].queryset = Institution.objects.all()
+
+    return render(request, 'dbwwinkel/forms_creation/register_faculty.html', {'form': form})
+
+def register_education(request):
+    if request.method == 'POST':
+        form = EducationForm(request.POST)
+
+        if form.is_valid():
+            education = form.save(commit=False)
+            education.save()
+            for inst in form.cleaned_data['institution']:
+                for fac in form.cleaned_data['faculteit']:
+                    nof = FacultyOf.objects.create(institution=inst, faculty=fac)
+                    nof.education.add(education)
+                    nof.save()
+                    education.facultyof_set.add(nof)
+            education.save()
+            return redirect('admin_education')
+
+    else:
+        form = EducationForm()
+        form.fields['institution'].queryset = Institution.objects.all()
+
+    return render(request, 'dbwwinkel/forms_creation/create_education.html', {'form': form})
+
+
+def register_promotor(request, question_id = None):
     if request.method == 'POST':
         promotor_form = PromotorForm(request.POST)
 
@@ -501,12 +554,14 @@ def register_promotor(request, question_id):
 
             promotor.address = promotor.institution.address
             promotor.save()
+            if not question_id == None:
+                question = Question.objects.get(id=question_id)
+                question.promotor.add(promotor)
+                question.save()
 
-            question = Question.objects.get(id=question_id)
-            question.promotor.add(promotor)
-            question.save()
-
-            return redirect('edit_meta_info', question_id=question_id)
+                return redirect('edit_meta_info', question_id=question_id)
+            else:
+                return redirect('admin_promotor')
     else:
         promotor_form = PromotorForm()
 
@@ -514,7 +569,7 @@ def register_promotor(request, question_id):
         'promotor_form': promotor_form,
         'question_id': question_id
     }
-    return render(request, 'dbwwinkel/templates/forms_creation/create_promotor.html', context)
+    return render(request, 'dbwwinkel/forms_creation/create_promotor.html', context)
 
 
 def administration_view_to_process(request):
@@ -755,6 +810,7 @@ class EducationDetail(DetailView):
         context = super(EducationDetail, self).get_context_data(**kwargs)
         return context
 
+
 class ContactDetail(DetailView):
     model = OrganisationUser
 
@@ -764,8 +820,9 @@ class ContactDetail(DetailView):
         context = super(ContactDetail, self).get_context_data(**kwargs)
         return context
 
+
 class PromotorDetail(DetailView):
-    model = Education
+    model = Promotor
 
     def get_context_data(self, **kwargs):
         context = super(PromotorDetail, self).get_context_data(**kwargs)

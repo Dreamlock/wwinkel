@@ -137,7 +137,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+
             ],
             #'loaders': ['django.template.loaders.filesystem.Loader','django.template.loaders.app_directories.Loader']
         },

@@ -13,7 +13,7 @@
             <tbody>
             {% for promotor in query %}
 
-                <tr data-href=""
+                <tr data-href='{% url 'promotor_detail' promotor.id %}'
                     class='table-row' style="cursor:pointer;">
                     <td class='col-md-3 text-center'>{{ promotor }}</td>
                     <td class='col-md-3 text-center'>{{ promotor.institution }}</td>
@@ -22,6 +22,12 @@
             </tbody>
         </table>
     </div>
+
+    <div class="row">
+        <a class="btn btn-success" href= {% url "register_promotor_admin" %}>Nieuw</a>
+    </div>
+    </div>
+
 {% endblock %}
 
 {% block extra_scripts %}
