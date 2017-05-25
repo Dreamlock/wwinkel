@@ -19,7 +19,6 @@ import os
 from django.views.generic import View, ListView, DetailView
 from haystack.generic_views import FacetedSearchView as BaseFacetedSearchView
 
-
 @login_required
 @permission_required('dbwwinkel.add_question')
 def register_question(request):
@@ -51,9 +50,11 @@ def register_question(request):
     return render(request, 'dbwwinkel/templates/forms_creation/vraagstelform.html', {'form': form})
 
 
+
 def list_questions(request, admin_filter=None):
     val = request.GET.get('search_text', '')
     sqs = search(SearchQuerySet(), val, Question)
+
 
     facet_form = FacetForm(request.GET)
     status_lst = Question.STATE_SELECT
@@ -752,4 +753,11 @@ class EducationDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(EducationDetail, self).get_context_data(**kwargs)
+        return context
+
+class ContactDetail(DetailView):
+    model = OrganisationUser
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactDetail, self).get_context_data(**kwargs)
         return context
