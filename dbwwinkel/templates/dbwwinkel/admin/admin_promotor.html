@@ -7,17 +7,16 @@
             <thead>
             <tr>
                 <th class='text-center'>Promotor</th>
+                <th class='text-center'>Instelling</th>
             </tr>
             </thead>
             <tbody>
-            {% for institution in query %}
+            {% for promotor in query %}
 
-                <tr data-href={% url 'promo' promotor.id %}
-                            class='table-row'
-                    style="cursor:pointer;">
-                    <td class='col-md-3 text-center'>{{ institution }}</td>
-
-                    </td>
+                <tr data-href=""
+                    class='table-row' style="cursor:pointer;">
+                    <td class='col-md-3 text-center'>{{ promotor }}</td>
+                    <td class='col-md-3 text-center'>{{ promotor.institution }}</td>
                 </tr>
             {% endfor %}
             </tbody>
