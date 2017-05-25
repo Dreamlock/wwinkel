@@ -215,7 +215,7 @@ def reserve_question(request, question_id):
 
     print(question.potential_students.all())
 
-    return render(request, 'dbwwinkel/question_detail&/reserve_question.html',
+    return render(request, 'dbwwinkel/question_detail/reserve_question.html',
                   {'form': form, 'question': question})
 
 
