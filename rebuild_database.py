@@ -117,12 +117,12 @@ def main(argv):
             'mediators',
             'organisationcontact'
         ]
-
-        call(['python3', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
+        
+        call(['python', '-W ignore', 'script.py'] + ['./CSV/'+file+'.csv' for file in csv_files])
         print('  done')
 
         print('creating permission groups...')
-        call(['python3', 'add_perm_group_script.py'])
+        call(['python', 'add_perm_group_script.py'])
         print('  done')
 
     if True:

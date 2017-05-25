@@ -199,7 +199,7 @@ AUTHENTICATION_BACKENDS = (
     'custom_users.permissions_backends.QuestionPermissionsBackend',
 )
 
-LOGIN_URL = 'custom_users/login'
+LOGIN_URL = 'custom_users/login/'
 
 SITE_ID = 1
 
