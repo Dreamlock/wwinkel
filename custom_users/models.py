@@ -279,6 +279,7 @@ class Region(models.Model):
     LIMBURG_REGION = 3
     WEST_FLANDERS_REGION = 4
     CENTRAL_REGION = 5
+    BRUSSELS_REGION=6
     REGION_SELECT = (
         (ANTWERP_REGION, _('Antwerpen')),
         (EAST_FLANDERS_REGION, _('Oost-Vlaanderen')),
@@ -286,6 +287,7 @@ class Region(models.Model):
         (LIMBURG_REGION, _('Limburg')),
         (WEST_FLANDERS_REGION, _('West-Vlaanderen')),
         (CENTRAL_REGION, _('Centraal')),
+        (BRUSSELS_REGION, _('Brussel'))
     )
     region = models.PositiveIntegerField(unique=True, choices=REGION_SELECT)
 
@@ -323,3 +325,19 @@ class QuestionInstitution(models.Model):
 class Mediator(User):
     jobfunction = models.TextField()
     quesiotninstitution = models.ManyToManyField(QuestionInstitution)
+
+class OrganisationContact(models.Model):
+    first_name = models.TextField(blank=True, null=True)
+    last_name = models.TextField(blank=True, null=True)
+    telephone = models.CharField(max_length=20)
+    cell = models.CharField(max_length=20)
+    address = models.ForeignKey(Address, null=True)
+    job_function = models.TextField()
+    email = models.EmailField(
+        _('email address'),
+        error_messages={
+            'unique': _('This email is already used.')
+        },
+    )
+    remarks = models.TextField()
+    organisation = models.ForeignKey(Organisation)
