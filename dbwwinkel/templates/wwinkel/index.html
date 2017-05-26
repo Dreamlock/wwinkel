@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+{%block content%}
+    <div id="page" class="page">
+            <section id="content1-3" class="content1-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="about-content">
+                                <h1 class="content-title">Welkom bij de wetenschapswinkel!</h1>
+                                {% placeholder "About" %}
+                                <div class="text-left">
+                                    <a href="/organisaties/" class="btn btn-info button">Organisaties</a>
+                                    <a href="/studenten/" class="btn btn-success button">Studenten</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "col-md-7">
+                                <div class="video-content">
+                                    {% placeholder "Video" %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+{%endblock content%}
+
+{% block extra_scripts %}
+{% endblock %}
+

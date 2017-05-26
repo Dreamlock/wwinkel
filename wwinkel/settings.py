@@ -153,11 +153,12 @@ TEMPLATES = [
 
 CMS_TEMPLATES = [
     ('base/base.html','Base template' ),
-    ('base/index.html','Home page'),
-    ('custom_users/contact.html', 'Contact info'),
-    ('custom_users/organisaties.html', 'Organisaties'),
-    ('custom_users/partners.html', 'Partners'),
-    ('custom_users/studenten.html', 'Studenten')
+    ('wwinkel/index.html','Home page'),
+    ('wwinkel/contact.html', 'Contact info'),
+    ('wwinkel/organisaties.html', 'Organisaties'),
+    ('wwinkel/partners.html', 'Partners'),
+    ('wwinkel/studenten.html', 'Studenten'),
+    ('wwinkel/publicaties.html', 'publicaties')
 ]
 
 CMS_TOOLBAR_HIDE = True

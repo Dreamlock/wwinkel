@@ -1,0 +1,108 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+{% block content %}
+    <div class = "page-header">
+        <div class = "container">
+            <h1>Partners</h1>
+        </div>
+
+       <div class="well bs-sidebar affix" id="sidebar">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#">Partners</a></li>
+            <li><a href="#cera">Cera Awards</a></li>
+            <li><a href="#living">Living knowledge</a></li>
+            <li><a href="#perares">Perares</a></li>
+            <li><a href="#enrich">EnRRICH</a></li>
+            <li><a href="#wetenschapswinkelt">Wetenschapswinke.nl</a></li>
+            <li><a href="#scriptie">Vlaamse Scriptieprijs</a></li>
+        </ul>
+    </div>
+
+
+    <section id="cera" class="content1-3">
+        <div class="container">
+            <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                    {% placeholder "Partner1" %}
+                        <div class = "container">
+                           {% placeholder "partner-img1" %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+       <section id="living" class="content1-3">
+        <div class="container">
+            <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                    {% placeholder "Partner2" %}
+                        <div class = "container">
+                           {% placeholder "partner-img2" %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+       <section id="perares" class="content1-3">
+        <div class="container">
+            <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                    {% placeholder "Partner3" %}
+                        <div class = "container">
+                           {% placeholder "partner-img3" %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+       <section id="enrich" class="content1-3">
+        <div class="container">
+            <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                    {% placeholder "Partner6" %}
+                        <div class = "container">
+                           {% placeholder "partner-img6" %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+       <section id="wetenschapswinkel" class="content1-3">
+        <div class="container">
+            <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                    {% placeholder "Partner4" %}
+                        <div class = "container">
+                           {% placeholder "partner-img4" %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+       <section id="scriptie" class="content1-3">
+        <div class="container">
+            <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                    {% placeholder "Partner5" %}
+                        <div class = "container">
+                           {% placeholder "partner-img5" %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
