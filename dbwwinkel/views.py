@@ -215,7 +215,7 @@ def reserve_question(request, question_id):
 
     print(question.potential_students.all())
 
-    return render(request, 'dbwwinkel/question_detail&/reserve_question.html',
+    return render(request, 'dbwwinkel/question_detail/reserve_question.html',
                   {'form': form, 'question': question})
 
 
@@ -349,7 +349,7 @@ def interested_in_question_view(request, question_id):
                'question': question,
                'address_form': address_form,
                }
-    print(address_form.errors)
+    #print(address_form.errors)
     return render(request, 'dbwwinkel/forms_creation/student_form.html', context)
 
 
