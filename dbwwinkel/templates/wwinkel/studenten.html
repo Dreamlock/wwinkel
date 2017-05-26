@@ -1,0 +1,83 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+{% block extra_head %}
+{% endblock %}
+
+
+{%block content%}
+
+    <div id="page" class="page">
+    <div class = "container">
+        <div class="page-header">
+            <h1>Studenten</h1>
+        </div>
+        </div>
+                <div class="well bs-sidebar affix" id="sidebar">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="#">Studenten</a></li>
+                        <li><a href="#wat">Wat biedt de Wetenschapswinkel?</a></li>
+                        <li><a href="#waarom">Waarom een scriptie schrijven<br> bij de Wetenschapswinkel?</a></li>
+                        <li><a href="#hoe">Hoe vind ik een interessant onderwerp</a></li>
+                        <li><a href="#stappenplan">Stappenplan</a></li>
+                        <li><a href="#handleiding">Handleiding</a></li>
+                    </ul>
+                </div> <!--well bs-sidebar affix-->
+
+            <section id="wat" class="content1-3">
+                <div class="container">
+                    <div class = "col-md-3"> </div>
+                        <div class="col-md-9">
+                            <div class="about-content">
+                                {% placeholder "Wat biedt WWinkel?" %}
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+            <section id="waarom" class="content1-3">
+                <div class="container">
+                        <div class = "col-md-3"> </div>
+                        <div class="col-md-9">
+                            <div class="about-content">
+                                {% placeholder "Waarom een scriptie schrijven??" %}
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+         <section id="hoe" class="content1-3">
+                <div class="container">
+                        <div class = "col-md-3"> </div>
+                        <div class="col-md-9">
+                            <div class="about-content">
+                                {% placeholder "Hoe vindt ik een onderwerp?" %}
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+         <section id="stappenplan" class="content1-3">
+                <div class="container">
+                        <div class = "col-md-3"> </div>
+                        <div class="col-md-9">
+                            <div class="about-content">
+                                {% placeholder "stappenplan?" %}
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+             <section id="handleiding" class="content1-3">
+                <div class="container">
+                        <div class = "col-md-3"> </div>
+                        <div class="col-md-9">
+                            <div class="about-content">
+                                {% placeholder "handleiding" %}
+                            </div>
+                        </div>
+                </div>
+            </section>
+    </div>
+</div>
+ {% endblock %}
