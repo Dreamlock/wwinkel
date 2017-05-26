@@ -53,8 +53,18 @@ INSTALLED_APPS = [
     'treebeard',
     'sekizai',
     'djangocms_text_ckeditor',
+    'filer',
+    'easy_thumbnails',
+    'djangocms_column',
+    'djangocms_link',
+    'cmsplugin_filer_file',
+    'cmsplugin_filer_folder',
+    'cmsplugin_filer_image',
+    'cmsplugin_filer_utils',
+    'djangocms_style',
+    'djangocms_snippet',
+    'djangocms_video',
 
-    
     'django_extensions',
     'simple_history',
 ]
