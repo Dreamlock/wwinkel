@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles index %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header">
+                <div class="container">
+                    <h1>Detail weergave student</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="container">
+                <div class="panel panel-info">
+                    <div class='panel-heading'>
+                        <h2><strong>student: </strong>{{ student.first_name }} {{ " " }} {{ student.last_name }}</h2><br>
+                    </div>
+                    <div class="panel panel-body">
+                        <div class=col-md-4>
+                            <h3>Contact gegevens</h3>
+                            <strong>Straat: </strong> {{ student.address.street_name }}<br>
+                            <strong>Nummer: </strong> {{ student.address.street_number }}<br>
+                            <strong>Plaats: </strong> {{ student.address.postal_code }} {{ student.address.city }}<br>
+                            <strong>Email: </strong> {{ student.email }}<br>
+                            <strong>Studie richting</strong> {{ student.education }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+

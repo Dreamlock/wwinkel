@@ -827,3 +827,14 @@ class PromotorDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PromotorDetail, self).get_context_data(**kwargs)
         return context
+
+
+class StudentDetail(DetailView):
+    model = Student
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentDetail, self).get_context_data(**kwargs)
+        return context
+
+
+

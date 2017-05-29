@@ -60,12 +60,6 @@ class PromotorForm(ModelForm):
         }
 
 
-class StudentForm(ModelForm):
-    class Meta:
-        model = Student
-        fields = ['first_name']
-
-
 class InternalRemarkForm(forms.Form):
     internal_remark = forms.CharField(label=_('Interne opmerking'), widget=forms.Textarea)
 
@@ -216,6 +210,11 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'mobile', 'email','education']
+
+        labels = {
+            'education': 'Opleiding'
+        }
+
 
 
 class ReserveForm(forms.Form):

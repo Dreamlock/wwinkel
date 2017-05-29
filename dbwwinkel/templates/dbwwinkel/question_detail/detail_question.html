@@ -74,7 +74,7 @@
                         <li><a href='{% url 'round_up_question' question.id %}'>Rond vraag af</a></li>
                     {% endif %}
 
-                    {% if question|question_regional_user:user%}
+                    {% if question|question_regional_user:user or user.is_central_manager%}
 
                             <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
                             <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
@@ -140,7 +140,17 @@
                             <strong>Onderwerp(en): </strong>
                             {% for subject in question.question_subject.all %}
                                 {{ subject }}
-                            {% endfor %}
+                            {% endfor %}<br>
+                            {% if question.state == question.PUBLIC_QUESTION and question|question_regional_user:user %}
+                                <strong>Potentiële studenten</strong>
+                                {% for student in question.potential_students.all %}
+                                    <a href = '{% url 'student_detail' student.id %}'> {{ student }}</a>
+                                {% endfor %}<br>
+                            {% endif %}
+
+                            {% if question.state == question.ONGOING_QUESTION  and question|question_regional_user:user %}
+                                <strong>Student</strong>: <a href="{% url 'student_detail' student.id %}">{{ question.student }}</a>
+                            {% endif %}
 
                         </div>
 
