@@ -149,7 +149,11 @@
                             {% endif %}
 
                             {% if question.state == question.ONGOING_QUESTION  and question|question_regional_user:user %}
-                                <strong>Student</strong>: <a href="{% url 'student_detail' student.id %}">{{ question.student }}</a>
+                                <strong>Student</strong>: <a href="{% url 'student_detail' question.student.id %}">{{ question.student }}</a>
+                            {% endif %}
+
+                        {% if question.state == question.RESERVED_QUESTION  and question|question_regional_user:user %}
+                                <strong>Student</strong>: <a href="{% url 'student_detail' question.student.id %}">{{ question.student }}</a>
                             {% endif %}
 
                         </div>
