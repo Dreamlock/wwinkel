@@ -74,7 +74,7 @@
                         <li><a href='{% url 'round_up_question' question.id %}'>Rond vraag af</a></li>
                     {% endif %}
 
-                    {% if question|question_regional_user:user%}
+                    {% if question|question_regional_user:user or user.is_central_manager%}
 
                             <li><a href= {% url "edit_question" question.id %}>Vraag wijzigen</a></li>
                             <li><a href= {% url "internal_remark" question.id %}>Opmerking toevoegen</a></li>
@@ -90,7 +90,10 @@
                     {% if not user.is_authenticated %}
                         <li><a href = {% url 'interested_in_question' question.id %}>Ik heb interesse in deze vraag</a></li>
                     {% endif %}
-                    <li><a href='{% url 'list_questions'%}'>Terug</a></li>
+                    <li><a href='{% if not user.is_authenticated or user.is_organisation %}
+                                    {% url 'list_questions' %}
+                                {% else %}
+                                {% url 'admin_to_process' %}{% endif %}'>Terug</a></li>
                 </ul>
                 <!--/sidebar-nav-fixed -->
             </div>
@@ -137,7 +140,21 @@
                             <strong>Onderwerp(en): </strong>
                             {% for subject in question.question_subject.all %}
                                 {{ subject }}
-                            {% endfor %}
+                            {% endfor %}<br>
+                            {% if question.state == question.PUBLIC_QUESTION and question|question_regional_user:user %}
+                                <strong>Potentiële studenten</strong>
+                                {% for student in question.potential_students.all %}
+                                    <a href = '{% url 'student_detail' student.id %}'> {{ student }}</a>
+                                {% endfor %}<br>
+                            {% endif %}
+
+                            {% if question.state == question.ONGOING_QUESTION  and question|question_regional_user:user %}
+                                <strong>Student</strong>: <a href="{% url 'student_detail' question.student.id %}">{{ question.student }}</a>
+                            {% endif %}
+
+                        {% if question.state == question.RESERVED_QUESTION  and question|question_regional_user:user %}
+                                <strong>Student</strong>: <a href="{% url 'student_detail' question.student.id %}">{{ question.student }}</a>
+                            {% endif %}
 
                         </div>
 

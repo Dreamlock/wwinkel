@@ -63,6 +63,17 @@ def province_map(old_province_id):
     }
     return idmap[old_province_id]
 
+def region_map(old_province_id):
+    idmap = {
+        '1': 0,
+        '4': 1,
+        '2': 2,
+        '3': 3,
+        '5': 4,
+        '6': 6
+    }
+    return idmap[old_province_id]
+
 
 def refactorDeadline(cdate):
     try:
@@ -139,7 +150,7 @@ def state_map(old_state_id):
 
 
 # path to province.csv
-with open(sys.argv[1], encoding='latin1') as f:
+with open(sys.argv[1], encoding='utf8') as f:
     print("importing provinces")
     print(f)
     reader = csv.reader(f)
@@ -161,7 +172,7 @@ for region in cmmodels.Region.REGION_SELECT:
 print("done")
 
 # path to JuridicalEntity.csv
-with open(sys.argv[2], encoding='latin1') as f:
+with open(sys.argv[2], encoding='utf8') as f:
     print("importing legal entities")
     reader = csv.reader(f)
     for row in reader:
@@ -177,7 +188,7 @@ with open(sys.argv[2], encoding='latin1') as f:
     f.close()
 
 # import organisation types
-with open(sys.argv[3], encoding='latin1') as f:
+with open(sys.argv[3], encoding='utf8') as f:
     print("importing organizations types")
     reader = csv.reader(f)
     for row in reader:
@@ -190,7 +201,7 @@ with open(sys.argv[3], encoding='latin1') as f:
     f.close()
 
 # import knowfrom
-with open(sys.argv[4], encoding='latin1') as f:
+with open(sys.argv[4], encoding='utf8') as f:
     print("importing know froms")
     reader = csv.reader(f)
     for row in reader:
@@ -203,7 +214,7 @@ with open(sys.argv[4], encoding='latin1') as f:
     f.close()
 
 # import organisation
-with open(sys.argv[5], encoding='latin1') as f:
+with open(sys.argv[5], encoding='utf8') as f:
     print("importing organizations")
     reader = csv.reader(f)
     for row in reader:
@@ -211,7 +222,7 @@ with open(sys.argv[5], encoding='latin1') as f:
             pass
         else:
             try:
-                prov = cmmodels.Province.objects.get(id=province_map(row[9]))
+                prov = cmmodels.Province.objects.get(id=int(row[9]))
                 adr, created = cmmodels.Address.objects.get_or_create(
                     province=prov,
                     city=row[8],
@@ -225,7 +236,7 @@ with open(sys.argv[5], encoding='latin1') as f:
                 le = cmmodels.LegalEntity.objects.get(id=row[4])
                 tp = cmmodels.OrganisationType.objects.get(id=1)
                 kf = cmmodels.KnowFrom.objects.get(id=1)
-                obj, created = cmmodels.Organisation.objects.get_or_create(
+                obj, created = cmmodels.Organisation.objects.update_or_create(
                     name=row[2],
                     recognised_abbreviation=row[3],
                     legal_entity=le,
@@ -244,14 +255,15 @@ with open(sys.argv[5], encoding='latin1') as f:
                 obj.save()
                 add_organisation_id(int(row[0]), obj.id)
             except:
-                # print(sys.exc_info())
+                #print("old id: ", row[9], " new id: ", province_map(row[9]))
+                print(sys.exc_info())
                 pass
     print(organisation_id_dict)
     print("done")
     f.close()
 
 # import question types
-with open(sys.argv[6], encoding='latin1') as f:
+with open(sys.argv[6], encoding='utf8') as f:
     print("importing question types")
     reader = csv.reader(f)
     for row in reader:
@@ -267,7 +279,7 @@ with open(sys.argv[6], encoding='latin1') as f:
     f.close()
 
 # import institution
-with open(sys.argv[7], encoding='latin1') as f:
+with open(sys.argv[7], encoding='utf8') as f:
     print("importing institutions")
     reader = csv.reader(f)
     for row in reader:
@@ -293,7 +305,7 @@ with open(sys.argv[7], encoding='latin1') as f:
     f.close()
 
 # import faculty
-with open(sys.argv[8], encoding='latin1') as f:
+with open(sys.argv[8], encoding='utf8') as f:
     print("importing faculties")
     reader = csv.reader(f)
     for row in reader:
@@ -315,7 +327,7 @@ with open(sys.argv[8], encoding='latin1') as f:
     f.close()
 
 # import education
-with open(sys.argv[9], encoding='latin1') as f:
+with open(sys.argv[9], encoding='utf8') as f:
     print("importing educations")
     reader = csv.reader(f)
     for row in reader:
@@ -338,7 +350,7 @@ with open(sys.argv[9], encoding='latin1') as f:
     f.close()
 
 # import students
-with open(sys.argv[10], encoding='latin1') as f:
+with open(sys.argv[10], encoding='utf8') as f:
     print("importing students")
     reader = csv.reader(f)
 
@@ -394,7 +406,7 @@ with open(sys.argv[10], encoding='latin1') as f:
     f.close()
 
 # import question
-with open(sys.argv[10], encoding='latin1') as f:
+with open(sys.argv[10], encoding='utf8') as f:
     # problems=open('questionproblems.txt', 'r+')
     print("importing questions")
     reader = csv.reader(f)
@@ -443,7 +455,7 @@ with open(sys.argv[10], encoding='latin1') as f:
             rdate = refactorDeadline(date)
             date2 = get_row('datecreated')
             cdate = refactorDate(date2)
-            print('org.id:', get_new_organisation_id(int(get_row('organization_idorganization'))), get_row('organization_idorganization'))
+            #print('org.id:', get_new_organisation_id(int(get_row('organization_idorganization'))), get_row('organization_idorganization'))
             org = dbmodels.Organisation.objects.get(
                 id=get_new_organisation_id(int(get_row('organization_idorganization')))
             )
@@ -488,11 +500,11 @@ with open(sys.argv[10], encoding='latin1') as f:
 
             obj.institution.add(inst)
 
-            obj.education.add(ed)
+            #obj.education.add(ed)
             prov = inst.address.province
             prov_id = prov.id
             # print(prov_id)
-            region_id = province_map(str(prov_id))
+            region_id = region_map(str(prov_id))
             # print(region_id)
             reg = cmmodels.Region.objects.get(region=region_id)
             # print(reg)
@@ -511,7 +523,7 @@ with open(sys.argv[10], encoding='latin1') as f:
     f.close()
 
 # import keywords
-with open(sys.argv[11], encoding='latin1') as f:
+with open(sys.argv[11], encoding='utf8') as f:
     print("importing keywords")
     reader = csv.reader(f)
 
@@ -536,7 +548,7 @@ with open(sys.argv[11], encoding='latin1') as f:
     f.close()
 
 # add keywords to organizations
-with open(sys.argv[12], encoding='latin1') as f:
+with open(sys.argv[12], encoding='utf8') as f:
     print("adding keywords to organisations")
     reader = csv.reader(f)
 
@@ -562,7 +574,7 @@ with open(sys.argv[12], encoding='latin1') as f:
     f.close()
 
 # import promotors
-with open(sys.argv[13], encoding='latin1') as f:
+with open(sys.argv[13], encoding='utf8') as f:
     print("importing promotors")
     reader = csv.reader(f)
 
@@ -605,7 +617,7 @@ with open(sys.argv[13], encoding='latin1') as f:
     f.close()
 
 # import users
-with open(sys.argv[14], encoding='latin1') as f:
+with open(sys.argv[14], encoding='utf8') as f:
     print("importing users")
     reader = csv.reader(f)
 
@@ -641,7 +653,7 @@ with open(sys.argv[14], encoding='latin1') as f:
     f.close()
 
 # add education, faculty and institution to questions
-with open(sys.argv[15], encoding='latin1') as f:
+with open(sys.argv[15], encoding='utf8') as f:
     print("add education, faculty and institution to questions")
     reader = csv.reader(f)
 
@@ -660,6 +672,7 @@ with open(sys.argv[15], encoding='latin1') as f:
 
             facsinsts = dbmodels.FacultyOf.objects.get(education=ed)
 
+            quest.education.add(ed)
             quest.faculty.add(facsinsts.faculty)
             quest.institution.add(facsinsts.institution)
             quest.save()
@@ -670,7 +683,7 @@ with open(sys.argv[15], encoding='latin1') as f:
     f.close()
 
 # import logs
-with open(sys.argv[16], encoding='latin1') as f:
+with open(sys.argv[16], encoding='utf8') as f:
     print("import logs")
     reader = csv.reader(f)
 
@@ -701,7 +714,7 @@ with open(sys.argv[16], encoding='latin1') as f:
     f.close()
 
 # import question institutions
-with open(sys.argv[17], encoding='latin1') as f:
+with open(sys.argv[17], encoding='utf8') as f:
     print("import question institutions")
     reader = csv.reader(f)
 
@@ -737,7 +750,7 @@ with open(sys.argv[17], encoding='latin1') as f:
     f.close()
 
 # import mediators
-with open(sys.argv[18], encoding='latin1') as f:
+with open(sys.argv[18], encoding='utf8') as f:
     print("import mediators")
     reader = csv.reader(f)
 
@@ -761,6 +774,37 @@ with open(sys.argv[18], encoding='latin1') as f:
             mediator.jobfunction = get_row('jobfunction')
             mediator.save()
             add_manager_id(int(get_row('idquestionmediator')), mediator.id)
+        except:
+            print(sys.exc_info())
+            pass
+    print("done")
+    f.close()
+
+with open(sys.argv[19], encoding='utf8') as f:
+    print("import organisation contacts")
+    reader = csv.reader(f)
+
+    first_row = next(reader)
+    name_dict = dict(zip(first_row, range(len(first_row))))  # dit leest header row in
+
+    def get_row(string):
+        return row[name_dict[string]]
+
+    for row in reader:
+        try:
+            org=cmmodels.Organisation.objects.get(id=int(get_new_organisation_id(int(get_row('organization_idorganization')))))
+            contact, created = cmmodels.OrganisationContact.objects.update_or_create(
+                id=int(get_row('idorganizationcontact')),
+                first_name=get_row('firstname'),
+                last_name=get_row('lastname'),
+                telephone='036467034',
+                cell='0498119433',
+                email= "{0}.{1}@{2}.be".format(get_row('firstname'),"test", "wwinkel"),
+                remarks=get_row('remarks'),
+                organisation=org
+            )
+            contact.job_function=get_row('jobfunction')
+            contact.save()
         except:
             print(sys.exc_info())
             pass

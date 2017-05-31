@@ -6,8 +6,20 @@ urlpatterns = [
     # Register urls
     url(r'^register_question', views.register_question, name='register_question'),
     url(r'register_institution/(?P<question_id>[0-9]+)', views.register_institution, name='register_institution'),
+    url(r'register_institution/', views.register_institution, name='register_institution_admin'),
     url(r'register_promotor/(?P<question_id>[0-9]+)', views.register_promotor, name='register_promotor'),
+    url(r'register_promotor/', views.register_promotor, name='register_promotor_admin'),
+    url(r'register_faculty/', views.register_faculty, name='register_faculty'),
+    url(r'register_education/', views.register_education, name='register_education'),
     # Rest
+
+    url(r'^organisation_detail/(?P<pk>[0-9]+)', views.OrganisationDetail.as_view(), name='organisation_detail'),
+    url(r'^institution_detail/(?P<pk>[0-9]+)', views.InstitutionDetail.as_view(), name='institution_detail'),
+    url(r'^faculty_detail/(?P<pk>[0-9]+)', views.FacultyDetail.as_view(), name='faculty_detail'),
+    url(r'^education_detail/(?P<pk>[0-9]+)', views.EducationDetail.as_view(), name='education_detail'),
+    url(r'^contact_detail/(?P<pk>[0-9]+)', views.ContactDetail.as_view(), name='contact_detail'),
+    url(r'^promotor_detail/(?P<pk>[0-9]+)', views.PromotorDetail.as_view(), name='promotor_detail'),
+    url(r'^student_detail/(?P<pk>[0-9]+)', views.StudentDetail.as_view(), name='student_detail'),
 
     url(r'^list_questions', views.list_questions, name='list_questions'),
     url(r'^list_questions/(?P<admin_filter>[a-z]+)', views.list_questions, name='list_questions_filter'),
@@ -19,7 +31,8 @@ urlpatterns = [
     url(r'^distribute_question/(?P<question_id>[0-9]+)', views.distribute_to_public, name='distribute_question_public'),
     url(r'^open_question/(?P<question_id>[0-9]+)', views.open_question, name='open_question'),
     url(r'^reserve_question/(?P<question_id>[0-9]+)', views.reserve_question, name='reserve_question'),
-    url(r'^interested_in_question/(?P<question_id>[0-9]+)', views.interested_in_question_view, name='interested_in_question'),
+    url(r'^interested_in_question/(?P<question_id>[0-9]+)', views.interested_in_question_view,
+        name='interested_in_question'),
     url(r'^assign_question/(?P<question_id>[0-9]+)', views.assign_question, name='assign_question'),
     url(r'round_up_question/(?P<question_id>[0-9]+)', views.round_up_question, name='round_up_question'),
     url(r'deny_question/(?P<question_id>[0-9]+)', views.deny_question, name='deny_question'),
@@ -42,7 +55,16 @@ urlpatterns = [
     url(r'admin_revoked/', views.administration_view_revoked, name='admin_revoked'),
     url(r'admin_regional_progress_all/', views.administration_view_in_regional_process_all,
         name='admin_regional_process_all'),
+
     url(r'admin_my_question/', views.administration_view_my_questions, name='admin_my_question'),
+
+    url(r'admin_organisations/', views.admin_organisation_table_view, name='admin_organisations'),
+    url(r'admin_contacts/', views.admin_organisation_contact_view, name='admin_contacts'),
+
+    url(r'admin_institution/', views.admin_institution_view, name='admin_institutions'),
+    url(r'admin_faculty/', views.admin_faculty_view, name='admin_faculty'),
+    url(r'admin_education/', views.admin_education_view, name='admin_education'),
+    url(r'admin_promotors/', views.admin_promotor_view, name='admin_promotor'),
 
     url(r'^institution-autocomplete/$',
         InstitutionAutocomplete.as_view(),
@@ -63,6 +85,10 @@ urlpatterns = [
     url(r'^subject-autocomplete/$',
         SubjectAutocomplete.as_view(create_field='subject'),
         name='subject-autocomplete'),
+
+    url(r'^all_institution-autocomplete/$',
+            AllInstitutionAutocomplete.as_view(),
+            name='all_institution_autocomplete'),
 
     url(r'^search/', include('haystack.urls')),
 

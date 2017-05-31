@@ -1,0 +1,86 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+{%block content%}
+    <div id="page" class="page">
+        <div class = "container">
+            <div class="page-header">
+                <h1>Organisaties</h1>
+            </div>
+        </div>
+
+            <div class="well bs-sidebar affix" id="sidebar">
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#">Organisaties</a></li>
+                    <li><a href="#wat">Wat biedt de wetenschapswinkel?</a></li>
+                    <li><a href="#aanmerking">Kom ik in aanmerking als aanvrager?</a></li>
+                    <li><a href="#indienen">Hoe een vraag indienen?</a></li>
+                    <li><a href="#stappenplan">Procedure: stappenplan</a></li>
+                    <li><a href="#verwacht">Wat wordt van de aanvrager verwacht?</a></li>
+                    <li><a href="#kostprijs">Kostprijs?</a></li>
+                </ul>
+            </div> <!--col-sm-3-->
+
+            <section id="wat" class="content1-3">
+                <div class="container">
+                        <div class = "col-md-3"> </div>
+                        <div class="col-md-9">
+                            <div class="about-content">
+                                {% placeholder "What is WWinkel?" %}
+                            </div>
+                        </div>
+                </div>
+            </section>
+            <section id="aanmerking" class="content1-3">
+            <div class="container">
+                    <div class = "col-md-3"> </div>
+                    <div class="col-md-9">
+                        <div class="about-content">
+                            {% placeholder "aanmerking?" %}
+                        </div>
+                    </div>
+            </div>
+        </section>
+        <section id="indienen" class="content1-3">
+            <div class="container">
+                    <div class = "col-md-3"> </div>
+                    <div class="col-md-9">
+                        <div class="about-content">
+                            {% placeholder "vraag indienen" %}
+                        </div>
+                    </div>
+            </div>
+        </section>
+        <section id="stappenplan" class="content1-3">
+            <div class="container">
+                    <div class = "col-md-3"> </div>
+                    <div class="col-md-9">
+                        <div class="about-content">
+                            {% placeholder "stapenplan" %}
+                        </div>
+                    </div>
+            </div>
+        </section>
+
+        <section id="verwacht" class="content1-3">
+            <div class="container">
+                    <div class = "col-md-3"> </div>
+                    <div class="col-md-9">
+                        <div class="about-content">
+                            {% placeholder "Wat wordt er verwacht?" %}
+                        </div>
+                    </div>
+            </div>
+        </section>
+        <section id="kostprijs" class="content1-3">
+        <div class="container">
+                <div class = "col-md-3"> </div>
+                <div class="col-md-9">
+                    <div class="about-content">
+                        {% placeholder "Kostprijs" %}
+                    </div>
+                </div>
+        </div>
+    </section>
+</div>
+ {% endblock %}

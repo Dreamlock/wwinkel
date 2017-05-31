@@ -1,0 +1,51 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+ {% block content %}
+
+<div class="container-fluid">
+    <div class = "page-header">
+        <h1>Contact</h1>
+    </div>
+
+    <div class = "container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class = "container-fluid" >
+                    {% placeholder "img" %}
+                    <div class = "container">
+                        {% placeholder "contact info" %}
+                    </div>
+                </div>
+            </div>
+        <div class="col-sm-3">
+            <div class="container-fluid">
+                {% placeholder "img1" %}
+                <div class = "container">
+                    {% placeholder "contact info1" %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div >
+            {% placeholder "img2" %}
+            <div class = "container">
+                {% placeholder "contact info2" %}
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="container">
+                {% placeholder "img3" %}
+                <div class = "container">
+                    {% placeholder "contact info3" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+{% endblock%}

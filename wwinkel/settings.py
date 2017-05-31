@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,8 +53,18 @@ INSTALLED_APPS = [
     'treebeard',
     'sekizai',
     'djangocms_text_ckeditor',
+    'filer',
+    'easy_thumbnails',
+    'djangocms_column',
+    'djangocms_link',
+    'cmsplugin_filer_file',
+    'cmsplugin_filer_folder',
+    'cmsplugin_filer_image',
+    'cmsplugin_filer_utils',
+    'djangocms_style',
+    'djangocms_snippet',
+    'djangocms_video',
 
-    
     'django_extensions',
     'simple_history',
 ]
@@ -138,7 +147,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+
             ],
             #'loaders': ['django.template.loaders.filesystem.Loader','django.template.loaders.app_directories.Loader']
         },
@@ -149,11 +159,12 @@ TEMPLATES = [
 
 CMS_TEMPLATES = [
     ('base/base.html','Base template' ),
-    ('base/index.html','Home page'),
-    ('custom_users/contact.html', 'Contact info'),
-    ('custom_users/organisaties.html', 'Organisaties'),
-    ('custom_users/partners.html', 'Partners'),
-    ('custom_users/studenten.html', 'Studenten')
+    ('wwinkel/index.html','Home page'),
+    ('wwinkel/contact.html', 'Contact info'),
+    ('wwinkel/organisaties.html', 'Organisaties'),
+    ('wwinkel/partners.html', 'Partners'),
+    ('wwinkel/studenten.html', 'Studenten'),
+    ('wwinkel/publicaties.html', 'publicaties')
 ]
 
 CMS_TOOLBAR_HIDE = True
@@ -200,6 +211,8 @@ AUTHENTICATION_BACKENDS = (
     'custom_users.permissions_backends.QuestionPermissionsBackend',
 )
 
+LOGIN_URL = 'custom_users/login/'
+
 SITE_ID = 1
 
 
@@ -224,4 +237,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static_root/'
+
+STATIC_ROOT = './static_root/'
+
+STATICFILES_DIRS = ['static', 'dbwwinkel/static']
+

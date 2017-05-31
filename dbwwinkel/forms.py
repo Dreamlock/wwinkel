@@ -60,12 +60,6 @@ class PromotorForm(ModelForm):
         }
 
 
-class StudentForm(ModelForm):
-    class Meta:
-        model = Student
-        fields = ['first_name']
-
-
 class InternalRemarkForm(forms.Form):
     internal_remark = forms.CharField(label=_('Interne opmerking'), widget=forms.Textarea)
 
@@ -217,10 +211,45 @@ class StudentForm(forms.ModelForm):
         model = Student
         fields = ['first_name', 'last_name', 'mobile', 'email','education']
 
+        labels = {
+            'education': 'Opleiding'
+        }
+
+
 
 class ReserveForm(forms.Form):
 
     student = forms.ModelChoiceField(queryset = None)
+
+
+class FacultyForm(forms.ModelForm):
+
+    opleiding = forms.ModelMultipleChoiceField(queryset=Education.objects.all())
+
+
+    class Meta:
+        model = Faculty
+        fields = ('__all__')
+
+        labels = {
+            'name': 'Naam',
+            'institution': 'Instelling',
+        }
+
+
+
+class EducationForm(forms.ModelForm):
+
+
+    faculteit =  forms.ModelMultipleChoiceField(queryset=Faculty.objects.all())
+    institution = forms.ModelMultipleChoiceField(queryset=Institution.objects.all(), label="Instelling")
+
+    class Meta:
+        model = Education
+        fields = ('__all__')
+
+
+
 
 
 

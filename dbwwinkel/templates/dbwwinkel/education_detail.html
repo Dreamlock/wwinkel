@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+{% load cms_tags menu_tags sekizai_tags staticfiles index %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header">
+                <div class="container">
+                    <h1>Detail weergave opleiding</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="container">
+                <div class="panel panel-info">
+                    <div class='panel-heading'>
+                        <h2><strong>Opleiding: </strong>{{ education.education }}</h2><br>
+                    </div>
+
+                    <div class="panel panel-body">
+                        <div class=col-md-4>
+                            <h3>Instelling(en)</h3>
+                            {% for facultyof in education.facultyof_set.all %}
+                                {{ facultyof.institution }}
+                            {% endfor %}<br>
+                        </div>
+
+                        <div class=col-md-4>
+                            <h3>Faculteit(en)</h3>
+                            {% for facultyof in education.facultyof_set.all %}
+                                {{ facultyof.faculty }}
+                            {% endfor %}<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
